@@ -10,6 +10,8 @@
     "reflect": "node agent/reflect.js"
   },
   "dependencies": {
+    "@x402/axios": "^2.7.0",
+    "@x402/evm": "^2.7.0",
     "axios": "^1.13.6",
     "dotenv": "^16.0.0",
     "ethers": "^6.0.0",

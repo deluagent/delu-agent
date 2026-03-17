@@ -58,43 +58,56 @@ function calculateRSI(prices, period = 14) {
 }
 
 /**
- * Fetch Checkr attention signals via x402
- * Uses x402-axios to auto-pay per call in USDC on Base
+ * Fetch attention/trending signals
+ * Primary: Checkr x402 (best signal quality)
+ * Fallback: Bankr trending tokens (free, works now)
  */
 async function getAttentionSignals() {
+  // Try Checkr first
   try {
-    const axios = require('axios');
-    const { withPaymentInterceptor } = require('x402-axios');
-    const { createWalletClient, http } = require('viem');
-    const { privateKeyToAccount } = require('viem/accounts');
-    const { base } = require('viem/chains');
-    const fs = require('fs');
-
-    const privateKey = fs.readFileSync('/home/openclaw/.x402_key', 'utf8').trim();
-    const account = privateKeyToAccount(privateKey);
-    const walletClient = createWalletClient({ account, chain: base, transport: http(process.env.BASE_RPC) });
-
-    const client = withPaymentInterceptor(axios.create(), walletClient);
-
-    // Get spikes — $0.05 per call
-    const { data } = await client.get('https://api.checkr.social/v1/spikes?min_velocity=2.0');
-
-    const spikes = data.spikes || [];
-    return spikes
-      .filter(t => t.velocity >= 2.0)
-      .map(t => ({
-        token: t.symbol,
-        velocity: t.velocity,
-        divergence: t.divergence || false,
-        viral_class: t.hawkes?.viral_class || 'UNKNOWN',
-        narrative: t.narrative_summary || null,
-        data_age_minutes: data.data_age_minutes
-      }))
-      .slice(0, 10);
+    const checkr = require('./checkr');
+    const data = await checkr.getSpikes(2.0);
+    const parsed = checkr.parseSpikes(data);
+    if (parsed.length > 0) {
+      console.log(`[signals] Checkr: ${parsed.length} spikes`);
+      return parsed;
+    }
   } catch (e) {
-    console.warn('[signals] Checkr unavailable:', e.message);
+    console.warn('[signals] Checkr unavailable, using Bankr trending:', e.message);
+  }
+
+  // Fallback: Bankr trending
+  try {
+    const bankr = require('./bankr');
+    const job = await bankr.prompt('what tokens are trending on base right now? top 5 with price change');
+    const result = await bankr.waitForJob(job.jobId, 30000);
+    return parseBankrTrending(result.response);
+  } catch (e) {
+    console.warn('[signals] Bankr trending unavailable:', e.message);
     return [];
   }
+}
+
+function parseBankrTrending(text) {
+  const signals = [];
+  // Match patterns like "TOKEN: +12.3%" or "TOKEN (sym): +5.4% ($0.001)"
+  const lines = text.split('\n').filter(l => l.trim());
+  for (const line of lines) {
+    const pctMatch = line.match(/\*?\*?([A-Z]{2,10})\*?\*?.*?([+-]?\d+\.?\d*)%/i);
+    if (pctMatch) {
+      const symbol = pctMatch[1].toUpperCase();
+      const pct = parseFloat(pctMatch[2]);
+      signals.push({
+        token: symbol,
+        velocity: Math.abs(pct) / 10,  // normalize: 10% change = 1x velocity
+        divergence: false,
+        viral_class: pct > 10 ? 'BUILDING' : 'UNKNOWN',
+        narrative: `${pct > 0 ? '+' : ''}${pct}% in recent period`,
+        source: 'bankr_trending'
+      });
+    }
+  }
+  return signals.slice(0, 10);
 }
 
 /**
