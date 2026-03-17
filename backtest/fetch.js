@@ -229,6 +229,95 @@ async function fetchGeckoTerminal(symbol, days = 180) {
   }));
 }
 
+// Token contract addresses on Base for DexScreener lookup
+const BASE_ADDRESSES = {
+  // Base tokens
+  VIRTUAL: '0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b',
+  BRETT:   '0x532f27101965dd16442E59d40670FaF5eBb142E4',
+  DEGEN:   '0x4ed4E862860bed51a9570b96d89af5e1B0Efefed',
+  AERO:    '0x940181a94A35A4569E4529A3CDfb74e38FD98631',
+  CLANKER: '0x1bc0c42215582d5A085795f4baDbaC3ff36d1Bcb',
+  ODAI:    '0x0086cFF0c1E5D17b19F5bCd4c8840a5B4251D959',
+  JUNO:    '0x4E6c9f48f73E54EE5F3AB7e2992B2d733D0d0b07',
+  FELIX:   '0xf30Bf00edd0C22db54C9274B90D2A4C21FC09b07',
+  CLAWD:   '0x9f86dB9fc6f7c9408e8Fda3Ff8ce4e78ac7a6b07',
+  CLAWNCH: '0xa1F72459dfA10BAD200Ac160eCd78C6b77a747be',
+  // Majors (for DexScreener fallback)
+  LINK:    '0x88Fb150BDc53A65fe94Dea0c9BA0a6dAf8C6e196',  // LINK on Base
+  AAVE:    '0x18c64B9F0a3dB32A6A2B15c6a88B9D4A4E5d79e5',  // AAVE on Base
+};
+
+/**
+ * Fetch buy/sell flow data from DexScreener (free, no auth)
+ * Returns flow signal: (buys - sells) / (buys + sells) → [-1, +1]
+ */
+async function fetchFlowSignal(symbol) {
+  const addr = BASE_ADDRESSES[symbol];
+  if (!addr) return null;
+
+  try {
+    const url = `https://api.dexscreener.com/latest/dex/tokens/${addr}`;
+    const r = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!r.ok) throw new Error(`DexScreener ${r.status}`);
+    const d = await r.json();
+    const pairs = (d.pairs || []).filter(p => p.chainId === 'base');
+    if (pairs.length === 0) return null;
+
+    // Use highest-liquidity pair
+    const pair = pairs.sort((a, b) => (b.liquidity?.usd || 0) - (a.liquidity?.usd || 0))[0];
+    const txns = pair.txns || {};
+
+    // Aggregate across time windows (weight recent more)
+    const h1  = txns.h1  || {};
+    const h6  = txns.h6  || {};
+    const h24 = txns.h24 || {};
+
+    const buys  = (h1.buys  || 0) * 3 + (h6.buys  || 0) * 2 + (h24.buys  || 0);
+    const sells = (h1.sells || 0) * 3 + (h6.sells  || 0) * 2 + (h24.sells || 0);
+    const total = buys + sells;
+
+    const flowSignal = total > 0 ? (buys - sells) / total : 0;  // [-1, +1]
+    const buyRatio   = total > 0 ? buys / total : 0.5;
+
+    // Volume trend: h1 vol vs h24 vol / 24 (is volume accelerating?)
+    const volH1  = pair.volume?.h1  || 0;
+    const volH24 = pair.volume?.h24 || 0;
+    const volAccel = volH24 > 0 ? (volH1 / (volH24 / 24)) - 1 : 0;  // > 0 = accelerating
+
+    return {
+      symbol,
+      flowSignal:  +flowSignal.toFixed(4),   // core signal
+      buyRatio:    +buyRatio.toFixed(4),
+      buys24h:     h24.buys  || 0,
+      sells24h:    h24.sells || 0,
+      volAccel:    +volAccel.toFixed(4),     // volume acceleration
+      vol24h:      volH24,
+      liquidity:   pair.liquidity?.usd || 0,
+      priceChange: {
+        h1:  pair.priceChange?.h1  || 0,
+        h6:  pair.priceChange?.h6  || 0,
+        h24: pair.priceChange?.h24 || 0,
+      },
+    };
+  } catch(e) {
+    return null;
+  }
+}
+
+/**
+ * Batch fetch flow signals for multiple tokens
+ * Respects DexScreener's rate limit with small delays
+ */
+async function fetchAllFlowSignals(symbols) {
+  const results = {};
+  for (const sym of symbols) {
+    const signal = await fetchFlowSignal(sym);
+    if (signal) results[sym] = signal;
+    await new Promise(r => setTimeout(r, 300));  // 300ms between calls
+  }
+  return results;
+}
+
 module.exports = {
   TOKEN_IDS,
   BINANCE_PAIRS,
@@ -241,4 +330,7 @@ module.exports = {
   fetchBinanceHistory,
   fetchBinanceHourly,
   fetchGeckoTerminal,
+  fetchFlowSignal,
+  fetchAllFlowSignals,
+  BASE_ADDRESSES,
 };

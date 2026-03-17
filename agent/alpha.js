@@ -123,20 +123,15 @@ function strategy1_trendAttention(prices, attention = 0) {
  * @param {number} attentionAccel   - Δ²mindshare (second derivative, for exit signal)
  * @returns {{ score: number, phase: string }}
  */
-function strategy2_attentionFlow(attentionDelta, walletInflow = 0, attentionAccel = 0) {
-  // Both must be positive to enter
-  if (attentionDelta <= 0 || walletInflow <= 0) {
-    return { score: 0, phase: 'WAIT' };
+function strategy2_attentionFlow(attentionDelta, flowSignal = 0, attentionAccel = 0, volAccel = 0) {
+  if (attentionAccel < -0.1 && flowSignal < 0) return { score: -0.5, phase: 'EXIT', detail: { attentionAccel, flowSignal } };
+  if (attentionDelta > 0 && flowSignal > 0.1) {
+    const score = attentionDelta * flowSignal * (1 + Math.max(volAccel, 0) * 0.5);
+    return { score: clamp(score, 0, 1), phase: attentionAccel > 0 ? 'BUILDING' : 'PEAKING', detail: { attentionDelta, flowSignal, volAccel } };
   }
-
-  // Exit signal: attention acceleration turning negative
-  if (attentionAccel < -0.1) {
-    return { score: -0.5, phase: 'EXIT' };
-  }
-
-  const score = attentionDelta * walletInflow;
-  const phase = attentionAccel > 0 ? 'BUILDING' : 'PEAKING';
-  return { score: clamp(score, 0, 1), phase };
+  if (attentionDelta > 0 && flowSignal < -0.2) return { score: 0, phase: 'FAKEOUT', detail: { attentionDelta, flowSignal } };
+  if (flowSignal > 0.3) return { score: flowSignal * 0.5, phase: 'FLOW_ONLY', detail: { flowSignal } };
+  return { score: 0, phase: 'WAIT', detail: { attentionDelta, flowSignal } };
 }
 
 // ─── Strategy 3: Cross-Sectional Momentum Ranking ────────────
@@ -228,7 +223,7 @@ function strategy5_regimeMeta(token, regime, recentSharpes = {}) {
 
   // Compute all sub-strategies
   const s1 = strategy1_trendAttention(token.prices, token.attentionDelta);
-  const s2 = strategy2_attentionFlow(token.attentionDelta || 0, token.walletInflow || 0, token.attentionAccel || 0);
+  const s2 = strategy2_attentionFlow(token.attentionDelta || 0, token.flowSignal || 0, token.attentionAccel || 0, token.volAccel || 0);
   const s4 = strategy4_panicReversion(token.prices, token.volume || 0, token.avgVolume || 0, r);
 
   // Regime-based strategy weights

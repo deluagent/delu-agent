@@ -266,7 +266,16 @@ async function runCycle(cycleNum) {
     console.log(`💰 Flow — Accumulating: ${accum.join(', ') || 'none'} | Distributing: ${dist.join(', ') || 'none'}`);
   } catch(e) { console.warn('[flows]', e.message); }
 
-  // ── 3. Load all token data ──────────────────────────────────
+  // ── 3. Fetch DexScreener flow signals (all Base tokens in parallel) ──
+  console.log('[flow] Fetching buy/sell signals from DexScreener...');
+  const allSymbols = [...BASE_TOKENS.map(t => t.symbol), 'VIRTUAL', 'BRETT', 'DEGEN', 'AERO'];
+  const flowSignals = await f.fetchAllFlowSignals(allSymbols);
+  const flowSummary = Object.entries(flowSignals)
+    .map(([s, d]) => `${d.flowSignal > 0.1 ? '🟢' : d.flowSignal < -0.1 ? '🔴' : '⚪'}${s}(${d.flowSignal.toFixed(2)})`)
+    .join(' ');
+  console.log(`  ${flowSummary}`);
+
+  // ── 4. Load all token data ──────────────────────────────────
   const allTokenData = [];
 
   // Majors — parallel Binance fetch
@@ -438,6 +447,7 @@ console.log('╔═════════════════════�
 console.log('║  delu alpha cycle — 15min                                       ║');
 console.log(`║  ${MAJORS.length} majors (Binance) + ${BASE_TOKENS.length} Base tokens (GeckoTerminal)`.padEnd(68) + '║');
 console.log('║  Strategies: trend·attention·flow·crosssection·panicrev·regime  ║');
+console.log('║  + DexScreener buy/sell flow signals on all Base tokens         ║');;
 console.log('╚══════════════════════════════════════════════════════════════════╝');
 
 let cycleNum = 0;
