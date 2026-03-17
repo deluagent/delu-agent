@@ -180,23 +180,31 @@ function recordSnapshot(db, ts, symbol, alphaResult, prices) {
 // ─── Bankr Execution ──────────────────────────────────────────
 
 async function askBankr(prompt) {
-  const key = process.env.BANKR_API_KEY;
+  let key = process.env.BANKR_API_KEY;
+  if (!key) {
+    try { const cfg = JSON.parse(require('fs').readFileSync('/home/openclaw/.bankr/config.json','utf8')); key = cfg.apiKey; } catch {}
+  }
   if (!key) return null;
   try {
     const r = await fetch('https://api.bankr.bot/agent/prompt', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-API-Key': key },
       body: JSON.stringify({ prompt }),
-      signal: AbortSignal.timeout(8000)
+      signal: AbortSignal.timeout(10000)
     });
     const { jobId } = await r.json();
-    await new Promise(res => setTimeout(res, 14000));
-    const poll = await fetch(`https://api.bankr.bot/agent/job/${jobId}`, {
-      headers: { 'X-API-Key': key }, signal: AbortSignal.timeout(8000)
-    });
-    const d = await poll.json();
-    return d.response || null;
-  } catch { return null; }
+    if (!jobId) return null;
+    // Poll with retries — Bankr jobs take 30-90s
+    for (let i = 0; i < 6; i++) {
+      await new Promise(res => setTimeout(res, 15000));
+      const poll = await fetch(`https://api.bankr.bot/agent/job/${jobId}`, {
+        headers: { 'X-API-Key': key }, signal: AbortSignal.timeout(10000)
+      });
+      const d = await poll.json();
+      if (d.status === 'completed' || d.response) return d.response || null;
+    }
+    return null;
+  } catch(e) { return null; }
 }
 
 async function executeTradeIfWarranted(portfolio, regime, db) {
