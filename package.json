@@ -1,0 +1,16 @@
+{
+  "name": "delu-agent",
+  "version": "0.1.0",
+  "description": "Autonomous onchain allocator with skin in the game",
+  "main": "agent/index.js",
+  "scripts": {
+    "start": "node agent/index.js --loop",
+    "run": "node agent/index.js",
+    "dry": "node agent/index.js --dry",
+    "reflect": "node agent/reflect.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "ethers": "^6.0.0"
+  }
+}
