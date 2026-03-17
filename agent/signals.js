@@ -59,25 +59,36 @@ function calculateRSI(prices, period = 14) {
 
 /**
  * Fetch Checkr attention signals via x402
- * Falls back to empty array if Checkr unavailable
+ * Uses x402-axios to auto-pay per call in USDC on Base
  */
 async function getAttentionSignals() {
   try {
-    // x402 payment flow to Checkr
-    const res = await fetch('https://api.checkr.social/attention/base', {
-      headers: { 'Accept': 'application/json' }
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    // Filter to high-signal tokens only
-    return (data.tokens || [])
-      .filter(t => t.velocity > 150 && t.weight === 'HIGH')
+    const axios = require('axios');
+    const { withPaymentInterceptor } = require('x402-axios');
+    const { createWalletClient, http } = require('viem');
+    const { privateKeyToAccount } = require('viem/accounts');
+    const { base } = require('viem/chains');
+    const fs = require('fs');
+
+    const privateKey = fs.readFileSync('/home/openclaw/.x402_key', 'utf8').trim();
+    const account = privateKeyToAccount(privateKey);
+    const walletClient = createWalletClient({ account, chain: base, transport: http(process.env.BASE_RPC) });
+
+    const client = withPaymentInterceptor(axios.create(), walletClient);
+
+    // Get spikes — $0.05 per call
+    const { data } = await client.get('https://api.checkr.social/v1/spikes?min_velocity=2.0');
+
+    const spikes = data.spikes || [];
+    return spikes
+      .filter(t => t.velocity >= 2.0)
       .map(t => ({
         token: t.symbol,
         velocity: t.velocity,
-        weight: t.weight,
-        divergence: t.divergence,
-        price_change_24h: t.price_change_24h
+        divergence: t.divergence || false,
+        viral_class: t.hawkes?.viral_class || 'UNKNOWN',
+        narrative: t.narrative_summary || null,
+        data_age_minutes: data.data_age_minutes
       }))
       .slice(0, 10);
   } catch (e) {

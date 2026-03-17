@@ -10,7 +10,10 @@
     "reflect": "node agent/reflect.js"
   },
   "dependencies": {
+    "axios": "^1.13.6",
     "dotenv": "^16.0.0",
-    "ethers": "^6.0.0"
+    "ethers": "^6.0.0",
+    "viem": "^2.47.4",
+    "x402-axios": "^1.1.0"
   }
 }
