@@ -50,7 +50,7 @@ const BASE_TOKENS = [
   { symbol: 'ODAI',    pool: '0xbf0f716999378af289863d0c7eb961793993a641a0a943ccc6bb45cb5713b3fb' },
 ];
 
-const TRADEABLE = new Set(['ETH', 'SOL', 'LINK', 'AAVE', 'VIRTUAL', 'BRETT', 'DEGEN', 'AERO', 'ODAI', 'JUNO', 'CLAWD', 'FELIX']);
+const TRADEABLE = new Set(['ETH', 'SOL', 'LINK', 'AAVE', 'VIRTUAL', 'BRETT', 'DEGEN', 'AERO', 'ODAI', 'JUNO', 'CLAWD', 'FELIX', 'CLANKER']);
 
 // Token contract addresses for Bankr swaps (Base mainnet)
 const TOKEN_ADDR = {

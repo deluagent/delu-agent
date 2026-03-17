@@ -42,6 +42,7 @@ const GECKO_TERMINAL_FALLBACK = {
   FELIX:   { pool: '0x6e19027912db90892200a2b08c514921917bc55d7291ec878aa382c193b50084', network: 'base' },
   CLAWD:   { pool: '0xCD55381a53da35Ab1D7Bc5e3fE5F76cac976FAc3',                              network: 'base' },
   CLAWNCH: { pool: '0x07Da9c5d35028f578dFac5BE6e5Aaa8a835704F6',                              network: 'base' },
+  CLANKER: { pool: '0xd23FE2DB317e1A96454a2D1c7e8fc0DbF19BB000',                              network: 'base' },
   VIRTUAL: { pool: '0x3f0296bf652e19bca772ec3df08b32732f93014a',                              network: 'base' },
   BRETT:   { pool: '0x4e829f8a5213c42535ab84aa40bd4adcce9cba02',                              network: 'base' },
   DEGEN:   { pool: '0xc9034c3e7f58003e6ae0c8438e7c8f4598d5acaa',                              network: 'base' },
