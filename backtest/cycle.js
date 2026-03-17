@@ -230,9 +230,16 @@ async function executeTradeIfWarranted(portfolio, regime, db) {
   console.log(`\n💸 [exec] Executing: BUY ${top.symbol} | alpha=${top.alpha.toFixed(4)} | weight=${(top.weight*100).toFixed(1)}% | regime=${regime}`);
 
   const tokenRef = TOKEN_ADDR[top.symbol] || top.symbol;
-  const resp = await askBankr(`swap $${SIZE_USD} USDC to ${tokenRef} on base`);
+  // Try USDC first; if Bankr asks about ETH, confirm using ETH
+  let resp = await askBankr(`swap $${SIZE_USD} USDC to ${tokenRef} on base. if i don't have enough USDC, use ETH instead.`);
   if (!resp) { console.log('   Bankr unavailable'); return; }
-  console.log('   ' + resp.slice(0, 200));
+  // If Bankr is asking for confirmation, send yes
+  if (resp.toLowerCase().includes('would you like') || resp.toLowerCase().includes('confirm') || resp.toLowerCase().includes('instead?')) {
+    console.log('   Bankr confirming ETH swap...');
+    resp = await askBankr(`yes, use ETH to swap $${SIZE_USD} worth to ${tokenRef} on base`);
+  }
+  if (!resp) { console.log('   Bankr no response after confirm'); return; }
+  console.log('   ' + resp.slice(0, 300));
 
   trades.push({
     id: Date.now(), symbol: top.symbol, sizeUsd: SIZE_USD, regime,
