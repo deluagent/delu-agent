@@ -55,19 +55,33 @@ const TRADEABLE = new Set(['ETH', 'BTC', 'SOL', 'AAVE', 'LINK', 'VIRTUAL', 'AERO
 
 // ─── Data Sources ─────────────────────────────────────────────
 
-async function fetchBinance(pair, limit = 72) {
-  const url = `https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1h&limit=${limit}`;
+// Fetch daily bars (for historical pattern analysis, up to 365 days)
+async function fetchBinanceDaily(pair, days = 365) {
+  const url = `https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1d&limit=${Math.min(days, 1000)}`;
   const r = await fetch(url, { signal: AbortSignal.timeout(12000) });
-  if (!r.ok) throw new Error(`Binance ${r.status}`);
+  if (!r.ok) throw new Error(`Binance daily ${r.status}`);
   const d = await r.json();
   return d.map(k => ({
-    ts: k[0], time: new Date(k[0]),
+    ts: k[0], time: new Date(k[0]), tf: '1d',
     open: +k[1], high: +k[2], low: +k[3], close: +k[4], volume: +k[5]
   }));
 }
 
-async function fetchGecko(network, pool, limit = 72) {
-  const url = `https://api.geckoterminal.com/api/v2/networks/${network}/pools/${pool}/ohlcv/hour?limit=${limit}&token=base`;
+// Fetch hourly bars (for recent signal confirmation, last 7 days)
+async function fetchBinanceHourly(pair, hours = 168) {
+  const url = `https://api.binance.com/api/v3/klines?symbol=${pair}&interval=1h&limit=${Math.min(hours, 1000)}`;
+  const r = await fetch(url, { signal: AbortSignal.timeout(12000) });
+  if (!r.ok) throw new Error(`Binance hourly ${r.status}`);
+  const d = await r.json();
+  return d.map(k => ({
+    ts: k[0], time: new Date(k[0]), tf: '1h',
+    open: +k[1], high: +k[2], low: +k[3], close: +k[4], volume: +k[5]
+  }));
+}
+
+// GeckoTerminal daily (up to 180 days for Base tokens)
+async function fetchGeckoDaily(network, pool, days = 180) {
+  const url = `https://api.geckoterminal.com/api/v2/networks/${network}/pools/${pool}/ohlcv/day?limit=${Math.min(days, 180)}&token=base`;
   const r = await fetch(url, {
     headers: { Accept: 'application/json;version=20230302' },
     signal: AbortSignal.timeout(12000)
@@ -77,14 +91,43 @@ async function fetchGecko(network, pool, limit = 72) {
   const list = json?.data?.attributes?.ohlcv_list || [];
   if (list.length === 0) throw new Error('empty ohlcv');
   return list.reverse().map(([ts, o, h, l, c, v]) => ({
-    ts: ts * 1000, time: new Date(ts * 1000),
+    ts: ts * 1000, time: new Date(ts * 1000), tf: '1d',
     open: +o, high: +h, low: +l, close: +c, volume: +v
   }));
 }
 
+// GeckoTerminal hourly (last 7 days for recent signal)
+async function fetchGeckoHourly(network, pool, hours = 168) {
+  const url = `https://api.geckoterminal.com/api/v2/networks/${network}/pools/${pool}/ohlcv/hour?limit=${Math.min(hours, 1000)}&token=base`;
+  const r = await fetch(url, {
+    headers: { Accept: 'application/json;version=20230302' },
+    signal: AbortSignal.timeout(12000)
+  });
+  if (!r.ok) throw new Error(`GeckoTerminal hourly ${r.status}`);
+  const json = await r.json();
+  const list = json?.data?.attributes?.ohlcv_list || [];
+  if (list.length === 0) throw new Error('empty ohlcv (hourly)');
+  return list.reverse().map(([ts, o, h, l, c, v]) => ({
+    ts: ts * 1000, time: new Date(ts * 1000), tf: '1h',
+    open: +o, high: +h, low: +l, close: +c, volume: +v
+  }));
+}
+
+// Returns { daily, hourly } — daily for pattern analysis, hourly for live signal
 async function fetchBars(token) {
-  if (token.source === 'binance') return fetchBinance(token.pair, token.limit);
-  if (token.source === 'gecko')   return fetchGecko(token.network, token.pool, token.limit);
+  if (token.source === 'binance') {
+    const [daily, hourly] = await Promise.all([
+      fetchBinanceDaily(token.pair, 365),
+      fetchBinanceHourly(token.pair, 168),
+    ]);
+    return { daily, hourly };
+  }
+  if (token.source === 'gecko') {
+    const daily  = await fetchGeckoDaily(token.network, token.pool, 180);
+    await new Promise(r => setTimeout(r, 1500));
+    const hourly = await fetchGeckoHourly(token.network, token.pool, 168);
+    return { daily, hourly };
+  }
   throw new Error('unknown source');
 }
 
@@ -153,11 +196,88 @@ function calcVWAP(bars) {
   return slice.reduce((s, b) => s + ((b.high + b.low + b.close) / 3) * b.volume, 0) / totalVol;
 }
 
+// ─── Historical Backtest (daily bars) ────────────────────────
+
+function backtest(daily, symbol) {
+  const closes  = daily.map(b => b.close);
+  const volumes = daily.map(b => b.volume);
+  const RSI  = calcRSI(closes);
+  const e9   = calcEMA(closes, 9);
+  const e21  = calcEMA(closes, 21);
+  const { hist } = calcMACD(closes);
+  const OBV  = calcOBV(closes, volumes);
+
+  const trades = [];
+  let position = null;
+
+  for (let i = 30; i < closes.length; i++) {
+    let entryScore = 0;
+    // Entry conditions
+    if (e9[i-1] < e21[i-1] && e9[i] >= e21[i]) entryScore += 3;       // EMA cross
+    if (RSI[i] != null && RSI[i] < 40) entryScore += 2;                // oversold
+    if (i >= 8 && OBV[i] > OBV[i-8] && closes[i] <= closes[i-8] * 1.01) entryScore += 3; // OBV accum
+    if (i >= 10 && closes[i] < closes[i-10] && RSI[i] > RSI[i-10] && RSI[i] != null) entryScore += 2; // RSI bull div
+
+    // Exit conditions
+    let exitScore = 0;
+    if (e9[i-1] > e21[i-1] && e9[i] <= e21[i]) exitScore += 3;        // EMA death cross
+    if (RSI[i] != null && RSI[i] > 70) exitScore += 2;                 // overbought
+    if (hist[i] < 0 && hist[i-1] >= 0) exitScore += 2;                // MACD cross down
+
+    if (!position && entryScore >= 4) {
+      position = { entry: closes[i], entryIdx: i, entryDate: daily[i].time };
+    } else if (position && (exitScore >= 3 || i === closes.length - 1)) {
+      const ret = (closes[i] - position.entry) / position.entry * 100;
+      const holdDays = i - position.entryIdx;
+      trades.push({
+        entryDate: position.entryDate.toISOString().slice(0, 10),
+        exitDate:  daily[i].time.toISOString().slice(0, 10),
+        entryPrice: +position.entry.toPrecision(6),
+        exitPrice:  +closes[i].toPrecision(6),
+        returnPct:  +ret.toFixed(2),
+        holdDays,
+        win: ret > 0,
+      });
+      position = null;
+    }
+  }
+
+  if (trades.length === 0) return null;
+  const wins    = trades.filter(t => t.win);
+  const avgRet  = trades.reduce((s, t) => s + t.returnPct, 0) / trades.length;
+  const totalRet = trades.reduce((s, t) => s + t.returnPct, 0);
+  const winRate = Math.round(wins.length / trades.length * 100);
+  const avgHold = Math.round(trades.reduce((s, t) => s + t.holdDays, 0) / trades.length);
+  const returns = trades.map(t => t.returnPct / 100);
+  const mean    = returns.reduce((a, b) => a + b) / returns.length;
+  const std     = Math.sqrt(returns.reduce((s, r) => s + (r-mean)**2, 0) / returns.length);
+  const sharpe  = std > 0 ? +(mean / std * Math.sqrt(252)).toFixed(2) : null;
+
+  return {
+    trades: trades.slice(-5), // last 5 only for log
+    totalTrades: trades.length,
+    winRate,
+    avgRetPct:  +avgRet.toFixed(2),
+    totalRetPct: +totalRet.toFixed(2),
+    avgHoldDays: avgHold,
+    sharpe,
+    bestTrade:  trades.reduce((a, b) => b.returnPct > a.returnPct ? b : a),
+    worstTrade: trades.reduce((a, b) => b.returnPct < a.returnPct ? b : a),
+    dataFrom:   daily[0].time.toISOString().slice(0, 10),
+    dataTo:     daily.at(-1).time.toISOString().slice(0, 10),
+    days:       daily.length,
+  };
+}
+
 // ─── Signal Scoring ───────────────────────────────────────────
 
 function scoreToken(bars) {
-  const closes  = bars.map(b => b.close);
-  const volumes = bars.map(b => b.volume);
+  // Use hourly bars for live signal; daily for HTF context
+  const hourly  = bars.hourly || bars;
+  const daily   = bars.daily  || bars;
+  const closes  = hourly.map(b => b.close);
+  const volumes = hourly.map(b => b.volume);
+  const dCloses = daily.map(b => b.close);
   const i = closes.length - 1;
 
   const RSI  = calcRSI(closes);
@@ -167,7 +287,15 @@ function scoreToken(bars) {
   const { hist } = calcMACD(closes);
   const OBV  = calcOBV(closes, volumes);
   const BBW  = calcBBW(closes);
-  const vwap = calcVWAP(bars);
+  const vwap = calcVWAP(hourly);
+
+  // Daily HTF bias (trend direction from monthly view)
+  const dRSI = calcRSI(dCloses);
+  const de21 = calcEMA(dCloses, 21);
+  const de50 = calcEMA(dCloses, 50);
+  const di   = dCloses.length - 1;
+  const htfBull = di > 0 && de21[di] > de50[di] && dRSI[di] > 50;
+  const htfBear = di > 0 && de21[di] < de50[di] && dRSI[di] < 50;
 
   const cur = {
     price: closes[i],
@@ -248,6 +376,10 @@ function scoreToken(bars) {
       if (cur.bbw <= p20) { signals.push('BB_SQUEEZE'); bull += 1; } // neutral breakout warning
     }
   }
+
+  // ── HTF alignment (daily trend agrees with hourly signal) ──
+  if (htfBull) { signals.push('HTF_BULL'); bull += 2; }
+  if (htfBear) { signals.push('HTF_BEAR'); bear += 2; }
 
   // ── VWAP ──
   if (closes[i] > cur.vwap * 1.005) { signals.push('ABOVE_VWAP'); bull += 1; }
@@ -447,29 +579,39 @@ async function runCycle(cycleNum) {
   const binanceTokens = TOKENS.filter(t => t.source === 'binance');
   const geckoTokens   = TOKENS.filter(t => t.source === 'gecko');
 
-  // Binance: parallel fetch (safe)
+  // Binance: parallel fetch (unlimited, safe)
   const binanceBars = await Promise.allSettled(binanceTokens.map(t => fetchBars(t)));
   for (let j = 0; j < binanceTokens.length; j++) {
     const token = binanceTokens[j];
     const result = binanceBars[j];
     if (result.status === 'rejected') { console.warn(`[${token.symbol}] ${result.reason.message}`); continue; }
-    const bars = result.value;
-    if (bars.length < 30) { console.warn(`[${token.symbol}] only ${bars.length} bars`); continue; }
-    const sc = scoreToken(bars);
+    const { daily, hourly } = result.value;
+    if (hourly.length < 30) { console.warn(`[${token.symbol}] only ${hourly.length} hourly bars`); continue; }
+    const sc   = scoreToken({ daily, hourly });
+    const hist = daily.length >= 30 ? backtest(daily, token.symbol) : null;
     record(db, ts, token.symbol, sc);
-    scores.push({ token: token.symbol, sc, bars });
+    scores.push({ token: token.symbol, sc, hist });
+    if (hist) {
+      console.log(`  📊 ${token.symbol} backtest (${hist.days}d): ${hist.totalTrades} trades | WR=${hist.winRate}% | ret=${hist.totalRetPct}% | sharpe=${hist.sharpe}`);
+    }
   }
 
-  // GeckoTerminal: sequential with small delay (avoid 429)
+  // GeckoTerminal: sequential with delay (avoid 429)
   for (const token of geckoTokens) {
-    await new Promise(r => setTimeout(r, 2500));
-    let bars;
-    try { bars = await fetchBars(token); }
-    catch (e) { console.warn(`[${token.symbol}] ${e.message}`); continue; }
-    if (bars.length < 15) { console.warn(`[${token.symbol}] only ${bars.length} bars`); continue; }
-    const sc = scoreToken(bars);
+    await new Promise(r => setTimeout(r, 3500));
+    let daily, hourly;
+    try {
+      const bars = await fetchBars(token);
+      daily = bars.daily; hourly = bars.hourly;
+    } catch (e) { console.warn(`[${token.symbol}] ${e.message}`); continue; }
+    if (hourly.length < 10) { console.warn(`[${token.symbol}] only ${hourly.length} bars`); continue; }
+    const sc   = scoreToken({ daily, hourly });
+    const hist = daily.length >= 20 ? backtest(daily, token.symbol) : null;
     record(db, ts, token.symbol, sc);
-    scores.push({ token: token.symbol, sc, bars });
+    scores.push({ token: token.symbol, sc, hist });
+    if (hist) {
+      console.log(`  📊 ${token.symbol} backtest (${hist.days}d): ${hist.totalTrades} trades | WR=${hist.winRate}% | ret=${hist.totalRetPct}% | sharpe=${hist.sharpe}`);
+    }
   }
 
   // Print signal table
@@ -492,9 +634,12 @@ async function runCycle(cycleNum) {
   if (hotBull.length) console.log(`\n🔥 HIGH CONVICTION BULLISH: ${hotBull.map(s => `${s.token}(${s.sc.conviction})`).join(', ')}`);
   if (hotBear.length) console.log(`🔥 HIGH CONVICTION BEARISH: ${hotBear.map(s => `${s.token}(${s.sc.conviction})`).join(', ')}`);
 
-  // Trade execution for very high conviction (>= 8)
+  // Trade execution for very high conviction (>= 8) AND HTF aligned
   for (const { token, sc } of scores) {
-    if (sc.conviction >= 8) await maybeTrade(token, sc, cycleNum);
+    const htfOk = sc.signals.includes('HTF_BULL') || TOKENS.find(t => t.symbol === token)?.source === 'gecko';
+    if (sc.conviction >= 8 && sc.bias === 'BULLISH' && htfOk) {
+      await maybeTrade(token, sc, cycleNum);
+    }
   }
 
   // Bankr context every ~4 cycles (~1h)
