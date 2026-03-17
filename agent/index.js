@@ -15,6 +15,8 @@ const venice = require('./venice');
 const bankr  = require('./bankr');
 const signals = require('./signals');
 const log    = require('./log');
+const { STATES, transition, getState, checkCircuitBreaker } = require('./state');
+const { kellySize, correlationAdjust, calibrateFromLog } = require('./kelly');
 
 const DRY_RUN = process.argv.includes('--dry');
 const LOOP    = process.argv.includes('--loop');
@@ -26,6 +28,17 @@ async function runCycle() {
   console.log('\n═══════════════════════════════════════');
   console.log(`[delu] Cycle start: ${new Date().toISOString()}`);
   console.log('═══════════════════════════════════════\n');
+
+  // 0. Circuit breaker check
+  const breaker = checkCircuitBreaker(ACTIVE_TRANCHE_USD);
+  if (breaker.halted) {
+    console.error('[delu] CIRCUIT BREAKER ACTIVE:', breaker.reason);
+    console.error('[delu] Skipping cycle. Fix the issue, then call resetCircuitBreaker()');
+    return;
+  }
+
+  const agentState = getState();
+  console.log(`[state] Current state: ${agentState.current} | Session P&L: $${agentState.session_pnl.toFixed(2)}`);
 
   // 1. Gather signals
   let market;
@@ -63,15 +76,34 @@ async function runCycle() {
   // 3. Skip if low confidence or hold
   if (decision.confidence < 65 || decision.action === 'hold') {
     console.log(`[delu] Skipping — confidence ${decision.confidence}% < 65% or hold`);
+    if (agentState.current === STATES.SCANNING) {
+      // stay scanning
+    } else {
+      transition(agentState.current, STATES.SCANNING, 'low confidence, returning to scan');
+    }
     log.record(market, decision, { skipped: true, reason: `confidence ${decision.confidence}%` });
     return;
+  }
+
+  // Kelly sizing
+  const kellyResult = kellySize(decision.confidence, ACTIVE_TRANCHE_USD);
+  const corrResult = correlationAdjust([], decision.asset, kellyResult.sizeUsd);
+  const finalSizeUsd = corrResult.adjustedSize;
+
+  console.log(`[kelly] Size: $${finalSizeUsd} (${kellyResult.sizePct}% Kelly, ${corrResult.adjustment}x corr)`);
+
+  // State machine: SCANNING → SIGNAL_DETECTED → CONFIRMING → ENTERING
+  if (agentState.current === STATES.SCANNING) {
+    transition(STATES.SCANNING, STATES.SIGNAL_DETECTED, `${decision.asset} @ ${decision.confidence}%`);
+    transition(STATES.SIGNAL_DETECTED, STATES.CONFIRMING, 'Venice confirms signal');
+    transition(STATES.CONFIRMING, STATES.ENTERING, `size $${finalSizeUsd}`);
   }
 
   // 4. Execute via Bankr
   let execution;
   if (DRY_RUN) {
-    console.log(`[delu] DRY RUN — would execute: "${decision.action} ${decision.asset}"`);
-    execution = { dry_run: true, would_execute: decision.action };
+    console.log(`[delu] DRY RUN — would execute: "${decision.action} ${decision.asset}" for $${finalSizeUsd}`);
+    execution = { dry_run: true, would_execute: decision.action, size_usd: finalSizeUsd };
   } else {
     try {
       console.log('\n[bankr] Executing...');
