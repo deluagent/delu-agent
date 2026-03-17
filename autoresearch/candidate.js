@@ -64,7 +64,7 @@ function zScore(prices, window = 20) {
   return std === 0? 0 : (prices[n - 1] - mean) / std;
 }
 
-// ── Score function ────────────────────────────────────────────
+// ── Score function ─────────────────────────────────────────���──
 
 function scoreToken(data) {
   const { prices, btcPrices = [], flowSignal = 0, attentionDelta = 0 } = data;
@@ -99,6 +99,11 @@ function scoreToken(data) {
   const trend    = 0.20 * ema;
   const flow     = 0.15 * flowSignal;
   const attn     = 0.05 * attentionDelta;
+
+  // Introduce a trend strength filter to avoid choppy/flat periods
+  const trendStrength = Math.abs(ema);
+  const trendStrengthThreshold = 0.05;
+  if (trendStrength < trendStrengthThreshold) return 0;
 
   return momentum + trend + flow + attn + meanRev + volPenalty;
 }
