@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "n": 1,
+    "valSharpe": -0.3554,
+    "isSharpe": 1.0494,
+    "accepted": true,
+    "description": "experiment 1",
+    "ts": 1773751882978
+  }
+]

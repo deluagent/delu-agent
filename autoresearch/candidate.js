@@ -17,7 +17,7 @@ function pctChange(prices, lookback) {
   const n = prices.length;
   if (n <= lookback) return 0;
   const prev = prices[n - 1 - lookback];
-  return prev === 0 ? 0 : (prices[n - 1] - prev) / prev;
+  return prev === 0? 0 : (prices[n - 1] - prev) / prev;
 }
 
 function realizedVol(prices, window = 14) {
@@ -52,7 +52,7 @@ function emaGap(prices, fast = 12, slow = 26) {
   const slice = prices.slice(Math.max(0, n - slow * 3));
   const f = emaVal(slice, fast);
   const s = emaVal(slice, slow);
-  return s === 0 ? 0 : (f - s) / s;
+  return s === 0? 0 : (f - s) / s;
 }
 
 function zScore(prices, window = 20) {
@@ -61,7 +61,7 @@ function zScore(prices, window = 20) {
   const slice = prices.slice(n - window);
   const mean = slice.reduce((s, p) => s + p, 0) / window;
   const std = Math.sqrt(slice.reduce((s, p) => s + (p - mean) ** 2, 0) / window);
-  return std === 0 ? 0 : (prices[n - 1] - mean) / std;
+  return std === 0? 0 : (prices[n - 1] - mean) / std;
 }
 
 // ── Score function ────────────────────────────────────────────
@@ -88,14 +88,14 @@ function scoreToken(data) {
 
   // ── Mean reversion ──
   const z = zScore(prices, 20);
-  const meanRev = z < -2.0 ? 0.1 : (z > 2.5 ? -0.1 : 0);
+  const meanRev = z < -2.0? 0.1 : (z > 2.5? -0.1 : 0);
 
   // ── Volatility penalty ──
   const vol = realizedVol(prices, 14);
   const volPenalty = -0.15 * Math.max(vol - 0.6, 0);
 
-  // ── Weighted composite ──
-  const momentum = 0.35 * r7 + 0.35 * r20 + 0.20 * r60;
+  // ── Vol-adjusted momentum ──
+  const momentum = 0.35 * r7 / (1 + vol) + 0.35 * r20 / (1 + vol) + 0.20 * r60 / (1 + vol);
   const trend    = 0.20 * ema;
   const flow     = 0.15 * flowSignal;
   const attn     = 0.05 * attentionDelta;
