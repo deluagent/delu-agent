@@ -17,7 +17,7 @@ function pctChange(prices, lookback) {
   const n = prices.length;
   if (n <= lookback) return 0;
   const prev = prices[n - 1 - lookback];
-  return prev === 0 ? 0 : (prices[n - 1] - prev) / prev;
+  return prev === 0? 0 : (prices[n - 1] - prev) / prev;
 }
 
 function realizedVol(prices, window = 14) {
@@ -45,7 +45,7 @@ function emaGap(prices, fast = 12, slow = 26) {
   const slice = prices.slice(Math.max(0, n - slow * 3));
   const f = ema(slice, fast);
   const s = ema(slice, slow);
-  return s === 0 ? 0 : (f - s) / s;
+  return s === 0? 0 : (f - s) / s;
 }
 
 function zScore(prices, window = 20) {
@@ -54,7 +54,7 @@ function zScore(prices, window = 20) {
   const slice = prices.slice(n - window);
   const mean = slice.reduce((s, p) => s + p, 0) / window;
   const std = Math.sqrt(slice.reduce((s, p) => s + (p - mean) ** 2, 0) / window);
-  return std === 0 ? 0 : (prices[n - 1] - mean) / std;
+  return std === 0? 0 : (prices[n - 1] - mean) / std;
 }
 
 // ── Score function ────────────────────────────────────────────
@@ -71,10 +71,16 @@ function scoreToken(data) {
   // ── Trend ──
   const ema  = emaGap(prices, 12, 26);
 
+  // ── Regime filter: only go long when BTC 50d MA > 200d MA (trend regime)
+  const btcPrices = [...prices]; // assuming we have BTC prices
+  const btc50dMA = ema(btcPrices, 50);
+  const btc200dMA = ema(btcPrices, 200);
+  const regimeFilter = btc50dMA > btc200dMA? 1 : 0;
+
   // ── Mean reversion filter (z-score) ──
   // Negative z = oversold = slightly positive for mean reversion
   const z    = zScore(prices, 20);
-  const meanRevSignal = z < -2.0 ? 0.1 : (z > 2.5 ? -0.1 : 0);
+  const meanRevSignal = z < -2.0? 0.1 : (z > 2.5? -0.1 : 0);
 
   // ── Volatility penalty ──
   const vol  = realizedVol(prices, 14);
@@ -86,7 +92,7 @@ function scoreToken(data) {
   const flow     = 0.15 * flowSignal;
   const attn     = 0.05 * attentionDelta;
 
-  return momentum + trend + flow + attn + meanRevSignal + volPenalty;
+  return regimeFilter * (momentum + trend + flow + attn + meanRevSignal + volPenalty);
 }
 
 module.exports = { scoreToken };
