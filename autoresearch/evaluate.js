@@ -57,13 +57,16 @@ function simulatePeriod(history, scoreToken, startBar, endBar) {
 
   for (let day = startBar; day < endBar - 1; day++) {
     // Score each token using prices up to and including day (no lookahead)
+    // Also pass BTC prices for regime detection
+    const btcBars  = history['BTC'] || [];
+    const btcPrices = btcBars.slice(0, day + 1).map(b => b.close);
     const scores = {};
     for (const sym of symbols) {
       const bars   = history[sym];
       if (!bars || bars.length <= day + 1) continue;
       const prices = bars.slice(0, day + 1).map(b => b.close);
       try {
-        scores[sym] = scoreToken({ prices, flowSignal: 0, attentionDelta: 0 });
+        scores[sym] = scoreToken({ prices, btcPrices, flowSignal: 0, attentionDelta: 0 });
       } catch (e) {
         scores[sym] = 0;
       }

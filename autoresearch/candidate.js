@@ -3,9 +3,9 @@
  *
  * Rules (enforced by evaluate.js):
  *  - Must export scoreToken(data) → number
- *  - data = { prices, flowSignal, attentionDelta, vol }
+ *  - data = { prices, btcPrices, flowSignal, attentionDelta }
+ *  - prices / btcPrices: float[] of daily closes, oldest first
  *  - Pure function — no I/O, no randomness, no external state
- *  - Lower vol → higher weight (vol-adjust internally if needed)
  *
  * The evaluator measures validation Sharpe on held-out data.
  * Improve it. Every committed version is tracked in git history.
@@ -17,7 +17,7 @@ function pctChange(prices, lookback) {
   const n = prices.length;
   if (n <= lookback) return 0;
   const prev = prices[n - 1 - lookback];
-  return prev === 0? 0 : (prices[n - 1] - prev) / prev;
+  return prev === 0 ? 0 : (prices[n - 1] - prev) / prev;
 }
 
 function realizedVol(prices, window = 14) {
@@ -33,19 +33,26 @@ function realizedVol(prices, window = 14) {
   return Math.sqrt(variance * 252);
 }
 
+function sma(prices, period) {
+  const n = prices.length;
+  if (n < period) return prices[n - 1] || 0;
+  return prices.slice(n - period).reduce((s, p) => s + p, 0) / period;
+}
+
+function emaVal(prices, period) {
+  const k = 2 / (period + 1);
+  let e = prices[0];
+  for (let i = 1; i < prices.length; i++) e = prices[i] * k + e * (1 - k);
+  return e;
+}
+
 function emaGap(prices, fast = 12, slow = 26) {
-  function ema(arr, period) {
-    const k = 2 / (period + 1);
-    let e = arr[0];
-    for (let i = 1; i < arr.length; i++) e = arr[i] * k + e * (1 - k);
-    return e;
-  }
   const n = prices.length;
   if (n < slow) return 0;
   const slice = prices.slice(Math.max(0, n - slow * 3));
-  const f = ema(slice, fast);
-  const s = ema(slice, slow);
-  return s === 0? 0 : (f - s) / s;
+  const f = emaVal(slice, fast);
+  const s = emaVal(slice, slow);
+  return s === 0 ? 0 : (f - s) / s;
 }
 
 function zScore(prices, window = 20) {
@@ -54,36 +61,37 @@ function zScore(prices, window = 20) {
   const slice = prices.slice(n - window);
   const mean = slice.reduce((s, p) => s + p, 0) / window;
   const std = Math.sqrt(slice.reduce((s, p) => s + (p - mean) ** 2, 0) / window);
-  return std === 0? 0 : (prices[n - 1] - mean) / std;
+  return std === 0 ? 0 : (prices[n - 1] - mean) / std;
 }
 
 // ── Score function ────────────────────────────────────────────
-// This is what the agent optimizes.
 
 function scoreToken(data) {
-  const { prices, flowSignal = 0, attentionDelta = 0 } = data;
+  const { prices, btcPrices = [], flowSignal = 0, attentionDelta = 0 } = data;
 
-  // ── Momentum signals (multi-timeframe) ──
-  const r7   = pctChange(prices, 7);
-  const r20  = pctChange(prices, 20);
-  const r60  = pctChange(prices, 60);
+  // ── Regime filter: only trade when BTC is in uptrend (50d > 200d MA) ──
+  let regimeOk = true;
+  if (btcPrices.length >= 200) {
+    const btc50  = sma(btcPrices, 50);
+    const btc200 = sma(btcPrices, 200);
+    regimeOk = btc50 > btc200;
+  }
+  if (!regimeOk) return 0;
+
+  // ── Momentum (multi-timeframe) ──
+  const r7  = pctChange(prices, 7);
+  const r20 = pctChange(prices, 20);
+  const r60 = pctChange(prices, 60);
 
   // ── Trend ──
-  const ema  = emaGap(prices, 12, 26);
+  const ema = emaGap(prices, 12, 26);
 
-  // ── Regime filter: only go long when BTC 50d MA > 200d MA (trend regime)
-  const btcPrices = [...prices]; // assuming we have BTC prices
-  const btc50dMA = ema(btcPrices, 50);
-  const btc200dMA = ema(btcPrices, 200);
-  const regimeFilter = btc50dMA > btc200dMA? 1 : 0;
-
-  // ── Mean reversion filter (z-score) ──
-  // Negative z = oversold = slightly positive for mean reversion
-  const z    = zScore(prices, 20);
-  const meanRevSignal = z < -2.0? 0.1 : (z > 2.5? -0.1 : 0);
+  // ── Mean reversion ──
+  const z = zScore(prices, 20);
+  const meanRev = z < -2.0 ? 0.1 : (z > 2.5 ? -0.1 : 0);
 
   // ── Volatility penalty ──
-  const vol  = realizedVol(prices, 14);
+  const vol = realizedVol(prices, 14);
   const volPenalty = -0.15 * Math.max(vol - 0.6, 0);
 
   // ── Weighted composite ──
@@ -92,7 +100,7 @@ function scoreToken(data) {
   const flow     = 0.15 * flowSignal;
   const attn     = 0.05 * attentionDelta;
 
-  return regimeFilter * (momentum + trend + flow + attn + meanRevSignal + volPenalty);
+  return momentum + trend + flow + attn + meanRev + volPenalty;
 }
 
 module.exports = { scoreToken };

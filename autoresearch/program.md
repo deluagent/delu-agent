@@ -40,21 +40,29 @@ to the in-sample period. The goal is to fix this.
 
 ```javascript
 scoreToken({
-  prices: float[],      // daily close prices, oldest first, length varies by day
-  flowSignal: float,    // DexScreener (buys-sells)/(buys+sells) [-1, +1]; 0 if unavailable in backtest
-  attentionDelta: float // Checkr mindshare delta; 0 if unavailable in backtest
+  prices:         float[],  // token's daily close prices, oldest first
+  btcPrices:      float[],  // BTC daily close prices (same length) — use for regime detection
+  flowSignal:     float,    // DexScreener buy/sell ratio [-1, +1]; 0 in backtest
+  attentionDelta: float,    // Checkr mindshare delta; 0 in backtest
 })
-// → returns a number. Higher = stronger long signal.
+// → returns a number. Higher = stronger long signal. Return 0 to skip token.
 ```
+
+**CRITICAL**: Do NOT call `ema()` directly — it's a nested helper inside `emaGap()`.
+Use `emaVal(prices, period)` for a standalone EMA value.
+Use `sma(prices, period)` for simple moving average.
+All helpers are at module scope in candidate.js.
 
 ## Available helpers (already in candidate.js)
 
-- `pctChange(prices, lookback)` — % change over N bars
-- `realizedVol(prices, window)` — annualized realized vol
-- `emaGap(prices, fast, slow)` — (ema_fast - ema_slow) / ema_slow
-- `zScore(prices, window)` — (price - mean) / std over window
+- `pctChange(prices, lookback)` — % return over N bars
+- `realizedVol(prices, window)` — annualized realized vol (returns ~0.3–1.5 for crypto)
+- `sma(prices, period)` — simple moving average of last N bars
+- `emaVal(prices, period)` — exponential moving average (standalone, use this not ema())
+- `emaGap(prices, fast, slow)` — (ema_fast - ema_slow) / ema_slow — trend signal
+- `zScore(prices, window)` — (price - mean(window)) / std(window) — mean reversion signal
 
-You can add new helpers freely.
+You can add new helpers freely. Keep them pure (no I/O).
 
 ## Hypotheses to test (pick one per experiment)
 
