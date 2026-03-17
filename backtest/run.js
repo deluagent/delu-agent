@@ -315,11 +315,11 @@ function findPatterns(allResults) {
   const patterns = [];
 
   // Which indicators have highest win rate?
-  const withEmaCross = allResults.flatMap(r => r.trades.filter(t => t.hasEmaCross));
-  const withOBVDiv = allResults.flatMap(r => r.trades.filter(t => t.hasOBVDiv));
+  const withEmaCross = allResults.flatMap(r => (r.trades || []).filter(t => t.hasEmaCross));
+  const withOBVDiv = allResults.flatMap(r => (r.trades || []).filter(t => t.hasOBVDiv));
 
   // Best performing tokens
-  const byToken = allResults.map(r => ({
+  const byToken = allResults.filter(r => r && r.stats).map(r => ({
     token: r.token,
     winRate: r.stats.winRate,
     totalReturn: r.stats.totalReturnPct,

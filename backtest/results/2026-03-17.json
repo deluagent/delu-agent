@@ -1,0 +1,381 @@
+{
+  "run_at": "2026-03-17T07:34:45.113Z",
+  "summary": [
+    {
+      "token": "ETH",
+      "stats": {
+        "totalTrades": 3,
+        "winRate": 100,
+        "totalReturnPct": 5.88,
+        "avgWinPct": 9.65,
+        "avgLossPct": 0,
+        "maxDrawdownPct": 0,
+        "sharpe": 26.59,
+        "avgHoldHours": 96,
+        "kellyFraction": null
+      },
+      "signals": 21
+    },
+    {
+      "token": "BTC",
+      "stats": {
+        "totalTrades": 2,
+        "winRate": 100,
+        "totalReturnPct": 1.46,
+        "avgWinPct": 3.64,
+        "avgLossPct": 0,
+        "maxDrawdownPct": 0,
+        "sharpe": null,
+        "avgHoldHours": 118,
+        "kellyFraction": null
+      },
+      "signals": 15
+    },
+    {
+      "token": "BRETT",
+      "stats": {
+        "totalTrades": 6,
+        "winRate": 67,
+        "totalReturnPct": 1.9,
+        "avgWinPct": 3.73,
+        "avgLossPct": -2.72,
+        "maxDrawdownPct": 0.56,
+        "sharpe": 6.6,
+        "avgHoldHours": 56,
+        "kellyFraction": 42.4
+      },
+      "signals": 16
+    },
+    {
+      "token": "DEGEN",
+      "stats": {
+        "totalTrades": 2,
+        "winRate": 100,
+        "totalReturnPct": 3.24,
+        "avgWinPct": 8.03,
+        "avgLossPct": 0,
+        "maxDrawdownPct": 0,
+        "sharpe": null,
+        "avgHoldHours": 136,
+        "kellyFraction": null
+      },
+      "signals": 21
+    },
+    {
+      "token": "TOSHI",
+      "error": "HTTP 429 for toshi"
+    },
+    {
+      "token": "AERO",
+      "error": "HTTP 429 for aerodrome-finance"
+    },
+    {
+      "token": "BNKR",
+      "error": "HTTP 429 for bankr-bot"
+    }
+  ],
+  "full": [
+    {
+      "token": "ETH",
+      "bars": 180,
+      "signals": 21,
+      "trades": [
+        {
+          "entryTime": "2026-02-19T16:00:00.000Z",
+          "exitTime": "2026-02-22T16:00:00.000Z",
+          "entryPrice": 1920.51,
+          "exitPrice": 1954.91,
+          "pnl": 0.0358,
+          "returnPct": 1.79,
+          "win": true,
+          "holdHours": 72
+        },
+        {
+          "entryTime": "2026-02-24T00:00:00.000Z",
+          "exitTime": "2026-02-25T20:00:00.000Z",
+          "entryPrice": 1853.7,
+          "exitPrice": 2071.03,
+          "pnl": 0.2353,
+          "returnPct": 11.72,
+          "win": true,
+          "holdHours": 44
+        },
+        {
+          "entryTime": "2026-03-09T00:00:00.000Z",
+          "exitTime": "2026-03-16T04:00:00.000Z",
+          "entryPrice": 1938.62,
+          "exitPrice": 2237.7,
+          "pnl": 0.3169,
+          "returnPct": 15.43,
+          "win": true,
+          "holdHours": 172
+        }
+      ],
+      "stats": {
+        "totalTrades": 3,
+        "winRate": 100,
+        "totalReturnPct": 5.88,
+        "avgWinPct": 9.65,
+        "avgLossPct": 0,
+        "maxDrawdownPct": 0,
+        "sharpe": 26.59,
+        "avgHoldHours": 96,
+        "kellyFraction": null
+      },
+      "equity": [
+        {
+          "time": "2026-02-22T16:00:00.000Z",
+          "value": 10.035823817631774
+        },
+        {
+          "time": "2026-02-24T00:00:00.000Z",
+          "value": 10.035823817631774
+        },
+        {
+          "time": "2026-02-25T20:00:00.000Z",
+          "value": 10.271146209635434
+        },
+        {
+          "time": "2026-03-09T00:00:00.000Z",
+          "value": 10.271146209635434
+        },
+        {
+          "time": "2026-03-16T04:00:00.000Z",
+          "value": 10.58806178962303
+        }
+      ]
+    },
+    {
+      "token": "BTC",
+      "bars": 180,
+      "signals": 15,
+      "trades": [
+        {
+          "entryTime": "2026-02-24T00:00:00.000Z",
+          "exitTime": "2026-02-27T20:00:00.000Z",
+          "entryPrice": 64578,
+          "exitPrice": 65400,
+          "pnl": 0.0255,
+          "returnPct": 1.27,
+          "win": true,
+          "holdHours": 92
+        },
+        {
+          "entryTime": "2026-03-10T04:00:00.000Z",
+          "exitTime": "2026-03-16T04:00:00.000Z",
+          "entryPrice": 69489,
+          "exitPrice": 73658,
+          "pnl": 0.1203,
+          "returnPct": 6,
+          "win": true,
+          "holdHours": 144
+        }
+      ],
+      "stats": {
+        "totalTrades": 2,
+        "winRate": 100,
+        "totalReturnPct": 1.46,
+        "avgWinPct": 3.64,
+        "avgLossPct": 0,
+        "maxDrawdownPct": 0,
+        "sharpe": null,
+        "avgHoldHours": 118,
+        "kellyFraction": null
+      },
+      "equity": [
+        {
+          "time": "2026-02-15T08:00:00.000Z",
+          "value": 10
+        },
+        {
+          "time": "2026-02-24T00:00:00.000Z",
+          "value": 10
+        },
+        {
+          "time": "2026-02-27T20:00:00.000Z",
+          "value": 10.02545758617486
+        },
+        {
+          "time": "2026-03-10T04:00:00.000Z",
+          "value": 10.02545758617486
+        },
+        {
+          "time": "2026-03-16T04:00:00.000Z",
+          "value": 10.145753266575392
+        }
+      ]
+    },
+    {
+      "token": "BRETT",
+      "bars": 180,
+      "signals": 16,
+      "trades": [
+        {
+          "entryTime": "2026-02-20T00:00:00.000Z",
+          "exitTime": "2026-02-22T00:00:00.000Z",
+          "entryPrice": 0.00729719,
+          "exitPrice": 0.00748351,
+          "pnl": 0.0511,
+          "returnPct": 2.55,
+          "win": true,
+          "holdHours": 48
+        },
+        {
+          "entryTime": "2026-02-23T12:00:00.000Z",
+          "exitTime": "2026-02-27T16:00:00.000Z",
+          "entryPrice": 0.00700134,
+          "exitPrice": 0.00708721,
+          "pnl": 0.0247,
+          "returnPct": 1.23,
+          "win": true,
+          "holdHours": 100
+        },
+        {
+          "entryTime": "2026-03-02T20:00:00.000Z",
+          "exitTime": "2026-03-06T20:00:00.000Z",
+          "entryPrice": 0.00736335,
+          "exitPrice": 0.00715807,
+          "pnl": -0.0562,
+          "returnPct": -2.79,
+          "win": false,
+          "holdHours": 96
+        },
+        {
+          "entryTime": "2026-03-08T16:00:00.000Z",
+          "exitTime": "2026-03-11T04:00:00.000Z",
+          "entryPrice": 0.00688091,
+          "exitPrice": 0.00706522,
+          "pnl": 0.0537,
+          "returnPct": 2.68,
+          "win": true,
+          "holdHours": 60
+        },
+        {
+          "entryTime": "2026-03-11T20:00:00.000Z",
+          "exitTime": "2026-03-12T04:00:00.000Z",
+          "entryPrice": 0.00723605,
+          "exitPrice": 0.00704453,
+          "pnl": -0.0533,
+          "returnPct": -2.65,
+          "win": false,
+          "holdHours": 8
+        },
+        {
+          "entryTime": "2026-03-12T12:00:00.000Z",
+          "exitTime": "2026-03-13T12:00:00.000Z",
+          "entryPrice": 0.00726858,
+          "exitPrice": 0.00788444,
+          "pnl": 0.1698,
+          "returnPct": 8.47,
+          "win": true,
+          "holdHours": 24
+        }
+      ],
+      "stats": {
+        "totalTrades": 6,
+        "winRate": 67,
+        "totalReturnPct": 1.9,
+        "avgWinPct": 3.73,
+        "avgLossPct": -2.72,
+        "maxDrawdownPct": 0.56,
+        "sharpe": 6.6,
+        "avgHoldHours": 56,
+        "kellyFraction": 42.4
+      },
+      "equity": [
+        {
+          "time": "2026-03-11T04:00:00.000Z",
+          "value": 10.073217745914837
+        },
+        {
+          "time": "2026-03-11T20:00:00.000Z",
+          "value": 10.073217745914837
+        },
+        {
+          "time": "2026-03-12T04:00:00.000Z",
+          "value": 10.019895210479135
+        },
+        {
+          "time": "2026-03-12T12:00:00.000Z",
+          "value": 10.019895210479135
+        },
+        {
+          "time": "2026-03-13T12:00:00.000Z",
+          "value": 10.189690484503103
+        }
+      ]
+    },
+    {
+      "token": "DEGEN",
+      "bars": 180,
+      "signals": 21,
+      "trades": [
+        {
+          "entryTime": "2026-02-19T20:00:00.000Z",
+          "exitTime": "2026-02-27T16:00:00.000Z",
+          "entryPrice": 0.00067677,
+          "exitPrice": 0.00072771,
+          "pnl": 0.1505,
+          "returnPct": 7.53,
+          "win": true,
+          "holdHours": 188
+        },
+        {
+          "entryTime": "2026-03-10T00:00:00.000Z",
+          "exitTime": "2026-03-13T12:00:00.000Z",
+          "entryPrice": 0.00069988,
+          "exitPrice": 0.00075959,
+          "pnl": 0.1732,
+          "returnPct": 8.53,
+          "win": true,
+          "holdHours": 84
+        }
+      ],
+      "stats": {
+        "totalTrades": 2,
+        "winRate": 100,
+        "totalReturnPct": 3.24,
+        "avgWinPct": 8.03,
+        "avgLossPct": 0,
+        "maxDrawdownPct": 0,
+        "sharpe": null,
+        "avgHoldHours": 136,
+        "kellyFraction": null
+      },
+      "equity": [
+        {
+          "time": "2026-02-15T08:00:00.000Z",
+          "value": 10
+        },
+        {
+          "time": "2026-02-19T20:00:00.000Z",
+          "value": 10
+        },
+        {
+          "time": "2026-02-27T16:00:00.000Z",
+          "value": 10.150538587703355
+        },
+        {
+          "time": "2026-03-10T00:00:00.000Z",
+          "value": 10.150538587703355
+        },
+        {
+          "time": "2026-03-13T12:00:00.000Z",
+          "value": 10.323736467074609
+        }
+      ]
+    },
+    {
+      "token": "TOSHI",
+      "error": "HTTP 429 for toshi"
+    },
+    {
+      "token": "AERO",
+      "error": "HTTP 429 for aerodrome-finance"
+    },
+    {
+      "token": "BNKR",
+      "error": "HTTP 429 for bankr-bot"
+    }
+  ]
+}
