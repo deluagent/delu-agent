@@ -15,8 +15,9 @@
 require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const fs   = require('fs');
 const path = require('path');
-const f    = require('./fetch');
+const f     = require('./fetch');
 const alpha = require('../agent/alpha');
+const flows = require('../agent/flows');
 
 const DATA_DIR       = path.join(__dirname, '../data');
 const LEARNINGS_FILE = path.join(DATA_DIR, 'learnings.json');
@@ -256,6 +257,15 @@ async function runCycle(cycleNum) {
     console.log(`🔥 Trending: ${trendNames}`);
   } catch(e) { }
 
+  // ── 2b. DexScreener flow data ────────────────────────────────
+  let flowData = {};
+  try {
+    flowData = await flows.getAllFlows();
+    const accum = Object.entries(flowData).filter(([,f]) => f.accumulating).map(([s]) => s);
+    const dist  = Object.entries(flowData).filter(([,f]) => f.distributing).map(([s]) => s);
+    console.log(`💰 Flow — Accumulating: ${accum.join(', ') || 'none'} | Distributing: ${dist.join(', ') || 'none'}`);
+  } catch(e) { console.warn('[flows]', e.message); }
+
   // ── 3. Load all token data ──────────────────────────────────
   const allTokenData = [];
 
@@ -270,6 +280,7 @@ async function runCycle(cycleNum) {
     if (majorBars[i].status === 'rejected') { console.warn(`  ${t.symbol}: ${majorBars[i].reason.message}`); continue; }
     const bars = majorBars[i].value;
     if (!bars || bars.length < 30) continue;
+    const flow = flowData[t.symbol];
     allTokenData.push({
       symbol:         t.symbol,
       prices:         bars.map(b => b.close),
@@ -277,8 +288,9 @@ async function runCycle(cycleNum) {
       avgVolume:      bars.slice(-20).reduce((s,b) => s+b.volume, 0) / 20,
       attentionDelta: trendingMap[t.symbol] || 0,
       attentionAccel: 0,
-      walletInflow:   0,
-      engagementRate: 0,
+      walletInflow:   flow ? flows.walletInflowFactor(flow) : 0,
+      engagementRate: flow ? flows.liquidityScore(flow) : 0,
+      flow,
     });
   }
 
@@ -289,6 +301,7 @@ async function runCycle(cycleNum) {
     try {
       const bars = await f.fetchGeckoTerminal(t.symbol);
       if (!bars || bars.length < 15) { console.log(`  ${t.symbol}: insufficient bars`); continue; }
+      const flow = flowData[t.symbol];
       allTokenData.push({
         symbol:         t.symbol,
         prices:         bars.map(b => b.close),
@@ -296,8 +309,9 @@ async function runCycle(cycleNum) {
         avgVolume:      bars.slice(-20).reduce((s,b) => s+b.volume, 0) / Math.min(bars.length, 20),
         attentionDelta: trendingMap[t.symbol] || 0,
         attentionAccel: 0,
-        walletInflow:   0,
-        engagementRate: 0,
+        walletInflow:   flow ? flows.walletInflowFactor(flow) : 0,
+        engagementRate: flow ? flows.liquidityScore(flow) : 0,
+        flow,
       });
       console.log(`  ✅ ${t.symbol}: ${bars.length} bars`);
     } catch(e) { console.log(`  ⚠️  ${t.symbol}: ${e.message.slice(0,60)}`); }
@@ -325,22 +339,29 @@ async function runCycle(cycleNum) {
   const portfolio = alpha.constructPortfolio(alphaResults, 5, 0.20);
 
   // ── 7. Print alpha table ─────────────────────────────────────
-  console.log('\n Symbol   │ Price        │  r7d%  │  r20%  │  Vol  │ Alpha(raw) │ Alpha(vol) │ Regime signal');
-  console.log(' ─────────┼──────────────┼────────┼────────┼───────┼────────────┼────────────┼────────────────');
+  console.log('\n Symbol   │ Price        │  r7d%  │  r20%  │ Flow24h │ Strategy2 │ Alpha(vol) │ Signal');
+  console.log(' ─────────┼──────────────┼────────┼────────┼─────────┼───────────┼────────────┼──────────');
   for (const r of alphaResults.sort((a, b) => b.volAdjusted - a.volAdjusted)) {
+    const td    = allTokenData.find(t => t.symbol === r.symbol);
+    const flow  = td?.flow;
     const p     = r.prices.at(-1);
     const r7d   = alpha.returns(r.prices, 7);
     const r20   = alpha.returns(r.prices, 20);
     const tag   = r.volAdjusted > 0.02 ? '🟢' : r.volAdjusted < -0.02 ? '🔴' : '⚪';
-    const s4    = r.strategies.s4?.signal !== 'WAIT' ? ` s4:${r.strategies.s4?.signal}` : '';
-    const price = p < 0.001 ? p.toExponential(2) : p < 1 ? p.toFixed(5) : p.toFixed(2);
+    const flowStr = flow
+      ? (flow.netBuyPct >= 0 ? '+' : '') + (flow.netBuyPct * 100).toFixed(0) + '%'
+      : '  --  ';
+    const flowTag = flow?.accumulating ? '🟢' : flow?.distributing ? '🔴' : '⚪';
+    const s2score = r.strategies.s2?.score || 0;
+    const price   = p < 0.001 ? p.toExponential(2) : p < 1 ? p.toFixed(5) : p.toFixed(2);
+    const s4note  = r.strategies.s4?.signal === 'LONG' ? ' ⚡REV' : '';
     console.log(
       ` ${tag}${r.symbol.padEnd(7)}│ ${('$'+price).padStart(12)} │`+
       `${(r7d!==null?(r7d*100>0?'+':'')+( r7d*100).toFixed(1)+'%':'  --  ').padStart(7)} │`+
       `${(r20!==null?(r20*100>0?'+':'')+( r20*100).toFixed(1)+'%':'  --  ').padStart(7)} │`+
-      `${(r.vol*100).toFixed(0).padStart(5)}% │`+
-      `${r.finalAlpha.toFixed(4).padStart(11)} │`+
-      `${r.volAdjusted.toFixed(4).padStart(11)} │ ${s4}`
+      ` ${flowTag}${flowStr.padStart(6)}  │`+
+      `${s2score.toFixed(4).padStart(10)} │`+
+      `${r.volAdjusted.toFixed(4).padStart(11)} │${s4note}`
     );
   }
 
