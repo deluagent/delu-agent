@@ -50,7 +50,19 @@ const BASE_TOKENS = [
   { symbol: 'ODAI',    pool: '0xbf0f716999378af289863d0c7eb961793993a641a0a943ccc6bb45cb5713b3fb' },
 ];
 
-const TRADEABLE = new Set(['ETH', 'SOL', 'LINK', 'AAVE', 'VIRTUAL', 'BRETT', 'DEGEN', 'AERO']);
+const TRADEABLE = new Set(['ETH', 'SOL', 'LINK', 'AAVE', 'VIRTUAL', 'BRETT', 'DEGEN', 'AERO', 'ODAI', 'JUNO', 'CLAWD', 'FELIX']);
+
+// Token contract addresses for Bankr swaps (Base mainnet)
+const TOKEN_ADDR = {
+  ODAI:    '0x0086cFF0c1E5D17b19F5bCd4c8840a5B4251D959',
+  JUNO:    '0x4E6c9f48f73E54EE5F3AB7e2992B2d733D0d0b07',
+  CLAWD:   '0x9f86dB9fc6f7c9408e8Fda3Ff8ce4e78ac7a6b07',
+  FELIX:   '0xf30Bf00edd0C22db54C9274B90D2A4C21FC09b07',
+  VIRTUAL: '0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b',
+  BRETT:   '0x532f27101965dd16442E59d40670FaF5eBb142E4',
+  DEGEN:   '0x4ed4E862860bed51a9570b96d89af5e1B0Efefed',
+  AERO:    '0x940181a94A35A4569E4529A3CDfb74e38FD98631',
+};
 
 // ─── Data Loading ─────────────────────────────────────────────
 
@@ -209,7 +221,8 @@ async function executeTradeIfWarranted(portfolio, regime, db) {
   const SIZE_USD = 2;
   console.log(`\n💸 [exec] Executing: BUY ${top.symbol} | alpha=${top.alpha.toFixed(4)} | weight=${(top.weight*100).toFixed(1)}% | regime=${regime}`);
 
-  const resp = await askBankr(`swap $${SIZE_USD} USDC to ${top.symbol} on base`);
+  const tokenRef = TOKEN_ADDR[top.symbol] || top.symbol;
+  const resp = await askBankr(`swap $${SIZE_USD} USDC to ${tokenRef} on base`);
   if (!resp) { console.log('   Bankr unavailable'); return; }
   console.log('   ' + resp.slice(0, 200));
 
