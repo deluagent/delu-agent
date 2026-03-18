@@ -14,5 +14,13 @@
     "accepted": true,
     "description": "experiment 2",
     "ts": 1773752002395
+  },
+  {
+    "n": 3,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": true,
+    "description": "experiment 3",
+    "ts": 1773865661311
   }
 ]
