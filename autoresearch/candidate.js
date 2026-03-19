@@ -109,7 +109,11 @@ function scoreToken(data) {
   const smoothedScore = emaVal([momentum, trend, flow, attn, meanRev, volPenalty], 3);
   const rawScore = smoothedScore;
 
-  return rawScore;
+  // Introduce a regime-based weighting for the score
+  const regimeWeight = regimeOk? 1.2 : 0.8;
+  const weightedScore = rawScore * regimeWeight;
+
+  return weightedScore;
 }
 
 module.exports = { scoreToken };

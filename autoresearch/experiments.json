@@ -22,5 +22,773 @@
     "accepted": true,
     "description": "experiment 3",
     "ts": 1773865661311
+  },
+  {
+    "n": 4,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 4",
+    "ts": 1773865782130
+  },
+  {
+    "n": 5,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 5",
+    "ts": 1773865902088
+  },
+  {
+    "n": 6,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 6",
+    "ts": 1773866026147
+  },
+  {
+    "n": 7,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 7",
+    "ts": 1773866149168
+  },
+  {
+    "n": 8,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 8",
+    "ts": 1773866267837
+  },
+  {
+    "n": 9,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 9",
+    "ts": 1773866412819
+  },
+  {
+    "n": 10,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 10",
+    "ts": 1773866536793
+  },
+  {
+    "n": 11,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 11",
+    "ts": 1773866660245
+  },
+  {
+    "n": 12,
+    "valSharpe": 0,
+    "isSharpe": -0.9613,
+    "accepted": false,
+    "description": "experiment 12",
+    "ts": 1773866785893
+  },
+  {
+    "n": 13,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 13",
+    "ts": 1773866911510
+  },
+  {
+    "n": 14,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 14",
+    "ts": 1773867039505
+  },
+  {
+    "n": 15,
+    "valSharpe": 2.1852,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 15",
+    "ts": 1773867171087
+  },
+  {
+    "n": 16,
+    "valSharpe": 0,
+    "isSharpe": 1.6452,
+    "accepted": false,
+    "description": "experiment 16",
+    "ts": 1773867296974
+  },
+  {
+    "n": 17,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 17",
+    "ts": 1773867426771
+  },
+  {
+    "n": 18,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 18",
+    "ts": 1773867569611
+  },
+  {
+    "n": 19,
+    "valSharpe": 0,
+    "isSharpe": -1.0711,
+    "accepted": false,
+    "description": "experiment 19",
+    "ts": 1773867705754
+  },
+  {
+    "n": 20,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 20",
+    "ts": 1773867839648
+  },
+  {
+    "n": 21,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 21",
+    "ts": 1773867972302
+  },
+  {
+    "n": 22,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 22",
+    "ts": 1773868096908
+  },
+  {
+    "n": 23,
+    "valSharpe": 0,
+    "isSharpe": -0.9818,
+    "accepted": false,
+    "description": "experiment 23",
+    "ts": 1773868226281
+  },
+  {
+    "n": 24,
+    "valSharpe": 0,
+    "isSharpe": -0.961,
+    "accepted": false,
+    "description": "experiment 24",
+    "ts": 1773868355880
+  },
+  {
+    "n": 25,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 25",
+    "ts": 1773868484635
+  },
+  {
+    "n": 26,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 26",
+    "ts": 1773868614690
+  },
+  {
+    "n": 27,
+    "valSharpe": 2.3987,
+    "isSharpe": -1.2515,
+    "accepted": false,
+    "description": "experiment 27",
+    "ts": 1773868750479
+  },
+  {
+    "n": 28,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 28",
+    "ts": 1773868885432
+  },
+  {
+    "n": 29,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 29",
+    "ts": 1773869015190
+  },
+  {
+    "n": 30,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 30",
+    "ts": 1773869143574
+  },
+  {
+    "n": 31,
+    "valSharpe": 0,
+    "isSharpe": -1.3909,
+    "accepted": false,
+    "description": "experiment 31",
+    "ts": 1773869274683
+  },
+  {
+    "n": 32,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 32",
+    "ts": 1773869413056
+  },
+  {
+    "n": 33,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 33",
+    "ts": 1773869550207
+  },
+  {
+    "n": 34,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 34",
+    "ts": 1773869691657
+  },
+  {
+    "n": 35,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 35",
+    "ts": 1773869821128
+  },
+  {
+    "n": 36,
+    "valSharpe": 0,
+    "isSharpe": -1.5076,
+    "accepted": false,
+    "description": "experiment 36",
+    "ts": 1773869957449
+  },
+  {
+    "n": 37,
+    "valSharpe": 0,
+    "isSharpe": -0.5847,
+    "accepted": false,
+    "description": "experiment 37",
+    "ts": 1773870097093
+  },
+  {
+    "n": 38,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 38",
+    "ts": 1773870228603
+  },
+  {
+    "n": 39,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 39",
+    "ts": 1773870359963
+  },
+  {
+    "n": 40,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 40",
+    "ts": 1773870492513
+  },
+  {
+    "n": 41,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 41",
+    "ts": 1773870623737
+  },
+  {
+    "n": 42,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 42",
+    "ts": 1773870752975
+  },
+  {
+    "n": 43,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 43",
+    "ts": 1773870895922
+  },
+  {
+    "n": 44,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 44",
+    "ts": 1773871036070
+  },
+  {
+    "n": 45,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 45",
+    "ts": 1773871185924
+  },
+  {
+    "n": 46,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 46",
+    "ts": 1773871313936
+  },
+  {
+    "n": 47,
+    "valSharpe": 0,
+    "isSharpe": -1.4406,
+    "accepted": false,
+    "description": "experiment 47",
+    "ts": 1773871441797
+  },
+  {
+    "n": 48,
+    "valSharpe": 0,
+    "isSharpe": -0.9818,
+    "accepted": false,
+    "description": "experiment 48",
+    "ts": 1773871578457
+  },
+  {
+    "n": 49,
+    "valSharpe": 0,
+    "isSharpe": -0.9613,
+    "accepted": false,
+    "description": "experiment 49",
+    "ts": 1773871706506
+  },
+  {
+    "n": 50,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 50",
+    "ts": 1773871939903
+  },
+  {
+    "n": 51,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 51",
+    "ts": 1773872072187
+  },
+  {
+    "n": 52,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 52",
+    "ts": 1773872211843
+  },
+  {
+    "n": 53,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 53",
+    "ts": 1773872352012
+  },
+  {
+    "n": 54,
+    "valSharpe": 1.0554,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 54",
+    "ts": 1773872481207
+  },
+  {
+    "n": 55,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 55",
+    "ts": 1773872611524
+  },
+  {
+    "n": 56,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 56",
+    "ts": 1773872816739
+  },
+  {
+    "n": 57,
+    "valSharpe": 0,
+    "isSharpe": -1.3143,
+    "accepted": false,
+    "description": "experiment 57",
+    "ts": 1773873017045
+  },
+  {
+    "n": 58,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 58",
+    "ts": 1773873201685
+  },
+  {
+    "n": 59,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 59",
+    "ts": 1773873426721
+  },
+  {
+    "n": 60,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 60",
+    "ts": 1773873590874
+  },
+  {
+    "n": 61,
+    "valSharpe": 0,
+    "isSharpe": -1.4406,
+    "accepted": false,
+    "description": "experiment 61",
+    "ts": 1773873777879
+  },
+  {
+    "n": 62,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 62",
+    "ts": 1773874141729
+  },
+  {
+    "n": 63,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 63",
+    "ts": 1773874382309
+  },
+  {
+    "n": 64,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 64",
+    "ts": 1773874626637
+  },
+  {
+    "n": 65,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 65",
+    "ts": 1773874924371
+  },
+  {
+    "n": 66,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 66",
+    "ts": 1773875220247
+  },
+  {
+    "n": 67,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 67",
+    "ts": 1773875395559
+  },
+  {
+    "n": 68,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 68",
+    "ts": 1773875845624
+  },
+  {
+    "n": 69,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 69",
+    "ts": 1773875986564
+  },
+  {
+    "n": 70,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 70",
+    "ts": 1773876122407
+  },
+  {
+    "n": 71,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 71",
+    "ts": 1773876259508
+  },
+  {
+    "n": 72,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 72",
+    "ts": 1773876393408
+  },
+  {
+    "n": 73,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 73",
+    "ts": 1773876525982
+  },
+  {
+    "n": 74,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 74",
+    "ts": 1773876669955
+  },
+  {
+    "n": 75,
+    "valSharpe": 1.0554,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 75",
+    "ts": 1773876805131
+  },
+  {
+    "n": 76,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 76",
+    "ts": 1773876946255
+  },
+  {
+    "n": 77,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 77",
+    "ts": 1773877081022
+  },
+  {
+    "n": 78,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 78",
+    "ts": 1773877240360
+  },
+  {
+    "n": 79,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 79",
+    "ts": 1773877378269
+  },
+  {
+    "n": 80,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 80",
+    "ts": 1773877529648
+  },
+  {
+    "n": 81,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 81",
+    "ts": 1773877658279
+  },
+  {
+    "n": 82,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 82",
+    "ts": 1773877797450
+  },
+  {
+    "n": 83,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 83",
+    "ts": 1773877942658
+  },
+  {
+    "n": 84,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 84",
+    "ts": 1773878091866
+  },
+  {
+    "n": 85,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 85",
+    "ts": 1773878229588
+  },
+  {
+    "n": 86,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 86",
+    "ts": 1773878384958
+  },
+  {
+    "n": 87,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 87",
+    "ts": 1773878970970
+  },
+  {
+    "n": 88,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 88",
+    "ts": 1773879360106
+  },
+  {
+    "n": 89,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 89",
+    "ts": 1773879902506
+  },
+  {
+    "n": 90,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 90",
+    "ts": 1773880167013
+  },
+  {
+    "n": 91,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 91",
+    "ts": 1773880473294
+  },
+  {
+    "n": 92,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 92",
+    "ts": 1773880624768
+  },
+  {
+    "n": 93,
+    "valSharpe": 2.3987,
+    "isSharpe": -0.9008,
+    "accepted": false,
+    "description": "experiment 93",
+    "ts": 1773880765597
+  },
+  {
+    "n": 94,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 94",
+    "ts": 1773880914441
+  },
+  {
+    "n": 95,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: evaluator returned null",
+    "ts": 1773881079118
+  },
+  {
+    "n": 96,
+    "valSharpe": 2.3987,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 96",
+    "ts": 1773881321375
+  },
+  {
+    "n": 97,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 97",
+    "ts": 1773881537549
+  },
+  {
+    "n": 98,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "experiment 98",
+    "ts": 1773881697729
+  },
+  {
+    "n": 99,
+    "valSharpe": 2.8373,
+    "isSharpe": 0,
+    "accepted": true,
+    "description": "experiment 99",
+    "ts": 1773881904529
   }
 ]
