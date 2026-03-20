@@ -123,8 +123,14 @@ async function main() {
     return;
   }
 
+  // Use contract addresses for ambiguous tokens
+  const TOKEN_ADDRESSES = {
+    SOL: '0x311935cd80b76769bf2ecc9d8ab7635b2139cf82', // Wormhole SOL on Base
+  };
+  const assetRef = TOKEN_ADDRESSES[decision.asset] || decision.asset;
+
   console.log(`\n[3] Executing: swap $${decision.size_usd} USDC → ${decision.asset} on Base...`);
-  const job    = await bankr.prompt(`swap $${decision.size_usd} USDC for ${decision.asset} on Base`);
+  const job    = await bankr.prompt(`swap $${decision.size_usd} USDC for ${assetRef} on Base`);
   console.log(`  Job: ${job.jobId}`);
   const result = await bankr.waitForJob(job.jobId);
   console.log(`\n[Bankr] ${result.response}`);

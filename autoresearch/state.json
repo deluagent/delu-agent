@@ -1,6 +1,6 @@
 {
   "bestValSharpe": 1.554,
-  "expCount": 6,
+  "expCount": 10,
   "resetAt": "2026-03-20",
   "baselineNote": "val=1.554 audit=1.873 — soft BEAR 0.3x + funding gate + trend filter 0.03"
 }

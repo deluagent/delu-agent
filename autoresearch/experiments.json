@@ -8166,5 +8166,37 @@
     "accepted": false,
     "description": "funding matters more",
     "ts": 1774032255339
+  },
+  {
+    "n": 7,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774032405619
+  },
+  {
+    "n": 8,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774032565775
+  },
+  {
+    "n": 9,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "experiment 9",
+    "ts": 1774032707383
+  },
+  {
+    "n": 10,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "lighter touch",
+    "ts": 1774032860489
   }
 ]
