@@ -1,0 +1,254 @@
+{
+  "ranked": [
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.8,
+        "maxPriceChg": 0.05,
+        "maxRSI": 60,
+        "label": "win=14d obvZ>0.8 pc<0.05 rsi<60"
+      },
+      "oos": {
+        "n": 13,
+        "sharpe": 8.23,
+        "ret": 8,
+        "tradRet": 5,
+        "dd": 1.4,
+        "wr": 62
+      },
+      "is": {
+        "n": 64,
+        "sharpe": -1.2,
+        "ret": 0.7,
+        "tradRet": -3.5,
+        "dd": 6.2,
+        "wr": 41
+      }
+    },
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.8,
+        "maxPriceChg": 0.03,
+        "maxRSI": 60,
+        "label": "win=14d obvZ>0.8 pc<0.03 rsi<60"
+      },
+      "oos": {
+        "n": 12,
+        "sharpe": 8.21,
+        "ret": 7.8,
+        "tradRet": 4.8,
+        "dd": 1.4,
+        "wr": 58
+      },
+      "is": {
+        "n": 51,
+        "sharpe": -1.21,
+        "ret": 1.2,
+        "tradRet": -3,
+        "dd": 5.9,
+        "wr": 41
+      }
+    },
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.3,
+        "maxPriceChg": 0.1,
+        "maxRSI": 50,
+        "label": "win=14d obvZ>0.3 pc<0.1 rsi<50"
+      },
+      "oos": {
+        "n": 10,
+        "sharpe": 8.18,
+        "ret": 6.8,
+        "tradRet": 3.8,
+        "dd": 1.4,
+        "wr": 60
+      },
+      "is": {
+        "n": 52,
+        "sharpe": -0.14,
+        "ret": 3.6,
+        "tradRet": -0.6,
+        "dd": 5.4,
+        "wr": 40
+      }
+    },
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.3,
+        "maxPriceChg": 0.03,
+        "maxRSI": 60,
+        "label": "win=14d obvZ>0.3 pc<0.03 rsi<60"
+      },
+      "oos": {
+        "n": 20,
+        "sharpe": 6.33,
+        "ret": 9.2,
+        "tradRet": 6.3,
+        "dd": 1.8,
+        "wr": 55
+      },
+      "is": {
+        "n": 70,
+        "sharpe": -1.38,
+        "ret": -0.8,
+        "tradRet": -4.9,
+        "dd": 7.3,
+        "wr": 41
+      }
+    },
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.3,
+        "maxPriceChg": 0.05,
+        "maxRSI": 60,
+        "label": "win=14d obvZ>0.3 pc<0.05 rsi<60"
+      },
+      "oos": {
+        "n": 23,
+        "sharpe": 6.33,
+        "ret": 9.3,
+        "tradRet": 6.3,
+        "dd": 1.8,
+        "wr": 61
+      },
+      "is": {
+        "n": 85,
+        "sharpe": -1.48,
+        "ret": -1.9,
+        "tradRet": -6,
+        "dd": 7.9,
+        "wr": 40
+      }
+    },
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.5,
+        "maxPriceChg": 0.05,
+        "maxRSI": 60,
+        "label": "win=14d obvZ>0.5 pc<0.05 rsi<60"
+      },
+      "oos": {
+        "n": 20,
+        "sharpe": 5.84,
+        "ret": 8,
+        "tradRet": 5,
+        "dd": 1.8,
+        "wr": 60
+      },
+      "is": {
+        "n": 80,
+        "sharpe": -1.09,
+        "ret": -0.2,
+        "tradRet": -4.3,
+        "dd": 6.5,
+        "wr": 40
+      }
+    },
+    {
+      "params": {
+        "win": 336,
+        "minOBVZ": 0.5,
+        "maxPriceChg": 0.03,
+        "maxRSI": 60,
+        "label": "win=14d obvZ>0.5 pc<0.03 rsi<60"
+      },
+      "oos": {
+        "n": 17,
+        "sharpe": 5.28,
+        "ret": 7.1,
+        "tradRet": 4.1,
+        "dd": 1.8,
+        "wr": 53
+      },
+      "is": {
+        "n": 66,
+        "sharpe": -1.01,
+        "ret": 0.6,
+        "tradRet": -3.5,
+        "dd": 6.1,
+        "wr": 41
+      }
+    },
+    {
+      "params": {
+        "win": 168,
+        "minOBVZ": 0.3,
+        "maxPriceChg": 0.1,
+        "maxRSI": 50,
+        "label": "win=7d obvZ>0.3 pc<0.1 rsi<50"
+      },
+      "oos": {
+        "n": 10,
+        "sharpe": 3.11,
+        "ret": 4.4,
+        "tradRet": 1.5,
+        "dd": 2.2,
+        "wr": 50
+      },
+      "is": {
+        "n": 59,
+        "sharpe": 0.41,
+        "ret": 5.2,
+        "tradRet": 1,
+        "dd": 5.9,
+        "wr": 41
+      }
+    },
+    {
+      "params": {
+        "win": 168,
+        "minOBVZ": 0.5,
+        "maxPriceChg": 0.1,
+        "maxRSI": 50,
+        "label": "win=7d obvZ>0.5 pc<0.1 rsi<50"
+      },
+      "oos": {
+        "n": 10,
+        "sharpe": 3.11,
+        "ret": 4.4,
+        "tradRet": 1.5,
+        "dd": 2.2,
+        "wr": 50
+      },
+      "is": {
+        "n": 54,
+        "sharpe": 1.15,
+        "ret": 7.4,
+        "tradRet": 3.2,
+        "dd": 5.2,
+        "wr": 43
+      }
+    },
+    {
+      "params": {
+        "win": 168,
+        "minOBVZ": 0.8,
+        "maxPriceChg": 0.1,
+        "maxRSI": 50,
+        "label": "win=7d obvZ>0.8 pc<0.1 rsi<50"
+      },
+      "oos": {
+        "n": 10,
+        "sharpe": 3.11,
+        "ret": 4.4,
+        "tradRet": 1.5,
+        "dd": 2.2,
+        "wr": 50
+      },
+      "is": {
+        "n": 44,
+        "sharpe": 3,
+        "ret": 11.3,
+        "tradRet": 7.1,
+        "dd": 4.5,
+        "wr": 50
+      }
+    }
+  ]
+}

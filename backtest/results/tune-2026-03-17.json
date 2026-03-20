@@ -1,0 +1,285 @@
+{
+  "run_at": "2026-03-17T20:16:37.204Z",
+  "best": {
+    "A": {
+      "params": {
+        "attnScale": 0.5,
+        "trendScale": 3,
+        "minTrend": 0.1,
+        "label": "attn=0.5 trend=3 minT=0.1"
+      },
+      "oos": {
+        "n": 91,
+        "sharpe": 0.88,
+        "ret": 7.5,
+        "tradRet": 4.7,
+        "dd": 14.8,
+        "wr": 45,
+        "pf": 1.15,
+        "avgHold": 34,
+        "stop": 52,
+        "tp": 32
+      },
+      "is": {
+        "n": 271,
+        "sharpe": 1.35,
+        "ret": 30.9,
+        "tradRet": 27.4,
+        "dd": 24.1,
+        "wr": 40,
+        "pf": 1.21,
+        "avgHold": 32,
+        "stop": 54,
+        "tp": 30
+      }
+    },
+    "B": null,
+    "C": {
+      "params": {
+        "wR30": 0.3,
+        "wVZ": 0.4,
+        "wAC": 0.2,
+        "wXR": 0.2,
+        "label": "r30=0.3 vz=0.4 ac=0.2 xrank=0.2"
+      },
+      "oos": {
+        "n": 119,
+        "sharpe": 1.1,
+        "ret": 9.3,
+        "tradRet": 6.5,
+        "dd": 7.9,
+        "wr": 45,
+        "pf": 1.19,
+        "avgHold": 19,
+        "stop": 43,
+        "tp": 19
+      },
+      "is": {
+        "n": 415,
+        "sharpe": 0.27,
+        "ret": 7.6,
+        "tradRet": 4.1,
+        "dd": 27.2,
+        "wr": 43,
+        "pf": 1.07,
+        "avgHold": 19,
+        "stop": 43,
+        "tp": 15
+      }
+    },
+    "D": null
+  },
+  "topPerTemplate": {
+    "A": [
+      {
+        "params": {
+          "attnScale": 0.5,
+          "trendScale": 3,
+          "minTrend": 0.1,
+          "label": "attn=0.5 trend=3 minT=0.1"
+        },
+        "oos": {
+          "n": 91,
+          "sharpe": 0.88,
+          "ret": 7.5,
+          "tradRet": 4.7,
+          "dd": 14.8,
+          "wr": 45,
+          "pf": 1.15,
+          "avgHold": 34,
+          "stop": 52,
+          "tp": 32
+        }
+      },
+      {
+        "params": {
+          "attnScale": 0.3,
+          "trendScale": 3,
+          "minTrend": 0.1,
+          "label": "attn=0.3 trend=3 minT=0.1"
+        },
+        "oos": {
+          "n": 83,
+          "sharpe": 0.85,
+          "ret": 7,
+          "tradRet": 4.2,
+          "dd": 14.8,
+          "wr": 42,
+          "pf": 1.16,
+          "avgHold": 38,
+          "stop": 52,
+          "tp": 33
+        }
+      },
+      {
+        "params": {
+          "attnScale": 1,
+          "trendScale": 3,
+          "minTrend": 0.1,
+          "label": "attn=1 trend=3 minT=0.1"
+        },
+        "oos": {
+          "n": 104,
+          "sharpe": 0.79,
+          "ret": 7.3,
+          "tradRet": 4.6,
+          "dd": 14.8,
+          "wr": 46,
+          "pf": 1.14,
+          "avgHold": 29,
+          "stop": 50,
+          "tp": 27
+        }
+      },
+      {
+        "params": {
+          "attnScale": 0.3,
+          "trendScale": 5,
+          "minTrend": 0.1,
+          "label": "attn=0.3 trend=5 minT=0.1"
+        },
+        "oos": {
+          "n": 95,
+          "sharpe": 0.74,
+          "ret": 6.8,
+          "tradRet": 4.1,
+          "dd": 14.9,
+          "wr": 45,
+          "pf": 1.12,
+          "avgHold": 33,
+          "stop": 54,
+          "tp": 31
+        }
+      },
+      {
+        "params": {
+          "attnScale": 0.7,
+          "trendScale": 3,
+          "minTrend": 0.1,
+          "label": "attn=0.7 trend=3 minT=0.1"
+        },
+        "oos": {
+          "n": 98,
+          "sharpe": 0.56,
+          "ret": 5.6,
+          "tradRet": 2.9,
+          "dd": 14.8,
+          "wr": 45,
+          "pf": 1.11,
+          "avgHold": 31,
+          "stop": 52,
+          "tp": 29
+        }
+      }
+    ],
+    "B": [],
+    "C": [
+      {
+        "params": {
+          "wR30": 0.3,
+          "wVZ": 0.4,
+          "wAC": 0.2,
+          "wXR": 0.2,
+          "label": "r30=0.3 vz=0.4 ac=0.2 xrank=0.2"
+        },
+        "oos": {
+          "n": 119,
+          "sharpe": 1.1,
+          "ret": 9.3,
+          "tradRet": 6.5,
+          "dd": 7.9,
+          "wr": 45,
+          "pf": 1.19,
+          "avgHold": 19,
+          "stop": 43,
+          "tp": 19
+        }
+      },
+      {
+        "params": {
+          "wR30": 0.3,
+          "wVZ": 0.4,
+          "wAC": 0.2,
+          "wXR": 0.3,
+          "label": "r30=0.3 vz=0.4 ac=0.2 xrank=0.3"
+        },
+        "oos": {
+          "n": 119,
+          "sharpe": 1.1,
+          "ret": 9.3,
+          "tradRet": 6.5,
+          "dd": 7.9,
+          "wr": 45,
+          "pf": 1.19,
+          "avgHold": 19,
+          "stop": 43,
+          "tp": 19
+        }
+      },
+      {
+        "params": {
+          "wR30": 0.3,
+          "wVZ": 0.4,
+          "wAC": 0.2,
+          "wXR": 0.4,
+          "label": "r30=0.3 vz=0.4 ac=0.2 xrank=0.4"
+        },
+        "oos": {
+          "n": 119,
+          "sharpe": 1.1,
+          "ret": 9.3,
+          "tradRet": 6.5,
+          "dd": 7.9,
+          "wr": 45,
+          "pf": 1.19,
+          "avgHold": 19,
+          "stop": 43,
+          "tp": 19
+        }
+      },
+      {
+        "params": {
+          "wR30": 0.3,
+          "wVZ": 0.3,
+          "wAC": 0.3,
+          "wXR": 0.2,
+          "label": "r30=0.3 vz=0.3 ac=0.3 xrank=0.2"
+        },
+        "oos": {
+          "n": 130,
+          "sharpe": 1.07,
+          "ret": 9.5,
+          "tradRet": 6.7,
+          "dd": 8.2,
+          "wr": 46,
+          "pf": 1.19,
+          "avgHold": 18,
+          "stop": 43,
+          "tp": 18
+        }
+      },
+      {
+        "params": {
+          "wR30": 0.3,
+          "wVZ": 0.3,
+          "wAC": 0.3,
+          "wXR": 0.3,
+          "label": "r30=0.3 vz=0.3 ac=0.3 xrank=0.3"
+        },
+        "oos": {
+          "n": 130,
+          "sharpe": 1.07,
+          "ret": 9.5,
+          "tradRet": 6.7,
+          "dd": 8.2,
+          "wr": 46,
+          "pf": 1.19,
+          "avgHold": 18,
+          "stop": 43,
+          "tp": 18
+        }
+      }
+    ],
+    "D": []
+  }
+}

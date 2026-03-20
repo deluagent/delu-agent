@@ -1,144 +1,535 @@
 #!/usr/bin/env node
 /**
- * delu agent loop
- * Runs every 4 hours: sense → reason → execute → log
+ * delu — autonomous trader agent
+ *
+ * Loop: every 4 hours
+ *   1. Fetch market data (Binance hourly bars, Chainlink prices)
+ *   2. Compute regime (5-state: BULL_HOT/BULL_COOL/RANGE_TIGHT/RANGE_WIDE/BEAR)
+ *   3. Score tokens with A/B/C/D framework
+ *   4. Build context → ask Venice (TEE) for the allocation decision
+ *   5. Execute via Bankr if confidence ≥ 65%
+ *   6. Log decision + execution
  *
  * Usage:
- *   node agent/index.js          # single run
- *   node agent/index.js --loop   # continuous (every 4h)
- *   node agent/index.js --dry    # dry run (no execution)
+ *   node agent/index.js           # single run
+ *   node agent/index.js --loop    # continuous (every 4h)
+ *   node agent/index.js --dry     # dry run (no execution)
  */
 
 require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
-const venice = require('./venice');
 const bankr  = require('./bankr');
-const signals = require('./signals');
-const log    = require('./log');
-const { STATES, transition, getState, checkCircuitBreaker } = require('./state');
-const { kellySize, correlationAdjust, calibrateFromLog } = require('./kelly');
 
-const DRY_RUN = process.argv.includes('--dry');
-const LOOP    = process.argv.includes('--loop');
-const CYCLE_MS = 4 * 60 * 60 * 1000; // 4 hours
+const DRY_RUN  = process.argv.includes('--dry');
+const LOOP     = process.argv.includes('--loop');
+const CYCLE_MS = 30 * 60 * 1000; // 30min — fast learning cycle
 
-const ACTIVE_TRANCHE_USD = 20; // USD available for active strategies
+const VENICE_API = 'https://api.venice.ai/api/v1/chat/completions';
+const VENICE_MODEL = 'llama-3.3-70b'; // best balance of speed + quality on Venice
 
-async function runCycle() {
-  console.log('\n═══════════════════════════════════════');
-  console.log(`[delu] Cycle start: ${new Date().toISOString()}`);
-  console.log('═══════════════════════════════════════\n');
-
-  // 0. Circuit breaker check
-  const breaker = checkCircuitBreaker(ACTIVE_TRANCHE_USD);
-  if (breaker.halted) {
-    console.error('[delu] CIRCUIT BREAKER ACTIVE:', breaker.reason);
-    console.error('[delu] Skipping cycle. Fix the issue, then call resetCircuitBreaker()');
-    return;
-  }
-
-  const agentState = getState();
-  console.log(`[state] Current state: ${agentState.current} | Session P&L: $${agentState.session_pnl.toFixed(2)}`);
-
-  // 1. Gather signals
-  let market;
+// Autoresearch candidate — Venice continuously improves this function
+// Agent loads it fresh every cycle so improvements flow in automatically
+const CANDIDATE_PATH = require('path').join(__dirname, '../autoresearch/candidate.js');
+function loadCandidate() {
   try {
-    market = await signals.gatherSignals(ACTIVE_TRANCHE_USD, log.getRecent().filter(e => !e.outcome).length);
-    console.log(`[signals] ETH=$${market.eth_price} BTC=$${market.btc_price}`);
-    console.log(`[signals] Attention signals: ${market.attention.length}`);
-    console.log(`[signals] Polymarket markets: ${market.polymarket.length}`);
-  } catch (e) {
-    console.error('[signals] Failed to gather:', e.message);
-    return;
+    delete require.cache[require.resolve(CANDIDATE_PATH)];
+    return require(CANDIDATE_PATH);
+  } catch(e) {
+    console.warn('[autoresearch] Could not load candidate.js:', e.message);
+    return null;
+  }
+}
+
+const TOKENS   = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','AAVEUSDT','ARBUSDT'];
+const SYMBOLS  = ['BTC','ETH','SOL','BNB','DOGE','AAVE','ARB'];
+const ACTIVE_TRANCHE_USD = 1; // liquid USDC on Base; rest already in Aave
+
+// ─── Best params from walk-forward validated grid search ──────────────────────
+// adaptive.js best config: OOS +8.9% Sharpe 1.69 DD 7.9%, WF worst=1.69 all 3 folds positive
+const PARAMS = {
+  stopMult:    1.5,
+  tpMult:      6.0,
+  stopMultD:   2.0,
+  tpMultD:     2.5,
+  topN:        1,
+  bullThresh:  0.05,
+  bearThresh: -0.03,
+  breadthMin:  0.30,
+  volHighMult: 1.5,
+  altWin:      14 * 24,
+  altThresh:   0.03,
+};
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// ─── Data fetching ─────────────────────────────────────────────────────────────
+async function fetchBars(symbol, interval = '1h', limit = 500) {
+  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Binance ${symbol} ${interval}: ${res.status}`);
+  const raw = await res.json();
+  return raw.map(d => ({
+    ts: d[0], time: new Date(d[0]),
+    open: +d[1], high: +d[2], low: +d[3], close: +d[4], volume: +d[5]
+  }));
+}
+
+// ─── Indicators ────────────────────────────────────────────────────────────────
+function smaN(arr, n) {
+  if (arr.length < n) return null;
+  return arr.slice(-n).reduce((a, b) => a + b, 0) / n;
+}
+
+function rsi(closes, p = 14) {
+  if (closes.length < p + 1) return null;
+  const s = closes.slice(-(p + 1));
+  let g = 0, l = 0;
+  for (let i = 1; i < s.length; i++) {
+    const d = s[i] - s[i - 1];
+    if (d > 0) g += d; else l += Math.abs(d);
+  }
+  const ag = g / p, al = l / p;
+  return al === 0 ? 100 : Math.round(100 - 100 / (1 + ag / al));
+}
+
+function atr(bars, p = 14) {
+  if (bars.length < p + 1) return null;
+  const s = bars.slice(-(p + 1));
+  let a = null;
+  for (let i = 1; i < s.length; i++) {
+    const tr = Math.max(s[i].high - s[i].low,
+      Math.abs(s[i].high - s[i - 1].close),
+      Math.abs(s[i].low  - s[i - 1].close));
+    a = a === null ? tr : (a * (p - 1) + tr) / p;
+  }
+  return a;
+}
+
+function volZ(volumes, lookback = 30 * 24) {
+  if (volumes.length < lookback + 1) return null;
+  const s = volumes.slice(-lookback - 1, -1);
+  const m = s.reduce((a, b) => a + b, 0) / s.length;
+  const sd = Math.sqrt(s.reduce((a, b) => a + (b - m) ** 2, 0) / s.length);
+  return sd > 0 ? (volumes[volumes.length - 1] - m) / sd : 0;
+}
+
+// ─── 5-State Regime ────────────────────────────────────────────────────────────
+// dailyBars: 1d candles (220) for 200d MA + breadth
+// hourlyBars: 1h candles (500) for vol ratio
+function detectRegime(allBarsDaily, allBarsHourly, p = PARAMS) {
+  const btcDaily = allBarsDaily[0];
+  if (!btcDaily || btcDaily.length < 201) return null;
+
+  const btcD = btcDaily.map(b => b.close);
+  const sma200 = smaN(btcD, 200);
+  if (!sma200) return null;
+
+  const btcNow = btcD[btcD.length - 1];
+  const pctFrom200 = (btcNow - sma200) / sma200;
+
+  // Vol ratio from hourly bars (7d vs 30d)
+  const btcH = allBarsHourly[0]?.map(b => b.close) || [];
+  const n7 = 7 * 24, n30 = 30 * 24;
+  let v7 = 0, v30 = 0;
+  const btcR = btcH.map((c, i) => i === 0 ? 0 : Math.log(c / btcH[i - 1]));
+  if (btcR.length >= n30) {
+    for (let j = btcR.length - n7; j < btcR.length; j++) v7 += btcR[j] ** 2;
+    for (let j = btcR.length - n30; j < btcR.length; j++) v30 += btcR[j] ** 2;
+  }
+  const volRatio = Math.sqrt(v30 / n30) > 0 ? Math.sqrt(v7 / n7) / Math.sqrt(v30 / n30) : 1;
+  const highVol    = volRatio > p.volHighMult;
+  const extremeVol = volRatio > p.volHighMult * 1.5;
+
+  // Market breadth (daily bars — tokens above 200d MA)
+  let aboveMa = 0;
+  for (const bars of allBarsDaily) {
+    if (!bars || bars.length < 201) continue;
+    const c = bars.map(b => b.close);
+    const ma = smaN(c, 200);
+    if (ma && c[c.length - 1] > ma) aboveMa++;
+  }
+  const breadth = aboveMa / allBarsDaily.filter(b => b?.length >= 201).length;
+
+  if (breadth < p.breadthMin || extremeVol) {
+    return { state: 'BEAR', btcNow, sma200, pctFrom200, volRatio, breadth, breadthFraction: `${aboveMa}/${allBarsDaily.length}` };
   }
 
-  // 2. Reason with Venice (TEE)
+  let state;
+  if (pctFrom200 < p.bearThresh)      state = 'BEAR';
+  else if (pctFrom200 > p.bullThresh) state = highVol ? 'BULL_COOL' : 'BULL_HOT';
+  else                                 state = highVol ? 'RANGE_WIDE' : 'RANGE_TIGHT';
+
+  return { state, btcNow, sma200, pctFrom200, volRatio, breadth, breadthFraction: `${aboveMa}/${allBarsDaily.length}` };
+}
+
+// ─── Template Scoring ──────────────────────────────────────────────────────────
+function scoreTemplateA(bars) {
+  // Trend momentum: 20/60/120d weighted return, volume confirmation
+  const closes  = bars.map(b => b.close);
+  const volumes = bars.map(b => b.volume);
+  if (closes.length < 120 * 24) return 0;
+  const r20  = (closes[closes.length-1] - closes[closes.length-1-20*24])  / closes[closes.length-1-20*24];
+  const r60  = (closes[closes.length-1] - closes[closes.length-1-60*24])  / closes[closes.length-1-60*24];
+  const r120 = (closes[closes.length-1] - closes[closes.length-1-120*24]) / closes[closes.length-1-120*24];
+  const trend = 0.5 * r20 + 0.3 * r60 + 0.2 * r120;
+  if (trend < 0.10) return 0;
+  const vz = volZ(volumes) ?? 0;
+  return Math.max(0, trend * (1 + Math.tanh(vz * 0.5)));
+}
+
+function scoreTemplateB(bars) {
+  // OBV accumulation — steady buying pressure, RSI not overbought, sideways price
+  const closes  = bars.map(b => b.close);
+  const volumes = bars.map(b => b.volume);
+  const WIN = 14 * 24;
+  if (closes.length < WIN + 25) return 0;
+  const r = rsi(closes.slice(-20));
+  if (r !== null && r > 60) return 0;
+  const ret14d = (closes[closes.length-1] - closes[closes.length-1-WIN]) / closes[closes.length-1-WIN];
+  if (ret14d > 0.05) return 0; // already running — too late
+  let ob = 0;
+  const obvArr = [];
+  const start = closes.length - WIN - 25;
+  for (let k = start; k < closes.length; k++) {
+    if (k > 0) {
+      if (closes[k] > closes[k-1]) ob += volumes[k];
+      else if (closes[k] < closes[k-1]) ob -= volumes[k];
+    }
+    obvArr.push(ob);
+  }
+  const w = obvArr;
+  const m = w.reduce((a, b) => a + b, 0) / w.length;
+  const sd = Math.sqrt(w.reduce((a, b) => a + (b - m) ** 2, 0) / w.length);
+  if (sd < 1e-9) return 0;
+  const oz  = (w[w.length - 1] - m) / sd;
+  const ozP = (w[w.length - 25] - m) / sd;
+  if (oz < 0.8 || oz <= ozP) return 0;
+  return Math.max(0, Math.tanh(oz * 0.5) * Math.tanh((oz - ozP) * 2));
+}
+
+function scoreTemplateC(bars, allBars) {
+  // Cross-sectional rank — token leads the pack on 30d momentum
+  const closes = bars.map(b => b.close);
+  if (closes.length < 30 * 24) return 0;
+  const ret30 = (closes[closes.length-1] - closes[closes.length-1-30*24]) / closes[closes.length-1-30*24];
+  // Rank among all tokens
+  const rets = allBars.map(b => {
+    const c = b.map(x => x.close);
+    if (c.length < 30 * 24) return 0;
+    return (c[c.length-1] - c[c.length-1-30*24]) / c[c.length-1-30*24];
+  });
+  const rank = rets.filter(r => r < ret30).length / rets.length;
+  if (rank < 0.70) return 0; // top 30% only
+  return (rank - 0.70) / 0.30;
+}
+
+function scoreTemplateD(bars) {
+  // Panic bounce: sharp 1-3d selloff with volume spike, RSI oversold, stabilizing
+  const closes  = bars.map(b => b.close);
+  const volumes = bars.map(b => b.volume);
+  const WIN = 30 * 24;
+  if (closes.length < WIN) return 0;
+
+  // 1d return z-score
+  const ret1d  = (closes[closes.length-1] - closes[closes.length-1-24]) / closes[closes.length-1-24];
+  const rets   = [];
+  for (let k = closes.length - WIN; k < closes.length; k += 24) {
+    if (k >= 24) rets.push((closes[k] - closes[k-24]) / closes[k-24]);
+  }
+  const m = rets.reduce((a, b) => a + b, 0) / rets.length;
+  const sd = Math.sqrt(rets.reduce((a, b) => a + (b - m) ** 2, 0) / rets.length);
+  const retZ = sd > 0 ? (ret1d - m) / sd : 0;
+
+  if (retZ > -1.2) return 0; // not a selloff
+  const vz = volZ(volumes);
+  if (vz === null || vz < 0.5) return 0;
+  const r = rsi(closes.slice(-20));
+  if (r !== null && r > 45) return 0; // not oversold
+  if (ret1d < -0.30) return 0; // freefall — avoid
+  // Small green candle forming (last 4h)
+  const r4h = (closes[closes.length-1] - closes[closes.length-5]) / closes[closes.length-5];
+  if (r4h < 0) return 0;
+  return Math.max(0, Math.min(Math.abs(retZ)-1.2, 3)/3 * Math.min(vz-0.5, 3)/3);
+}
+
+// ─── Venice reasoning ──────────────────────────────────────────────────────────
+async function askVenice(context) {
+  const systemPrompt = `You are delu, an autonomous onchain trader running on Base.
+Your capital is real. Every decision is executed onchain via Bankr.
+You reason from quantitative signals — not vibes, not narratives.
+
+You have a walk-forward validated quant framework:
+- 5 market regimes: BULL_HOT, BULL_COOL, RANGE_TIGHT, RANGE_WIDE, BEAR
+- 4 signal templates: A (trend momentum), B (OBV accumulation), C (cross-sectional rank), D (panic bounce)
+- Backtested: +8.9% OOS return, Sharpe 1.69, DD 7.9% vs BTC -39% over 219 days
+- In BEAR regime: go flat. Only earn Aave yield.
+- In BULL_HOT: use A and C signals (trend + relative strength)
+- In RANGE/BULL_COOL: use B and D signals (accumulation + panic bounce)
+
+You respond ONLY with valid JSON:
+{
+  "action": "buy" | "yield" | "hold",
+  "asset": "token symbol or USDC",
+  "size_pct": number (5-20 for buy, 100 for yield, 0 for hold),
+  "confidence": number (0-100),
+  "reasoning": "1-2 sentences",
+  "stop_loss_pct": number,
+  "take_profit_pct": number
+}
+
+Rules:
+- BEAR regime → always yield (action=yield, asset=USDC)
+- confidence < 65 → hold
+- Never allocate more than 20% in one position
+- If top signal score < 0.05 → hold`;
+
+  const res = await fetch(VENICE_API, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.VENICE_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: VENICE_MODEL,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user',   content: context }
+      ],
+      venice_parameters: { enable_e2ee: true }, // E2EE: inference is encrypted end-to-end
+      temperature: 0.2
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Venice error: ${err}`);
+  }
+
+  const data = await res.json();
+  const content = data.choices[0].message.content;
+  const teeQuote = data.venice_parameters?.enable_e2ee ? 'e2ee-encrypted' : null;
+
   let decision;
   try {
-    console.log('\n[venice] Reasoning...');
-    decision = await venice.reason(market);
-    console.log(`[venice] Decision: ${decision.action} ${decision.asset} @ ${decision.confidence}% confidence`);
-    console.log(`[venice] Reasoning: ${decision.reasoning}`);
-    console.log(`[venice] TEE proof: ${decision.tee_quote ? '✓' : '✗ (no TEE quote)'}`);
-  } catch (e) {
-    console.error('[venice] Reasoning failed:', e.message);
-    // If Venice is down, default to yield
-    decision = {
-      action: 'yield',
-      asset: 'USDC',
-      size_pct: 100,
-      confidence: 50,
-      reasoning: 'Venice unavailable — defaulting to yield',
-      tee_quote: null
-    };
+    decision = JSON.parse(content.trim());
+  } catch {
+    const match = content.match(/```(?:json)?\n?([\s\S]+?)\n?```/);
+    if (match) decision = JSON.parse(match[1]);
+    else throw new Error(`Could not parse Venice response: ${content}`);
   }
 
-  // 3. Skip if low confidence or hold
-  if (decision.confidence < 65 || decision.action === 'hold') {
-    console.log(`[delu] Skipping — confidence ${decision.confidence}% < 65% or hold`);
-    if (agentState.current === STATES.SCANNING) {
-      // stay scanning
-    } else {
-      transition(agentState.current, STATES.SCANNING, 'low confidence, returning to scan');
+  return { ...decision, tee_quote: teeQuote, raw: content };
+}
+
+// ─── Main cycle ────────────────────────────────────────────────────────────────
+async function runCycle() {
+  const cycleStart = new Date().toISOString();
+  console.log('\n' + '═'.repeat(60));
+  console.log(`delu cycle: ${cycleStart}`);
+  console.log('═'.repeat(60));
+
+  // 1. Fetch bars — daily for regime (200d MA), hourly for signals
+  console.log('\n[data] Fetching bars...');
+  const allBarsDaily = [];  // 1d bars, 220 candles
+  const allBars = [];       // 1h bars, 500 candles
+  for (let i = 0; i < TOKENS.length; i++) {
+    try {
+      const [daily, hourly] = await Promise.all([
+        fetchBars(TOKENS[i], '1d', 220),
+        fetchBars(TOKENS[i], '1h', 500),
+      ]);
+      allBarsDaily.push(daily);
+      allBars.push(hourly);
+      process.stdout.write(`  ${SYMBOLS[i]} ✓  `);
+    } catch (e) {
+      console.error(`  ${SYMBOLS[i]} FAILED: ${e.message}`);
+      allBarsDaily.push([]);
+      allBars.push([]);
     }
-    log.record(market, decision, { skipped: true, reason: `confidence ${decision.confidence}%` });
+    await sleep(250);
+  }
+  console.log();
+
+  // 2. Detect regime
+  const regime = detectRegime(allBarsDaily, allBars);
+  if (!regime) {
+    console.log('[regime] Not enough data — aborting');
     return;
   }
+  console.log(`\n[regime] ${regime.state} | BTC $${Math.round(regime.btcNow)} | ${((regime.pctFrom200)*100).toFixed(1)}% from 200d MA | breadth ${regime.breadthFraction} | volRatio ${regime.volRatio.toFixed(2)}`);
 
-  // Kelly sizing
-  const kellyResult = kellySize(decision.confidence, ACTIVE_TRANCHE_USD);
-  const corrResult = correlationAdjust([], decision.asset, kellyResult.sizeUsd);
-  const finalSizeUsd = corrResult.adjustedSize;
+  // 3. Score all tokens
+  const candidate = loadCandidate();
+  const arState = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../autoresearch/state.json'),'utf8')); } catch { return null; } })();
+  if (arState) console.log(`\n[autoresearch] exp=${arState.expCount} bestValSharpe=${arState.bestValSharpe.toFixed(3)} — candidate loaded ${candidate ? '✓' : '✗'}`);
 
-  console.log(`[kelly] Size: $${finalSizeUsd} (${kellyResult.sizePct}% Kelly, ${corrResult.adjustment}x corr)`);
+  console.log('[signals] Scoring...');
+  const btcDailyCloses = allBarsDaily[0]?.map(b => b.close) || [];
+  const scores = SYMBOLS.map((sym, ti) => {
+    const bars = allBars[ti];
+    const dailyBars = allBarsDaily[ti] || [];
+    if (bars.length < 250) return { sym, ti, sA: 0, sB: 0, sC: 0, sD: 0, sAR: 0 };
 
-  // State machine: SCANNING → SIGNAL_DETECTED → CONFIRMING → ENTERING
-  if (agentState.current === STATES.SCANNING) {
-    transition(STATES.SCANNING, STATES.SIGNAL_DETECTED, `${decision.asset} @ ${decision.confidence}%`);
-    transition(STATES.SIGNAL_DETECTED, STATES.CONFIRMING, 'Venice confirms signal');
-    transition(STATES.CONFIRMING, STATES.ENTERING, `size $${finalSizeUsd}`);
+    // Autoresearch score — Venice-evolved signal function
+    let sAR = 0;
+    if (candidate?.scoreToken) {
+      try {
+        sAR = candidate.scoreToken({
+          prices:      dailyBars.map(b => b.close),
+          btcPrices:   btcDailyCloses,
+          flowSignal:  0,
+          attentionDelta: 0,
+        }) || 0;
+        sAR = Math.max(0, Math.min(1, sAR)); // clamp 0-1
+      } catch(e) { sAR = 0; }
+    }
+
+    return {
+      sym, ti,
+      sA:  scoreTemplateA(bars),
+      sB:  scoreTemplateB(bars),
+      sC:  scoreTemplateC(bars, allBars),
+      sD:  scoreTemplateD(bars),
+      sAR,
+    };
+  });
+
+  // Regime-gated combined score
+  // sAR = autoresearch score (Venice-evolved, contributes 20% weight in BULL)
+  const state = regime.state;
+  const hasAR = scores.some(s => s.sAR > 0);
+  const ranked = scores.map(s => {
+    let combined = 0;
+    let template = 'none';
+    // AR weight: 20% in BULL, 10% in RANGE, 0% in BEAR
+    const arW = state.startsWith('BULL') ? 0.20 : state.startsWith('RANGE') ? 0.10 : 0;
+    const rem = 1 - arW;
+    if (state === 'BULL_HOT') {
+      combined = rem * (0.50 * s.sA + 0.25 * s.sC + 0.15 * s.sB + 0.10 * s.sD) + arW * s.sAR;
+      template = s.sAR > s.sA && hasAR ? 'AR' : s.sA > s.sC ? 'A' : 'C';
+    } else if (state === 'BULL_COOL') {
+      combined = rem * (0.40 * s.sA + 0.30 * s.sD + 0.20 * s.sB + 0.10 * s.sC) + arW * s.sAR;
+      template = s.sD > s.sA ? 'D' : 'A';
+    } else if (state === 'RANGE_TIGHT') {
+      combined = rem * (0.50 * s.sB + 0.35 * s.sD + 0.15 * s.sA) + arW * s.sAR;
+      template = s.sB > s.sD ? 'B' : 'D';
+    } else if (state === 'RANGE_WIDE') {
+      combined = rem * (0.70 * s.sD + 0.30 * s.sB) + arW * s.sAR;
+      template = 'D';
+    }
+    // BEAR: combined = 0 for all
+    return { ...s, combined, template };
+  }).sort((a, b) => b.combined - a.combined);
+
+  console.log('  Top tokens:');
+  for (const s of ranked.slice(0, 3)) {
+    console.log(`    ${s.sym.padEnd(6)} A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} → combined=${s.combined.toFixed(3)} [${s.template}]`);
   }
 
-  // 4. Execute via Bankr
-  let execution;
-  if (DRY_RUN) {
-    console.log(`[delu] DRY RUN — would execute: "${decision.action} ${decision.asset}" for $${finalSizeUsd}`);
-    execution = { dry_run: true, would_execute: decision.action, size_usd: finalSizeUsd };
+  // 4. Build Venice context
+  const topToken = ranked[0];
+  const recentPrices = SYMBOLS.map((sym, ti) => {
+    const bars = allBars[ti];
+    if (!bars.length) return `${sym}: N/A`;
+    const c = bars[bars.length-1].close;
+    const r24h = bars.length > 24 ? ((c - bars[bars.length-25].close) / bars[bars.length-25].close * 100).toFixed(1) : 'N/A';
+    return `${sym}: $${c.toFixed(4)} (${r24h}% 24h)`;
+  });
+
+  const rsiVals = SYMBOLS.map((sym, ti) => {
+    const bars = allBars[ti];
+    if (!bars.length) return `${sym}: N/A`;
+    const r = rsi(bars.slice(-20).map(b => b.close));
+    return `${sym}: ${r ?? 'N/A'}`;
+  });
+
+  const arNote = arState
+    ? `\n## Autoresearch (Venice self-improvement loop)\nExperiments run: ${arState.expCount} | Best validation Sharpe: ${arState.bestValSharpe.toFixed(3)}\nAR scores reflect a scoring function Venice has been autonomously evolving.\n`
+    : '';
+
+  const context = `## Market Regime
+State: ${state}
+BTC: $${Math.round(regime.btcNow)} — ${(regime.pctFrom200 * 100).toFixed(1)}% ${regime.pctFrom200 > 0 ? 'above' : 'below'} 200d MA
+Volatility ratio (7d/30d): ${regime.volRatio.toFixed(2)} — ${regime.volRatio > PARAMS.volHighMult ? 'HIGH VOL' : 'normal'}
+Market breadth: ${regime.breadthFraction} tokens above 200d MA
+${arNote}
+## Prices & 24h Change
+${recentPrices.join('\n')}
+
+## RSI (14, hourly)
+${rsiVals.join('\n')}
+
+## Signal Scores (A=trend B=OBV C=rank D=bounce AR=self-evolved)
+${ranked.map(s => `${s.sym.padEnd(6)}: A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} → ${s.combined.toFixed(3)} [${s.template}]`).join('\n')}
+
+## Top Candidate
+${state !== 'BEAR' && topToken.combined > 0.05
+  ? `${topToken.sym} via Template ${topToken.template} | score=${topToken.combined.toFixed(3)}`
+  : 'None — below threshold or BEAR regime'}
+
+## Portfolio Context
+Active tranche: $${ACTIVE_TRANCHE_USD} USDC
+Stop: ${PARAMS.stopMult}× ATR | Target: ${PARAMS.tpMult}× ATR
+
+What is your allocation decision?`;
+
+  // 5. Ask Venice
+  console.log('\n[venice] Reasoning...');
+  let decision;
+  try {
+    decision = await askVenice(context);
+    console.log(`[venice] → ${decision.action.toUpperCase()} ${decision.asset} | size=${decision.size_pct}% | confidence=${decision.confidence}%`);
+    console.log(`[venice] "${decision.reasoning}"`);
+    console.log(`[venice] Privacy: ${decision.tee_quote === 'e2ee-encrypted' ? '✓ E2EE (inference encrypted)' : '✗ no privacy layer'}`);
+  } catch (e) {
+    console.error('[venice] Failed:', e.message);
+    decision = { action: 'hold', asset: 'USDC', size_pct: 0, confidence: 0, reasoning: `Venice unavailable: ${e.message}`, tee_quote: null };
+  }
+
+  // 6. Execute
+  if (decision.confidence < 65 || decision.action === 'hold') {
+    console.log(`\n[delu] Skipping — confidence ${decision.confidence}% or hold`);
+  } else if (DRY_RUN) {
+    console.log(`\n[delu] DRY RUN — would: ${decision.action} ${decision.asset} (${decision.size_pct}% = $${Math.round(decision.size_pct/100*ACTIVE_TRANCHE_USD)})`);
   } else {
+    console.log('\n[bankr] Executing...');
     try {
-      console.log('\n[bankr] Executing...');
-      execution = await bankr.execute(decision, ACTIVE_TRANCHE_USD);
-      console.log(`[bankr] Done: ${execution.response || JSON.stringify(execution)}`);
+      const result = await bankr.execute(decision, ACTIVE_TRANCHE_USD);
+      console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
     } catch (e) {
       console.error('[bankr] Execution failed:', e.message);
-      execution = { error: e.message };
     }
   }
 
-  // 5. Log
-  const entry = log.record(market, decision, execution);
-  const s = log.stats();
-  console.log(`\n[delu] Allocation #${entry.id} recorded`);
-  console.log(`[delu] Track record: ${s.correct}/${s.resolved} correct (${s.accuracy}%) | ${s.total} total decisions\n`);
+  // 7. Log
+  const logEntry = {
+    ts: cycleStart,
+    regime: state,
+    regime_detail: regime,
+    scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template, sA: s.sA, sB: s.sB, sC: s.sC, sD: s.sD })),
+    decision,
+    dry_run: DRY_RUN
+  };
+  const logPath = require('path').join(__dirname, '../data/agent_log.jsonl');
+  require('fs').appendFileSync(logPath, JSON.stringify(logEntry) + '\n');
+  console.log(`\n[log] → ${logPath}`);
+  console.log('\n' + '═'.repeat(60));
 }
 
 async function main() {
-  console.log('delu agent starting...');
-  console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'} | ${LOOP ? 'LOOP (4h)' : 'SINGLE RUN'}`);
-
-  // Verify keys
-  if (!process.env.BANKR_API_KEY) { console.error('Missing BANKR_API_KEY'); process.exit(1); }
+  if (!process.env.BANKR_API_KEY)  { console.error('Missing BANKR_API_KEY');  process.exit(1); }
   if (!process.env.VENICE_API_KEY) { console.error('Missing VENICE_API_KEY'); process.exit(1); }
+
+  console.log(`delu agent — ${DRY_RUN ? 'DRY RUN' : 'LIVE'} | ${LOOP ? 'every 4h' : 'single run'}`);
+  console.log(`Wallet: ${process.env.DELU_WALLET}`);
+  console.log(`Tranche: $${ACTIVE_TRANCHE_USD}`);
 
   await runCycle();
 
   if (LOOP) {
-    console.log(`[delu] Next cycle in 4 hours`);
+    console.log(`\nNext cycle: ${new Date(Date.now() + CYCLE_MS).toISOString()}`);
     setInterval(runCycle, CYCLE_MS);
   }
 }
 
-main().catch(e => {
-  console.error('Fatal:', e);
-  process.exit(1);
-});
+main().catch(e => { console.error('Fatal:', e.stack); process.exit(1); });

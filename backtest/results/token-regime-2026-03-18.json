@@ -1,0 +1,1083 @@
+{
+  "run_at": "2026-03-18T08:40:52.747Z",
+  "top10": [
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2.5,
+        "topN": 1,
+        "corrBoost": true,
+        "rangeAllow": false,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2.5 N=1 corrBoost=true rngAllow=false"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.46,
+        "ret": 4.2,
+        "tradRet": 1.3,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 50,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.24629419894066806
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.08255854352758095
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": 0.009229337042338028
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.44,
+        "ret": 15.8,
+        "tradRet": 11.8,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2.5,
+        "topN": 1,
+        "corrBoost": false,
+        "rangeAllow": false,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2.5 N=1 corrBoost=false rngAllow=false"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.46,
+        "ret": 4.2,
+        "tradRet": 1.3,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 50,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.24629419894066806
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.08255854352758095
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": 0.009229337042338028
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.48,
+        "ret": 16.2,
+        "tradRet": 12.2,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2,
+        "topN": 1,
+        "corrBoost": true,
+        "rangeAllow": false,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2 N=1 corrBoost=true rngAllow=false"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.32,
+        "ret": 3.6,
+        "tradRet": 0.8,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 50,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.24629419894066806
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.06604683482206475
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": -0.007282371663178177
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.44,
+        "ret": 15.8,
+        "tradRet": 11.8,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2,
+        "topN": 1,
+        "corrBoost": false,
+        "rangeAllow": false,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2 N=1 corrBoost=false rngAllow=false"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.32,
+        "ret": 3.6,
+        "tradRet": 0.8,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 50,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.24629419894066806
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.06604683482206475
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": -0.007282371663178177
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.48,
+        "ret": 16.2,
+        "tradRet": 12.2,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2.5,
+        "topN": 1,
+        "corrBoost": true,
+        "rangeAllow": true,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2.5 N=1 corrBoost=true rngAllow=true"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.25,
+        "ret": 3.4,
+        "tradRet": 0.5,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 52,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.2700691167428856
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.08255854352758095
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": -0.014545580759879502
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.44,
+        "ret": 15.8,
+        "tradRet": 11.8,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2.5,
+        "topN": 1,
+        "corrBoost": false,
+        "rangeAllow": true,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2.5 N=1 corrBoost=false rngAllow=true"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.25,
+        "ret": 3.4,
+        "tradRet": 0.5,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 52,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.2700691167428856
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.08255854352758095
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": -0.014545580759879502
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.48,
+        "ret": 16.2,
+        "tradRet": 12.2,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2,
+        "topN": 1,
+        "corrBoost": true,
+        "rangeAllow": true,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2 N=1 corrBoost=true rngAllow=true"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.11,
+        "ret": 2.8,
+        "tradRet": -0.1,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 52,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.2700691167428856
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.06604683482206475
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": -0.031057289465395706
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.44,
+        "ret": 15.8,
+        "tradRet": 11.8,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 2,
+        "tpMultD": 2,
+        "topN": 1,
+        "corrBoost": false,
+        "rangeAllow": true,
+        "label": "sm=2.5 tp=6 smD=2 tpD=2 N=1 corrBoost=false rngAllow=true"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": 0.11,
+        "ret": 2.8,
+        "tradRet": -0.1,
+        "dd": 12.6,
+        "wr": 39,
+        "stop": 52,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.2700691167428856
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 2,
+            "pnl": 0.06604683482206475
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 3,
+            "pnl": -0.031057289465395706
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.48,
+        "ret": 16.2,
+        "tradRet": 12.2,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 1.5,
+        "tpMultD": 2.5,
+        "topN": 1,
+        "corrBoost": true,
+        "rangeAllow": false,
+        "label": "sm=2.5 tp=6 smD=1.5 tpD=2.5 N=1 corrBoost=true rngAllow=false"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": -0.3,
+        "ret": 1.2,
+        "tradRet": -1.7,
+        "dd": 12.6,
+        "wr": 38,
+        "stop": 52,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.24629419894066806
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.004581253947523779
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 2,
+            "pnl": -0.0779104604327667
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.44,
+        "ret": 15.8,
+        "tradRet": 11.8,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "stopMult": 2.5,
+        "tpMult": 6,
+        "stopMultD": 1.5,
+        "tpMultD": 2.5,
+        "topN": 1,
+        "corrBoost": false,
+        "rangeAllow": false,
+        "label": "sm=2.5 tp=6 smD=1.5 tpD=2.5 N=1 corrBoost=false rngAllow=false"
+      },
+      "oos": {
+        "n": 56,
+        "sharpe": -0.3,
+        "ret": 1.2,
+        "tradRet": -1.7,
+        "dd": 12.6,
+        "wr": 38,
+        "stop": 52,
+        "byStrategy": {
+          "A": {
+            "n": 40,
+            "wins": 11,
+            "pnl": -0.24629419894066806
+          },
+          "C": {
+            "n": 14,
+            "wins": 9,
+            "pnl": 0.21533648586645132
+          },
+          "D": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.004581253947523779
+          }
+        },
+        "byRegime": {
+          "ALT_SEASON": {
+            "n": 19,
+            "wins": 5,
+            "pnl": -0.22977827300151232
+          },
+          "BULL_HOT": {
+            "n": 28,
+            "wins": 14,
+            "pnl": 0.2721497664125386
+          },
+          "RANGE_TIGHT": {
+            "n": 9,
+            "wins": 2,
+            "pnl": -0.0779104604327667
+          }
+        }
+      },
+      "is": {
+        "n": 109,
+        "sharpe": 1.48,
+        "ret": 16.2,
+        "tradRet": 12.2,
+        "dd": 13.4,
+        "wr": 36,
+        "stop": 49,
+        "byStrategy": {
+          "A": {
+            "n": 73,
+            "wins": 26,
+            "pnl": 0.5267028467591875
+          },
+          "C": {
+            "n": 33,
+            "wins": 13,
+            "pnl": 0.06740665110053076
+          },
+          "B": {
+            "n": 3,
+            "wins": 0,
+            "pnl": -0.0451335741414702
+          }
+        },
+        "byRegime": {
+          "RANGE_TIGHT": {
+            "n": 2,
+            "wins": 1,
+            "pnl": -0.02566649600001745
+          },
+          "BULL_HOT": {
+            "n": 78,
+            "wins": 28,
+            "pnl": 0.23686003299718533
+          },
+          "ALT_SEASON": {
+            "n": 29,
+            "wins": 10,
+            "pnl": 0.3377823867210808
+          }
+        }
+      }
+    }
+  ],
+  "best": {
+    "params": {
+      "stopMult": 2.5,
+      "tpMult": 6,
+      "stopMultD": 2,
+      "tpMultD": 2.5,
+      "topN": 1,
+      "corrBoost": true,
+      "rangeAllow": false,
+      "label": "sm=2.5 tp=6 smD=2 tpD=2.5 N=1 corrBoost=true rngAllow=false"
+    },
+    "oos": {
+      "n": 56,
+      "sharpe": 0.46,
+      "ret": 4.2,
+      "tradRet": 1.3,
+      "dd": 12.6,
+      "wr": 39,
+      "stop": 50,
+      "byStrategy": {
+        "A": {
+          "n": 40,
+          "wins": 11,
+          "pnl": -0.24629419894066806
+        },
+        "C": {
+          "n": 14,
+          "wins": 9,
+          "pnl": 0.21533648586645132
+        },
+        "D": {
+          "n": 2,
+          "wins": 2,
+          "pnl": 0.08255854352758095
+        }
+      },
+      "byRegime": {
+        "ALT_SEASON": {
+          "n": 19,
+          "wins": 5,
+          "pnl": -0.22977827300151232
+        },
+        "BULL_HOT": {
+          "n": 28,
+          "wins": 14,
+          "pnl": 0.2721497664125386
+        },
+        "RANGE_TIGHT": {
+          "n": 9,
+          "wins": 3,
+          "pnl": 0.009229337042338028
+        }
+      }
+    },
+    "is": {
+      "n": 109,
+      "sharpe": 1.44,
+      "ret": 15.8,
+      "tradRet": 11.8,
+      "dd": 13.4,
+      "wr": 36,
+      "stop": 49,
+      "byStrategy": {
+        "A": {
+          "n": 73,
+          "wins": 26,
+          "pnl": 0.5267028467591875
+        },
+        "C": {
+          "n": 33,
+          "wins": 13,
+          "pnl": 0.06740665110053076
+        },
+        "B": {
+          "n": 3,
+          "wins": 0,
+          "pnl": -0.0451335741414702
+        }
+      },
+      "byRegime": {
+        "RANGE_TIGHT": {
+          "n": 2,
+          "wins": 1,
+          "pnl": -0.02566649600001745
+        },
+        "BULL_HOT": {
+          "n": 78,
+          "wins": 28,
+          "pnl": 0.23686003299718533
+        },
+        "ALT_SEASON": {
+          "n": 29,
+          "wins": 10,
+          "pnl": 0.3377823867210808
+        }
+      }
+    }
+  }
+}

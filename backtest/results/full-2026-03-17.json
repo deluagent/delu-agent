@@ -1,0 +1,716 @@
+{
+  "run_at": "2026-03-17T22:23:03.864Z",
+  "version": "full-1.0",
+  "config": {
+    "tokens": [
+      "BTC",
+      "ETH",
+      "SOL",
+      "BNB",
+      "DOGE",
+      "AAVE",
+      "ARB"
+    ],
+    "days": 730,
+    "splitIdx": 12264,
+    "warmup": 4800,
+    "total": 319
+  },
+  "benchmarks": {
+    "btc": {
+      "is": {
+        "ret": 96,
+        "sharpe": 1.9,
+        "maxDD": 30.9
+      },
+      "oos": {
+        "ret": -37.5,
+        "sharpe": -1.5,
+        "maxDD": 50.1
+      }
+    },
+    "eth": {
+      "is": {
+        "ret": 80.9,
+        "sharpe": 1.32,
+        "maxDD": 65.3
+      },
+      "oos": {
+        "ret": -45.1,
+        "sharpe": -1.14,
+        "maxDD": 63.2
+      }
+    },
+    "aave": {
+      "is": 4.3,
+      "oos": 3
+    }
+  },
+  "regimeLog": {
+    "BULL": 7361,
+    "RANGE": 2055,
+    "BEAR": 3304
+  },
+  "isStats": {
+    "n": 250,
+    "winRate": 36,
+    "totalReturnPct": 7,
+    "tradingReturnPct": 3.1,
+    "yieldReturnPct": 3.9,
+    "sharpe": 0.67,
+    "maxDrawdownPct": 6.3,
+    "calmar": 1.12,
+    "profitFactor": 1.14,
+    "avgHoldHours": 16,
+    "stopHitPct": 61,
+    "tpHitPct": 15,
+    "byStrategy": {
+      "A": {
+        "n": 161,
+        "wins": 61,
+        "pnlSum": 0.7022547710614772
+      },
+      "C": {
+        "n": 54,
+        "wins": 19,
+        "pnlSum": 0.13234908357234998
+      },
+      "D": {
+        "n": 32,
+        "wins": 10,
+        "pnlSum": -0.23873159334413485
+      },
+      "B": {
+        "n": 3,
+        "wins": 0,
+        "pnlSum": -0.10048300400433435
+      }
+    },
+    "byRegime": {
+      "RANGE": {
+        "n": 11,
+        "wins": 4,
+        "pnlSum": 0.08444747420533655
+      },
+      "BULL": {
+        "n": 239,
+        "wins": 86,
+        "pnlSum": 0.4109417830800217
+      }
+    }
+  },
+  "oosStats": {
+    "n": 69,
+    "winRate": 42,
+    "totalReturnPct": 8.7,
+    "tradingReturnPct": 5.8,
+    "yieldReturnPct": 2.9,
+    "sharpe": 4.24,
+    "maxDrawdownPct": 1.8,
+    "calmar": 4.82,
+    "profitFactor": 1.46,
+    "avgHoldHours": 20,
+    "stopHitPct": 54,
+    "tpHitPct": 26,
+    "byStrategy": {
+      "C": {
+        "n": 5,
+        "wins": 3,
+        "pnlSum": 0.038491025836053065
+      },
+      "A": {
+        "n": 55,
+        "wins": 19,
+        "pnlSum": 0.14891251791715984
+      },
+      "D": {
+        "n": 6,
+        "wins": 5,
+        "pnlSum": 0.14752258213486333
+      },
+      "B": {
+        "n": 3,
+        "wins": 2,
+        "pnlSum": 0.014768120205421155
+      }
+    },
+    "byRegime": {
+      "BULL": {
+        "n": 59,
+        "wins": 26,
+        "pnlSum": 0.2841829958626782
+      },
+      "RANGE": {
+        "n": 10,
+        "wins": 3,
+        "pnlSum": 0.06551125023081912
+      }
+    }
+  },
+  "sampleTrades": {
+    "is": [
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 4800,
+        "exitBar": 4941,
+        "entryPrice": 143.73,
+        "exitPrice": 139.53861836058763,
+        "pnl": -0.02916149474300672,
+        "exitReason": "stop",
+        "holdHours": 141,
+        "weight": 0.09517232733736265,
+        "strategy": "A",
+        "regime": "RANGE"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 4944,
+        "exitBar": 4963,
+        "entryPrice": 139.44,
+        "exitPrice": 136.57874666431093,
+        "pnl": -0.020519602235291673,
+        "exitReason": "stop",
+        "holdHours": 19,
+        "weight": 0.10017982086456707,
+        "strategy": "A",
+        "regime": "RANGE"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 4968,
+        "exitBar": 5011,
+        "entryPrice": 140.7,
+        "exitPrice": 153.22679637084943,
+        "pnl": 0.08903195714889439,
+        "exitReason": "tp",
+        "holdHours": 43,
+        "weight": 0.10078627539914589,
+        "strategy": "A",
+        "regime": "RANGE"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 5016,
+        "exitBar": 5025,
+        "entryPrice": 154.73,
+        "exitPrice": 151.9594101959604,
+        "pnl": -0.01790596396328823,
+        "exitReason": "stop",
+        "holdHours": 9,
+        "weight": 0.10197366999370362,
+        "strategy": "A",
+        "regime": "RANGE"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 5040,
+        "exitBar": 5050,
+        "entryPrice": 154.64,
+        "exitPrice": 163.99615863246066,
+        "pnl": 0.060502836474784515,
+        "exitReason": "tp",
+        "holdHours": 10,
+        "weight": 0.11215563328388446,
+        "strategy": "A",
+        "regime": "RANGE"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 5064,
+        "exitBar": 5076,
+        "entryPrice": 162.93,
+        "exitPrice": 160.21595215240765,
+        "pnl": -0.0166577539286341,
+        "exitReason": "stop",
+        "holdHours": 12,
+        "weight": 0.10953504741199209,
+        "strategy": "A",
+        "regime": "RANGE"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 5088,
+        "exitBar": 5112,
+        "entryPrice": 156.79,
+        "exitPrice": 155.8,
+        "pnl": -0.006314178200140192,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.08723362637560152,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5112,
+        "exitBar": 5118,
+        "entryPrice": 0.12573,
+        "exitPrice": 0.12225451288172776,
+        "pnl": -0.027642464950864965,
+        "exitReason": "stop",
+        "holdHours": 6,
+        "weight": 0.05114377205525776,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5136,
+        "exitBar": 5160,
+        "entryPrice": 0.12967,
+        "exitPrice": 0.13716,
+        "pnl": 0.05776201125935063,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.07916783998330898,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 5160,
+        "exitBar": 5167,
+        "entryPrice": 159,
+        "exitPrice": 156.83671783213538,
+        "pnl": -0.013605548225563662,
+        "exitReason": "stop",
+        "holdHours": 7,
+        "weight": 0.06313790870594779,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5184,
+        "exitBar": 5197,
+        "entryPrice": 0.14407,
+        "exitPrice": 0.14040151748426455,
+        "pnl": -0.025463195083885993,
+        "exitReason": "stop",
+        "holdHours": 13,
+        "weight": 0.08101828299558377,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 0,
+        "symbol": "BTC",
+        "entryBar": 5208,
+        "exitBar": 5212,
+        "entryPrice": 69031.99,
+        "exitPrice": 68679.94068185969,
+        "pnl": -0.005099799645647104,
+        "exitReason": "stop",
+        "holdHours": 4,
+        "weight": 0.2296541378027166,
+        "strategy": "C",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5232,
+        "exitBar": 5245,
+        "entryPrice": 0.14367,
+        "exitPrice": 0.14024203080374195,
+        "pnl": -0.023860020855140534,
+        "exitReason": "stop",
+        "holdHours": 13,
+        "weight": 0.09140552594589643,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5256,
+        "exitBar": 5267,
+        "entryPrice": 0.1397,
+        "exitPrice": 0.13653048919605454,
+        "pnl": -0.022687979985293146,
+        "exitReason": "stop",
+        "holdHours": 11,
+        "weight": 0.09006039977407644,
+        "strategy": "C",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5280,
+        "exitBar": 5290,
+        "entryPrice": 0.13997,
+        "exitPrice": 0.1366568204392501,
+        "pnl": -0.023670640571193242,
+        "exitReason": "stop",
+        "holdHours": 10,
+        "weight": 0.08462451493822112,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 2,
+        "symbol": "SOL",
+        "entryBar": 5304,
+        "exitBar": 5308,
+        "entryPrice": 177.19,
+        "exitPrice": 174.42420004517055,
+        "pnl": -0.015609232771767295,
+        "exitReason": "stop",
+        "holdHours": 4,
+        "weight": 0.11276451379449175,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 2,
+        "symbol": "SOL",
+        "entryBar": 5328,
+        "exitBar": 5349,
+        "entryPrice": 164.9,
+        "exitPrice": 172.35898558516757,
+        "pnl": 0.04523338741763231,
+        "exitReason": "tp",
+        "holdHours": 21,
+        "weight": 0.09175025588715918,
+        "strategy": "D",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 6,
+        "symbol": "ARB",
+        "entryBar": 5328,
+        "exitBar": 5352,
+        "entryPrice": 0.5069,
+        "exitPrice": 0.5144,
+        "pnl": 0.014795817715525648,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.07389320614694929,
+        "strategy": "D",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5328,
+        "exitBar": 5376,
+        "entryPrice": 0.13161,
+        "exitPrice": 0.1458366905029777,
+        "pnl": 0.10809733685113365,
+        "exitReason": "tp",
+        "holdHours": 48,
+        "weight": 0.08503996967464944,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 4,
+        "symbol": "DOGE",
+        "entryBar": 5376,
+        "exitBar": 5378,
+        "entryPrice": 0.14426,
+        "exitPrice": 0.14175503002050466,
+        "pnl": -0.01736427269856746,
+        "exitReason": "stop",
+        "holdHours": 2,
+        "weight": 0.09094395460440259,
+        "strategy": "A",
+        "regime": "BULL"
+      }
+    ],
+    "oos": [
+      {
+        "tidx": 0,
+        "symbol": "BTC",
+        "entryBar": 12264,
+        "exitBar": 12268,
+        "entryPrice": 119294.01,
+        "exitPrice": 121957.89115119945,
+        "pnl": 0.0223303848298792,
+        "exitReason": "tp",
+        "holdHours": 4,
+        "weight": 0.22782567623534025,
+        "strategy": "C",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 3,
+        "symbol": "BNB",
+        "entryBar": 12288,
+        "exitBar": 12312,
+        "entryPrice": 805.09,
+        "exitPrice": 832.47,
+        "pnl": 0.03400862015426846,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.1613703730087776,
+        "strategy": "C",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 12312,
+        "exitBar": 12336,
+        "entryPrice": 322.26,
+        "exitPrice": 332.15,
+        "pnl": 0.030689505368336086,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.046222963895559334,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 6,
+        "symbol": "ARB",
+        "entryBar": 12336,
+        "exitBar": 12338,
+        "entryPrice": 0.5712,
+        "exitPrice": 0.5508687971231737,
+        "pnl": -0.03559384257147466,
+        "exitReason": "stop",
+        "holdHours": 2,
+        "weight": 0.028932905862385828,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12360,
+        "exitBar": 12376,
+        "entryPrice": 4546.84,
+        "exitPrice": 4439.265095287759,
+        "pnl": -0.02365926769190049,
+        "exitReason": "stop",
+        "holdHours": 16,
+        "weight": 0.12398925709539993,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12384,
+        "exitBar": 12408,
+        "entryPrice": 4439.47,
+        "exitPrice": 4421.99,
+        "pnl": -0.003937406942720746,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.13736646611071096,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 6,
+        "symbol": "ARB",
+        "entryBar": 12408,
+        "exitBar": 12419,
+        "entryPrice": 0.4925,
+        "exitPrice": 0.5322503383008079,
+        "pnl": 0.08071134680367092,
+        "exitReason": "tp",
+        "holdHours": 11,
+        "weight": 0.04277575496121169,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12432,
+        "exitBar": 12434,
+        "entryPrice": 4472.33,
+        "exitPrice": 4411.945628280367,
+        "pnl": -0.013501770155519212,
+        "exitReason": "stop",
+        "holdHours": 2,
+        "weight": 0.14902338523717387,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12456,
+        "exitBar": 12460,
+        "entryPrice": 4312.99,
+        "exitPrice": 4234.150026878353,
+        "pnl": -0.018279655904986293,
+        "exitReason": "stop",
+        "holdHours": 4,
+        "weight": 0.14710674200898055,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12480,
+        "exitBar": 12488,
+        "entryPrice": 4075.59,
+        "exitPrice": 4208.623845027065,
+        "pnl": 0.03264161631250068,
+        "exitReason": "tp",
+        "holdHours": 8,
+        "weight": 0.13382276746434535,
+        "strategy": "D",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 3,
+        "symbol": "BNB",
+        "entryBar": 12504,
+        "exitBar": 12514,
+        "entryPrice": 869.05,
+        "exitPrice": 856.6910797429645,
+        "pnl": -0.014221184347316602,
+        "exitReason": "stop",
+        "holdHours": 10,
+        "weight": 0.1413730674564243,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12528,
+        "exitBar": 12543,
+        "entryPrice": 4225.3,
+        "exitPrice": 4501.624366946803,
+        "pnl": 0.0653975734141488,
+        "exitReason": "tp",
+        "holdHours": 15,
+        "weight": 0.16204571999600242,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 6,
+        "symbol": "ARB",
+        "entryBar": 12552,
+        "exitBar": 12600,
+        "entryPrice": 0.5867,
+        "exitPrice": 0.579,
+        "pnl": -0.013124254303732812,
+        "exitReason": "rebalance",
+        "holdHours": 48,
+        "weight": 0.06081812097760704,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 2,
+        "symbol": "SOL",
+        "entryBar": 12600,
+        "exitBar": 12608,
+        "entryPrice": 205.98,
+        "exitPrice": 201.3294497462431,
+        "pnl": -0.022577678676361183,
+        "exitReason": "stop",
+        "holdHours": 8,
+        "weight": 0.041987313214227856,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12624,
+        "exitBar": 12637,
+        "entryPrice": 4376.18,
+        "exitPrice": 4538.886658928667,
+        "pnl": 0.03718006547460728,
+        "exitReason": "tp",
+        "holdHours": 13,
+        "weight": 0.11044734507543134,
+        "strategy": "D",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 6,
+        "symbol": "ARB",
+        "entryBar": 12648,
+        "exitBar": 12656,
+        "entryPrice": 0.5303,
+        "exitPrice": 0.5161142811059796,
+        "pnl": -0.026750365630813552,
+        "exitReason": "stop",
+        "holdHours": 8,
+        "weight": 0.10331150881789408,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 2,
+        "symbol": "SOL",
+        "entryBar": 12672,
+        "exitBar": 12696,
+        "entryPrice": 202.95,
+        "exitPrice": 214.43,
+        "pnl": 0.05656565656565666,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.10470986564638932,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 6,
+        "symbol": "ARB",
+        "entryBar": 12696,
+        "exitBar": 12698,
+        "entryPrice": 0.5233,
+        "exitPrice": 0.511358462854699,
+        "pnl": -0.0228196773271565,
+        "exitReason": "stop",
+        "holdHours": 2,
+        "weight": 0.043381468064052096,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 5,
+        "symbol": "AAVE",
+        "entryBar": 12720,
+        "exitBar": 12722,
+        "entryPrice": 319.2,
+        "exitPrice": 313.16119920152244,
+        "pnl": -0.01891854886741088,
+        "exitReason": "stop",
+        "holdHours": 2,
+        "weight": 0.10734251416802523,
+        "strategy": "A",
+        "regime": "BULL"
+      },
+      {
+        "tidx": 1,
+        "symbol": "ETH",
+        "entryBar": 12744,
+        "exitBar": 12768,
+        "entryPrice": 4373.7,
+        "exitPrice": 4391.83,
+        "pnl": 0.004145231725998608,
+        "exitReason": "rebalance",
+        "holdHours": 24,
+        "weight": 0.17367883666154382,
+        "strategy": "C",
+        "regime": "BULL"
+      }
+    ]
+  }
+}

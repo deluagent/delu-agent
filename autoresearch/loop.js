@@ -98,16 +98,33 @@ function gitRevert() {
   execSync('cd /data/workspace/delu-agent && git checkout HEAD -- autoresearch/candidate.js', { encoding: 'utf8' });
 }
 
+// ── Load agent trade history ─────────────────────────────────
+function loadAgentHistory() {
+  try {
+    const logPath = path.join(DIR, '../data/agent_log.jsonl');
+    const lines = fs.readFileSync(logPath, 'utf8').trim().split('\n').filter(Boolean);
+    const entries = lines.map(l => JSON.parse(l)).slice(-10);
+    const recent = entries.map(e =>
+      `  ${e.ts?.slice(0,16)} | regime=${e.regime} | decision=${e.decision?.action} ${e.decision?.asset} conf=${e.decision?.confidence}% | "${e.decision?.reasoning?.slice(0,60)}"`
+    ).join('\n');
+    return `## Agent recent decisions (last ${entries.length})\n${recent}`;
+  } catch { return '## Agent history: none yet'; }
+}
+
 // ── Propose change via Venice ────────────────────────────────
 async function proposeChange(state, experiments) {
   const programMd    = fs.readFileSync(PROGRAM, 'utf8');
   const candidateJs  = fs.readFileSync(CANDIDATE, 'utf8');
+  const agentHistory = loadAgentHistory();
 
   const recentExps = experiments.slice(-6).map(e =>
     `  exp ${e.n}: val_sharpe=${e.valSharpe.toFixed(3)} ${e.accepted ? '✅ KEPT' : '❌ reverted'} — ${e.description}`
   ).join('\n') || '  (none yet)';
 
-  const prompt = `You are an autonomous trading strategy researcher improving a crypto trading strategy.
+  const prompt = `You are an autonomous trading strategy researcher.
+You are continuously improving a token-scoring function used by a live crypto trading agent.
+The agent uses your score (as "AR signal") alongside other signals (trend, OBV, cross-rank, panic-bounce).
+The agent currently has AR score weighted at 20% in BULL regime, 10% in RANGE, 0% in BEAR.
 
 ## Current state
 - Best validation Sharpe so far: ${state.bestValSharpe.toFixed(3)}
@@ -124,10 +141,14 @@ ${candidateJs}
 ## Recent experiments
 ${recentExps}
 
+${agentHistory}
+
 ## Your task
 Propose ONE specific, small, logical change to improve validation Sharpe.
 Avoid overfitting: changes that work only in-sample will be rejected.
 Prefer: regime filters, vol-adjusted signals, tighter entry criteria.
+The function receives: { prices, btcPrices, flowSignal, attentionDelta }
+It must return a number 0-1. Higher = stronger buy signal.
 
 Return ONLY the complete new candidate.js file. No explanation outside the code.
 Start with the comment block, end with module.exports. No markdown fences.`;

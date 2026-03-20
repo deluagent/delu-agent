@@ -1,0 +1,837 @@
+{
+  "run_at": "2026-03-17T19:08:57.196Z",
+  "version": 4,
+  "benchmarks": {
+    "btc": {
+      "is": {
+        "ret": 93.8,
+        "sharpe": 1.87,
+        "maxDD": 30.9
+      },
+      "oos": {
+        "ret": -36.9,
+        "sharpe": -1.46,
+        "maxDD": 50.1
+      }
+    },
+    "eth": {
+      "is": {
+        "ret": 78.7,
+        "sharpe": 1.3,
+        "maxDD": 65.3
+      },
+      "oos": {
+        "ret": -44.7,
+        "sharpe": -1.12,
+        "maxDD": 63.2
+      }
+    },
+    "aave": {
+      "is": 4.3,
+      "oos": 3
+    }
+  },
+  "regimeCounts": {
+    "BULL": 7439,
+    "RANGE": 1980,
+    "BEAR": 3301
+  },
+  "config": {
+    "tokens": [
+      "BTC",
+      "ETH",
+      "SOL",
+      "BNB",
+      "DOGE",
+      "AAVE",
+      "ARB"
+    ],
+    "nStrategies": 12,
+    "totalTrades": 3721,
+    "elapsed": 69
+  },
+  "ranked": [
+    {
+      "si": 6,
+      "label": "bull[t0.6,va0.3,xr0.1] range_z=-2.5 vol_pen=0.5",
+      "strategy": [
+        0.6,
+        0.3,
+        0.1,
+        -2.5,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 212,
+        "winRate": 38,
+        "totalReturnPct": 27.5,
+        "tradingReturnPct": 24.2,
+        "yieldReturnPct": 3.21,
+        "sharpe": 1.23,
+        "maxDrawdownPct": 30.7,
+        "calmar": 0.89,
+        "profitFactor": 1.23,
+        "avgHoldHours": 44,
+        "stopHitPct": 58,
+        "tpHitPct": 33,
+        "byRegime": {
+          "BULL": {
+            "n": 207,
+            "wins": 79,
+            "pnlSum": 1.0795112307113268
+          },
+          "RANGE": {
+            "n": 5,
+            "wins": 2,
+            "pnlSum": 0.030378036458977235
+          }
+        }
+      },
+      "oosStats": {
+        "n": 82,
+        "winRate": 41,
+        "totalReturnPct": 9.7,
+        "tradingReturnPct": 7,
+        "yieldReturnPct": 2.72,
+        "sharpe": 1.21,
+        "maxDrawdownPct": 10.2,
+        "calmar": 0.95,
+        "profitFactor": 1.41,
+        "avgHoldHours": 30,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 75,
+            "wins": 28,
+            "pnlSum": 0.022148208990124322
+          },
+          "RANGE": {
+            "n": 7,
+            "wins": 6,
+            "pnlSum": 0.5390234531905727
+          }
+        }
+      },
+      "isN": 212,
+      "oosN": 82
+    },
+    {
+      "si": 5,
+      "label": "bull[t0.4,va0.2,xr0.4] range_z=-2 vol_pen=0.5",
+      "strategy": [
+        0.4,
+        0.2,
+        0.4,
+        -2,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 231,
+        "winRate": 40,
+        "totalReturnPct": 37,
+        "tradingReturnPct": 33.9,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.51,
+        "maxDrawdownPct": 25.3,
+        "calmar": 1.46,
+        "profitFactor": 1.31,
+        "avgHoldHours": 42,
+        "stopHitPct": 56,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 212,
+            "wins": 83,
+            "pnlSum": 1.4245406961810512
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 87,
+        "winRate": 41,
+        "totalReturnPct": 9.5,
+        "tradingReturnPct": 6.8,
+        "yieldReturnPct": 2.72,
+        "sharpe": 1.14,
+        "maxDrawdownPct": 10.2,
+        "calmar": 0.94,
+        "profitFactor": 1.39,
+        "avgHoldHours": 29,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 75,
+            "wins": 28,
+            "pnlSum": 0.022148208990124322
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 231,
+      "oosN": 87
+    },
+    {
+      "si": 4,
+      "label": "bull[t0.4,va0.3,xr0.3] range_z=-2.5 vol_pen=0.5",
+      "strategy": [
+        0.4,
+        0.3,
+        0.3,
+        -2.5,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 222,
+        "winRate": 41,
+        "totalReturnPct": 44.2,
+        "tradingReturnPct": 41,
+        "yieldReturnPct": 3.19,
+        "sharpe": 1.8,
+        "maxDrawdownPct": 23.7,
+        "calmar": 1.86,
+        "profitFactor": 1.34,
+        "avgHoldHours": 43,
+        "stopHitPct": 55,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 217,
+            "wins": 89,
+            "pnlSum": 1.5948043402054388
+          },
+          "RANGE": {
+            "n": 5,
+            "wins": 2,
+            "pnlSum": 0.030378036458977235
+          }
+        }
+      },
+      "oosStats": {
+        "n": 80,
+        "winRate": 41,
+        "totalReturnPct": 7.3,
+        "tradingReturnPct": 4.6,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.89,
+        "maxDrawdownPct": 9.6,
+        "calmar": 0.76,
+        "profitFactor": 1.38,
+        "avgHoldHours": 31,
+        "stopHitPct": 57,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 73,
+            "wins": 27,
+            "pnlSum": -0.04655719946931555
+          },
+          "RANGE": {
+            "n": 7,
+            "wins": 6,
+            "pnlSum": 0.5390234531905727
+          }
+        }
+      },
+      "isN": 222,
+      "oosN": 80
+    },
+    {
+      "si": 1,
+      "label": "bull[t0.5,va0.3,xr0.2] range_z=-2.5 vol_pen=0.5",
+      "strategy": [
+        0.5,
+        0.3,
+        0.2,
+        -2.5,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 217,
+        "winRate": 39,
+        "totalReturnPct": 35.4,
+        "tradingReturnPct": 32.2,
+        "yieldReturnPct": 3.19,
+        "sharpe": 1.5,
+        "maxDrawdownPct": 26.3,
+        "calmar": 1.35,
+        "profitFactor": 1.26,
+        "avgHoldHours": 44,
+        "stopHitPct": 57,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 212,
+            "wins": 82,
+            "pnlSum": 1.243134224692996
+          },
+          "RANGE": {
+            "n": 5,
+            "wins": 2,
+            "pnlSum": 0.030378036458977235
+          }
+        }
+      },
+      "oosStats": {
+        "n": 82,
+        "winRate": 43,
+        "totalReturnPct": 7.3,
+        "tradingReturnPct": 4.6,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.86,
+        "maxDrawdownPct": 10.5,
+        "calmar": 0.7,
+        "profitFactor": 1.37,
+        "avgHoldHours": 30,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 75,
+            "wins": 29,
+            "pnlSum": -0.03487859496570687
+          },
+          "RANGE": {
+            "n": 7,
+            "wins": 6,
+            "pnlSum": 0.5390234531905727
+          }
+        }
+      },
+      "isN": 217,
+      "oosN": 82
+    },
+    {
+      "si": 3,
+      "label": "bull[t0.4,va0.3,xr0.3] range_z=-2 vol_pen=0.5",
+      "strategy": [
+        0.4,
+        0.3,
+        0.3,
+        -2,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 235,
+        "winRate": 42,
+        "totalReturnPct": 42.8,
+        "tradingReturnPct": 39.6,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.7,
+        "maxDrawdownPct": 24.4,
+        "calmar": 1.75,
+        "profitFactor": 1.34,
+        "avgHoldHours": 41,
+        "stopHitPct": 55,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 216,
+            "wins": 88,
+            "pnlSum": 1.5585535850731471
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 85,
+        "winRate": 41,
+        "totalReturnPct": 7.1,
+        "tradingReturnPct": 4.4,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.83,
+        "maxDrawdownPct": 9.6,
+        "calmar": 0.75,
+        "profitFactor": 1.35,
+        "avgHoldHours": 30,
+        "stopHitPct": 58,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 73,
+            "wins": 27,
+            "pnlSum": -0.04655719946931555
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 235,
+      "oosN": 85
+    },
+    {
+      "si": 0,
+      "label": "bull[t0.5,va0.3,xr0.2] range_z=-2 vol_pen=0.5",
+      "strategy": [
+        0.5,
+        0.3,
+        0.2,
+        -2,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 230,
+        "winRate": 40,
+        "totalReturnPct": 34.1,
+        "tradingReturnPct": 31,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.42,
+        "maxDrawdownPct": 27,
+        "calmar": 1.27,
+        "profitFactor": 1.26,
+        "avgHoldHours": 42,
+        "stopHitPct": 57,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 211,
+            "wins": 81,
+            "pnlSum": 1.2068834695607047
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 87,
+        "winRate": 43,
+        "totalReturnPct": 7.1,
+        "tradingReturnPct": 4.4,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.81,
+        "maxDrawdownPct": 10.5,
+        "calmar": 0.68,
+        "profitFactor": 1.35,
+        "avgHoldHours": 29,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 75,
+            "wins": 29,
+            "pnlSum": -0.03487859496570687
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 230,
+      "oosN": 87
+    },
+    {
+      "si": 2,
+      "label": "bull[t0.5,va0.3,xr0.2] range_z=-2 vol_pen=0.3",
+      "strategy": [
+        0.5,
+        0.3,
+        0.2,
+        -2,
+        0.05,
+        0.3
+      ],
+      "isStats": {
+        "n": 230,
+        "winRate": 40,
+        "totalReturnPct": 34.2,
+        "tradingReturnPct": 31,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.42,
+        "maxDrawdownPct": 26.9,
+        "calmar": 1.27,
+        "profitFactor": 1.26,
+        "avgHoldHours": 42,
+        "stopHitPct": 57,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 211,
+            "wins": 81,
+            "pnlSum": 1.2068834695607047
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 87,
+        "winRate": 43,
+        "totalReturnPct": 7.1,
+        "tradingReturnPct": 4.4,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.81,
+        "maxDrawdownPct": 10.5,
+        "calmar": 0.68,
+        "profitFactor": 1.35,
+        "avgHoldHours": 29,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 75,
+            "wins": 29,
+            "pnlSum": -0.03487859496570687
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 230,
+      "oosN": 87
+    },
+    {
+      "si": 11,
+      "label": "bull[t0.5,va0.3,xr0.2] range_z=-2 vol_pen=0.5",
+      "strategy": [
+        0.5,
+        0.3,
+        0.2,
+        -2,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 230,
+        "winRate": 40,
+        "totalReturnPct": 34.1,
+        "tradingReturnPct": 31,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.42,
+        "maxDrawdownPct": 27,
+        "calmar": 1.27,
+        "profitFactor": 1.26,
+        "avgHoldHours": 42,
+        "stopHitPct": 57,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 211,
+            "wins": 81,
+            "pnlSum": 1.2068834695607047
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 87,
+        "winRate": 43,
+        "totalReturnPct": 7.1,
+        "tradingReturnPct": 4.4,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.81,
+        "maxDrawdownPct": 10.5,
+        "calmar": 0.68,
+        "profitFactor": 1.35,
+        "avgHoldHours": 29,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 75,
+            "wins": 29,
+            "pnlSum": -0.03487859496570687
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 230,
+      "oosN": 87
+    },
+    {
+      "si": 7,
+      "label": "bull[t0.6,va0.2,xr0.2] range_z=-2 vol_pen=0.5",
+      "strategy": [
+        0.6,
+        0.2,
+        0.2,
+        -2,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 232,
+        "winRate": 40,
+        "totalReturnPct": 33.2,
+        "tradingReturnPct": 30.1,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.38,
+        "maxDrawdownPct": 27.2,
+        "calmar": 1.22,
+        "profitFactor": 1.26,
+        "avgHoldHours": 42,
+        "stopHitPct": 56,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 213,
+            "wins": 82,
+            "pnlSum": 1.181019773178254
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 91,
+        "winRate": 40,
+        "totalReturnPct": 5.5,
+        "tradingReturnPct": 2.8,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.55,
+        "maxDrawdownPct": 11.9,
+        "calmar": 0.47,
+        "profitFactor": 1.3,
+        "avgHoldHours": 28,
+        "stopHitPct": 56,
+        "tpHitPct": 33,
+        "byRegime": {
+          "BULL": {
+            "n": 79,
+            "wins": 28,
+            "pnlSum": -0.07196330676626334
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 232,
+      "oosN": 91
+    },
+    {
+      "si": 9,
+      "label": "bull[t0.3,va0.3,xr0.4] range_z=-2.5 vol_pen=0.5",
+      "strategy": [
+        0.3,
+        0.3,
+        0.4,
+        -2.5,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 226,
+        "winRate": 42,
+        "totalReturnPct": 44.9,
+        "tradingReturnPct": 41.7,
+        "yieldReturnPct": 3.2,
+        "sharpe": 1.83,
+        "maxDrawdownPct": 23.7,
+        "calmar": 1.89,
+        "profitFactor": 1.34,
+        "avgHoldHours": 42,
+        "stopHitPct": 54,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 221,
+            "wins": 92,
+            "pnlSum": 1.5610076557790773
+          },
+          "RANGE": {
+            "n": 5,
+            "wins": 2,
+            "pnlSum": 0.030378036458977235
+          }
+        }
+      },
+      "oosStats": {
+        "n": 79,
+        "winRate": 41,
+        "totalReturnPct": 5.2,
+        "tradingReturnPct": 2.5,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.55,
+        "maxDrawdownPct": 9.6,
+        "calmar": 0.54,
+        "profitFactor": 1.32,
+        "avgHoldHours": 32,
+        "stopHitPct": 58,
+        "tpHitPct": 34,
+        "byRegime": {
+          "BULL": {
+            "n": 72,
+            "wins": 26,
+            "pnlSum": -0.11868436188036698
+          },
+          "RANGE": {
+            "n": 7,
+            "wins": 6,
+            "pnlSum": 0.5390234531905727
+          }
+        }
+      },
+      "isN": 226,
+      "oosN": 79
+    },
+    {
+      "si": 8,
+      "label": "bull[t0.2,va0.2,xr0.6] range_z=-2 vol_pen=0.5",
+      "strategy": [
+        0.2,
+        0.2,
+        0.6,
+        -2,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 239,
+        "winRate": 42,
+        "totalReturnPct": 43.5,
+        "tradingReturnPct": 40.4,
+        "yieldReturnPct": 3.18,
+        "sharpe": 1.73,
+        "maxDrawdownPct": 24.4,
+        "calmar": 1.78,
+        "profitFactor": 1.34,
+        "avgHoldHours": 40,
+        "stopHitPct": 54,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 220,
+            "wins": 91,
+            "pnlSum": 1.5247569006467856
+          },
+          "RANGE": {
+            "n": 19,
+            "wins": 10,
+            "pnlSum": 0.13023884122089935
+          }
+        }
+      },
+      "oosStats": {
+        "n": 84,
+        "winRate": 40,
+        "totalReturnPct": 5,
+        "tradingReturnPct": 2.3,
+        "yieldReturnPct": 2.72,
+        "sharpe": 0.51,
+        "maxDrawdownPct": 9.6,
+        "calmar": 0.53,
+        "profitFactor": 1.3,
+        "avgHoldHours": 31,
+        "stopHitPct": 58,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 72,
+            "wins": 26,
+            "pnlSum": -0.11868436188036698
+          },
+          "RANGE": {
+            "n": 12,
+            "wins": 8,
+            "pnlSum": 0.5225687431354531
+          }
+        }
+      },
+      "isN": 239,
+      "oosN": 84
+    },
+    {
+      "si": 10,
+      "label": "bull[t0.4,va0.3,xr0.3] range_z=-99 vol_pen=0.5",
+      "strategy": [
+        0.4,
+        0.3,
+        0.3,
+        -99,
+        0.05,
+        0.5
+      ],
+      "isStats": {
+        "n": 215,
+        "winRate": 41,
+        "totalReturnPct": 47.2,
+        "tradingReturnPct": 44,
+        "yieldReturnPct": 3.19,
+        "sharpe": 1.93,
+        "maxDrawdownPct": 22.1,
+        "calmar": 2.14,
+        "profitFactor": 1.34,
+        "avgHoldHours": 45,
+        "stopHitPct": 56,
+        "tpHitPct": 35,
+        "byRegime": {
+          "BULL": {
+            "n": 215,
+            "wins": 89,
+            "pnlSum": 1.6207643553566284
+          }
+        }
+      },
+      "oosStats": {
+        "n": 71,
+        "winRate": 35,
+        "totalReturnPct": 2.4,
+        "tradingReturnPct": -0.3,
+        "yieldReturnPct": 2.74,
+        "sharpe": 0.09,
+        "maxDrawdownPct": 14,
+        "calmar": 0.17,
+        "profitFactor": 0.97,
+        "avgHoldHours": 33,
+        "stopHitPct": 65,
+        "tpHitPct": 32,
+        "byRegime": {
+          "BULL": {
+            "n": 71,
+            "wins": 25,
+            "pnlSum": -0.033976629600303905
+          }
+        }
+      },
+      "isN": 215,
+      "oosN": 71
+    }
+  ]
+}
