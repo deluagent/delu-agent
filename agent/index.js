@@ -58,7 +58,7 @@ const TOKENS = [
 ];
 const SYMBOLS = TOKENS; // same list
 
-const ACTIVE_TRANCHE_USD = 1; // liquid USDC on Base; rest already in Aave
+const ACTIVE_TRANCHE_USD = 27; // liquid USDC on Base (updated 2026-03-20)
 
 // ─── Best params from walk-forward validated grid search ──────────────────────
 // adaptive.js best config: OOS +8.9% Sharpe 1.69 DD 7.9%, WF worst=1.69 all 3 folds positive
@@ -300,9 +300,15 @@ function scoreTemplateD(bars) {
 async function bankrScreen(regime, ranked) {
   const state = regime.state;
 
-  // Hard skip in BEAR — no need to call any LLM
+  // In BEAR: only skip if nothing is oversold — otherwise look for bounce plays
   if (state === 'BEAR') {
-    return { skip: true, interesting: [], reason: 'BEAR regime — yield only, no analysis needed', layer: 'hardcoded' };
+    // Check if any token has a non-zero score (oversold bounce signal from candidate)
+    const hasSignal = ranked.some(s => s.sAR > 0 || s.sD > 0.05);
+    if (!hasSignal) {
+      return { skip: true, interesting: [], reason: 'BEAR regime, no oversold signals — yield only', layer: 'hardcoded' };
+    }
+    // Has oversold signal — pass through to Bankr LLM for light screening
+    console.log('[bankr-screen] BEAR but oversold signals detected — checking with LLM');
   }
 
   // Build a compact summary for the screen model
@@ -374,7 +380,7 @@ You have a walk-forward validated quant framework:
 - 5 market regimes: BULL_HOT, BULL_COOL, RANGE_TIGHT, RANGE_WIDE, BEAR
 - 4 signal templates: A (trend momentum), B (OBV accumulation), C (cross-sectional rank), D (panic bounce)
 - Backtested: +8.9% OOS return, Sharpe 1.69, DD 7.9% vs BTC -39% over 219 days
-- In BEAR regime: go flat. Only earn Aave yield.
+- In BEAR regime: prefer yield, but small bounce trades allowed if RSI < 35 and confidence ≥ 65
 - In BULL_HOT: use A and C signals (trend + relative strength)
 - In RANGE/BULL_COOL: use B and D signals (accumulation + panic bounce)
 

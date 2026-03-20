@@ -8118,5 +8118,53 @@
     "accepted": false,
     "description": "experiment 2",
     "ts": 1774030858852
+  },
+  {
+    "n": 1,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774031348759
+  },
+  {
+    "n": 2,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774031525650
+  },
+  {
+    "n": 3,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774031750889
+  },
+  {
+    "n": 4,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774031898129
+  },
+  {
+    "n": 5,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774032096235
+  },
+  {
+    "n": 6,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774032255339
   }
 ]
