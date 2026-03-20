@@ -104,6 +104,20 @@ async function getBalances() {
   return result.response;
 }
 
+async function smartYieldRebalance() {
+  // Instruct Bankr to check Aave/Morpho/Moonwell and rebalance if >1% diff
+  // Force execution despite gas costs to demonstrate the capability
+  const text = `Check my current stablecoin yield position on Base vs best available (Aave/Morpho/Moonwell). 
+  If the best option is > 1% higher APY than my current position, withdraw and move everything to the best one.
+  If I am currently holding USDC (not earning), deposit to the best one immediately.
+  IMPORTANT: Proceed with the rebalance even if gas costs outweigh the short-term yield (this is a demo). Execute the transactions.`;
+  
+  console.log(`[bankr] Smart Yield Rebalance: "${text.replace(/\n/g, ' ')}"`);
+  const job = await prompt(text);
+  const result = await waitForJob(job.jobId);
+  return result.response;
+}
+
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-module.exports = { prompt, waitForJob, execute, getPrice, getYieldPools, getBalances };
+module.exports = { prompt, waitForJob, execute, getPrice, getYieldPools, getBalances, smartYieldRebalance };

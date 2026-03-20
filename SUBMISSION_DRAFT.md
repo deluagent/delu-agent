@@ -26,9 +26,12 @@ delu is built different:
 
 Every 30 minutes, delu runs a consensus pipeline:
 
-1. **Screen (Bankr LLM)**: Fast, cheap model (`gemini-2.5-flash`) scans 7 tokens + regime. "Is anything worth analyzing?" If no, skip to yield.
+1. **Screen (Bankr LLM)**: Fast, cheap model (`gemini-2.5-flash`) scans 7 tokens + regime. "Is anything worth analyzing?"
+   - If **BEAR**: Activates **Smart Yield Mode**. Asks Bankr to scan Aave, Morpho, and Moonwell for the best stablecoin APY. If a better pool exists (>1% spread), it autonomously rebalances the treasury.
+   - If **BULL/RANGE**: Shortlists interesting tokens for Venice.
+
 2. **Reason (Venice E2EE)**: If interesting, send context to Venice (`llama-3.3-70b` on private GPU). Reason about risk, sizing, and conflicts. Output allocation JSON.
-3. **Execute (Bankr API)**: If confidence ≥ 65%, execute trade on Base. If BEAR, deposit to Aave.
+3. **Execute (Bankr API)**: If confidence ≥ 65%, execute trade on Base.
 
 ## Tracks & Tech Stack
 

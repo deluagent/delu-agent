@@ -510,36 +510,27 @@ async function runCycle() {
   console.log(`[bankr-screen] skip=${screen.skip} | interesting=[${screen.interesting.join(',')}] | "${screen.reason}" (${screen.layer})`);
 
   if (screen.skip) {
-    console.log('[bankr-screen] Skip signal → going to yield/hold without Venice');
-    // In BEAR or no signal: execute yield directly
-    const yieldDecision = {
-      action: state === 'BEAR' ? 'yield' : 'hold',
-      asset: 'USDC',
-      size_pct: state === 'BEAR' ? 100 : 0,
-      confidence: 90,
-      reasoning: screen.reason,
-      stop_loss_pct: 0,
-      take_profit_pct: 0,
-      tee_quote: null,
-      layers_used: ['bankr-screen'],
-      screen,
-    };
-    // Log and execute yield
+    console.log('[bankr-screen] Skip signal → entering Smart Yield mode');
+    
+    // In BEAR or no signal: smart yield rebalance
+    // 1. Check if we're already in the best yield
+    // 2. Move if >1% better available
     if (!DRY_RUN && state === 'BEAR') {
-      console.log('\n[bankr] Depositing to Aave yield...');
+      console.log('\n[bankr] Checking Smart Yield opportunities...');
       try {
-        const result = await bankr.execute(yieldDecision, ACTIVE_TRANCHE_USD);
-        console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
+        const result = await bankr.smartYieldRebalance();
+        console.log(`[bankr] Result:\n${result}`);
       } catch (e) {
-        console.error('[bankr] Execution failed:', e.message);
+        console.error('[bankr] Yield rebalance failed:', e.message);
       }
     } else if (DRY_RUN) {
-      console.log(`\n[delu] DRY RUN — would yield to Aave`);
+      console.log(`\n[delu] DRY RUN — would run smartYieldRebalance()`);
     }
+
     const logEntry = {
       ts: cycleStart, regime: state, regime_detail: regime,
       scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template })),
-      screen, decision: yieldDecision, dry_run: DRY_RUN
+      screen, decision: { action: 'smart_yield', asset: 'USDC', reason: screen.reason }, dry_run: DRY_RUN
     };
     const logPath = require('path').join(__dirname, '../data/agent_log.jsonl');
     require('fs').appendFileSync(logPath, JSON.stringify(logEntry) + '\n');
