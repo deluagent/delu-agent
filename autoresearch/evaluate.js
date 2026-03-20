@@ -35,11 +35,26 @@ const HISTORY_DIR = path.join(__dirname, '../data/history');
 const IS_END      = 438;
 const VAL_END     = 584;
 const TOTAL_BARS  = 730;
-const LONG_COUNT  = 2;     // top N to hold
-const MIN_SCORE   = 0.02;  // minimum score to enter a position
+const LONG_COUNT  = 5;     // top N to hold (5 out of 50 = 10% concentration, more realistic)
+const MIN_SCORE   = 0.05;  // higher threshold with 50 tokens — only strong signals
 
-// Majors: 730 bars from Binance
-const MAJOR_TOKENS = ['ETH', 'BTC', 'SOL', 'BNB', 'ARB', 'OP', 'LINK'];
+// Majors: 730 bars from Binance (50 tokens)
+const MAJOR_TOKENS = [
+  // Large caps
+  'BTC','ETH','BNB','SOL','XRP','ADA','AVAX','DOGE','TRX','HBAR',
+  // Mid caps / DeFi
+  'LINK','AAVE','UNI','MKR','CRV','COMP','SNX','BAL','YFI','SUSHI',
+  // L2 / infra
+  'ARB','OP','MATIC','STX','IMX',
+  // AI / data
+  'FET','AGIX','OCEAN','RNDR',
+  // Meme / social
+  'PEPE','SHIB','BONK','WIF','FLOKI',
+  // Other alts
+  'NEAR','APT','SUI','INJ','ATOM','DOT','ALGO',
+  'LTC','BCH','FIL','ETC','XLM',
+  'SAND','MANA','AXS','1INCH',
+];
 // Base tokens: 181 bars from GeckoTerminal (Sep 2025 → Mar 2026)
 // Split for Base: IS=0–108 (60%), VAL=109–144 (20%), AUD=145–180 (20%)
 const BASE_TOKENS  = ['BRETT', 'VIRTUAL', 'AERO', 'DEGEN', 'CLANKER'];
@@ -88,7 +103,7 @@ function loadHistory() {
 // Falls back to empty object if cache doesn't exist
 function loadFundingSignals() {
   const result = {};
-  for (const sym of TOKENS) {
+  for (const sym of MAJOR_TOKENS) {
     const file = path.join(HISTORY_DIR, `${sym}_funding.json`);
     if (!fs.existsSync(file)) { result[sym] = {}; continue; }
     try {
@@ -262,7 +277,7 @@ function evaluate(silent = false) {
   if (!silent) {
     console.log('\n════════════════════════════════════════');
     console.log('  delu autoresearch — evaluator');
-    console.log('  Tokens: 7 majors (Binance) + 5 Base (GeckoTerminal)');
+    console.log(`  Tokens: ${MAJOR_TOKENS.length} majors (Binance) + ${BASE_TOKENS.length} Base (GeckoTerminal) = ${TOKENS.length} total`);
     console.log('════════════════════════════════════════');
     console.log(`  In-Sample   (${results.inSample.bars}d):  Sharpe=${results.inSample.sharpe.toFixed(3).padStart(7)}  ret=${(results.inSample.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.inSample.maxDrawdown*100).toFixed(1)}%  WR=${(results.inSample.winRate*100).toFixed(0)}%`);
     console.log(`  Validation  (${results.validation.bars}d):  Sharpe=${results.validation.sharpe.toFixed(3).padStart(7)}  ret=${(results.validation.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.validation.maxDrawdown*100).toFixed(1)}%  WR=${(results.validation.winRate*100).toFixed(0)}%  [majors=${results.majorVal.sharpe.toFixed(2)} base=${results.baseVal.sharpe.toFixed(2)}]`);

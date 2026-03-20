@@ -1,6 +1,6 @@
 {
-  "bestValSharpe": 1.554,
-  "expCount": 98,
+  "bestValSharpe": 1.405,
+  "expCount": 0,
   "resetAt": "2026-03-20",
-  "baselineNote": "val=1.554 audit=1.873 — soft BEAR 0.3x + funding gate + trend filter 0.03"
+  "baselineNote": "55 tokens: 50 majors (Binance 730d) + 5 Base (GT 181d). LONG_COUNT=5, MIN_SCORE=0.05. val=1.405 audit=1.327"
 }
