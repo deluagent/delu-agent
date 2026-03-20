@@ -8774,5 +8774,13 @@
     "accepted": false,
     "description": "funding matters more",
     "ts": 1774044006183
+  },
+  {
+    "n": 83,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774046816975
   }
 ]

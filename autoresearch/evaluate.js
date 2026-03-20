@@ -43,7 +43,11 @@ const TOKENS      = ['ETH', 'BTC', 'SOL', 'BNB', 'ARB', 'OP', 'LINK'];
 function loadHistory() {
   const data = {};
   for (const sym of TOKENS) {
-    const file = path.join(HISTORY_DIR, `${sym}_binance.json`);
+    // Prefer _binance_daily.json (won't be overwritten by hourly agent fetches)
+    // Fall back to _binance.json for backward compat
+    const dailyFile  = path.join(HISTORY_DIR, `${sym}_binance_daily.json`);
+    const legacyFile = path.join(HISTORY_DIR, `${sym}_binance.json`);
+    const file = fs.existsSync(dailyFile) ? dailyFile : legacyFile;
     if (!fs.existsSync(file)) continue;
     try {
       const raw  = JSON.parse(fs.readFileSync(file, 'utf8'));

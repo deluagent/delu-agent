@@ -190,7 +190,10 @@ const BINANCE_PAIRS = {
 async function fetchBinanceHistory(symbol, days = 365) {
   const pair = BINANCE_PAIRS[symbol];
   if (!pair) return null;
-  const cacheFile = path.join(CACHE_DIR, `${symbol}_binance.json`);
+  // Use _daily suffix to avoid collision with hourly cache (_binance.json)
+  const cacheFile = path.join(CACHE_DIR, `${symbol}_binance_daily.json`);
+  // Fallback: also check the legacy _binance.json if daily cache missing
+  const legacyFile = path.join(CACHE_DIR, `${symbol}_binance.json`);
   const TWO_HOURS = 2 * 60 * 60 * 1000;
 
   if (fs.existsSync(cacheFile)) {
