@@ -11,7 +11,7 @@ delu is an autonomous agent that makes and executes trading decisions on Base ma
 
 Every 30 minutes:
 
-1. **Fetch** — pulls Binance hourly bars for 7 tokens (BTC/ETH/SOL/BNB/DOGE/AAVE/ARB)
+1. **Fetch** — pulls Binance/GeckoTerminal hourly bars for 30+ tokens (Majors + Base ecosystem: BRETT, DEGEN, AERO, etc.)
 2. **Detect regime** — 5-state market regime (BULL_HOT / BULL_COOL / RANGE_TIGHT / RANGE_WIDE / BEAR) using BTC 200d MA, market breadth, vol regime, ETH/BTC ratio
 3. **Score tokens** — 4 signal templates (A/B/C/D) from a walk-forward validated quant framework
 4. **Reason privately** — sends context to Venice AI (E2EE, private GPU) to allocate capital

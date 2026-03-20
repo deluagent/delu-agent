@@ -5,6 +5,8 @@
  *  - Must export scoreToken(data) → number
  *  - data = { prices, btcPrices, flowSignal, attentionDelta }
  *  - prices / btcPrices: float[] of daily closes, oldest first
+ *  - flowSignal: Binance perp funding rate z-score, INVERTED [-1,+1]
+ *    Positive = bullish (negative funding = shorts paying = buy signal)
  *  - Pure function — no I/O, no randomness, no external state
  *
  * The evaluator measures validation Sharpe on held-out data.
@@ -17,7 +19,7 @@ function pctChange(prices, lookback) {
   const n = prices.length;
   if (n <= lookback) return 0;
   const prev = prices[n - 1 - lookback];
-  return prev === 0? 0 : (prices[n - 1] - prev) / prev;
+  return prev === 0 ? 0 : (prices[n - 1] - prev) / prev;
 }
 
 function realizedVol(prices, window = 14) {
@@ -52,7 +54,7 @@ function emaGap(prices, fast = 12, slow = 26) {
   const slice = prices.slice(Math.max(0, n - slow * 3));
   const f = emaVal(slice, fast);
   const s = emaVal(slice, slow);
-  return s === 0? 0 : (f - s) / s;
+  return s === 0 ? 0 : (f - s) / s;
 }
 
 function zScore(prices, window = 20) {
@@ -61,59 +63,63 @@ function zScore(prices, window = 20) {
   const slice = prices.slice(n - window);
   const mean = slice.reduce((s, p) => s + p, 0) / window;
   const std = Math.sqrt(slice.reduce((s, p) => s + (p - mean) ** 2, 0) / window);
-  return std === 0? 0 : (prices[n - 1] - mean) / std;
+  return std === 0 ? 0 : (prices[n - 1] - mean) / std;
 }
 
 // ── Score function ─────────────────────────────────────────────
 
 function scoreToken(data) {
-  const { prices, btcPrices = [], flowSignal = 0, attentionDelta = 0 } = data;
+  const { prices, btcPrices = [], flowSignal = 0 } = data;
+  const n = prices.length;
+  if (n < 60) return 0;
 
-  // ── Regime filter: only trade when BTC is in uptrend (50d > 200d MA) ──
-  let regimeOk = true;
+  // ── Regime detection: BTC 50d vs 200d MA ──
+  // BEAR = soft penalty (0.3×), not hard zero — there are still tradeable tokens in BEAR
+  // BULL = full weight (1.0×)
+  let regimeMult = 1.0;
+  let isBear = false;
   if (btcPrices.length >= 200) {
     const btc50  = sma(btcPrices, 50);
     const btc200 = sma(btcPrices, 200);
-    regimeOk = btc50 > btc200;
+    if (btc50 < btc200) {
+      isBear = true;
+      regimeMult = 0.3;
+    }
   }
-  if (!regimeOk) return 0;
 
-  // ── Momentum (multi-timeframe) ──
-  const r7  = pctChange(prices, 7);
-  const r20 = pctChange(prices, 20);
-  const r60 = pctChange(prices, 60);
+  // ── Trend strength filter ──
+  const ema = emaGap(prices, 12, 26);
+  if (Math.abs(ema) < 0.03) return 0;   // skip choppy/flat — no trend to ride
+
+  // ── Momentum (multi-timeframe, vol-adjusted) ──
+  const vol = realizedVol(prices, 14);
+  const r7   = pctChange(prices, 7);
+  const r20  = pctChange(prices, 20);
+  const r60  = pctChange(prices, Math.min(60, n - 1));
+
+  const momentum = 0.40 * r7 / (1 + vol)
+                 + 0.35 * r20 / (1 + vol)
+                 + 0.25 * r60 / (1 + vol);
 
   // ── Trend ──
-  const ema = emaGap(prices, 12, 26);
+  const trend = 0.20 * ema;
 
   // ── Mean reversion ──
   const z = zScore(prices, 20);
-  const meanRev = z < -2.0? 0.1 : (z > 2.5? -0.1 : 0);
+  const meanRev = z < -2.0 ? 0.08 : (z > 2.5 ? -0.08 : 0);
 
   // ── Volatility penalty ──
-  const vol = realizedVol(prices, 14);
   const volPenalty = -0.15 * Math.max(vol - 0.6, 0);
 
-  // ── Vol-adjusted momentum ──
-  const momentum = 0.35 * r7 / (1 + vol) + 0.35 * r20 / (1 + vol) + 0.20 * r60 / (1 + vol);
-  const trend    = 0.20 * ema;
-  const flow     = 0.15 * flowSignal;
-  const attn     = 0.05 * attentionDelta;
+  // ── Funding rate signal ──
+  // In BEAR regime, require positive funding (crowded shorts = bullish) to trade
+  const fundingBoost = isBear
+    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.10 * Math.abs(flowSignal))  // BEAR: funding matters more
+    : 0.10 * flowSignal;  // BULL: lighter touch
 
-  // Introduce a trend strength filter to avoid choppy/flat periods
-  const trendStrength = Math.abs(ema);
-  const trendStrengthThreshold = 0.05;
-  if (trendStrength < trendStrengthThreshold) return 0;
-
-  // Introduce a minimum holding period via score smoothing
-  const smoothedScore = emaVal([momentum, trend, flow, attn, meanRev, volPenalty], 3);
-  const rawScore = smoothedScore;
-
-  // Introduce a regime-based weighting for the score
-  const regimeWeight = regimeOk? 1.2 : 0.8;
-  const weightedScore = rawScore * regimeWeight;
-
-  return weightedScore;
+  // ── Combined ──
+  const raw = momentum + trend + meanRev + volPenalty + fundingBoost;
+  return raw * regimeMult;
 }
 
 module.exports = { scoreToken };

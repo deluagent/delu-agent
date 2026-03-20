@@ -175,11 +175,16 @@ async function loop() {
   if (!baseline) { console.error('❌ Evaluator failed on baseline — check candidate.js'); process.exit(1); }
 
   let state = loadState();
-  if (state.expCount === 0) {
-    state.bestValSharpe = baseline.validation.sharpe;
-    saveState(state);
-    console.log(`📏 Baseline: val_sharpe=${baseline.validation.sharpe.toFixed(3)} | is_sharpe=${baseline.inSample.sharpe.toFixed(3)}`);
+  // Use the higher of: fresh eval OR previously saved best (handles manual resets)
+  const measuredBaseline = baseline.validation.sharpe;
+  if (state.expCount === 0 || measuredBaseline > state.bestValSharpe) {
+    // Only update if measured is better (don't clobber a manually-set baseline)
+    if (measuredBaseline > state.bestValSharpe) {
+      state.bestValSharpe = measuredBaseline;
+      saveState(state);
+    }
   }
+  console.log(`📏 Baseline: val_sharpe=${state.bestValSharpe.toFixed(3)} | measured=${measuredBaseline.toFixed(3)} | is_sharpe=${baseline.inSample.sharpe.toFixed(3)}`);
 
   while (true) {
     const experiments = loadExperiments();

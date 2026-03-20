@@ -34,22 +34,24 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { fetchBinanceHistory, fetchGeckoTerminal, GECKO_TERMINAL_FALLBACK } = require('./fetch');
 const RESULTS_DIR = path.join(__dirname, 'results');
 if (!fs.existsSync(RESULTS_DIR)) fs.mkdirSync(RESULTS_DIR, { recursive: true });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-const TOKENS  = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','AAVEUSDT','ARBUSDT'];
-const SYMBOLS = ['BTC','ETH','SOL','BNB','DOGE','AAVE','ARB'];
+const TOKENS = ['BTC','ETH','SOL','BNB','DOGE','AAVE','ARB'];
+const SYMBOLS = TOKENS; // reuse same list
+
 // DeFi / alt tokens that benefit from alt season
 const ALT_TOKENS = new Set(['AAVE','ARB','SOL']);
-const DAYS=730, WARMUP=200*24, REBAL_H=24, AAVE_APY=0.05;
+const DAYS=730, REBAL_H=24, AAVE_APY=0.05;
 const BASE_SIZE=0.15, MAX_POS=0.35;
 
 // ─── Data ─────────────────────────────────────────────────────
 async function fetchBinance(symbol) {
   const total=DAYS*24; let all=[],endTime=Date.now();
   while(all.length<total){
-    const res=await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=1h&limit=1000&endTime=${endTime}`);
+    const res=await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}USDT&interval=1h&limit=1000&endTime=${endTime}`);
     if(!res.ok)throw new Error(`${res.status}`);
     const data=await res.json(); if(!data.length)break;
     all=[...data.map(d=>({ts:d[0],time:new Date(d[0]),open:+d[1],high:+d[2],low:+d[3],close:+d[4],volume:+d[5]})),...all];
@@ -296,7 +298,7 @@ function precompute(allBars, allCloses, btcCloses, ethCloses) {
 }
 
 // ─── Simulation ───────────────────────────────────────────────
-function simulate(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, splitIdx, params) {
+function simulate(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, splitIdx, params, warmup) {
   const { garchs, atrs, volumes, sA, sB, sC, sD } = precomp;
   const { topN, adaptWindow, stopMult, tpMult, stopMultD, tpMultD, regimeParams } = params;
   const n = allBars[0].length;
@@ -305,7 +307,7 @@ function simulate(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, sp
   let openPos={}, lastRebal=0, yIS=0, yOOS=0;
   const regimeLog = {};
 
-  for (let i=WARMUP; i<n; i++) {
+  for (let i=warmup; i<n; i++) {
     const regime = sixStateRegime(btcCloses, ethCloses, allCloses, i, regimeParams);
     if (!regime) continue;
 
@@ -481,7 +483,7 @@ function stats(trades, y=0) {
 // Fold 1: train on first 60%, test on 60-75%
 // Fold 2: train on first 70%, test on 70-85%
 // Fold 3: train on first 75%, test on 75-100%
-function walkForwardStats(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, params, n) {
+function walkForwardStats(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, params, n, warmup) {
   const folds = [
     { isEnd: Math.floor(n*0.60), oosStart: Math.floor(n*0.60), oosEnd: Math.floor(n*0.75) },
     { isEnd: Math.floor(n*0.70), oosStart: Math.floor(n*0.70), oosEnd: Math.floor(n*0.85) },
@@ -492,7 +494,7 @@ function walkForwardStats(allBars, allCloses, btcCloses, ethCloses, symbols, pre
   for (const fold of folds) {
     // Simulate on full period, take IS=0..isEnd, OOS=oosStart..oosEnd
     const { isTrades, oosTrades, yIS, yOOS } = simulate(
-      allBars, allCloses, btcCloses, ethCloses, symbols, precomp, fold.isEnd, params
+      allBars, allCloses, btcCloses, ethCloses, symbols, precomp, fold.isEnd, params, warmup
     );
     // Only count OOS trades in [oosStart, oosEnd]
     const oosSlice = oosTrades; // trades after isEnd
@@ -531,7 +533,7 @@ async function main() {
   const t0 = Date.now();
   console.log(`\n${'═'.repeat(72)}`);
   console.log(`delu ADAPTIVE FRAMEWORK — 6 market states + ETH/BTC + walk-forward`);
-  console.log(`Grid: ${GRID.length} combos | 7 tokens | 2yr | 3-fold walk-forward`);
+  console.log(`Grid: ${GRID.length} combos | ${TOKENS.length} tokens | 2yr | 3-fold walk-forward`);
   console.log(`${'═'.repeat(72)}\n`);
 
   console.log('Fetching data...');
@@ -557,8 +559,9 @@ async function main() {
   const ethCloses = allCloses[ethIdx >= 0 ? ethIdx : btcIdx];
   const splitIdx = Math.floor(minLen * 0.70);  // default split for single-pass
   const n = minLen;
+  const WARMUP = Math.min(200*24, Math.floor(n * 0.2));
 
-  console.log(`\n${n} bars | IS: ${Math.round(splitIdx/24)}d | OOS: ${Math.round((n-splitIdx)/24)}d\n`);
+  console.log(`\n${n} bars | IS: ${Math.round(splitIdx/24)}d | OOS: ${Math.round((n-splitIdx)/24)}d | Warmup: ${Math.round(WARMUP/24)}d\n`);
   const precomp = precompute(allBars, allCloses, btcCloses, ethCloses);
   console.log(`\nRunning ${GRID.length} combos (3-fold each)...\n`);
 
@@ -567,7 +570,7 @@ async function main() {
   for (const params of GRID) {
     // Fast single-pass first (70/30) for ranking
     const { isTrades, oosTrades, yIS, yOOS, regimeLog } = simulate(
-      allBars, allCloses, btcCloses, ethCloses, symbols, precomp, splitIdx, params
+      allBars, allCloses, btcCloses, ethCloses, symbols, precomp, splitIdx, params, WARMUP
     );
     const oos = stats(oosTrades, yOOS);
     const is_ = stats(isTrades, yIS);
@@ -590,7 +593,7 @@ async function main() {
   console.log(`\nRunning 3-fold walk-forward on top 20 candidates...`);
   const topWF = [];
   for (const r of ranked.slice(0, 20)) {
-    const wf = walkForwardStats(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, r.params, n);
+    const wf = walkForwardStats(allBars, allCloses, btcCloses, ethCloses, symbols, precomp, r.params, n, WARMUP);
     topWF.push({ ...r, wf });
   }
 

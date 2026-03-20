@@ -1,6 +1,6 @@
 {
-  "bestValSharpe": 1.996,
+  "bestValSharpe": 1.554,
   "expCount": 0,
   "resetAt": "2026-03-20",
-  "resetReason": "2-year evaluator with real funding signals; previous 2.837 was measurement artifact"
+  "baselineNote": "val=1.554 audit=1.873 — soft BEAR 0.3x + funding gate + trend filter 0.03"
 }
