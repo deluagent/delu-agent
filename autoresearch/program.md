@@ -21,17 +21,24 @@ You commit every improvement to git. You revert every failure.
 - Metric: **validation Sharpe** — this is the only number that matters.
 - Higher is better. You accept experiments only if val_sharpe strictly improves.
 
-## Current baseline (reset 2026-03-20 — honest 2-year eval)
+## Current baseline (reset 2026-03-20 — 12 tokens: 7 majors + 5 Base)
 
 ```
-In-Sample   (437d):  Sharpe= -0.111  ret= -20.1%  DD=51.6%  WR=19%
-Validation  (145d):  Sharpe=  1.996  ret= +74.7%  DD=17.6%  WR=42%
-Audit       (145d):  Sharpe=  0.427  ret=  +1.5%  DD= 3.7%  WR= 2%
+In-Sample   (437d):  Sharpe= -0.505  ret= -35.4%  DD=38.0%  WR=16%
+Validation  (180d):  Sharpe=  1.183  ret= +41.4%  DD=17.6%  WR=31%  [majors=1.55 base=-3.56]
+Audit       (180d):  Sharpe=  0.364  ret=  +2.1%  DD= 5.6%  WR= 1%  [majors=1.87 base=-2.72]
 ```
 
-Val Sharpe 1.996 is your starting point. Beat it.
-Note: In-sample Sharpe is negative — that's OK. We optimize for OOS (validation), not IS.
-The audit Sharpe (0.427) shows the strategy survives bear regime but conservatively.
+Val Sharpe 1.183 is your starting point. Beat it.
+Key insight: **Base tokens (BRETT, VIRTUAL, AERO, DEGEN, CLANKER) are dragging the combined score**.
+The current signal works well for majors (1.55) but fails on Base alts (-3.56).
+This means the regime filter + momentum signals need to be adapted for high-beta Base tokens.
+
+**Priority: fix Base token scoring.** Ideas:
+- Base tokens have shorter history (181 bars) — use shorter lookbacks (r3, r7 instead of r20, r60)
+- Base tokens are higher beta — vol-adjust more aggressively
+- Base tokens respond to BTC regime more violently — sharper regime penalty in BEAR
+- In BEAR, return 0 for Base tokens entirely (they crash harder than majors)
 
 ## What scoreToken receives
 

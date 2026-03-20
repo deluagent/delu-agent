@@ -37,14 +37,23 @@ const VAL_END     = 584;
 const TOTAL_BARS  = 730;
 const LONG_COUNT  = 2;     // top N to hold
 const MIN_SCORE   = 0.02;  // minimum score to enter a position
-const TOKENS      = ['ETH', 'BTC', 'SOL', 'BNB', 'ARB', 'OP', 'LINK'];
+
+// Majors: 730 bars from Binance
+const MAJOR_TOKENS = ['ETH', 'BTC', 'SOL', 'BNB', 'ARB', 'OP', 'LINK'];
+// Base tokens: 181 bars from GeckoTerminal (Sep 2025 → Mar 2026)
+// Split for Base: IS=0–108 (60%), VAL=109–144 (20%), AUD=145–180 (20%)
+const BASE_TOKENS  = ['BRETT', 'VIRTUAL', 'AERO', 'DEGEN', 'CLANKER'];
+const BASE_IS_END  = 109;
+const BASE_VAL_END = 145;
+const BASE_TOTAL   = 181;
+const TOKENS = [...MAJOR_TOKENS, ...BASE_TOKENS];
 
 // ── Load history ─────────────────────────────────────────────
 function loadHistory() {
   const data = {};
-  for (const sym of TOKENS) {
-    // Prefer _binance_daily.json (won't be overwritten by hourly agent fetches)
-    // Fall back to _binance.json for backward compat
+
+  // Majors: prefer _binance_daily.json (protected from hourly overwrites)
+  for (const sym of MAJOR_TOKENS) {
     const dailyFile  = path.join(HISTORY_DIR, `${sym}_binance_daily.json`);
     const legacyFile = path.join(HISTORY_DIR, `${sym}_binance.json`);
     const file = fs.existsSync(dailyFile) ? dailyFile : legacyFile;
@@ -53,15 +62,24 @@ function loadHistory() {
       const raw  = JSON.parse(fs.readFileSync(file, 'utf8'));
       const bars = raw.bars || raw;
       if (Array.isArray(bars) && bars.length >= 60) {
-        data[sym] = bars.map(b => ({
-          close:  b.close,
-          open:   b.open,
-          volume: b.volume,
-          time:   b.time || b.ts,
-        }));
+        data[sym] = bars.map(b => ({ close: b.close, open: b.open, volume: b.volume, time: b.time || b.ts }));
       }
     } catch (e) { /* skip */ }
   }
+
+  // Base tokens: GeckoTerminal daily cache (_gt_daily.json)
+  for (const sym of BASE_TOKENS) {
+    const file = path.join(HISTORY_DIR, `${sym}_gt_daily.json`);
+    if (!fs.existsSync(file)) continue;
+    try {
+      const raw  = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const bars = raw.bars || raw;
+      if (Array.isArray(bars) && bars.length >= 30) {
+        data[sym] = bars.map(b => ({ close: b.close, open: b.open, volume: b.volume, time: b.time || b.ts }));
+      }
+    } catch (e) { /* skip */ }
+  }
+
   return data;
 }
 
@@ -193,9 +211,23 @@ function evaluate(silent = false) {
   const fundingSignals = loadFundingSignals();
   const { scoreToken } = require('./candidate');
 
-  const isReturns  = simulatePeriod(history, scoreToken, 0,        IS_END,     fundingSignals);
-  const valReturns = simulatePeriod(history, scoreToken, IS_END,   VAL_END,    fundingSignals);
-  const audReturns = simulatePeriod(history, scoreToken, VAL_END,  TOTAL_BARS, fundingSignals);
+  // Separate histories for different token universes
+  const majorHistory = Object.fromEntries(Object.entries(history).filter(([k]) => MAJOR_TOKENS.includes(k)));
+  const baseHistory  = Object.fromEntries(Object.entries(history).filter(([k]) => BASE_TOKENS.includes(k)));
+
+  // Majors: 730-bar split
+  const isReturns  = simulatePeriod(majorHistory, scoreToken, 0,           IS_END,     fundingSignals);
+  const valReturns = simulatePeriod(majorHistory, scoreToken, IS_END,      VAL_END,    fundingSignals);
+  const audReturns = simulatePeriod(majorHistory, scoreToken, VAL_END,     TOTAL_BARS, fundingSignals);
+
+  // Base tokens: 181-bar split (shorter history)
+  const baseIsReturns  = Object.keys(baseHistory).length > 0 ? simulatePeriod(baseHistory, scoreToken, 0,            BASE_IS_END,  {}) : [];
+  const baseValReturns = Object.keys(baseHistory).length > 0 ? simulatePeriod(baseHistory, scoreToken, BASE_IS_END,  BASE_VAL_END, {}) : [];
+  const baseAudReturns = Object.keys(baseHistory).length > 0 ? simulatePeriod(baseHistory, scoreToken, BASE_VAL_END, BASE_TOTAL,   {}) : [];
+
+  // Combined validation = majors + Base (equal weight)
+  const combinedVal = [...valReturns, ...baseValReturns];
+  const combinedAud = [...audReturns, ...baseAudReturns];
 
   const results = {
     inSample: {
@@ -205,29 +237,36 @@ function evaluate(silent = false) {
       winRate:     +winRate(isReturns).toFixed(4),
       bars:        isReturns.length,
     },
+    // Validation and audit use COMBINED majors + Base returns
     validation: {
-      sharpe:      +sharpe(valReturns).toFixed(4),
-      totalReturn: +totalReturn(valReturns).toFixed(4),
-      maxDrawdown: +maxDrawdown(valReturns).toFixed(4),
-      winRate:     +winRate(valReturns).toFixed(4),
-      bars:        valReturns.length,
+      sharpe:      +sharpe(combinedVal).toFixed(4),
+      totalReturn: +totalReturn(combinedVal).toFixed(4),
+      maxDrawdown: +maxDrawdown(combinedVal).toFixed(4),
+      winRate:     +winRate(combinedVal).toFixed(4),
+      bars:        combinedVal.length,
     },
     audit: {
-      sharpe:      +sharpe(audReturns).toFixed(4),
-      totalReturn: +totalReturn(audReturns).toFixed(4),
-      maxDrawdown: +maxDrawdown(audReturns).toFixed(4),
-      winRate:     +winRate(audReturns).toFixed(4),
-      bars:        audReturns.length,
+      sharpe:      +sharpe(combinedAud).toFixed(4),
+      totalReturn: +totalReturn(combinedAud).toFixed(4),
+      maxDrawdown: +maxDrawdown(combinedAud).toFixed(4),
+      winRate:     +winRate(combinedAud).toFixed(4),
+      bars:        combinedAud.length,
     },
+    // Breakdown for visibility
+    majorVal:  { sharpe: +sharpe(valReturns).toFixed(4),    bars: valReturns.length },
+    baseVal:   { sharpe: +sharpe(baseValReturns).toFixed(4), bars: baseValReturns.length },
+    majorAud:  { sharpe: +sharpe(audReturns).toFixed(4),    bars: audReturns.length },
+    baseAud:   { sharpe: +sharpe(baseAudReturns).toFixed(4), bars: baseAudReturns.length },
   };
 
   if (!silent) {
     console.log('\n════════════════════════════════════════');
     console.log('  delu autoresearch — evaluator');
+    console.log('  Tokens: 7 majors (Binance) + 5 Base (GeckoTerminal)');
     console.log('════════════════════════════════════════');
     console.log(`  In-Sample   (${results.inSample.bars}d):  Sharpe=${results.inSample.sharpe.toFixed(3).padStart(7)}  ret=${(results.inSample.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.inSample.maxDrawdown*100).toFixed(1)}%  WR=${(results.inSample.winRate*100).toFixed(0)}%`);
-    console.log(`  Validation  (${results.validation.bars}d):  Sharpe=${results.validation.sharpe.toFixed(3).padStart(7)}  ret=${(results.validation.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.validation.maxDrawdown*100).toFixed(1)}%  WR=${(results.validation.winRate*100).toFixed(0)}%`);
-    console.log(`  Audit       (${results.audit.bars}d):  Sharpe=${results.audit.sharpe.toFixed(3).padStart(7)}  ret=${(results.audit.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.audit.maxDrawdown*100).toFixed(1)}%  WR=${(results.audit.winRate*100).toFixed(0)}%`);
+    console.log(`  Validation  (${results.validation.bars}d):  Sharpe=${results.validation.sharpe.toFixed(3).padStart(7)}  ret=${(results.validation.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.validation.maxDrawdown*100).toFixed(1)}%  WR=${(results.validation.winRate*100).toFixed(0)}%  [majors=${results.majorVal.sharpe.toFixed(2)} base=${results.baseVal.sharpe.toFixed(2)}]`);
+    console.log(`  Audit       (${results.audit.bars}d):  Sharpe=${results.audit.sharpe.toFixed(3).padStart(7)}  ret=${(results.audit.totalReturn*100).toFixed(1).padStart(7)}%  DD=${(results.audit.maxDrawdown*100).toFixed(1)}%  WR=${(results.audit.winRate*100).toFixed(0)}%  [majors=${results.majorAud.sharpe.toFixed(2)} base=${results.baseAud.sharpe.toFixed(2)}]`);
     console.log('════════════════════════════════════════\n');
   }
 
