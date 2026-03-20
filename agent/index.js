@@ -47,8 +47,17 @@ function loadCandidate() {
   }
 }
 
-const TOKENS   = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','DOGEUSDT','AAVEUSDT','ARBUSDT'];
-const SYMBOLS  = ['BTC','ETH','SOL','BNB','DOGE','AAVE','ARB'];
+const { fetchBinanceHourly, fetchGeckoTerminal, GECKO_TERMINAL_FALLBACK } = require('../backtest/fetch.js');
+
+const TOKENS = [
+  // Majors (Binance)
+  'BTC','ETH','SOL','BNB','DOGE','AAVE','ARB',
+  // Base ecosystem (GeckoTerminal)
+  'BRETT','DEGEN','AERO','VIRTUAL','CLANKER',
+  'ODAI','JUNO','FELIX','CLAWD','CLAWNCH'
+];
+const SYMBOLS = TOKENS; // same list
+
 const ACTIVE_TRANCHE_USD = 1; // liquid USDC on Base; rest already in Aave
 
 // ─── Best params from walk-forward validated grid search ──────────────────────
@@ -71,14 +80,39 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // ─── Data fetching ─────────────────────────────────────────────────────────────
 async function fetchBars(symbol, interval = '1h', limit = 500) {
-  const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Binance ${symbol} ${interval}: ${res.status}`);
-  const raw = await res.json();
-  return raw.map(d => ({
-    ts: d[0], time: new Date(d[0]),
-    open: +d[1], high: +d[2], low: +d[3], close: +d[4], volume: +d[5]
-  }));
+  // Try Binance first (majors)
+  try {
+    const bars = await fetchBinanceHourly(symbol, limit);
+    if (bars && bars.length > 0) return bars;
+  } catch(e) {}
+
+  // Try GeckoTerminal (Base tokens)
+  if (GECKO_TERMINAL_FALLBACK[symbol]) {
+    try {
+      const bars = await fetchGeckoTerminal(symbol, Math.ceil(limit / 24)); // GT uses days for limits often, but we want hourly?
+      // fetchGeckoTerminal returns DAILY bars in backtest/fetch.js. 
+      // We need HOURLY for signals.
+      // Let's check fetchGeckoTerminal implementation in backtest/fetch.js...
+      // It fetches daily bars.
+      // We need to implement hourly fetching for GT here if it's not there.
+      
+      // Actually, let's fetch hourly from GT directly here:
+      const cfg = GECKO_TERMINAL_FALLBACK[symbol];
+      const url = `https://api.geckoterminal.com/api/v2/networks/${cfg.network}/pools/${cfg.pool}/ohlcv/hour?limit=${limit}&token=base`;
+      const r = await fetch(url, { headers: { Accept: 'application/json;version=20230302' } });
+      if (!r.ok) throw new Error(`GT ${r.status}`);
+      const json = await r.json();
+      const list = json?.data?.attributes?.ohlcv_list || [];
+      return list.reverse().map(([ts, o, h, l, c, v]) => ({
+        ts: ts * 1000, time: new Date(ts * 1000),
+        open: +o, high: +h, low: +l, close: +c, volume: +v
+      }));
+    } catch(e) {
+      console.warn(`  [fetch] ${symbol} failed on GT: ${e.message}`);
+    }
+  }
+  
+  return [];
 }
 
 // ─── Indicators ────────────────────────────────────────────────────────────────
@@ -424,7 +458,7 @@ async function runCycle() {
       allBarsDaily.push([]);
       allBars.push([]);
     }
-    await sleep(250);
+    await sleep(2000); // 2s delay to avoid GeckoTerminal 429s (30 req/min limit)
   }
   console.log();
 
