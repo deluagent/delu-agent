@@ -8198,5 +8198,573 @@
     "accepted": false,
     "description": "lighter touch",
     "ts": 1774032860489
+  },
+  {
+    "n": 11,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033008830
+  },
+  {
+    "n": 12,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033178526
+  },
+  {
+    "n": 13,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033328535
+  },
+  {
+    "n": 14,
+    "valSharpe": 1.5535,
+    "isSharpe": -0.5055,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033511022
+  },
+  {
+    "n": 15,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033680094
+  },
+  {
+    "n": 16,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033828661
+  },
+  {
+    "n": 17,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774033963690
+  },
+  {
+    "n": 18,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774034158920
+  },
+  {
+    "n": 19,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774034291274
+  },
+  {
+    "n": 20,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774034443859
+  },
+  {
+    "n": 21,
+    "valSharpe": 0,
+    "isSharpe": 0.2936,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774034582794
+  },
+  {
+    "n": 22,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774034747201
+  },
+  {
+    "n": 23,
+    "valSharpe": 0,
+    "isSharpe": 0.2936,
+    "accepted": false,
+    "description": "experiment 23",
+    "ts": 1774034882128
+  },
+  {
+    "n": 24,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774035066675
+  },
+  {
+    "n": 25,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774035216756
+  },
+  {
+    "n": 26,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774035424108
+  },
+  {
+    "n": 27,
+    "valSharpe": 0,
+    "isSharpe": 0.2936,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774035585078
+  },
+  {
+    "n": 28,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774035729047
+  },
+  {
+    "n": 29,
+    "valSharpe": 0,
+    "isSharpe": 0.1997,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774035895058
+  },
+  {
+    "n": 30,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774036036640
+  },
+  {
+    "n": 31,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "lighter touch",
+    "ts": 1774036189410
+  },
+  {
+    "n": 32,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774036355953
+  },
+  {
+    "n": 33,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774036544727
+  },
+  {
+    "n": 34,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774036683454
+  },
+  {
+    "n": 35,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774036847649
+  },
+  {
+    "n": 36,
+    "valSharpe": 0,
+    "isSharpe": 0.2936,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774036997773
+  },
+  {
+    "n": 37,
+    "valSharpe": 0,
+    "isSharpe": 0.6129,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774037143078
+  },
+  {
+    "n": 38,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774037306711
+  },
+  {
+    "n": 39,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774037480632
+  },
+  {
+    "n": 40,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774037634604
+  },
+  {
+    "n": 41,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774037809708
+  },
+  {
+    "n": 42,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774037986000
+  },
+  {
+    "n": 43,
+    "valSharpe": 0,
+    "isSharpe": 0.2936,
+    "accepted": false,
+    "description": "experiment 43",
+    "ts": 1774038133085
+  },
+  {
+    "n": 44,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774038281877
+  },
+  {
+    "n": 45,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774038436009
+  },
+  {
+    "n": 46,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774038640226
+  },
+  {
+    "n": 47,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774038790869
+  },
+  {
+    "n": 48,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774038950222
+  },
+  {
+    "n": 49,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774039127587
+  },
+  {
+    "n": 50,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774039272946
+  },
+  {
+    "n": 51,
+    "valSharpe": 0,
+    "isSharpe": 0.2936,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774039470878
+  },
+  {
+    "n": 52,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "lighter touch",
+    "ts": 1774039620615
+  },
+  {
+    "n": 53,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with a gate",
+    "ts": 1774039798562
+  },
+  {
+    "n": 54,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774039970014
+  },
+  {
+    "n": 55,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774040120331
+  },
+  {
+    "n": 56,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774040269463
+  },
+  {
+    "n": 57,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774040454835
+  },
+  {
+    "n": 58,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "lighter touch",
+    "ts": 1774040618962
+  },
+  {
+    "n": 59,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774040780531
+  },
+  {
+    "n": 60,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "lighter touch",
+    "ts": 1774040913101
+  },
+  {
+    "n": 61,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774041068037
+  },
+  {
+    "n": 62,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774041204422
+  },
+  {
+    "n": 63,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774041339136
+  },
+  {
+    "n": 64,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774041491228
+  },
+  {
+    "n": 65,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774041627985
+  },
+  {
+    "n": 66,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774041761785
+  },
+  {
+    "n": 67,
+    "valSharpe": 0,
+    "isSharpe": 0.5616,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774041900779
+  },
+  {
+    "n": 68,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774042035897
+  },
+  {
+    "n": 69,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774042166225
+  },
+  {
+    "n": 70,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774042298458
+  },
+  {
+    "n": 71,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774042433819
+  },
+  {
+    "n": 72,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774042572869
+  },
+  {
+    "n": 73,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774042704471
+  },
+  {
+    "n": 74,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774042834727
+  },
+  {
+    "n": 75,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774042967516
+  },
+  {
+    "n": 76,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774043149462
+  },
+  {
+    "n": 77,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "lighter touch",
+    "ts": 1774043286690
+  },
+  {
+    "n": 78,
+    "valSharpe": 0,
+    "isSharpe": 0.2221,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774043427567
+  },
+  {
+    "n": 79,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774043600589
+  },
+  {
+    "n": 80,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774043736889
+  },
+  {
+    "n": 81,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774043866082
   }
 ]
