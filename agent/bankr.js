@@ -22,18 +22,23 @@ async function prompt(text, threadId = null) {
   return res.json(); // { jobId, threadId, status }
 }
 
-async function waitForJob(jobId, maxWaitMs = 60000) {
+async function waitForJob(jobId, maxWaitMs = 300000) {
+  // Default 5min — DeFi multi-step jobs (yield rebalance, position checks) can take 60-90s
+  // Simple queries (price checks) complete in ~10s
   const start = Date.now();
+  let pollInterval = 3000;
   while (Date.now() - start < maxWaitMs) {
-    await sleep(3000);
+    await sleep(pollInterval);
     const res = await fetch(`${BANKR_API}/agent/job/${jobId}`, {
       headers: { 'X-API-Key': process.env.BANKR_API_KEY }
     });
     const data = await res.json();
     if (data.status === 'completed') return data;
     if (data.status === 'failed') throw new Error(`Bankr job failed: ${data.response}`);
+    // Back off polling after 30s to reduce API load
+    if (Date.now() - start > 30000) pollInterval = 5000;
   }
-  throw new Error(`Bankr job timed out: ${jobId}`);
+  throw new Error(`Bankr job timed out after ${maxWaitMs/1000}s: ${jobId}`);
 }
 
 async function execute(decision, activeTrancheUsd) {
@@ -105,17 +110,48 @@ async function getBalances() {
 }
 
 async function smartYieldRebalance() {
-  // Instruct Bankr to check Aave/Morpho/Moonwell and rebalance if >1% diff
-  // Force execution despite gas costs to demonstrate the capability
-  const text = `Check my current stablecoin yield position on Base vs best available (Aave/Morpho/Moonwell). 
-  If the best option is > 1% higher APY than my current position, withdraw and move everything to the best one.
-  If I am currently holding USDC (not earning), deposit to the best one immediately.
-  IMPORTANT: Proceed with the rebalance even if gas costs outweigh the short-term yield (this is a demo). Execute the transactions.`;
-  
-  console.log(`[bankr] Smart Yield Rebalance: "${text.replace(/\n/g, ' ')}"`);
-  const job = await prompt(text);
-  const result = await waitForJob(job.jobId);
-  return result.response;
+  // Two-step: first read current state, then decide + execute if warranted
+  // Step 1: check current position vs best available
+  const checkJob = await prompt(
+    `What are my current stablecoin yield positions on Base? ` +
+    `Compare to the best available USDC rates on Aave v3, Morpho, and Moonwell. ` +
+    `Report: current protocol, current APY, best available APY, and the difference.`
+  );
+  const checkResult = await waitForJob(checkJob.jobId);
+  console.log(`[bankr] Yield check:\n${checkResult.response}`);
+
+  // Parse APY delta from response — look for a move if >1% better exists
+  const response = checkResult.response.toLowerCase();
+
+  // Pattern 1: "difference: +1.84%" or "difference: 1.84%"
+  const diffMatch = response.match(/difference[:\s*]+\+?(\d+\.?\d*)\s*%/);
+  // Pattern 2: "X% higher/better/more"
+  const relMatch = response.match(/\+?(\d+\.?\d*)\s*%\s*(higher|better|more|improvement|increase)/);
+  // Pattern 3: "increase by X%" or "improve by X%"
+  const increaseMatch = response.match(/(?:increase|improve).*?by.*?\+?(\d+\.?\d*)\s*%/);
+  // Pattern 4: compute from best vs current APY values in text
+  const apyValues = [...response.matchAll(/(\d+\.?\d*)\s*%/g)].map(m => parseFloat(m[1]));
+  const computedDelta = apyValues.length >= 2 ? Math.max(...apyValues) - apyValues.find(v => v === Math.min(...apyValues.filter(x => x > 0)) || v > 0) : 0;
+
+  const bestDelta = Math.max(
+    diffMatch    ? parseFloat(diffMatch[1])    : 0,
+    relMatch     ? parseFloat(relMatch[1])     : 0,
+    increaseMatch? parseFloat(increaseMatch[1]): 0,
+  );
+
+  if (bestDelta < 1.0) {
+    console.log(`[bankr] Yield delta ${bestDelta.toFixed(2)}% — below 1% threshold, staying put`);
+    return `No rebalance needed. Best available is only ${bestDelta.toFixed(2)}% better than current position.\n\n${checkResult.response}`;
+  }
+
+  // Step 2: execute the rebalance
+  console.log(`[bankr] ${bestDelta.toFixed(2)}% yield improvement found — rebalancing`);
+  const moveJob = await prompt(
+    `Move all my USDC from my current yield position to the highest APY vault available on Base ` +
+    `(Aave v3, Morpho, or Moonwell). Execute the withdrawal and deposit now.`
+  );
+  const moveResult = await waitForJob(moveJob.jobId);
+  return `Rebalanced (+${bestDelta.toFixed(2)}% APY).\n\n${moveResult.response}`;
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
