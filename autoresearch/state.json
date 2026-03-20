@@ -1,4 +1,6 @@
 {
-  "bestValSharpe": 2.8373,
-  "expCount": 815
+  "bestValSharpe": 1.996,
+  "expCount": 0,
+  "resetAt": "2026-03-20",
+  "resetReason": "2-year evaluator with real funding signals; previous 2.837 was measurement artifact"
 }

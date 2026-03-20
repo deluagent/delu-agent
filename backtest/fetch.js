@@ -178,6 +178,12 @@ function fetchMarkets(limit = 250) {
 const BINANCE_PAIRS = {
   ETH: 'ETHUSDT', BTC: 'BTCUSDT', SOL: 'SOLUSDT', BNB: 'BNBUSDT',
   ARB: 'ARBUSDT', OP: 'OPUSDT', LINK: 'LINKUSDT', AAVE: 'AAVEUSDT',
+  DOGE: 'DOGEUSDT', MATIC: 'MATICUSDT', UNI: 'UNIUSDT', LTC: 'LTCUSDT',
+  BCH: 'BCHUSDT', FIL: 'FILUSDT', ETC: 'ETCUSDT', XLM: 'XLMUSDT',
+  NEAR: 'NEARUSDT', APT: 'APTUSDT', INJ: 'INJUSDT', RNDR: 'RNDRUSDT',
+  PEPE: 'PEPEUSDT', SHIB: 'SHIBUSDT', WIF: 'WIFUSDT', FLOKI: 'FLOKIUSDT',
+  BONK: 'BONKUSDT', FET: 'FETUSDT', AGIX: 'AGIXUSDT', OCEAN: 'OCEANUSDT',
+  IMX: 'IMXUSDT', STX: 'STXUSDT'
 };
 
 // Fetch full daily history via Binance (no rate limits, 1000 bars = ~2.7 years)
@@ -230,6 +236,22 @@ async function fetchGeckoTerminal(symbol, days = 180) {
   if (list.length === 0) throw new Error('empty');
   return list.reverse().map(([ts, o, h, l, c, v]) => ({
     ts: ts * 1000, time: new Date(ts * 1000), tf: '1d',
+    open: +o, high: +h, low: +l, close: +c, volume: +v
+  }));
+}
+
+// GeckoTerminal Hourly fetcher
+async function fetchGeckoTerminalHourly(symbol, hours = 1000) {
+  const cfg = GECKO_TERMINAL_FALLBACK[symbol];
+  if (!cfg) return null;
+  const url = `https://api.geckoterminal.com/api/v2/networks/${cfg.network}/pools/${cfg.pool}/ohlcv/hour?limit=${hours}&token=base`;
+  const r = await fetch(url, { headers: { Accept: 'application/json;version=20230302' }, signal: AbortSignal.timeout(12000) });
+  if (!r.ok) throw new Error(`GT ${r.status}`);
+  const json = await r.json();
+  const list = json?.data?.attributes?.ohlcv_list || [];
+  if (list.length === 0) throw new Error('empty');
+  return list.reverse().map(([ts, o, h, l, c, v]) => ({
+    ts: ts * 1000, time: new Date(ts * 1000), tf: '1h',
     open: +o, high: +h, low: +l, close: +c, volume: +v
   }));
 }
@@ -323,9 +345,120 @@ async function fetchAllFlowSignals(symbols) {
   return results;
 }
 
+// ── Funding Rate Fetcher ──────────────────────────────────────
+// Binance perpetual funding rates — free, no auth required
+// Funding rate is a strong sentiment signal:
+//   positive = longs paying shorts = crowded long = often bearish for price
+//   negative = shorts paying longs = crowded short = often bullish for price
+
+const BINANCE_PERP_PAIRS = {
+  BTC: 'BTCUSDT', ETH: 'ETHUSDT', SOL: 'SOLUSDT', BNB: 'BNBUSDT',
+  ARB: 'ARBUSDT', LINK: 'LINKUSDT', AAVE: 'AAVEUSDT', DOGE: 'DOGEUSDT',
+  OP:  'OPUSDT',
+};
+
+/**
+ * Fetch funding rate history for a token (up to 1000 records per call, 8h intervals)
+ * Returns array of { ts, rate, markPrice } oldest first
+ */
+async function fetchFundingHistory(symbol, limit = 1000) {
+  const pair = BINANCE_PERP_PAIRS[symbol];
+  if (!pair) return null;
+
+  const cacheFile = path.join(CACHE_DIR, `${symbol}_funding.json`);
+  const FOUR_HOURS = 4 * 60 * 60 * 1000;
+
+  if (fs.existsSync(cacheFile)) {
+    const cached = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+    if (Date.now() - cached.fetchedAt < FOUR_HOURS) return cached.rates;
+  }
+
+  try {
+    const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${pair}&limit=${limit}`;
+    const r = await fetch(url, { signal: AbortSignal.timeout(12000) });
+    if (!r.ok) throw new Error(`Funding API ${r.status}`);
+    const data = await r.json();
+    const rates = data.map(d => ({
+      ts:        d.fundingTime,
+      rate:      parseFloat(d.fundingRate),
+      markPrice: parseFloat(d.markPrice),
+    }));
+    fs.writeFileSync(cacheFile, JSON.stringify({ fetchedAt: Date.now(), symbol, rates }, null, 2));
+    return rates;
+  } catch (e) {
+    if (fs.existsSync(cacheFile)) {
+      return JSON.parse(fs.readFileSync(cacheFile, 'utf8')).rates;
+    }
+    return null;
+  }
+}
+
+/**
+ * Compute a daily funding signal from hourly funding rate history
+ * Returns array of { date: 'YYYY-MM-DD', fundingSignal: float [-1, +1] } aligned to daily bars
+ *
+ * Signal logic:
+ *   - Average daily funding rate (3 periods × 8h = 24h)
+ *   - Normalize by rolling 30d std → z-score
+ *   - Negative funding z-score → bullish (crowded shorts = fuel for rally)
+ *   - Positive funding z-score → bearish (crowded longs = squeeze risk)
+ *   - Return inverted so positive signal = bullish
+ */
+async function computeDailyFundingSignal(symbol) {
+  const rates = await fetchFundingHistory(symbol, 1000);
+  if (!rates || rates.length < 30) return {};
+
+  // Group by day
+  const byDay = {};
+  for (const { ts, rate } of rates) {
+    const date = new Date(ts).toISOString().slice(0, 10);
+    if (!byDay[date]) byDay[date] = [];
+    byDay[date].push(rate);
+  }
+
+  // Daily average funding rate
+  const days = Object.keys(byDay).sort();
+  const dailyRates = days.map(d => ({
+    date: d,
+    avgRate: byDay[d].reduce((s, r) => s + r, 0) / byDay[d].length,
+  }));
+
+  // Rolling 30d z-score of funding rate → invert for bullish signal
+  const result = {};
+  for (let i = 0; i < dailyRates.length; i++) {
+    if (i < 10) continue; // need min 10 days of history
+    const window = dailyRates.slice(Math.max(0, i - 30), i + 1).map(d => d.avgRate);
+    const mean = window.reduce((s, r) => s + r, 0) / window.length;
+    const std  = Math.sqrt(window.reduce((s, r) => s + (r - mean) ** 2, 0) / window.length);
+    const z    = std > 0 ? (dailyRates[i].avgRate - mean) / std : 0;
+    // Invert: negative funding (shorts paying) = bullish = positive signal
+    result[dailyRates[i].date] = +Math.max(-1, Math.min(1, -z * 0.3)).toFixed(4);
+  }
+  return result;
+}
+
+/**
+ * Fetch all funding signals for evaluator tokens
+ * Returns { ETH: { '2025-01-01': 0.12, ... }, BTC: {...}, ... }
+ */
+async function fetchAllFundingSignals() {
+  const FUNDING_TOKENS = ['BTC', 'ETH', 'SOL', 'BNB', 'ARB', 'OP', 'LINK'];
+  const result = {};
+  for (const sym of FUNDING_TOKENS) {
+    try {
+      result[sym] = await computeDailyFundingSignal(sym);
+    } catch (e) {
+      result[sym] = {};
+    }
+    await new Promise(r => setTimeout(r, 200));
+  }
+  return result;
+}
+
 module.exports = {
   TOKEN_IDS,
   BINANCE_PAIRS,
+  BINANCE_PERP_PAIRS,
   GECKO_TERMINAL_FALLBACK,
   fetchDailyHistory,
   fetchRecentHourly,
@@ -335,7 +468,11 @@ module.exports = {
   fetchBinanceHistory,
   fetchBinanceHourly,
   fetchGeckoTerminal,
+  fetchGeckoTerminalHourly,
   fetchFlowSignal,
   fetchAllFlowSignals,
+  fetchFundingHistory,
+  computeDailyFundingSignal,
+  fetchAllFundingSignals,
   BASE_ADDRESSES,
 };

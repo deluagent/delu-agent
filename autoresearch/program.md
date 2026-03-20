@@ -11,30 +11,27 @@ You commit every improvement to git. You revert every failure.
 
 - `evaluate.js` is fixed — do not modify it.
 - `candidate.js` is yours — modify it freely.
-- Data: 7 tokens (ETH, BTC, SOL, BNB, ARB, OP, LINK), 365 daily bars from Binance.
-- Split: in-sample (60%) | validation (20%) | audit (20% — only read at the end).
-- Strategy: rank all tokens by scoreToken(), long top 2 if score > MIN_SCORE.
+- Data: 7 tokens (ETH, BTC, SOL, BNB, ARB, OP, LINK), 730 daily bars from Binance.
+  - Mar 2024 → Mar 2026 (full 2-year history, bull + bear regimes)
+- Split:
+  - In-sample  (IS):  bars 0–437   (60%) — Mar 2024–Jul 2025 — early bull + correction
+  - Validation (VAL): bars 438–583 (20%) — Jul 2025–Dec 2025 — bull continuation + peak
+  - Audit      (AUD): bars 584–729 (20%) — Dec 2025–Mar 2026 — bear drawdown (NEVER used for decisions)
+- Strategy: rank all tokens by scoreToken(), long top 2 if score > MIN_SCORE (0.02)
 - Metric: **validation Sharpe** — this is the only number that matters.
-- Higher is better. Negative = strategy loses money OOS.
+- Higher is better. You accept experiments only if val_sharpe strictly improves.
 
-## Current baseline (run 0 — starting point)
+## Current baseline (reset 2026-03-20 — honest 2-year eval)
 
 ```
-In-Sample  (218d): Sharpe=  0.796  ret= +30.2%  WR=47%
-Validation  (72d): Sharpe= -0.662  ret=  -3.3%  WR=8%
-Audit       (72d): Sharpe= -1.643  ret= -10.5%  WR=10%
+In-Sample   (437d):  Sharpe= -0.111  ret= -20.1%  DD=51.6%  WR=19%
+Validation  (145d):  Sharpe=  1.996  ret= +74.7%  DD=17.6%  WR=42%
+Audit       (145d):  Sharpe=  0.427  ret=  +1.5%  DD= 3.7%  WR= 2%
 ```
 
-In-sample looks OK. Validation collapses. This means the strategy is overfitting
-to the in-sample period. The goal is to fix this.
-
-## What you know about the data
-
-- Daily bars (open/high/low/close/volume) for: ETH, BTC, SOL, BNB, ARB, OP, LINK
-- The data spans roughly Dec 2024 – Mar 2026 (recent crypto market)
-- This period includes: bull run (late 2024), correction (early 2025), choppy range (mid 2025), bear pressure (early 2026)
-- ETH has been weak relative to BTC over this period
-- Momentum strategies tend to work in trend regimes and fail in ranges
+Val Sharpe 1.996 is your starting point. Beat it.
+Note: In-sample Sharpe is negative — that's OK. We optimize for OOS (validation), not IS.
+The audit Sharpe (0.427) shows the strategy survives bear regime but conservatively.
 
 ## What scoreToken receives
 
@@ -42,10 +39,12 @@ to the in-sample period. The goal is to fix this.
 scoreToken({
   prices:         float[],  // token's daily close prices, oldest first
   btcPrices:      float[],  // BTC daily close prices (same length) — use for regime detection
-  flowSignal:     float,    // DexScreener buy/sell ratio [-1, +1]; 0 in backtest
-  attentionDelta: float,    // Checkr mindshare delta; 0 in backtest
+  flowSignal:     float,    // Binance perp funding rate z-score, INVERTED, range [-1, +1]
+                            // Positive = bullish (negative funding = shorts paying = buy signal)
+                            // Negative = bearish (positive funding = longs paying = crowded)
+  attentionDelta: float,    // 0 in backtest (future: social attention delta)
 })
-// → returns a number. Higher = stronger long signal. Return 0 to skip token.
+// → returns a number. Higher = stronger long signal. Return 0 or negative to skip token.
 ```
 
 **CRITICAL**: Do NOT call `ema()` directly — it's a nested helper inside `emaGap()`.
@@ -64,28 +63,46 @@ All helpers are at module scope in candidate.js.
 
 You can add new helpers freely. Keep them pure (no I/O).
 
-## Hypotheses to test (pick one per experiment)
+## The funding signal (flowSignal) — important alpha
 
-1. **Regime filter**: only go long when BTC 50d MA > 200d MA (trend regime)
-   → reduces false entries during bear/range markets
-2. **Shorter lookback**: r3 + r7 instead of r20 + r60 (faster momentum)
-   → may reduce lag in turning points
-3. **Vol-adjusted momentum**: r20 / vol instead of raw r20
-   → normalizes signal across high/low vol regimes  
-4. **Mean reversion mode**: when z < -2.5, increase score; when z > 2.5, decrease
-   → captures snap-backs after extreme moves
-5. **Trend strength filter**: only trade when |emaGap| > threshold
-   → avoids choppy/flat periods
-6. **Minimum holding period via score smoothing**: use EMA of score over 3 bars
-   → reduces excessive turnover
-7. **Cross-asset momentum**: rank by relative performance vs BTC specifically
-   → beta-adjusted momentum, not raw returns
+The `flowSignal` is the daily Binance perpetual funding rate, normalized as a z-score and inverted:
+- **Positive flowSignal** = funding was negative = shorts paying longs = crowded short = **bullish**
+- **Negative flowSignal** = funding was positive = longs paying shorts = crowded long = **bearish**
+- Range: [-1, +1] after clamping
+- This signal is available for all 7 tokens (ETH, BTC, SOL, BNB, ARB, OP, LINK)
+
+The current baseline uses it with weight 0.10. Try increasing/decreasing this weight.
+Try using it as a gate (only trade when funding > threshold) rather than a linear weight.
+Try using it to differentiate BULL vs BEAR regime treatment.
+
+## Hypotheses to test (pick ONE per experiment)
+
+### Funding signal (high priority — new signal, unexplored)
+1. **Increase funding weight**: 0.10 → 0.20 or 0.30 — see if more funding weight helps
+2. **Funding gate**: only enter when flowSignal > 0.05 (market not crowded long)
+3. **Funding + regime**: in BEAR regime, require flowSignal > 0 to trade at all
+4. **Funding divergence**: go long when price is falling BUT funding is negative (smart money positioning)
+
+### Momentum tuning
+5. **Shorter lookback**: r3 + r7 instead of r7 + r20 (faster momentum for crypto)
+6. **Vol-adjusted momentum**: divide each momentum component by (1 + vol) — already partially done, try fully
+7. **Asymmetric momentum**: larger weight on recent (r7) vs older (r60) in BULL; equal weight in RANGE
+8. **Relative momentum vs BTC**: r20_token / r20_btc — captures alpha above market
+
+### Regime handling
+9. **Softer BEAR penalty**: try 0.5 instead of 0.3 — BEAR regime still has tradeable tokens
+10. **Multi-regime momentum**: BULL → trend signals; BEAR → mean reversion signals only
+11. **Vol regime**: when volRatio (7d/30d realized vol) > 1.5 → reduce all signals by 50%
+
+### Risk
+12. **Sharpe-weighted sizing**: scale score by inverse vol — higher vol tokens get lower score
+13. **Drawdown protection**: if token is down >20% in 30d, score = 0 (skip falling knives)
 
 ## Rules
 
-- Every change must be a single logical modification — don't rewrite everything at once.
+- Every change must be a SINGLE logical modification — don't rewrite everything at once.
 - If validation Sharpe improves, commit with message: `exp N: +X.XXX val_sharpe — [what you changed]`
 - If it doesn't improve, revert candidate.js and try something else.
 - Log every experiment (pass and fail) to `autoresearch/experiments.json`.
-- When you've found 3+ improvements, update this file with the new baseline.
-- Aim for: validation Sharpe > 0.5 (currently -0.66).
+- **Target**: validation Sharpe > 2.5 (current: 1.996)
+- Secondary goal: audit Sharpe > 0.5 (current: 0.427) — but never sacrifice val for audit
