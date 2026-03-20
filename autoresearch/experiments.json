@@ -8766,5 +8766,13 @@
     "accepted": false,
     "description": "funding matters more, with threshold",
     "ts": 1774043866082
+  },
+  {
+    "n": 82,
+    "valSharpe": 0,
+    "isSharpe": 0.6424,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774044006183
   }
 ]
