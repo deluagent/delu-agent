@@ -1,18 +1,22 @@
 #!/usr/bin/env node
 /**
- * delu — autonomous trader agent
+ * delu — autonomous onchain trader agent
  *
- * Loop: every 4 hours
- *   1. Fetch market data (Binance hourly bars, Chainlink prices)
+ * Three-layer pipeline (every 30 minutes):
+ *   1. Fetch market data (Binance OHLCV, dual timeframe)
  *   2. Compute regime (5-state: BULL_HOT/BULL_COOL/RANGE_TIGHT/RANGE_WIDE/BEAR)
- *   3. Score tokens with A/B/C/D framework
- *   4. Build context → ask Venice (TEE) for the allocation decision
- *   5. Execute via Bankr if confidence ≥ 65%
- *   6. Log decision + execution
+ *   3. Score tokens with A/B/C/D quant framework
+ *   4. [Layer 1] Bankr LLM screen (gemini-2.5-flash, ~$0.0001)
+ *      → "anything worth trading given regime + scores?"
+ *      → SKIP if BEAR or nothing interesting → Venice never called
+ *   5. [Layer 2] Venice E2EE reason (llama-3.3-70b, private GPU)
+ *      → receives shortlist + full context → allocation decision
+ *   6. Execute via Bankr if confidence ≥ 65%
+ *   7. Log all layers: which fired, what decided, why
  *
  * Usage:
  *   node agent/index.js           # single run
- *   node agent/index.js --loop    # continuous (every 4h)
+ *   node agent/index.js --loop    # continuous (every 30min)
  *   node agent/index.js --dry     # dry run (no execution)
  */
 
@@ -24,8 +28,11 @@ const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
 const CYCLE_MS = 30 * 60 * 1000; // 30min — fast learning cycle
 
-const VENICE_API = 'https://api.venice.ai/api/v1/chat/completions';
-const VENICE_MODEL = 'llama-3.3-70b'; // best balance of speed + quality on Venice
+const VENICE_API   = 'https://api.venice.ai/api/v1/chat/completions';
+const VENICE_MODEL = 'llama-3.3-70b'; // private GPU, E2EE inference
+
+const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
+const BANKR_LLM_MODEL = 'gemini-2.5-flash'; // fast screen layer — cheap, ~1s, ~$0.0001/call
 
 // Autoresearch candidate — Venice continuously improves this function
 // Agent loads it fresh every cycle so improvements flow in automatically
@@ -252,6 +259,77 @@ function scoreTemplateD(bars) {
   return Math.max(0, Math.min(Math.abs(retZ)-1.2, 3)/3 * Math.min(vz-0.5, 3)/3);
 }
 
+// ─── Layer 1: Bankr LLM screen ────────────────────────────────────────────────
+// Fast pre-filter before Venice. Cheap model, simple question:
+// "Given this regime and these signal scores, is anything worth analyzing?"
+// Returns: { skip: bool, interesting: string[], reason: string }
+async function bankrScreen(regime, ranked) {
+  const state = regime.state;
+
+  // Hard skip in BEAR — no need to call any LLM
+  if (state === 'BEAR') {
+    return { skip: true, interesting: [], reason: 'BEAR regime — yield only, no analysis needed', layer: 'hardcoded' };
+  }
+
+  // Build a compact summary for the screen model
+  const scoreLines = ranked
+    .map(s => `${s.sym}: combined=${s.combined.toFixed(3)} [A=${s.sA.toFixed(2)} B=${s.sB.toFixed(2)} C=${s.sC.toFixed(2)} D=${s.sD.toFixed(2)}]`)
+    .join('\n');
+
+  const prompt = `Market regime: ${state}
+BTC ${(regime.pctFrom200 * 100).toFixed(1)}% from 200d MA | breadth: ${regime.breadthFraction} | volRatio: ${regime.volRatio.toFixed(2)}
+
+Signal scores (combined 0-1, threshold 0.05):
+${scoreLines}
+
+Are any tokens worth deeper analysis for a trade entry right now?
+Reply with JSON only — no markdown, no explanation outside the JSON:
+{"skip": false, "interesting": ["ETH", "AAVE"], "reason": "one sentence"}
+or
+{"skip": true, "interesting": [], "reason": "one sentence"}`;
+
+  try {
+    const res = await fetch(BANKR_LLM_API, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.BANKR_API_KEY}`,
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify({
+        model: BANKR_LLM_MODEL,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 120,
+        temperature: 0.1
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Bankr LLM error ${res.status}: ${err}`);
+    }
+
+    const data = await res.json();
+    const content = data.choices[0].message.content.trim();
+
+    // Strip markdown fences if model wraps in ```json
+    const clean = content.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+    const parsed = JSON.parse(clean);
+
+    return {
+      skip:        !!parsed.skip,
+      interesting: Array.isArray(parsed.interesting) ? parsed.interesting : [],
+      reason:      parsed.reason || '',
+      layer:       'bankr-llm',
+      model:       BANKR_LLM_MODEL,
+      usage:       data.usage,
+    };
+  } catch (e) {
+    // Screen failure → don't block Venice, log and continue
+    console.warn(`[bankr-screen] Failed (${e.message}) — passing to Venice anyway`);
+    return { skip: false, interesting: SYMBOLS, reason: `screen failed: ${e.message}`, layer: 'fallback' };
+  }
+}
+
 // ─── Venice reasoning ──────────────────────────────────────────────────────────
 async function askVenice(context) {
   const systemPrompt = `You are delu, an autonomous onchain trader running on Base.
@@ -426,8 +504,61 @@ async function runCycle() {
     console.log(`    ${s.sym.padEnd(6)} A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} → combined=${s.combined.toFixed(3)} [${s.template}]`);
   }
 
-  // 4. Build Venice context
-  const topToken = ranked[0];
+  // 4. [Layer 1] Bankr LLM screen — fast pre-filter
+  console.log('\n[bankr-screen] Screening...');
+  const screen = await bankrScreen(regime, ranked);
+  console.log(`[bankr-screen] skip=${screen.skip} | interesting=[${screen.interesting.join(',')}] | "${screen.reason}" (${screen.layer})`);
+
+  if (screen.skip) {
+    console.log('[bankr-screen] Skip signal → going to yield/hold without Venice');
+    // In BEAR or no signal: execute yield directly
+    const yieldDecision = {
+      action: state === 'BEAR' ? 'yield' : 'hold',
+      asset: 'USDC',
+      size_pct: state === 'BEAR' ? 100 : 0,
+      confidence: 90,
+      reasoning: screen.reason,
+      stop_loss_pct: 0,
+      take_profit_pct: 0,
+      tee_quote: null,
+      layers_used: ['bankr-screen'],
+      screen,
+    };
+    // Log and execute yield
+    if (!DRY_RUN && state === 'BEAR') {
+      console.log('\n[bankr] Depositing to Aave yield...');
+      try {
+        const result = await bankr.execute(yieldDecision, ACTIVE_TRANCHE_USD);
+        console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
+      } catch (e) {
+        console.error('[bankr] Execution failed:', e.message);
+      }
+    } else if (DRY_RUN) {
+      console.log(`\n[delu] DRY RUN — would yield to Aave`);
+    }
+    const logEntry = {
+      ts: cycleStart, regime: state, regime_detail: regime,
+      scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template })),
+      screen, decision: yieldDecision, dry_run: DRY_RUN
+    };
+    const logPath = require('path').join(__dirname, '../data/agent_log.jsonl');
+    require('fs').appendFileSync(logPath, JSON.stringify(logEntry) + '\n');
+    console.log(`\n[log] → ${logPath}`);
+    console.log('\n' + '═'.repeat(60));
+    return;
+  }
+
+  // Filter ranked to only tokens Bankr screen found interesting
+  const interestingRanked = screen.interesting.length > 0
+    ? ranked.filter(s => screen.interesting.includes(s.sym))
+    : ranked;
+  if (interestingRanked.length === 0) {
+    console.log('[bankr-screen] No tokens passed filter — holding');
+    return;
+  }
+
+  // 5. Build Venice context (shortlisted tokens only)
+  const topToken = interestingRanked[0];
   const recentPrices = SYMBOLS.map((sym, ti) => {
     const bars = allBars[ti];
     if (!bars.length) return `${sym}: N/A`;
@@ -453,40 +584,47 @@ BTC: $${Math.round(regime.btcNow)} — ${(regime.pctFrom200 * 100).toFixed(1)}% 
 Volatility ratio (7d/30d): ${regime.volRatio.toFixed(2)} — ${regime.volRatio > PARAMS.volHighMult ? 'HIGH VOL' : 'normal'}
 Market breadth: ${regime.breadthFraction} tokens above 200d MA
 ${arNote}
+## Pre-Screen (Bankr LLM)
+Tokens flagged as interesting: ${screen.interesting.join(', ') || 'none'}
+Screen rationale: "${screen.reason}"
+
 ## Prices & 24h Change
 ${recentPrices.join('\n')}
 
 ## RSI (14, hourly)
 ${rsiVals.join('\n')}
 
-## Signal Scores (A=trend B=OBV C=rank D=bounce AR=self-evolved)
-${ranked.map(s => `${s.sym.padEnd(6)}: A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} → ${s.combined.toFixed(3)} [${s.template}]`).join('\n')}
+## Signal Scores — Shortlisted tokens (A=trend B=OBV C=rank D=bounce AR=self-evolved)
+${interestingRanked.map(s => `${s.sym.padEnd(6)}: A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} → ${s.combined.toFixed(3)} [${s.template}]`).join('\n')}
 
 ## Top Candidate
-${state !== 'BEAR' && topToken.combined > 0.05
+${topToken.combined > 0.05
   ? `${topToken.sym} via Template ${topToken.template} | score=${topToken.combined.toFixed(3)}`
-  : 'None — below threshold or BEAR regime'}
+  : 'None — below threshold'}
 
 ## Portfolio Context
 Active tranche: $${ACTIVE_TRANCHE_USD} USDC
 Stop: ${PARAMS.stopMult}× ATR | Target: ${PARAMS.tpMult}× ATR
 
+A fast screening model (Bankr LLM) already filtered these tokens as worth analyzing.
 What is your allocation decision?`;
 
-  // 5. Ask Venice
-  console.log('\n[venice] Reasoning...');
+  // 6. [Layer 2] Venice E2EE — private allocation reasoning
+  console.log('\n[venice] Reasoning (E2EE private)...');
   let decision;
   try {
     decision = await askVenice(context);
+    decision.layers_used = ['bankr-screen', 'venice-e2ee'];
+    decision.screen = screen;
     console.log(`[venice] → ${decision.action.toUpperCase()} ${decision.asset} | size=${decision.size_pct}% | confidence=${decision.confidence}%`);
     console.log(`[venice] "${decision.reasoning}"`);
     console.log(`[venice] Privacy: ${decision.tee_quote === 'e2ee-encrypted' ? '✓ E2EE (inference encrypted)' : '✗ no privacy layer'}`);
   } catch (e) {
     console.error('[venice] Failed:', e.message);
-    decision = { action: 'hold', asset: 'USDC', size_pct: 0, confidence: 0, reasoning: `Venice unavailable: ${e.message}`, tee_quote: null };
+    decision = { action: 'hold', asset: 'USDC', size_pct: 0, confidence: 0, reasoning: `Venice unavailable: ${e.message}`, tee_quote: null, layers_used: ['bankr-screen', 'venice-failed'], screen };
   }
 
-  // 6. Execute
+  // 7. Execute
   if (decision.confidence < 65 || decision.action === 'hold') {
     console.log(`\n[delu] Skipping — confidence ${decision.confidence}% or hold`);
   } else if (DRY_RUN) {
@@ -501,12 +639,13 @@ What is your allocation decision?`;
     }
   }
 
-  // 7. Log
+  // 8. Log
   const logEntry = {
     ts: cycleStart,
     regime: state,
     regime_detail: regime,
     scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template, sA: s.sA, sB: s.sB, sC: s.sC, sD: s.sD })),
+    screen,
     decision,
     dry_run: DRY_RUN
   };
