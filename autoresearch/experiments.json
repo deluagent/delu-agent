@@ -9434,5 +9434,13 @@
     "accepted": false,
     "description": "error: syntax error in generated code: Missing initialize",
     "ts": 1774056373816
+  },
+  {
+    "n": 64,
+    "valSharpe": 3.3922,
+    "isSharpe": 1.223,
+    "accepted": false,
+    "description": "experiment 64",
+    "ts": 1774056523743
   }
 ]
