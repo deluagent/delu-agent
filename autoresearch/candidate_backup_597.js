@@ -123,7 +123,6 @@ function scoreToken(data) {
   const r20 = pctChange(prices, 20);
   const r60 = pctChange(prices, Math.min(60, n - 1));
 
-  if (vol > 0.75 && r3 < 0.10) return 0;
   const momentum = vol > 0.75
  ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
     : (0.30 * r7 + 0.40 * r20 + 0.30 * r60) / (1 + vol);
@@ -146,11 +145,11 @@ function scoreToken(data) {
   //  OBV Signal (Volume Accumulation) with Volume Surge Multiplier 
   const obvSig = calculateObvSig(prices, volumes, 15);
   const relVol = volumes[n - 1] / (sma(volumes, 15) || 1);
-  const obvBoost = 0.06 * obvSig * Math.min(relVol, 2.0);
+  const obvBoost = 0.06 * obvSig * Math.min(relVol, 1.4);
 
   //  Price acceleration filter
   const r1 = pctChange(prices, 1);
-  // spike protect removed — let signal run
+  if (r1 > 0.15 && vol > 0.9) return (momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost) * regimeMult * 0.5;
 
   // Volume confirmation
   const vol20avg = volumes.length >= 20? sma(volumes, 20) : 0;

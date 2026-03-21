@@ -1,8 +1,9 @@
 {
-  "bestValSharpe": 3.8884,
-  "bestAudSharpe": 1.858,
-  "bestScore": 3.2795499999999995,
-  "expCount": 565,
+  "bestValSharpe": 4.393,
+  "bestAudSharpe": 2.176,
+  "bestScore": 3.7278999999999995,
+  "expCount": 598,
   "resetAt": "2026-03-21",
-  "baselineNote": "bench sprint: vol confirm + 52w high proximity — val=3.574 aud=1.858 combined=3.059"
+  "baselineNote": "bench sprint: vol confirm + 52w high proximity — val=3.574 aud=1.858 combined=3.059",
+  "note": "Manual bench sprint 2026-03-21: r3>0.10 high-vol gate + relVol cap 2.0 + no spike protect"
 }

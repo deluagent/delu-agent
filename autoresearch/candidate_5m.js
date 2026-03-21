@@ -63,19 +63,19 @@ function scoreToken(data) {
   const aligned = (ret12 > 0 && ret48 > 0) || (ret12 < 0 && ret48 < 0);
   if (!aligned) return 0;
   
-  const momScore = Math.tanh(ret12 * 30) * 0.5 + Math.tanh(ret48 * 10) * 0.5;
+  const momScore = Math.tanh(ret12 * 30) * 0.6 + Math.tanh(ret48 * 10) * 0.4;
 
   // ── Volume burst (12 bars vs 48 bars) ───────────────────────
   const vol12 = volumes.slice(-12).reduce((s, v) => s + v, 0) / 12;
   const vol48 = volumes.slice(-60, -12).reduce((s, v) => s + v, 0) / 48;
   const burst  = vol12 / (vol48 || 1);
   const dir12  = ret12 > 0 ? 1 : ret12 < 0 ? -1 : 0;
-  const volSignal = Math.tanh((burst - 1.2) * dir12 * 4) * 0.3;
+  const volSignal = Math.tanh((burst - 1.2) * dir12 * 4) * 0.25;
 
   // ── Relative strength vs BTC (4h horizon) ────────────────────
   const tokenRet48 = ret48;
   const btcRet48   = bN >= 49 ? (btcPrices[bN-1] - btcPrices[bN-49]) / btcPrices[bN-49] : 0;
-  const relBTC     = Math.tanh((tokenRet48 - btcRet48) * 25) * 0.25;
+  const relBTC     = Math.tanh((tokenRet48 - btcRet48) * 25) * 0.15;
 
   // ── VWAP deviation (1h window) ───────────────────────────────
   let sumPV = 0, sumV = 0;
@@ -87,12 +87,15 @@ function scoreToken(data) {
   const vwapDev = (prices[n-1] - vwap) / vwap;
   const vwapSignal = Math.tanh(vwapDev * 50) * 0.2;
 
-  // ── BTC gate (halve if BTC dumping >1.5% this hour) ──────────
+  // ── BTC gate: stricter threshold + early exit on strong downtrend ────────────────
   const btcRet12 = bN >= 13 ? (btcPrices[bN-1] - btcPrices[bN-13]) / btcPrices[bN-13] : 0;
-  const btcGate  = btcRet12 < -0.015 ? 0.4 : btcRet12 > 0.015 ? 1.1 : 1.0;
+  let btcGate = 1.0;
+  if (btcRet12 < -0.015) btcGate = 0.0;
+  else if (btcRet12 < -0.010) btcGate = 0.1;
+  else if (btcRet12 > 0.020) btcGate = 0.5;
 
-  const score = (momScore + volSignal + relBTC + vwapSignal) * btcGate;
-  return Math.max(-1, Math.min(1, score));
+  const score = momScore + volSignal + relBTC + vwapSignal;
+  return Math.max(-1, Math.min(1, score * btcGate));
 }
 
 module.exports = { scoreToken };
