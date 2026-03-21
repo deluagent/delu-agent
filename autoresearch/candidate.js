@@ -3,14 +3,13 @@
  *
  * Rules (enforced by evaluate.js):
  *  - Must export scoreToken(data) → number
- *  - data = { prices, btcPrices, flowSignal, attentionDelta }
+ *  - data = { prices, volumes, opens, highs, lows, btcPrices, flowSignal, attentionDelta }
  *  - prices / btcPrices: float[] of daily closes, oldest first
  *  - flowSignal: Binance perp funding rate z-score, INVERTED [-1,+1]
  *    Positive = bullish (negative funding = shorts paying = buy signal)
  *  - Pure function — no I/O, no randomness, no external state
  *
  * The evaluator measures validation Sharpe on held-out data.
- * Improve it. Every committed version is tracked in git history.
  */
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -66,10 +65,37 @@ function zScore(prices, window = 20) {
   return std === 0 ? 0 : (prices[n - 1] - mean) / std;
 }
 
+/**
+ * Net Volume Flow (OBV-style)
+ * Measures the percentage of volume that occurred on "up" days over a window.
+ * Returns a value between -1 and 1.
+ */
+function calculateObvSig(prices, volumes, window = 20) {
+  const n = prices.length;
+  if (n < window + 1 || volumes.length < n) return 0;
+  let obvDelta = 0;
+  let totalVol = 0;
+  for (let i = n - window; i < n; i++) {
+    totalVol += volumes[i];
+    if (prices[i] > prices[i - 1]) {
+      obvDelta += volumes[i];
+    } else if (prices[i] < prices[i - 1]) {
+      obvDelta -= volumes[i];
+    }
+  }
+  return totalVol > 0 ? obvDelta / totalVol : 0;
+}
+
 // ── Score function ─────────────────────────────────────────────
 
 function scoreToken(data) {
-  const { prices, btcPrices = [], flowSignal = 0 } = data;
+  const { 
+    prices, 
+    volumes = [], 
+    btcPrices = [], 
+    flowSignal = 0 
+  } = data;
+  
   const n = prices.length;
   if (n < 60) return 0;
 
@@ -84,8 +110,7 @@ function scoreToken(data) {
     const btc200 = sma(btcPrices, 200);
     if (btc50 < btc200) {
       isBear = true;
-      // High-vol alts (Base tokens) are skipped in bear markets.
-      // Majors get a small participation weight.
+      // High-vol alts are skipped in bear markets. Majors get 20% weight.
       regimeMult = vol > 0.75 ? 0.0 : 0.20;
     }
   }
@@ -98,8 +123,6 @@ function scoreToken(data) {
   if (Math.abs(ema) < 0.03) return 0;
 
   // ── Momentum (Adaptive Lookbacks) ──
-  // High-vol tokens (Base) need faster response (r3/r7).
-  // Lower-vol tokens (Majors) benefit from longer-term trend confirmation (r20/r60).
   const r3 = pctChange(prices, 3);
   const r20 = pctChange(prices, 20);
   const r60 = pctChange(prices, Math.min(60, n - 1));
@@ -123,8 +146,14 @@ function scoreToken(data) {
     ? (flowSignal > 0 ? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
 
+  // ── OBV Signal (Volume Accumulation) ──
+  // Check if volume is confirming the price action over the last 15 days.
+  const obvSig = calculateObvSig(prices, volumes, 15);
+  const obvBoost = 0.08 * obvSig;
+
   // ── Combined ──
-  const raw = momentum + trend + meanRev + volPenalty + fundingBoost;
+  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost;
+  
   return raw * regimeMult;
 }
 
