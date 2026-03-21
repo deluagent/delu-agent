@@ -9231,5 +9231,117 @@
     "accepted": true,
     "description": "experiment 39",
     "ts": 1774053960629
+  },
+  {
+    "n": 40,
+    "valSharpe": 1.3259,
+    "isSharpe": 1.9639,
+    "accepted": false,
+    "description": "experiment 40",
+    "ts": 1774054027785
+  },
+  {
+    "n": 41,
+    "valSharpe": 0.6231,
+    "isSharpe": 1.5158,
+    "accepted": false,
+    "description": "experiment 41",
+    "ts": 1774054067480
+  },
+  {
+    "n": 42,
+    "valSharpe": 1.4741,
+    "isSharpe": 1.428,
+    "accepted": false,
+    "description": "experiment 42",
+    "ts": 1774054105242
+  },
+  {
+    "n": 43,
+    "valSharpe": 0.9336,
+    "isSharpe": 1.7784,
+    "accepted": false,
+    "description": "experiment 43",
+    "ts": 1774054130939
+  },
+  {
+    "n": 44,
+    "valSharpe": 1.091,
+    "isSharpe": 2.0672,
+    "accepted": false,
+    "description": "experiment 44",
+    "ts": 1774054195333
+  },
+  {
+    "n": 45,
+    "valSharpe": 1.2544,
+    "isSharpe": 1.5709,
+    "accepted": false,
+    "description": "experiment 45",
+    "ts": 1774054235422
+  },
+  {
+    "n": 46,
+    "valSharpe": 0.189,
+    "isSharpe": 0.9573,
+    "accepted": false,
+    "description": "experiment 46",
+    "ts": 1774054267476
+  },
+  {
+    "n": 47,
+    "valSharpe": 0.794,
+    "isSharpe": 1.81,
+    "accepted": false,
+    "description": "Changed from absolute dead-zone to directional filter. ",
+    "ts": 1774054316732
+  },
+  {
+    "n": 48,
+    "valSharpe": 1.0076,
+    "isSharpe": 1.6623,
+    "accepted": false,
+    "description": "experiment 48",
+    "ts": 1774054344928
+  },
+  {
+    "n": 49,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax: Unexpected token ')'",
+    "ts": 1774054391223
+  },
+  {
+    "n": 50,
+    "valSharpe": 1.1278,
+    "isSharpe": 1.3927,
+    "accepted": false,
+    "description": "experiment 50",
+    "ts": 1774054431617
+  },
+  {
+    "n": 51,
+    "valSharpe": 1.0735,
+    "isSharpe": 2.1372,
+    "accepted": false,
+    "description": "Only long tokens in a clear positive trend (emaGap > 0.02).",
+    "ts": 1774054470516
+  },
+  {
+    "n": 52,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax: Unexpected token ')'",
+    "ts": 1774054518222
+  },
+  {
+    "n": 53,
+    "valSharpe": -1.1339,
+    "isSharpe": 1.2936,
+    "accepted": false,
+    "description": "experiment 53",
+    "ts": 1774054549647
   }
 ]
