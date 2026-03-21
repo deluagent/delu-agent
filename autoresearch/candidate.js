@@ -150,8 +150,13 @@ function scoreToken(data) {
   const r1 = pctChange(prices, 1);
   if (r1 > 0.15 && vol > 0.9) return (momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost) * regimeMult * 0.5;
 
+  // Volume confirmation (r1 already computed above)
+  const vol20avg = volumes.length >= 20 ? sma(volumes, 20) : 0;
+  const relVolume = vol20avg > 0 ? volumes[volumes.length-1] / vol20avg : 1;
+  const volConfirm = r1 > 0.03 ? (relVolume > 1.5 ? 0.05 : relVolume < 0.8 ? -0.04 : 0) : 0;
+
   //  Combined 
-  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost;
+  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm;
   
   return raw * regimeMult;
 }
