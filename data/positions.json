@@ -7,14 +7,12 @@
     "activateAt": 1,
     "hardSlPct": 3,
     "peakPrice": 2159.2,
-    "peakPct": 1.6572504708097842,
+    "peakPct": 1.66,
     "openedAt": "2026-03-20T18:30:00.000Z",
     "timeStopAt": "2026-03-23T18:30:00.000Z",
-    "status": "closed",
-    "closeReason": "bankr_stop",
-    "closedAt": "2026-03-21T18:53:55.016Z",
-    "closePrice": null,
-    "pnlPct": null
+    "status": "open",
+    "note": "bankr_stop fired but tokens still in wallet — now managed by ATR stop",
+    "lastChecked": null
   },
   {
     "sym": "cbBTC",
@@ -24,14 +22,12 @@
     "activateAt": 1,
     "hardSlPct": 3,
     "peakPrice": 70832.02,
-    "peakPct": 1.6270481218973343,
+    "peakPct": 1.63,
     "openedAt": "2026-03-20T18:30:00.000Z",
     "timeStopAt": "2026-03-23T18:30:00.000Z",
-    "status": "closed",
-    "closeReason": "bankr_stop",
-    "closedAt": "2026-03-21T19:10:50.126Z",
-    "closePrice": null,
-    "pnlPct": null
+    "status": "open",
+    "note": "bankr_stop fired but tokens still in wallet — now managed by ATR stop",
+    "lastChecked": null
   },
   {
     "sym": "SOL",
@@ -41,14 +37,12 @@
     "activateAt": 1,
     "hardSlPct": 3,
     "peakPrice": 90.24,
-    "peakPct": 2.1045485403937536,
+    "peakPct": 2.10,
     "openedAt": "2026-03-20T18:30:00.000Z",
     "timeStopAt": "2026-03-23T18:30:00.000Z",
-    "status": "closed",
-    "closeReason": "bankr_stop",
-    "closedAt": "2026-03-21T19:44:44.059Z",
-    "closePrice": null,
-    "pnlPct": null
+    "status": "open",
+    "note": "bankr_stop fired but tokens still in wallet — now managed by ATR stop",
+    "lastChecked": null
   },
   {
     "sym": "MOLT",

@@ -16160,5 +16160,261 @@
     "accepted": false,
     "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.059 with ",
     "ts": 1774131528811
+  },
+  {
+    "n": 902,
+    "valSharpe": 4.1526,
+    "isSharpe": 1.3658,
+    "accepted": false,
+    "description": "Reintroduce ATR penalty but reduce magnitude from -0.03 to -0.015, keeping OBV divergence removed.",
+    "ts": 1774131541804
+  },
+  {
+    "n": 903,
+    "valSharpe": 4.0759,
+    "isSharpe": 1.3092,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.058 with volume sur",
+    "ts": 1774131554455
+  },
+  {
+    "n": 904,
+    "valSharpe": 4.2127,
+    "isSharpe": 1.3991,
+    "accepted": false,
+    "description": "Reintroduce ATR penalty at reduced -0.015 magnitude and restore OBV divergence with -0.01 magnitude ",
+    "ts": 1774131568026
+  },
+  {
+    "n": 905,
+    "valSharpe": 4.0051,
+    "isSharpe": 1.3438,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.062 with volume sur",
+    "ts": 1774131580767
+  },
+  {
+    "n": 906,
+    "valSharpe": 4.2147,
+    "isSharpe": 1.3035,
+    "accepted": false,
+    "description": "Reintroduce OBV divergence at -0.01 magnitude and ATR penalty at -0.015, but reduce obvBoost multipl",
+    "ts": 1774131595212
+  },
+  {
+    "n": 907,
+    "valSharpe": 3.6577,
+    "isSharpe": 1.3873,
+    "accepted": false,
+    "description": "Remove OBV divergence penalty and ATR penalty; increase obvBoost multiplier from 0.06 to 0.065 with ",
+    "ts": 1774131608459
+  },
+  {
+    "n": 908,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.2337,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; increase obvBoost multiplier from 0.06 to 0.068 with volume s",
+    "ts": 1774131622833
+  },
+  {
+    "n": 909,
+    "valSharpe": 3.9494,
+    "isSharpe": 1.3495,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.055 and apply volum",
+    "ts": 1774131635421
+  },
+  {
+    "n": 910,
+    "valSharpe": 4.2147,
+    "isSharpe": 1.4278,
+    "accepted": false,
+    "description": "Restore OBV divergence at -0.01 magnitude and ATR penalty at -0.012 magnitude with reduced obvBoost ",
+    "ts": 1774131647819
+  },
+  {
+    "n": 911,
+    "valSharpe": 4.0051,
+    "isSharpe": 1.3438,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; increase obvBoost multiplier from 0.06 to 0.062 with volume s",
+    "ts": 1774131660822
+  },
+  {
+    "n": 912,
+    "valSharpe": 3.5785,
+    "isSharpe": 1.2864,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.075 with volume sur",
+    "ts": 1774131673679
+  },
+  {
+    "n": 913,
+    "valSharpe": 3.6891,
+    "isSharpe": 1.2065,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; increase obvBoost multiplier from 0.06 to 0.065 and add volum",
+    "ts": 1774131687305
+  },
+  {
+    "n": 914,
+    "valSharpe": 3.6525,
+    "isSharpe": 1.2022,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.072 with volume sur",
+    "ts": 1774131700616
+  },
+  {
+    "n": 915,
+    "valSharpe": 2.4586,
+    "isSharpe": 1.1111,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; restore OBV divergence at -0.015 magnitude as a standalone chec",
+    "ts": 1774131713644
+  },
+  {
+    "n": 916,
+    "valSharpe": 4.2147,
+    "isSharpe": 1.3625,
+    "accepted": false,
+    "description": "Restore OBV divergence at -0.01 magnitude and ATR penalty at -0.010 magnitude with obvBoost reduced ",
+    "ts": 1774131727182
+  },
+  {
+    "n": 917,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.2337,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.068 with volume sur",
+    "ts": 1774131740023
+  },
+  {
+    "n": 918,
+    "valSharpe": 3.6278,
+    "isSharpe": 1.1958,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.076 with volume sur",
+    "ts": 1774131751572
+  },
+  {
+    "n": 919,
+    "valSharpe": 3.996,
+    "isSharpe": 1.3446,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; increase obvBoost multiplier from 0.06 to 0.062 and add volum",
+    "ts": 1774131765240
+  },
+  {
+    "n": 920,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.3066,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.065 with volume sur",
+    "ts": 1774131777715
+  },
+  {
+    "n": 921,
+    "valSharpe": 3.6525,
+    "isSharpe": 1.211,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.070 with volume sur",
+    "ts": 1774131790792
+  },
+  {
+    "n": 922,
+    "valSharpe": 4.1765,
+    "isSharpe": 1.3762,
+    "accepted": false,
+    "description": "Restore OBV divergence at -0.01 magnitude and ATR penalty at -0.008 magnitude with obvBoost reduced ",
+    "ts": 1774131803884
+  },
+  {
+    "n": 923,
+    "valSharpe": 3.9639,
+    "isSharpe": 1.3931,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.063 with volume sur",
+    "ts": 1774131816410
+  },
+  {
+    "n": 924,
+    "valSharpe": 3.6278,
+    "isSharpe": 1.1958,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.075 with volume sur",
+    "ts": 1774131829050
+  },
+  {
+    "n": 925,
+    "valSharpe": 4.2127,
+    "isSharpe": 1.2985,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; restore OBV divergence at -0.015 magnitude with ATR penalty at ",
+    "ts": 1774131842103
+  },
+  {
+    "n": 926,
+    "valSharpe": 4.0051,
+    "isSharpe": 1.3438,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.062 with volume sur",
+    "ts": 1774131855659
+  },
+  {
+    "n": 927,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.3066,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.065 with volume sur",
+    "ts": 1774131868369
+  },
+  {
+    "n": 928,
+    "valSharpe": 4.1765,
+    "isSharpe": 1.3762,
+    "accepted": false,
+    "description": "Restore OBV divergence at -0.01 magnitude and ATR penalty at -0.008 magnitude with obvBoost reduced ",
+    "ts": 1774131881479
+  },
+  {
+    "n": 929,
+    "valSharpe": 3.9277,
+    "isSharpe": 1.3835,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.061 with volume sur",
+    "ts": 1774131894372
+  },
+  {
+    "n": 930,
+    "valSharpe": 3.5943,
+    "isSharpe": 1.3235,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.074 with volume sur",
+    "ts": 1774131907033
+  },
+  {
+    "n": 931,
+    "valSharpe": 4.2147,
+    "isSharpe": 1.2824,
+    "accepted": false,
+    "description": "Restore OBV divergence at -0.015 magnitude and ATR penalty at -0.008 magnitude with obvBoost reduced",
+    "ts": 1774131920319
+  },
+  {
+    "n": 932,
+    "valSharpe": 3.7083,
+    "isSharpe": 1.3571,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.068 with volume sur",
+    "ts": 1774131932916
+  },
+  {
+    "n": 933,
+    "valSharpe": 4.0051,
+    "isSharpe": 1.3438,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.062 with volume sur",
+    "ts": 1774131945547
   }
 ]

@@ -57,7 +57,7 @@ function loadCandidate() {
 }
 
 const { fetchBinanceHourly, fetchGeckoTerminal, GECKO_TERMINAL_FALLBACK } = require('../backtest/fetch.js');
-const { monitorPositions } = require('./position_monitor');
+const { monitorPositions, runAtrStops } = require('./position_monitor');
 
 // Regime tokens only — BTC + ETH for macro context
 const REGIME_TOKENS = ['BTC', 'ETH'];
@@ -491,6 +491,16 @@ async function runCycle() {
   } catch(e) {
     console.warn(`[journal] Reconcile skipped: ${e.message?.slice(0,60)}`);
     openPositions = journal.loadPositions().filter(p => p.status === 'open');
+  }
+
+  // ATR trailing stop check — runs before anything else each cycle
+  if (openPositions.length) {
+    const stopped = await runAtrStops(openPositions, bankr, DRY_RUN);
+    if (stopped.length) {
+      console.log(`[atr-stops] ${stopped.length} position(s) stopped out: ${stopped.map(s => s.sym).join(', ')}`);
+      // Reload positions after stop-outs
+      openPositions = journal.loadPositions().filter(p => p.status === 'open');
+    }
   }
 
   // Live position intelligence — volume, momentum, recommendation per position
