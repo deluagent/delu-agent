@@ -25,6 +25,8 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 const bankr   = require('./bankr');
 const checkr  = require('./checkr');
 const journal = require('./journal');
+const { kellySize, correlationAdjust, calibrateFromLog } = require('./kelly');
+const { startDashboard } = require('./dashboard');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -733,16 +735,32 @@ What is your allocation decision?`;
   } else {
     console.log('\n[bankr] Executing...');
     try {
-      const result = await bankr.execute(decision, ACTIVE_TRANCHE_USD);
+      // Kelly position sizing — calibrate from live trade history
+      const stats = journal.getStats();
+      const kellyParams = stats.totalTrades >= 5
+        ? { winRate: stats.wins / stats.totalTrades, avgWin: Math.max(0.01, stats.avgPnl / 100), avgLoss: 0.05 }
+        : { winRate: 0.52, avgWin: 0.08, avgLoss: 0.05 }; // conservative defaults until calibrated
+
+      const openPositions = journal.loadPositions().filter(p => p.status === 'open');
+      const kelly = kellySize(decision.confidence, ACTIVE_TRANCHE_USD, kellyParams);
+      const corr  = correlationAdjust(openPositions.map(p => ({ token: p.sym })), decision.asset, kelly.sizeUsd);
+      const finalSizeUsd = Math.max(10, corr.adjustedSize); // $10 Bankr minimum
+
+      console.log(`[kelly] size=$${finalSizeUsd} (kelly=${kelly.kellyFraction}% half=${kelly.halfKelly}% conf_mult=${kelly.confidenceMultiplier}% ${corr.reason})`);
+
+      // Override Venice's size_pct with Kelly-computed size
+      const kellyDecision = { ...decision, size_pct: Math.round(finalSizeUsd / ACTIVE_TRANCHE_USD * 100) };
+      const result = await bankr.execute(kellyDecision, ACTIVE_TRANCHE_USD);
       console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
-      // Point 1: record entry in journal
+
+      // Record entry in journal with Kelly metadata
       if (decision.action === 'buy' || decision.action === 'long') {
         const entryPrice = await bankr.getPrice(decision.asset).catch(() => 0);
-        const sizeUsd    = Math.round((decision.size_pct / 100) * ACTIVE_TRANCHE_USD * 100) / 100;
-        journal.recordEntry(decision.asset, entryPrice, sizeUsd, {
+        journal.recordEntry(decision.asset, entryPrice, finalSizeUsd, {
           regime:     regime.state,
           confidence: decision.confidence,
           signals:    ranked.find(s => s.sym === decision.asset),
+          kellyFraction: kelly.kellyFraction,
         });
       }
     } catch (e) {
@@ -802,9 +820,12 @@ async function main() {
   if (!process.env.BANKR_API_KEY)  { console.error('Missing BANKR_API_KEY');  process.exit(1); }
   if (!process.env.VENICE_API_KEY) { console.error('Missing VENICE_API_KEY'); process.exit(1); }
 
-  console.log(`delu agent — ${DRY_RUN ? 'DRY RUN' : 'LIVE'} | ${LOOP ? 'every 4h' : 'single run'}`);
+  console.log(`delu agent — ${DRY_RUN ? 'DRY RUN' : 'LIVE'} | ${LOOP ? 'every 30min' : 'single run'}`);
   console.log(`Wallet: ${process.env.DELU_WALLET}`);
   console.log(`Tranche: $${ACTIVE_TRANCHE_USD}`);
+
+  // Start status dashboard
+  startDashboard(process.env.DASHBOARD_PORT || 3737);
 
   await runCycle();
 
