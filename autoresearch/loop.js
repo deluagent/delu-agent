@@ -26,8 +26,32 @@ const PROGRAM      = path.join(DIR, 'program.md');
 const EXPERIMENTS  = path.join(DIR, 'experiments.json');
 const STATE        = path.join(DIR, 'state.json');
 const INTERVAL_MS  = 90_000;   // 90s between experiments
-const VENICE_KEY   = fs.readFileSync('/home/openclaw/.venice_key', 'utf8').trim();
-const VENICE_MODEL = 'llama-3.3-70b';
+
+// Model: Bankr LLM Gateway — Gemini 2.5 Flash (fast, cheap, smarter than llama for code)
+// Fallback key order: BANKR_API_KEY (from .env)
+const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
+const BANKR_LLM_MODEL = 'gemini-2.5-flash';
+const BANKR_API_KEY   = process.env.BANKR_API_KEY;
+
+// Credit guard: estimated cost per call ~$0.002 (3000 tokens in+out)
+// Stop loop if we've spent more than $4.50 to keep $0.50 buffer on $5 budget
+const COST_PER_CALL_EST = 0.002;
+const MAX_SPEND_USD     = 4.50;
+const COST_TRACK_FILE   = path.join(DIR, 'cost_track.json');
+
+function loadCostTrack() {
+  try { return JSON.parse(fs.readFileSync(COST_TRACK_FILE, 'utf8')); } catch { return { totalCalls: 0, estimatedSpend: 0 }; }
+}
+function saveCostTrack(t) { fs.writeFileSync(COST_TRACK_FILE, JSON.stringify(t, null, 2)); }
+function checkBudget() {
+  const t = loadCostTrack();
+  if (t.estimatedSpend >= MAX_SPEND_USD) {
+    console.error(`\n⛔ Budget guard: estimated spend $${t.estimatedSpend.toFixed(3)} >= $${MAX_SPEND_USD} limit. Stopping loop.`);
+    console.error(`   Total calls: ${t.totalCalls} | Add more Bankr LLM credits to continue.`);
+    process.exit(1);
+  }
+  return t;
+}
 
 // ── State ────────────────────────────────────────────────────
 function loadState() {
@@ -40,38 +64,42 @@ function loadExperiments() {
 }
 function saveExperiments(exps) { fs.writeFileSync(EXPERIMENTS, JSON.stringify(exps, null, 2)); }
 
-// ── Venice call ──────────────────────────────────────────────
-async function callVenice(messages) {
-  return new Promise((resolve, reject) => {
-    const body = JSON.stringify({
-      model: VENICE_MODEL,
+// ── Bankr LLM call (Gemini 2.5 Flash) ───────────────────────
+async function callLLM(messages) {
+  // Track spend before call
+  const track = checkBudget();
+
+  const res = await fetch(BANKR_LLM_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${BANKR_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model:       BANKR_LLM_MODEL,
       messages,
       temperature: 0.7,
-      max_tokens: 3000,
-    });
-
-    const req = https.request({
-      hostname: 'api.venice.ai',
-      path:     '/api/v1/chat/completions',
-      method:   'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': `Bearer ${VENICE_KEY}`,
-      },
-    }, res => {
-      let data = '';
-      res.on('data', c => data += c);
-      res.on('end', () => {
-        try {
-          const json = JSON.parse(data);
-          resolve(json.choices?.[0]?.message?.content || '');
-        } catch(e) { reject(e); }
-      });
-    });
-    req.on('error', reject);
-    req.write(body);
-    req.end();
+      max_tokens:  3000,
+    }),
+    signal: AbortSignal.timeout(60000),
   });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Bankr LLM ${res.status}: ${err.slice(0, 200)}`);
+  }
+
+  const data = await res.json();
+
+  // Update cost tracking
+  track.totalCalls++;
+  track.estimatedSpend += COST_PER_CALL_EST;
+  saveCostTrack(track);
+
+  const remaining = MAX_SPEND_USD - track.estimatedSpend;
+  console.log(`   💰 est. spend: $${track.estimatedSpend.toFixed(3)} / $${MAX_SPEND_USD} (${remaining.toFixed(2)} remaining)`);
+
+  return data.choices?.[0]?.message?.content || '';
 }
 
 // ── Run evaluator ────────────────────────────────────────────
@@ -153,7 +181,7 @@ It must return a number 0-1. Higher = stronger buy signal.
 Return ONLY the complete new candidate.js file. No explanation outside the code.
 Start with the comment block, end with module.exports. No markdown fences.`;
 
-  const response = await callVenice([{ role: 'user', content: prompt }]);
+  const response = await callLLM([{ role: 'user', content: prompt }]);
 
   // Strip any accidental markdown fences
   return response
@@ -168,7 +196,9 @@ async function loop() {
   console.log('🔬 delu autoresearch loop starting...');
   console.log(`   candidate: ${CANDIDATE}`);
   console.log(`   interval:  ${INTERVAL_MS / 1000}s`);
-  console.log(`   model:     ${VENICE_MODEL}\n`);
+  console.log(`   model:     ${BANKR_LLM_MODEL} via Bankr LLM Gateway`);
+  const ct = loadCostTrack();
+  console.log(`   budget:    $${ct.estimatedSpend.toFixed(3)} spent / $${MAX_SPEND_USD} limit (${ct.totalCalls} calls)\n`);
 
   // Baseline on first run
   const baseline = runEvaluate();

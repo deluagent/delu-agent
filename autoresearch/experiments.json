@@ -8918,5 +8918,125 @@
     "accepted": false,
     "description": "funding matters more",
     "ts": 1774049307908
+  },
+  {
+    "n": 1,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774049480174
+  },
+  {
+    "n": 2,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774049620151
+  },
+  {
+    "n": 3,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774049762728
+  },
+  {
+    "n": 4,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774049946961
+  },
+  {
+    "n": 5,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774050090698
+  },
+  {
+    "n": 6,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774050227901
+  },
+  {
+    "n": 7,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774050390422
+  },
+  {
+    "n": 8,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774050528502
+  },
+  {
+    "n": 9,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774050682353
+  },
+  {
+    "n": 10,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774050833673
+  },
+  {
+    "n": 11,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774050990690
+  },
+  {
+    "n": 12,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774051140715
+  },
+  {
+    "n": 13,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774051538190
+  },
+  {
+    "n": 14,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more, with threshold",
+    "ts": 1774051712341
+  },
+  {
+    "n": 15,
+    "valSharpe": 1.4051,
+    "isSharpe": 1.9894,
+    "accepted": false,
+    "description": "funding matters more",
+    "ts": 1774051851107
   }
 ]
