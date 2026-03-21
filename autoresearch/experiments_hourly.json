@@ -1938,5 +1938,125 @@
     "score": 5.7444,
     "accepted": false,
     "description": "exp 194"
+  },
+  {
+    "n": 195,
+    "ts": "2026-03-21T19:52:58.767Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 195"
+  },
+  {
+    "n": 196,
+    "ts": "2026-03-21T19:54:43.622Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 196"
+  },
+  {
+    "n": 197,
+    "ts": "2026-03-21T19:56:29.831Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 197"
+  },
+  {
+    "n": 198,
+    "ts": "2026-03-21T19:58:15.601Z",
+    "valSharpe": 4.307,
+    "audSharpe": 8.0573,
+    "isSharpe": 4.1906,
+    "score": 6.18215,
+    "accepted": false,
+    "description": "exp 198"
+  },
+  {
+    "n": 199,
+    "ts": "2026-03-21T20:00:02.031Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 199"
+  },
+  {
+    "n": 200,
+    "ts": "2026-03-21T20:01:47.373Z",
+    "valSharpe": 4.5028,
+    "audSharpe": 9.1836,
+    "isSharpe": 5.2559,
+    "score": 6.8431999999999995,
+    "accepted": false,
+    "description": "exp 200"
+  },
+  {
+    "n": 201,
+    "ts": "2026-03-21T20:03:33.208Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 201"
+  },
+  {
+    "n": 202,
+    "ts": "2026-03-21T20:05:18.375Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 202"
+  },
+  {
+    "n": 203,
+    "ts": "2026-03-21T20:07:02.649Z",
+    "valSharpe": 5.7042,
+    "audSharpe": 10.5621,
+    "isSharpe": 4.7262,
+    "score": 8.13315,
+    "accepted": false,
+    "description": "exp 203"
+  },
+  {
+    "n": 204,
+    "ts": "2026-03-21T20:08:45.803Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 204"
+  },
+  {
+    "n": 205,
+    "ts": "2026-03-21T20:10:27.717Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 205"
+  },
+  {
+    "n": 206,
+    "ts": "2026-03-21T20:12:09.939Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 206"
   }
 ]

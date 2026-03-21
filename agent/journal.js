@@ -62,15 +62,23 @@ async function reconcilePositions(bankrBalanceResponse, currentPrices = {}) {
     // Bankr balance string format: "ETH - 0.0070 $15.15\nSOL - 0.1591 $14.28\n..."
     if (bankrBalanceResponse) {
       // Parse all token symbols currently held (non-zero balance)
+      // Bankr returns: "USD Coin - 34.94 USDC $34.94" or "Solana - 0.159 SOL $14.30"
+      const NAME_MAP = {
+        'USD COIN': 'USDC', 'ETHEREUM': 'ETH', 'SOLANA': 'SOL',
+        'COINBASE WRAPPED BTC': 'CBBTC', 'BITCOIN': 'BTC',
+      };
       const heldSymbols = new Set();
       const lines = bankrBalanceResponse.split('\n');
       for (const line of lines) {
-        // Match "TOKEN - 0.xxxx $xx.xx"
-        const m = line.match(/^([A-Za-z0-9]+)\s*[-–]\s*([\d.]+)\s*\$/);
-        if (m) {
-          const qty = parseFloat(m[2]);
-          if (qty > 0) heldSymbols.add(m[1].toUpperCase());
-        }
+        if (!line.trim()) continue;
+        const m = line.match(/^(.+?)\s*[-–]\s*([\d.]+)\s*(?:([A-Za-z]+)\s*)?\$([\d.]+)/);
+        if (!m) continue;
+        const namePart  = m[1].trim().toUpperCase();
+        const qty       = parseFloat(m[2]);
+        const inlineSym = m[3]?.toUpperCase();
+        if (qty <= 0) continue;
+        const sym = inlineSym || NAME_MAP[namePart] || namePart.replace(/\s+/g,'');
+        if (sym) heldSymbols.add(sym);
       }
 
       // For non-contract tokens (majors): if sym not in held list, position is closed

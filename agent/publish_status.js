@@ -32,7 +32,7 @@ function readJSON(file, fallback = null) {
   catch { return fallback; }
 }
 
-async function buildStatus(regimeData) {
+async function buildStatus(regimeData, balanceStr = null) {
   const positions   = readJSON(path.join(DATA_DIR, 'positions.json'), []);
   const arDaily     = readJSON(path.join(AUTORES_DIR, 'state.json'), {});
   const arHourly    = readJSON(path.join(AUTORES_DIR, 'state_hourly.json'), {});
@@ -85,16 +85,42 @@ async function buildStatus(regimeData) {
   // Open positions — fetch live prices from Bankr balances string
   // Format: "SOL - 0.1591 $14.28\nETH - 0.0070 $15.15\n..."
   let liveBalanceMap = {}; // sym -> { qty, valueUSD }
+  let rawBalanceStr = '';
   try {
-    const bankr = require('./bankr');
-    const balStr = await bankr.getBalances();
-    if (typeof balStr === 'string') {
-      for (const line of balStr.split('\n')) {
-        const m = line.match(/^([A-Za-z0-9]+)\s*[-–]\s*([\d.]+)\s*\$([\d.]+)/);
-        if (m) liveBalanceMap[m[1].toUpperCase()] = { qty: parseFloat(m[2]), valueUSD: parseFloat(m[3]) };
+    // Use pre-fetched balance if available (agent already called getBalances this cycle)
+    // Fall back to fresh fetch only if not provided
+    if (balanceStr) {
+      rawBalanceStr = balanceStr;
+    } else {
+      const bankr = require('./bankr');
+      rawBalanceStr = await bankr.getBalances();
+    }
+    if (typeof rawBalanceStr === 'string') {
+      // Bankr returns either "TOKEN - qty $val" or "Full Name - qty SYMBOL $val"
+      // e.g. "USD Coin - 34.94 USDC $34.94" or "Solana - 0.159 SOL $14.30"
+      // Strategy: extract the last all-caps word before the $ as the symbol
+      // Bankr balance format varies: lowercase short sym, or "Full Name - qty SYM $val"
+      // e.g. "usdc - 34.94 $34.94" or "USD Coin - 34.94 USDC $34.94"
+      const NAME_MAP = {
+        'USD COIN': 'USDC', 'ETHEREUM': 'ETH', 'SOLANA': 'SOL',
+        'COINBASE WRAPPED BTC': 'CBBTC', 'BITCOIN': 'BTC',
+        'THE FORGE': 'FORGE', 'MINIDEV': 'MINI',
+      };
+      for (const line of rawBalanceStr.split('\n')) {
+        if (!line.trim()) continue;
+        // Match: "name_or_sym - qty [OPTIONAL_SYM] $val"
+        const m = line.match(/^(.+?)\s*[-–]\s*([\d.]+)\s*(?:([A-Za-z]+)\s*)?\$([\d.]+)/);
+        if (!m) continue;
+        const namePart = m[1].trim().toUpperCase();
+        const qty      = parseFloat(m[2]);
+        const inlineSym = m[3]?.toUpperCase(); // e.g. "USDC" from "USD Coin - 34.94 USDC $34.94"
+        const val      = parseFloat(m[4]);
+        // Resolve symbol: inline sym > name map > treat name itself as symbol
+        const sym = inlineSym || NAME_MAP[namePart] || namePart.replace(/\s+/g, '');
+        if (sym && qty >= 0) liveBalanceMap[sym] = { qty, valueUSD: val };
       }
     }
-  } catch(e) { /* live prices unavailable — fall back to journal */ }
+  } catch(e) { console.warn('[publish] Balance fetch failed:', e.message?.slice(0,60)); }
 
   const openPositions = positions
     .filter(p => p.status === 'open')
@@ -290,11 +316,11 @@ async function buildStatus(regimeData) {
   };
 }
 
-async function publish(regimeData = null) {
+async function publish(regimeData = null, balanceStr = null) {
   try {
     fs.mkdirSync(OUT_DIR, { recursive: true });
 
-    const status = await buildStatus(regimeData);
+    const status = await buildStatus(regimeData, balanceStr);
     fs.writeFileSync(OUT_FILE, JSON.stringify(status, null, 2));
 
     // Commit + push to delu-site repo

@@ -482,8 +482,9 @@ async function runCycle() {
   // ── STEP 2: Position management — Alchemy on every open position ─────────────
   console.log('\n[journal] Reconciling positions...');
   let openPositions = [];
+  let balanceResp = null;
   try {
-    const balanceResp = await bankr.getBalances();
+    balanceResp = await bankr.getBalances();
     const updatedPositions = await journal.reconcilePositions(balanceResp, {});
     openPositions = updatedPositions.filter(p => p.status === 'open');
     console.log(`[journal] ${openPositions.length} open position(s)`);
@@ -885,7 +886,7 @@ What is your allocation decision?`;
   // Publish live status to delu-site repo (Vercel reads this)
   try {
     const { publish } = require('./publish_status');
-    await publish(regime);
+    await publish(regime, balanceResp);
   } catch(e) { console.warn('[publish] Failed:', e.message?.slice(0, 60)); }
 
   console.log('\n' + '═'.repeat(60));
