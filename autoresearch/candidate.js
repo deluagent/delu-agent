@@ -124,7 +124,7 @@ function scoreToken(data) {
   const r60 = pctChange(prices, Math.min(60, n - 1));
 
   const momentum = vol > 0.75
-  ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
+ ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
     : (0.30 * r7 + 0.40 * r20 + 0.30 * r60) / (1 + vol);
 
   //  Trend 
@@ -139,7 +139,7 @@ function scoreToken(data) {
 
   //  Funding rate signal 
   const fundingBoost = isBear
-  ? (flowSignal > 0? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
+ ? (flowSignal > 0? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
 
   //  OBV Signal (Volume Accumulation) with Volume Surge Multiplier 
@@ -165,8 +165,13 @@ function scoreToken(data) {
   const priceChange = prices[n - 1] - prices[n - 20];
   const obvDivergence = obv > 0 && priceChange < 0? -0.02 : obv < 0 && priceChange > 0? 0.02 : 0;
 
+  //  Volume Surprise 
+  const avgVol = sma(volumes, 14);
+  const surprise = volumes[n-1] / (avgVol || 1);
+  const surprisePenalty = surprise > 2? -0.01 : surprise < 0.5? 0.01 : 0;
+
   //  Combined 
-  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity + obvDivergence;
+  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity + obvDivergence + surprisePenalty;
   
   return raw * regimeMult;
 }
