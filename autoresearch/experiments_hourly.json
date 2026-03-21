@@ -1798,5 +1798,45 @@
     "score": 7.35835,
     "accepted": false,
     "description": "exp 180"
+  },
+  {
+    "n": 181,
+    "ts": "2026-03-21T19:28:50.193Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 181"
+  },
+  {
+    "n": 182,
+    "ts": "2026-03-21T19:30:33.843Z",
+    "valSharpe": 5.785,
+    "audSharpe": 10.5599,
+    "isSharpe": 4.6574,
+    "score": 8.172450000000001,
+    "accepted": false,
+    "description": "exp 182"
+  },
+  {
+    "n": 183,
+    "ts": "2026-03-21T19:32:16.562Z",
+    "valSharpe": 5.0114,
+    "audSharpe": 10.3273,
+    "isSharpe": 5.4913,
+    "score": 7.66935,
+    "accepted": false,
+    "description": "exp 183"
+  },
+  {
+    "n": 184,
+    "ts": "2026-03-21T19:33:59.031Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 184"
   }
 ]

@@ -153,6 +153,22 @@ async function buildStatus(regimeData) {
     breadth,
     nextCycle,
 
+    // Wallet summary — total portfolio value + unrealised PnL across all positions
+    wallet: (() => {
+      const posValue  = openPositions.reduce((s, p) => s + (p.sizeUSD || 0), 0);
+      const yieldVal  = yieldPosition.amountUSD || 0;
+      const totalUSD  = parseFloat((posValue + yieldVal).toFixed(2));
+      // Unrealised PnL: sum of (peakPct × sizeUSD) for each position (approximation)
+      const unrealPnl = openPositions.reduce((s, p) => s + ((p.peakPct || 0) / 100 * (p.sizeUSD || 0)), 0);
+      return {
+        totalUSD,
+        positionsUSD: parseFloat(posValue.toFixed(2)),
+        yieldUSD:     parseFloat(yieldVal.toFixed(2)),
+        unrealPnlUSD: parseFloat(unrealPnl.toFixed(2)),
+        unrealPnlPct: posValue > 0 ? parseFloat((unrealPnl / posValue * 100).toFixed(2)) : 0,
+      };
+    })(),
+
     positions: openPositions,
     yield:     yieldPosition,
 
