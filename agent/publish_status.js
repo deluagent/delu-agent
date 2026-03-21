@@ -65,13 +65,16 @@ async function buildStatus(regimeData) {
   const openPositions = positions
     .filter(p => p.status === 'open')
     .map(p => ({
-      sym:        p.sym,
-      entryPrice: p.entryPrice,
-      sizeUSD:    p.sizeUsd,
-      peakPct:    parseFloat((p.peakPct || 0).toFixed(2)),
-      trailStop:  p.trailPct || 5,
-      openedAt:   p.openedAt,
-      entryTx:    p.entryTx || null,
+      sym:             p.sym,
+      entryPrice:      p.entryPrice,
+      sizeUSD:         p.sizeUsd,
+      peakPct:         parseFloat((p.peakPct || 0).toFixed(2)),
+      trailStop:       p.trailPct || 5,
+      openedAt:        p.openedAt,
+      entryTx:         p.entryTx || p.txHash || null,
+      contractAddress: p.contractAddress || null,
+      source:          p.source || 'universe',
+      chain:           p.chain || 'base',
     }));
 
   // Yield position (hardcoded Morpho — update when rebalanced)
