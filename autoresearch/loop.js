@@ -205,8 +205,10 @@ ${programMd.match(/## Hypotheses[\s\S]*?(?=\n##|\n#|$)/)?.[0]?.slice(0, 600) || 
 ${scoreTokenSection}
 
 ## Task
-Return ONLY the new scoreToken function + module.exports line.
-Start with: function scoreToken(data) {
+First line: DESCRIPTION: <one short sentence describing your change, e.g. "RSI period 8 instead of 14">
+Then the new scoreToken function + module.exports line.
+Start with: DESCRIPTION: ...
+Then: function scoreToken(data) {
 End with: }
 
 module.exports = { scoreToken };
@@ -273,9 +275,16 @@ async function loop() {
       newCode = await proposeChange(state, experiments);
       if (!newCode || newCode.length < 100) throw new Error('empty response');
 
-      // Extract description from first comment line
-      const match = newCode.match(/\/\/ (exp \d+:|change:|hypothesis:|\w+:) (.+)/i);
-      description = match ? match[2].slice(0, 80) : `experiment ${state.expCount}`;
+      // Extract DESCRIPTION: line first, then strip it from code
+      const descMatch = newCode.match(/^DESCRIPTION:\s*(.+)/m);
+      if (descMatch) {
+        description = descMatch[1].trim().slice(0, 100);
+        newCode = newCode.replace(/^DESCRIPTION:.*\n?/m, '').trim();
+      } else {
+        // Fallback: extract from first comment line
+        const match = newCode.match(/\/\/ (exp \d+:|change:|hypothesis:|\w+:) (.+)/i);
+        description = match ? match[2].slice(0, 80) : `experiment ${state.expCount}`;
+      }
 
       // Validate JS syntax before writing
       try {

@@ -214,8 +214,10 @@ ${liveFeedback ? liveFeedback + '\n' : ''}## Current scoreToken
 ${scoreSection}
 
 ## Task
-Return ONLY the new scoreToken function + module.exports.
-Start with: function scoreToken(data) {
+First line: DESCRIPTION: <one short sentence, e.g. "RSI period 8 instead of 14">
+Then the new scoreToken function.
+Start with: DESCRIPTION: ...
+Then: function scoreToken(data) {
 End with: }
 
 module.exports = { scoreToken };
@@ -310,10 +312,16 @@ async function main() {
 
     // Test new code
     const prevCode = fs.readFileSync(CANDIDATE, 'utf8');
+        // Extract DESCRIPTION line before writing
+    const descMatch = newCode.match(/^DESCRIPTION:\s*(.+)/m);
+    if (descMatch) {
+      description = descMatch[1].trim().slice(0, 100);
+      newCode = newCode.replace(/^DESCRIPTION:.*\n?/m, '').trim();
+    }
     fs.writeFileSync(CANDIDATE, newCode);
 
     const result = runEval();
-    let accepted = false;
+    let accepted = false, description = `exp ${expN}`;
     let valSharpe = -999, audSharpe = -999, score = -999, isSharpe = -999;
 
     if (result) {
@@ -349,7 +357,7 @@ async function main() {
     expLog.push({
       n: expN, ts: new Date().toISOString(),
       valSharpe, audSharpe, isSharpe, score, accepted,
-      description: `exp ${expN}`,
+      description,
     });
     saveExperiments(expLog);
 
