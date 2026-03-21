@@ -171,11 +171,12 @@ async function buildStatus(regimeData) {
     : null;
 
   const cycleOut = {
-    ts:         lastCycle?.ts || new Date().toISOString(),
-    ago:        agoLabel,
+    ts:           lastCycle?.ts || new Date().toISOString(),
+    ago:          agoLabel,
     regime,
+    regime_detail: lastCycle?.regime_detail || null,
     seenCount,
-    screened:   seenCount,
+    screened:     seenCount,
     flagged,
     traded,
     action:     decision.action || 'hold',
