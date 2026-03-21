@@ -336,7 +336,8 @@ async function publish(regimeData = null, balanceStr = null) {
     // 1. Commit cycle log to delu-agent repo (judges can read raw history)
     const agentGit = (cmd) => execSync(cmd, { cwd: AGENT_DIR, stdio: 'pipe' }).toString().trim();
     try {
-      agentGit('git add data/agent_log.jsonl data/positions.json data/trade_journal.jsonl');
+      // Only commit the human-readable summary — not raw JSONL
+      agentGit('git add data/cycle_summary.md data/positions.json data/trade_journal.jsonl');
       const agentDiff = agentGit('git diff --cached --stat');
       if (agentDiff) {
         agentGit(`git commit -m "data: cycle log ${new Date().toISOString().slice(0,16)}"`);

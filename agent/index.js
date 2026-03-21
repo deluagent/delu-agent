@@ -856,11 +856,12 @@ What is your allocation decision?`;
   try {
     journal.writeSummary({
       regime,
-      scores:   ranked.slice(0, 8),
+      scores:           ranked.slice(0, 8),
       decision,
-      positions: journal.loadPositions(),
+      positions:        journal.loadPositions(),
       screen,
-      cycleTs:  cycleStart,
+      cycleTs:          cycleStart,
+      trendingEntries,
     });
   } catch(e) { console.warn('[journal] Summary failed:', e.message); }
 
