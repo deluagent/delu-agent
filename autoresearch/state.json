@@ -1,7 +1,7 @@
 {
-  "bestValSharpe": 1.405,
-  "bestScore": 1.3816,
-  "expCount": 38,
+  "bestValSharpe": 1.8136,
+  "bestScore": 1.9624000000000001,
+  "expCount": 39,
   "resetAt": "2026-03-21",
   "baselineNote": "combined score metric. val=1.405 aud=1.327 score=1.382"
 }

@@ -73,9 +73,11 @@ function scoreToken(data) {
   const n = prices.length;
   if (n < 60) return 0;
 
+  const vol = realizedVol(prices, 14);
+  const r7 = pctChange(prices, 7);
+
   // ── Regime detection: BTC 50d vs 200d MA ──
-  // BEAR = soft penalty (0.3×), not hard zero — there are still tradeable tokens in BEAR
-  // BULL = full weight (1.0×)
+  // Key fix: Base tokens (high vol) are aggressively penalized in BEAR regimes.
   let regimeMult = 1.0;
   let isBear = false;
   if (btcPrices.length >= 200) {
@@ -83,23 +85,28 @@ function scoreToken(data) {
     const btc200 = sma(btcPrices, 200);
     if (btc50 < btc200) {
       isBear = true;
-      regimeMult = 0.3;
+      // If it's a high-vol alt (likely a Base token) in a bear market, skip it.
+      // Majors (lower vol) get a small weight.
+      regimeMult = vol > 0.65 ? 0.0 : 0.20;
     }
   }
 
+  // ── Falling knife protection ──
+  // If a token crashed >20% in a week, don't touch it.
+  if (r7 < -0.20) return 0;
+
   // ── Trend strength filter ──
   const ema = emaGap(prices, 12, 26);
-  if (Math.abs(ema) < 0.03) return 0;   // skip choppy/flat — no trend to ride
+  if (Math.abs(ema) < 0.03) return 0;
 
   // ── Momentum (multi-timeframe, vol-adjusted) ──
-  const vol = realizedVol(prices, 14);
-  const r7   = pctChange(prices, 7);
+  // Shifted weights slightly more toward 7d/20d for faster response in alts.
   const r20  = pctChange(prices, 20);
   const r60  = pctChange(prices, Math.min(60, n - 1));
 
-  const momentum = 0.40 * r7 / (1 + vol)
+  const momentum = 0.45 * r7 / (1 + vol)
                  + 0.35 * r20 / (1 + vol)
-                 + 0.25 * r60 / (1 + vol);
+                 + 0.20 * r60 / (1 + vol);
 
   // ── Trend ──
   const trend = 0.20 * ema;
@@ -109,13 +116,13 @@ function scoreToken(data) {
   const meanRev = z < -2.0 ? 0.08 : (z > 2.5 ? -0.08 : 0);
 
   // ── Volatility penalty ──
-  const volPenalty = -0.15 * Math.max(vol - 0.6, 0);
+  const volPenalty = -0.20 * Math.max(vol - 0.6, 0);
 
   // ── Funding rate signal ──
-  // In BEAR regime, require positive funding (crowded shorts = bullish) to trade
+  // In BEAR regime, require positive funding (crowded shorts) to trade.
   const fundingBoost = isBear
-    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.10 * Math.abs(flowSignal))  // BEAR: funding matters more
-    : 0.10 * flowSignal;  // BULL: lighter touch
+    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
+    : 0.10 * flowSignal;
 
   // ── Combined ──
   const raw = momentum + trend + meanRev + volPenalty + fundingBoost;
