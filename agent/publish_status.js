@@ -49,20 +49,30 @@ async function buildStatus(regimeData, balanceStr = null) {
     if (lines.length) {
       lastCycle = JSON.parse(lines[lines.length - 1]);
       // Last 20 cycles, newest first
-      cycleHistory = lines.slice(-20).reverse().map(l => {
+      cycleHistory = lines.slice(-50).reverse().map(l => {
         try {
           const c = JSON.parse(l);
+          const entries = c.trendingEntries || [];
+          const flagged = entries.filter((t: any) => (t.score || 0) >= 0.65).map((t: any) => t.symbol);
+          const traded  = (c.decision?.action === 'buy' || c.decision?.action === 'long') && c.decision?.asset
+            ? [c.decision.asset] : [];
           return {
-            ts:        c.ts,
-            regime:    c.regime,
-            action:    c.decision?.action || 'hold',
-            asset:     c.decision?.asset  || null,
-            reasoning: c.decision?.reasoning || c.screen?.reason || null,
-            confidence:c.decision?.confidence || null,
-            screened:  c.scores?.length || 0,
-            topToken:  c.scores?.[0] ? { sym: c.scores[0].sym, score: c.scores[0].combined } : null,
-            trendingEntries: c.trendingEntries || [],
-            layers:    c.decision?.layers_used || [],
+            ts:               c.ts,
+            regime:           c.regime,
+            regime_detail:    c.regime_detail || null,
+            action:           c.decision?.action || 'hold',
+            asset:            c.decision?.asset  || null,
+            confidence:       c.decision?.confidence || null,
+            reasoning:        c.decision?.reasoning || c.screen?.reason || null,
+            seenCount:        entries.length,
+            flagged,
+            traded,
+            trendingEntries:  entries.slice(0, 5),
+            positionUpdates:  c.positionAssessments || [],
+            topSignal:        entries.length > 0
+              ? `${entries[0].symbol} score=${entries[0].score?.toFixed(2)} ret1h=${((entries[0].ret1h||0)*100).toFixed(1)}%`
+              : null,
+            layers:           c.decision?.layers_used || [],
           };
         } catch { return null; }
       }).filter(Boolean);
@@ -323,7 +333,21 @@ async function publish(regimeData = null, balanceStr = null) {
     const status = await buildStatus(regimeData, balanceStr);
     fs.writeFileSync(OUT_FILE, JSON.stringify(status, null, 2));
 
-    // Commit + push to delu-site repo
+    // 1. Commit cycle log to delu-agent repo (judges can read raw history)
+    const agentGit = (cmd) => execSync(cmd, { cwd: AGENT_DIR, stdio: 'pipe' }).toString().trim();
+    try {
+      agentGit('git add data/agent_log.jsonl data/positions.json data/trade_journal.jsonl');
+      const agentDiff = agentGit('git diff --cached --stat');
+      if (agentDiff) {
+        agentGit(`git commit -m "data: cycle log ${new Date().toISOString().slice(0,16)}"`);
+        agentGit('git push origin main');
+        console.log('[publish] ✅ Cycle log committed to delu-agent');
+      }
+    } catch (agentErr) {
+      console.warn('[publish] Agent log push skipped:', agentErr.message?.slice(0, 60));
+    }
+
+    // 2. Commit + push to delu-site repo
     const gitCmd = (cmd) => execSync(cmd, { cwd: SITE_DIR, stdio: 'pipe' }).toString().trim();
 
     try {

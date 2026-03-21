@@ -50,10 +50,9 @@ function scoreToken(data) {
   if (n < 169 || bN < 169) return 0;
 
   // ── Relative strength vs BTC (7d) ───────────────────────────
-  // Core bear signal: which tokens are bleeding less (or gaining) vs BTC
   const tokenRet7d = (prices[n-1] - prices[n-169]) / prices[n-169];
   const btcRet7d   = (btcPrices[bN-1] - btcPrices[bN-169]) / btcPrices[bN-169];
-  const relStr7d   = tokenRet7d - btcRet7d; // positive = outperforming BTC
+  const relStr7d   = tokenRet7d - btcRet7d;
 
   // ── Relative strength vs BTC (4h) ───────────────────────────
   const tokenRet4h = n >= 5 ? (prices[n-1] - prices[n-5]) / prices[n-5] : 0;
@@ -65,7 +64,7 @@ function scoreToken(data) {
   const vol48h = volumes.slice(-48).reduce((s, v) => s + v, 0) / 48;
   const volBurst = vol4h / (vol48h || 1);
   const dir4h    = tokenRet4h > 0 ? 1 : tokenRet4h < 0 ? -1 : 0;
-  const volSignal = Math.tanh((volBurst - 1) * dir4h * 2); // positive when volume confirms direction
+  const volSignal = Math.tanh((volBurst - 1) * dir4h * 2);
 
   // ── Momentum acceleration (4h change rate) ───────────────────
   const tokenRet8h = n >= 9 ? (prices[n-5] - prices[n-9]) / prices[n-9] : 0;
@@ -77,12 +76,17 @@ function scoreToken(data) {
   const range48h = highs.slice(-48).reduce((m, h, i) => m + (h - lows[n-48+i]), 0) / 48;
   const rangeCoil = 1 - (range4h / (range48h || range4h || 1));
 
+  // ── Volatility regime filter (avoid chop) ────────────────────
+  const rv12h = realizedVol(prices.slice(-12));
+  const rv48h = realizedVol(prices.slice(-48));
+  const volRegime = rv12h > rv48h * 0.5 ? 1 : 0.7; // reduce score in low vol regimes
+
   // ── Combined score [-1, +1] ──────────────────────────────────
-  const score = Math.tanh(relStr7d * 5) * 0.35   // 7d relative strength (primary)
-              + Math.tanh(relStr4h * 35) * 0.28  // 4h relative strength (momentum) - reduced slightly
-              + volSignal * 0.18                  // volume confirmation - increased
-              + Math.tanh(relAccel * 50) * 0.10   // momentum acceleration
-              + Math.tanh(rangeCoil * 5) * 0.09;  // range compression (coiling) - reduced
+  const score = (Math.tanh(relStr7d * 5) * 0.35
+              + Math.tanh(relStr4h * 35) * 0.28
+              + volSignal * 0.18
+              + Math.tanh(relAccel * 50) * 0.10
+              + Math.tanh(rangeCoil * 5) * 0.09) * volRegime;
 
   return Math.max(-1, Math.min(1, score));
 }

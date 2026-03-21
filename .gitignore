@@ -1,3 +1,14 @@
 node_modules/
-data/
 .env
+
+# Cache files — large, not useful for judges
+data/*_binance*.json
+data/*_gt*.json
+data/trending_snapshots.jsonl
+
+# Keep these tracked — judges can read them
+!data/agent_log.jsonl
+!data/positions.json
+!data/trade_journal.jsonl
+!data/cycle_summary.md
+!data/reasoning_traces.jsonl

@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1773752732142,
+    "symbol": "ODAI",
+    "sizeUsd": 2,
+    "regime": "NEUTRAL",
+    "alpha": 0.106781,
+    "weight": 0.2,
+    "entryTs": "2026-03-17T13:05:32.142Z",
+    "closed": false,
+    "bankrResp": "you only have $1.04 USDC on base. would you like me to use your ETH (balance: ~$9.97) to complete the $2 swap for 0x0086cFF0c1E5D17b19F5bCd4c8840a5B4251D959 instead?"
+  }
+]
