@@ -22,7 +22,8 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
-const bankr  = require('./bankr');
+const bankr   = require('./bankr');
+const checkr  = require('./checkr');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -297,13 +298,14 @@ function scoreTemplateD(bars) {
 // Fast pre-filter before Venice. Cheap model, simple question:
 // "Given this regime and these signal scores, is anything worth analyzing?"
 // Returns: { skip: bool, interesting: string[], reason: string }
-async function bankrScreen(regime, ranked, attentionMap = {}) {
+async function bankrScreen(regime, ranked, checkrAttention = {}) {
   const state = regime.state;
 
   // In BEAR: only skip if nothing is oversold — otherwise look for bounce plays
   if (state === 'BEAR') {
-    // Check if any token has a non-zero score (oversold bounce signal from candidate)
-    const hasSignal = ranked.some(s => s.sAR > 0 || s.sD > 0.05);
+    // Check if any token has a non-zero score OR spiking attention (oversold bounce / divergence)
+    const hasSocialSpike = Object.values(checkrAttention).some(a => a.velocity >= 3.0 && a.divergence);
+    const hasSignal = ranked.some(s => s.sAR > 0 || s.sD > 0.05) || hasSocialSpike;
     if (!hasSignal) {
       return { skip: true, interesting: [], reason: 'BEAR regime, no oversold signals — yield only', layer: 'hardcoded' };
     }
@@ -313,7 +315,11 @@ async function bankrScreen(regime, ranked, attentionMap = {}) {
 
   // Build a compact summary for the screen model
   const scoreLines = ranked
-    .map(s => `${s.sym}: combined=${s.combined.toFixed(3)} [A=${s.sA.toFixed(2)} B=${s.sB.toFixed(2)} C=${s.sC.toFixed(2)} D=${s.sD.toFixed(2)} AR=${s.sAR.toFixed(2)} ATT=${(attentionMap?.[s.sym]||0).toFixed(2)}]`)
+    .map(s => {
+      const attn = checkrAttention[s.sym];
+      const attnStr = attn ? ` vel=${attn.velocity?.toFixed(1)} div=${attn.divergence?1:0}` : '';
+      return `${s.sym}: combined=${s.combined.toFixed(3)} [A=${s.sA.toFixed(2)} B=${s.sB.toFixed(2)} AR=${s.sAR.toFixed(2)}${attnStr}]`;
+    })
     .join('\n');
 
   const prompt = `Market regime: ${state}
@@ -476,30 +482,45 @@ async function runCycle() {
   }
   console.log(`\n[regime] ${regime.state} | BTC $${Math.round(regime.btcNow)} | ${((regime.pctFrom200)*100).toFixed(1)}% from 200d MA | breadth ${regime.breadthFraction} | volRatio ${regime.volRatio.toFixed(2)}`);
 
-  // 2b. Fetch Checkr social attention signals (~$0.02/cycle)
-  // Maps token symbol → attentionDelta (normalized 0..1, >0.5 = above-avg attention)
-  const attentionMap = {};
-  try {
-    const checkr = require('./checkr');
-    const leaderboard = await checkr.getLeaderboard(20);
-    if (leaderboard?.tokens) {
-      // Normalize ATT_pct across all tokens to 0..1 range
-      const scores = leaderboard.tokens;
-      const maxAtt = Math.max(...scores.map(t => t.ATT_pct || 0), 1);
-      for (const t of scores) {
-        const sym = t.symbol?.toUpperCase();
-        if (sym) attentionMap[sym] = (t.ATT_pct || 0) / maxAtt;
-      }
-      console.log(`[checkr] leaderboard fetched — ${scores.length} tokens | top: ${scores.slice(0,3).map(t=>t.symbol+'('+t.ATT_pct?.toFixed(1)+'%)').join(', ')}`);
-    }
-  } catch (e) {
-    console.warn(`[checkr] skipped: ${e.message}`);
-  }
+  // (checkr attention fetched below in step 3b)
 
   // 3. Score all tokens
   const candidate = loadCandidate();
   const arState = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../autoresearch/state.json'),'utf8')); } catch { return null; } })();
   if (arState) console.log(`\n[autoresearch] exp=${arState.expCount} bestValSharpe=${arState.bestValSharpe.toFixed(3)} — candidate loaded ${candidate ? '✓' : '✗'}`);
+
+  // 3b. Fetch Checkr social attention signals (pay-per-call via x402, ~$0.02)
+  let checkrAttention = {}; // sym → { attentionDelta, velocity, divergence, viral_class }
+  try {
+    console.log('\n[checkr] Fetching attention leaderboard...');
+    const lb = await checkr.getLeaderboard(20);
+    if (lb?.tokens) {
+      for (const t of lb.tokens) {
+        const sym = (t.symbol || '').toUpperCase();
+        checkrAttention[sym] = {
+          attentionDelta: t.ATT_delta_1h ?? t.att_delta_1h ?? 0,
+          velocity:       t.velocity ?? 0,
+          divergence:     t.divergence ?? false,
+        };
+      }
+    }
+    // Also fetch spikes for high-velocity signals
+    const spikes = await checkr.getSpikes(2.0);
+    for (const t of checkr.parseSpikes(spikes)) {
+      const sym = t.token.toUpperCase();
+      if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
+      checkrAttention[sym].velocity    = Math.max(checkrAttention[sym].velocity, t.velocity);
+      checkrAttention[sym].divergence  = t.divergence;
+      checkrAttention[sym].viral_class = t.viral_class;
+      // Spike = strong positive attention delta
+      if (t.velocity >= 2.0) checkrAttention[sym].attentionDelta = Math.max(checkrAttention[sym].attentionDelta, t.velocity * 0.1);
+    }
+    console.log(`[checkr] Got attention data for ${Object.keys(checkrAttention).length} tokens`);
+    const topAttn = Object.entries(checkrAttention).sort((a,b) => b[1].velocity - a[1].velocity).slice(0,3);
+    for (const [sym, d] of topAttn) console.log(`  ${sym}: vel=${d.velocity?.toFixed(2)} div=${d.divergence} attnDelta=${d.attentionDelta?.toFixed(3)}`);
+  } catch(e) {
+    console.warn(`[checkr] Failed (skipping): ${e.message?.slice(0,80)}`);
+  }
 
   console.log('[signals] Scoring...');
   const btcDailyCloses = allBarsDaily[0]?.map(b => b.close) || [];
@@ -512,11 +533,15 @@ async function runCycle() {
     let sAR = 0;
     if (candidate?.scoreToken) {
       try {
+        const attn = checkrAttention[sym] || {};
         sAR = candidate.scoreToken({
-          prices:      dailyBars.map(b => b.close),
-          btcPrices:   btcDailyCloses,
-          flowSignal:  0,
-          attentionDelta: attentionMap[sym] || 0,
+          prices:            dailyBars.map(b => b.close),
+          volumes:           dailyBars.map(b => b.volume || 0),
+          btcPrices:         btcDailyCloses,
+          flowSignal:        0,
+          attentionDelta:    attn.attentionDelta || 0,
+          attentionVelocity: attn.velocity || 0,
+          divergence:        attn.divergence ? 1 : 0,
         }) || 0;
         sAR = Math.max(0, Math.min(1, sAR)); // clamp 0-1
       } catch(e) { sAR = 0; }
@@ -566,7 +591,7 @@ async function runCycle() {
 
   // 4. [Layer 1] Bankr LLM screen — fast pre-filter
   console.log('\n[bankr-screen] Screening...');
-  const screen = await bankrScreen(regime, ranked, attentionMap);
+  const screen = await bankrScreen(regime, ranked, checkrAttention);
   console.log(`[bankr-screen] skip=${screen.skip} | interesting=[${screen.interesting.join(',')}] | "${screen.reason}" (${screen.layer})`);
 
   if (screen.skip) {
@@ -645,13 +670,20 @@ ${recentPrices.join('\n')}
 ## RSI (14, hourly)
 ${rsiVals.join('\n')}
 
-## Social Attention (Checkr — X/CT mindshare, normalized 0-1)
-${Object.keys(attentionMap).length > 0
-  ? interestingRanked.map(s => `${s.sym}: ATT=${(attentionMap[s.sym]||0).toFixed(2)}`).join(' | ')
+## Social Attention (Checkr — X/CT mindshare, velocity, divergence)
+${Object.keys(checkrAttention).length > 0
+  ? interestingRanked.map(s => {
+      const a = checkrAttention[s.sym];
+      return a ? `${s.sym}: vel=${a.velocity?.toFixed(1)} div=${a.divergence?'YES':'no'} delta=${a.attentionDelta?.toFixed(3)}` : `${s.sym}: no data`;
+    }).join(' | ')
   : 'Checkr unavailable this cycle'}
 
-## Signal Scores — Shortlisted tokens (A=trend B=OBV C=rank D=bounce AR=self-evolved ATT=social)
-${interestingRanked.map(s => `${s.sym.padEnd(6)}: A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} ATT=${(attentionMap[s.sym]||0).toFixed(2)} → ${s.combined.toFixed(3)} [${s.template}]`).join('\n')}
+## Signal Scores — Shortlisted tokens (A=trend B=OBV C=rank D=bounce AR=self-evolved vel=social-velocity)
+${interestingRanked.map(s => {
+  const a = checkrAttention[s.sym];
+  const velStr = a ? ` vel=${a.velocity?.toFixed(1)}` : '';
+  return `${s.sym.padEnd(6)}: A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)}${velStr} → ${s.combined.toFixed(3)} [${s.template}]`;
+}).join('\n')}
 
 ## Top Candidate
 ${topToken.combined > 0.05
