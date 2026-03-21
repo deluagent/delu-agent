@@ -1058,5 +1058,125 @@
     "score": 7.35835,
     "accepted": false,
     "description": "exp 106"
+  },
+  {
+    "n": 107,
+    "ts": "2026-03-21T16:59:38.593Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 107"
+  },
+  {
+    "n": 108,
+    "ts": "2026-03-21T17:01:21.016Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 108"
+  },
+  {
+    "n": 109,
+    "ts": "2026-03-21T17:03:03.170Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 109"
+  },
+  {
+    "n": 110,
+    "ts": "2026-03-21T17:04:45.532Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 110"
+  },
+  {
+    "n": 111,
+    "ts": "2026-03-21T17:06:28.302Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 111"
+  },
+  {
+    "n": 112,
+    "ts": "2026-03-21T17:08:10.861Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 112"
+  },
+  {
+    "n": 113,
+    "ts": "2026-03-21T17:09:53.159Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 113"
+  },
+  {
+    "n": 114,
+    "ts": "2026-03-21T17:11:37.105Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 114"
+  },
+  {
+    "n": 115,
+    "ts": "2026-03-21T17:13:23.413Z",
+    "valSharpe": 4.5028,
+    "audSharpe": 9.1836,
+    "isSharpe": 5.2559,
+    "score": 6.8431999999999995,
+    "accepted": false,
+    "description": "exp 115"
+  },
+  {
+    "n": 116,
+    "ts": "2026-03-21T17:15:06.849Z",
+    "valSharpe": 3.8749,
+    "audSharpe": 8.2201,
+    "isSharpe": 6.1219,
+    "score": 6.0475,
+    "accepted": false,
+    "description": "exp 116"
+  },
+  {
+    "n": 117,
+    "ts": "2026-03-21T17:16:51.128Z",
+    "valSharpe": 3.8477,
+    "audSharpe": 4.8604,
+    "isSharpe": 5.567,
+    "score": 4.35405,
+    "accepted": false,
+    "description": "exp 117"
+  },
+  {
+    "n": 118,
+    "ts": "2026-03-21T17:18:34.487Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 118"
   }
 ]

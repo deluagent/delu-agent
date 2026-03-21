@@ -31,6 +31,7 @@ const { dynamicTrailStop } = require('./stops');
 const { fetchAllFlows } = require('./flows');
 const { getBankrAttention } = require('./bankr_market');
 const { discover } = require('./discover');
+const { getTrendingEntries } = require('./trending_entry');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -651,6 +652,28 @@ async function runCycle() {
     }
   } catch (e) {
     console.warn(`[discover] Failed (skipping): ${e.message?.slice(0, 80)}`);
+  }
+
+  // ── Trending entry signal: catch Base tokens early in their move ─────────────
+  let trendingEntries = [];
+  try {
+    console.log('\n[trending_entry] Scanning Base trending for early entries...');
+    trendingEntries = await getTrendingEntries(process.env.BANKR_API_KEY);
+    if (trendingEntries.length) {
+      for (const t of trendingEntries) {
+        // Merge into checkrAttention so Venice sees them in context
+        if (!checkrAttention[t.symbol]) checkrAttention[t.symbol] = { attentionDelta: 0, velocity: 0, divergence: false };
+        checkrAttention[t.symbol].trendingEntry      = true;
+        checkrAttention[t.symbol].trendingScore      = t.score;
+        checkrAttention[t.symbol].trendingRank       = t.rank;
+        checkrAttention[t.symbol].trendingRet1h      = t.ret1h;
+        checkrAttention[t.symbol].trendingMoveFrac   = t.moveFrac;
+        checkrAttention[t.symbol].attentionDelta    += t.score * 3;
+        checkrAttention[t.symbol].velocity           = Math.max(checkrAttention[t.symbol].velocity, t.score * 6);
+      }
+    }
+  } catch (e) {
+    console.warn(`[trending_entry] Failed (skipping): ${e.message?.slice(0, 80)}`);
   }
 
   console.log('[signals] Scoring...');
