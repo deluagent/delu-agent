@@ -106,7 +106,7 @@ function scoreToken(data) {
     const btc200 = sma(btcPrices, 200);
     if (btc50 < btc200) {
       isBear = true;
-      regimeMult = vol > 0.75 ? 0.05 : 0.20;
+      regimeMult = vol > 0.75? 0.05 : 0.20;
     }
   }
 
@@ -123,7 +123,7 @@ function scoreToken(data) {
   const r60 = pctChange(prices, Math.min(60, n - 1));
 
   const momentum = vol > 0.75
-    ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
+   ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
     : (0.30 * r7 + 0.40 * r20 + 0.30 * r60) / (1 + vol);
 
   //  Trend 
@@ -131,14 +131,14 @@ function scoreToken(data) {
 
   //  Mean reversion 
   const z = zScore(prices, 20);
-  const meanRev = z < -1.8 ? 0.10 : (z > 2.5 ? -0.08 : 0);
+  const meanRev = z < -1.8? 0.10 : (z > 2.5? -0.08 : 0);
 
   //  Volatility penalty 
   const volPenalty = -0.20 * Math.max(vol - 0.6, 0);
 
   //  Funding rate signal 
   const fundingBoost = isBear
-    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
+   ? (flowSignal > 0? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
 
   //  OBV Signal (Volume Accumulation) with Volume Surge Multiplier 
@@ -148,7 +148,7 @@ function scoreToken(data) {
 
   //  Price acceleration filter
   const r1 = pctChange(prices, 1);
-  if (r1 > 0.15 && vol > 0.9) return raw * regimeMult * 0.5;
+  if (r1 > 0.15 && vol > 0.9) return (momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost) * regimeMult * 0.5;
 
   //  Combined 
   const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost;

@@ -18,6 +18,8 @@ const fs      = require('fs');
 const path    = require('path');
 const { execSync, spawnSync } = require('child_process');
 const https   = require('https');
+// Use node-fetch instead of built-in fetch — avoids undici connection-pool hang in nohup background
+const nodeFetch = require('node-fetch');
 
 // ── Config ───────────────────────────────────────────────────
 const DIR          = __dirname;
@@ -72,7 +74,10 @@ async function callLLM(messages) {
   const track = checkBudget();
 
   // Venice llama-3.3-70b — private, free, proven to work
-  const res = await fetch('https://api.venice.ai/api/v1/chat/completions', {
+  const _t0 = Date.now();
+  const controller = new AbortController();
+  const _timer = setTimeout(() => controller.abort(), 90000);
+  const res = await nodeFetch('https://api.venice.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type':  'application/json',
@@ -85,8 +90,9 @@ async function callLLM(messages) {
       max_tokens:  3000,
       venice_parameters: { enable_web_search: 'off', include_venice_system_prompt: false },
     }),
-    signal: AbortSignal.timeout(90000),
+    signal: controller.signal,
   });
+  clearTimeout(_timer);
 
   if (!res.ok) {
     const err = await res.text();
@@ -94,6 +100,7 @@ async function callLLM(messages) {
   }
 
   const data = await res.json();
+  console.log(`   [llm] ${((Date.now()-_t0)/1000).toFixed(1)}s | tokens=${data.usage?.completion_tokens}`);
 
   // Update cost tracking
   track.totalCalls++;
