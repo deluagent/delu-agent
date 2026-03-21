@@ -75,32 +75,32 @@ async function callLLM(messages) {
 
   // Venice llama-3.3-70b — private, free, proven to work
   const _t0 = Date.now();
-  const controller = new AbortController();
-  const _timer = setTimeout(() => controller.abort(), 90000);
-  const res = await nodeFetch('https://api.venice.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type':  'application/json',
-      'Authorization': `Bearer ${(process.env.VENICE_API_KEY || '').replace(/\s/g, '')}`,
-    },
-    body: JSON.stringify({
-      model:       'llama-3.3-70b',
-      messages,
-      temperature: 0.7,
-      max_tokens:  3000,
+  // Use raw https.request — works reliably in nohup background (no undici/node-fetch issues)
+  const data = await new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      model: 'llama-3.3-70b', messages, temperature: 0.7, max_tokens: 3000,
       venice_parameters: { enable_web_search: 'off', include_venice_system_prompt: false },
-    }),
-    signal: controller.signal,
+    });
+    const key = (process.env.VENICE_API_KEY || '').replace(/\s/g, '');
+    const req = https.request({
+      hostname: 'api.venice.ai', path: '/api/v1/chat/completions', method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}`, 'Content-Length': Buffer.byteLength(body) },
+    }, (res) => {
+      let raw = '';
+      res.on('data', d => raw += d);
+      res.on('end', () => {
+        try { resolve(JSON.parse(raw)); }
+        catch(e) { reject(new Error(`JSON parse failed: ${raw.slice(0,100)}`)); }
+      });
+    });
+    req.on('error', reject);
+    const _timeout = setTimeout(() => { req.destroy(); reject(new Error('Venice timeout after 90s')); }, 90000);
+    req.on('close', () => clearTimeout(_timeout));
+    req.write(body);
+    req.end();
   });
-  clearTimeout(_timer);
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Venice ${res.status}: ${err.slice(0, 200)}`);
-  }
-
-  const data = await res.json();
   console.log(`   [llm] ${((Date.now()-_t0)/1000).toFixed(1)}s | tokens=${data.usage?.completion_tokens}`);
+  if (data.error) throw new Error(`Venice API error: ${JSON.stringify(data.error).slice(0,150)}`);
 
   // Update cost tracking
   track.totalCalls++;
