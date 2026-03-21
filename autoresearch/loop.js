@@ -176,10 +176,14 @@ Propose ONE specific, small, logical change to improve validation Sharpe.
 Avoid overfitting: changes that work only in-sample will be rejected.
 Prefer: regime filters, vol-adjusted signals, tighter entry criteria.
 The function receives: { prices, btcPrices, flowSignal, attentionDelta }
-It must return a number 0-1. Higher = stronger buy signal.
+It must return a number. Higher = stronger buy signal. Return 0 to skip token.
 
-Return ONLY the complete new candidate.js file. No explanation outside the code.
-Start with the comment block, end with module.exports. No markdown fences.`;
+CRITICAL OUTPUT RULES:
+1. Return ONLY valid JavaScript code — no markdown, no fences, no prose
+2. The file MUST start with a comment block (/**) and end with: module.exports = { scoreToken };
+3. scoreToken MUST be defined as a function and exported
+4. No import/require statements — pure JS only
+5. Test your logic mentally before outputting`;
 
   const response = await callLLM([{ role: 'user', content: prompt }]);
 
@@ -235,6 +239,17 @@ async function loop() {
       // Extract description from first comment line
       const match = newCode.match(/\/\/ (exp \d+:|change:|hypothesis:|\w+:) (.+)/i);
       description = match ? match[2].slice(0, 80) : `experiment ${state.expCount}`;
+
+      // Validate JS syntax before writing
+      try {
+        new Function(newCode); // throws SyntaxError if invalid
+      } catch(syntaxErr) {
+        throw new Error(`syntax error in generated code: ${syntaxErr.message.slice(0, 100)}`);
+      }
+      // Must export scoreToken
+      if (!newCode.includes('scoreToken') || !newCode.includes('module.exports')) {
+        throw new Error('generated code missing scoreToken or module.exports');
+      }
 
       // Apply the change
       fs.writeFileSync(CANDIDATE, newCode);

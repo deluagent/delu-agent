@@ -9038,5 +9038,29 @@
     "accepted": false,
     "description": "funding matters more",
     "ts": 1774051851107
+  },
+  {
+    "n": 16,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: evaluator returned null",
+    "ts": 1774052029423
+  },
+  {
+    "n": 17,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: evaluator returned null",
+    "ts": 1774052132603
+  },
+  {
+    "n": 18,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: evaluator returned null",
+    "ts": 1774052237956
   }
 ]
