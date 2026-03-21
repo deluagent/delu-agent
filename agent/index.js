@@ -57,18 +57,10 @@ function loadCandidate() {
 }
 
 const { fetchBinanceHourly, fetchGeckoTerminal, GECKO_TERMINAL_FALLBACK } = require('../backtest/fetch.js');
+const { monitorPositions } = require('./position_monitor');
 
-const TOKENS = [
-  // Top Binance majors (liquid, high volume)
-  'BTC','ETH','SOL','BNB','DOGE','AAVE','ARB',
-  'LINK','AVAX','DOT','UNI','ATOM','LTC','XRP',
-  'ADA','NEAR','OP','INJ','SUI','APT','TIA',
-  'WLD','PEPE','WIF','TON','FTM','SEI',
-  // Base ecosystem (GeckoTerminal)
-  'BRETT','DEGEN','AERO','VIRTUAL','CLANKER',
-  'ODAI','JUNO','FELIX','CLAWD','CLAWNCH'
-];
-const SYMBOLS = TOKENS; // same list
+// Regime tokens only — BTC + ETH for macro context
+const REGIME_TOKENS = ['BTC', 'ETH'];
 
 const ACTIVE_TRANCHE_USD = 27; // liquid USDC on Base (updated 2026-03-20)
 
@@ -166,22 +158,37 @@ function volZ(volumes, lookback = 30 * 24) {
   return sd > 0 ? (volumes[volumes.length - 1] - m) / sd : 0;
 }
 
-// ─── 5-State Regime ────────────────────────────────────────────────────────────
-// dailyBars: 1d candles (220) for 200d MA + breadth
-// hourlyBars: 1h candles (500) for vol ratio
-function detectRegime(allBarsDaily, allBarsHourly, p = PARAMS) {
-  const btcDaily = allBarsDaily[0];
+// ─── Regime detection — BTC + ETH only ────────────────────────────────────────
+// btcDaily: 1d BTC bars (220+), ethDaily: 1d ETH bars
+// btcHourly: 1h BTC bars (720+) for vol ratio
+function detectRegime(btcDaily, ethDaily, btcHourly, p = PARAMS) {
   if (!btcDaily || btcDaily.length < 201) return null;
 
-  const btcD = btcDaily.map(b => b.close);
+  const btcD   = btcDaily.map(b => b.close);
+  const ethD   = ethDaily?.map(b => b.close) || [];
   const sma200 = smaN(btcD, 200);
   if (!sma200) return null;
 
-  const btcNow = btcD[btcD.length - 1];
+  const btcNow    = btcD[btcD.length - 1];
   const pctFrom200 = (btcNow - sma200) / sma200;
 
-  // Vol ratio from hourly bars (7d vs 30d)
-  const btcH = allBarsHourly[0]?.map(b => b.close) || [];
+  // ETH regime (independent signal)
+  let ethState = 'unknown';
+  if (ethD.length >= 201) {
+    const ethSma200 = smaN(ethD, 200);
+    if (ethSma200) {
+      const ethPct = (ethD[ethD.length - 1] - ethSma200) / ethSma200;
+      ethState = ethPct > 0.05 ? 'BULL' : ethPct < -0.03 ? 'BEAR' : 'RANGE';
+    }
+  }
+  const btcState = pctFrom200 > 0.05 ? 'BULL' : pctFrom200 < -0.03 ? 'BEAR' : 'RANGE';
+
+  // Combined regime: both BEAR = full BEAR, one BEAR = mixed, both BULL = BULL
+  const bothBear = btcState === 'BEAR' && ethState === 'BEAR';
+  const bothBull = btcState === 'BULL' && ethState === 'BULL';
+
+  // Vol ratio (BTC hourly 7d vs 30d)
+  const btcH = btcHourly?.map(b => b.close) || [];
   const n7 = 7 * 24, n30 = 30 * 24;
   let v7 = 0, v30 = 0;
   const btcR = btcH.map((c, i) => i === 0 ? 0 : Math.log(c / btcH[i - 1]));
@@ -189,30 +196,20 @@ function detectRegime(allBarsDaily, allBarsHourly, p = PARAMS) {
     for (let j = btcR.length - n7; j < btcR.length; j++) v7 += btcR[j] ** 2;
     for (let j = btcR.length - n30; j < btcR.length; j++) v30 += btcR[j] ** 2;
   }
-  const volRatio = Math.sqrt(v30 / n30) > 0 ? Math.sqrt(v7 / n7) / Math.sqrt(v30 / n30) : 1;
+  const volRatio   = Math.sqrt(v30 / n30) > 0 ? Math.sqrt(v7 / n7) / Math.sqrt(v30 / n30) : 1;
   const highVol    = volRatio > p.volHighMult;
   const extremeVol = volRatio > p.volHighMult * 1.5;
 
-  // Market breadth (daily bars — tokens above 200d MA)
-  let aboveMa = 0;
-  for (const bars of allBarsDaily) {
-    if (!bars || bars.length < 201) continue;
-    const c = bars.map(b => b.close);
-    const ma = smaN(c, 200);
-    if (ma && c[c.length - 1] > ma) aboveMa++;
-  }
-  const breadth = aboveMa / allBarsDaily.filter(b => b?.length >= 201).length;
-
-  if (breadth < p.breadthMin || extremeVol) {
-    return { state: 'BEAR', btcNow, sma200, pctFrom200, volRatio, breadth, breadthFraction: `${aboveMa}/${allBarsDaily.length}` };
-  }
-
   let state;
-  if (pctFrom200 < p.bearThresh)      state = 'BEAR';
-  else if (pctFrom200 > p.bullThresh) state = highVol ? 'BULL_COOL' : 'BULL_HOT';
-  else                                 state = highVol ? 'RANGE_WIDE' : 'RANGE_TIGHT';
+  if (bothBear || extremeVol)  state = 'BEAR';
+  else if (bothBull)           state = highVol ? 'BULL_COOL' : 'BULL_HOT';
+  else                         state = highVol ? 'RANGE_WIDE' : 'RANGE_TIGHT';
 
-  return { state, btcNow, sma200, pctFrom200, volRatio, breadth, breadthFraction: `${aboveMa}/${allBarsDaily.length}` };
+  return {
+    state, btcNow, sma200, pctFrom200, volRatio, btcState, ethState,
+    breadthFraction: `BTC:${btcState} ETH:${ethState}`,
+    breadth: bothBull ? 1.0 : bothBear ? 0.0 : 0.5,
+  };
 }
 
 // ─── Template Scoring ──────────────────────────────────────────────────────────
@@ -383,7 +380,7 @@ or
   } catch (e) {
     // Screen failure → don't block Venice, log and continue
     console.warn(`[bankr-screen] Failed (${e.message}) — passing to Venice anyway`);
-    return { skip: false, interesting: SYMBOLS, reason: `screen failed: ${e.message}`, layer: 'fallback' };
+    return { skip: false, interesting: [], reason: `screen failed: ${e.message}`, layer: 'fallback' };
   }
 }
 
@@ -466,69 +463,39 @@ async function runCycle() {
   console.log(`delu cycle: ${cycleStart}`);
   console.log('═'.repeat(60));
 
-  // 1. Fetch bars — daily for regime (200d MA), hourly for signals
-  console.log('\n[data] Fetching bars...');
-  const allBarsDaily = [];  // 1d bars, 220 candles
-  const allBars = [];       // 1h bars, 500 candles
-  const allBars4h = [];     // 4h bars, 120 candles (multi-timeframe confluence)
-  for (let i = 0; i < TOKENS.length; i++) {
-    try {
-      const [daily, hourly, bars4h] = await Promise.all([
-        fetchBars(TOKENS[i], '1d', 220),
-        fetchBars(TOKENS[i], '1h', 500),
-        fetchBars(TOKENS[i], '4h', 120).catch(() => []),
-      ]);
-      allBarsDaily.push(daily);
-      allBars.push(hourly);
-      allBars4h.push(bars4h);
-      process.stdout.write(`  ${SYMBOLS[i]} ✓  `);
-    } catch (e) {
-      console.error(`  ${SYMBOLS[i]} FAILED: ${e.message}`);
-      allBarsDaily.push([]);
-      allBars.push([]);
-      allBars4h.push([]);
-    }
-    await sleep(2000); // 2s delay to avoid GeckoTerminal 429s (30 req/min limit)
-  }
-  console.log();
+  // ── STEP 1: Regime — BTC + ETH only (fast, 2 tokens) ────────────────────────
+  console.log('\n[regime] Fetching BTC + ETH bars...');
+  const [btcDailyBars, ethDailyBars, btcHourlyBars] = await Promise.all([
+    fetchBars('BTC', '1d', 220).catch(() => []),
+    fetchBars('ETH', '1d', 220).catch(() => []),
+    fetchBars('BTC', '1h', 720).catch(() => []),
+  ]);
+  console.log(`  BTC daily=${btcDailyBars.length}bars  ETH daily=${ethDailyBars.length}bars  BTC hourly=${btcHourlyBars.length}bars`);
 
-  // 2. Detect regime
-  const regime = detectRegime(allBarsDaily, allBars);
+  const regime = detectRegime(btcDailyBars, ethDailyBars, btcHourlyBars);
   if (!regime) {
     console.log('[regime] Not enough data — aborting');
     return;
   }
-  console.log(`\n[regime] ${regime.state} | BTC $${Math.round(regime.btcNow)} | ${((regime.pctFrom200)*100).toFixed(1)}% from 200d MA | breadth ${regime.breadthFraction} | volRatio ${regime.volRatio.toFixed(2)}`);
+  console.log(`[regime] ${regime.state} | BTC $${Math.round(regime.btcNow)} | ${(regime.pctFrom200*100).toFixed(1)}% from 200d MA | BTC:${regime.btcState} ETH:${regime.ethState} | volRatio ${regime.volRatio.toFixed(2)}`);
 
-  // 2b. Reconcile positions with Bankr (point 1: track closes)
+  // ── STEP 2: Position management — Alchemy on every open position ─────────────
   console.log('\n[journal] Reconciling positions...');
-  const currentPricesForReconcile = {};
+  let openPositions = [];
   try {
     const balanceResp = await bankr.getBalances();
-    const updatedPositions = await journal.reconcilePositions(balanceResp, currentPricesForReconcile);
-    const open = updatedPositions.filter(p => p.status === 'open');
-    console.log(`[journal] ${open.length} open positions after reconcile`);
+    const updatedPositions = await journal.reconcilePositions(balanceResp, {});
+    openPositions = updatedPositions.filter(p => p.status === 'open');
+    console.log(`[journal] ${openPositions.length} open position(s)`);
   } catch(e) {
     console.warn(`[journal] Reconcile skipped: ${e.message?.slice(0,60)}`);
+    openPositions = journal.loadPositions().filter(p => p.status === 'open');
   }
 
-  // (checkr attention fetched below in step 3b)
+  // Live position intelligence — volume, momentum, recommendation per position
+  const positionAssessments = await monitorPositions(openPositions);
 
-  // 3. Score all tokens
-  const candidate = loadCandidate();
-  const arState = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../autoresearch/state.json'),'utf8')); } catch { return null; } })();
-  if (arState) console.log(`\n[autoresearch] exp=${arState.expCount} bestValSharpe=${arState.bestValSharpe.toFixed(3)} — candidate loaded ${candidate ? '✓' : '✗'}`);
-
-  // 3b. Fetch market flow signals (Binance OI + volume, free)
-  let flowSignals = {};
-  try {
-    console.log('\n[flows] Fetching Binance OI + volume signals...');
-    flowSignals = await fetchAllFlows(TOKENS.filter(t => require('./flows').SYMBOL_MAP[t]));
-    const topFlow = Object.entries(flowSignals).sort((a,b) => b[1].flowScore - a[1].flowScore).slice(0,3);
-    console.log('[flows] Top flows:', topFlow.map(([s,f]) => `${s}:${f.flowScore.toFixed(2)}`).join(' '));
-  } catch(e) {
-    console.warn('[flows] Skipped:', e.message?.slice(0,60));
-  }
+  // ── STEP 3: Onchain signals — Checkr + Bankr trending ───────────────────────
 
   // 3c. Fetch Checkr social attention signals (pay-per-call via x402)
   let checkrAttention = {}; // sym → { attentionDelta, velocity, divergence, viral_class, rotationGain, isGainer }
@@ -685,97 +652,16 @@ async function runCycle() {
     console.warn(`[trending_entry] Failed (skipping): ${e.message?.slice(0, 80)}`);
   }
 
-  console.log('[signals] Scoring...');
-  const btcDailyCloses = allBarsDaily[0]?.map(b => b.close) || [];
-  const scores = SYMBOLS.map((sym, ti) => {
-    const bars     = allBars[ti];
-    const bars4h   = allBars4h[ti] || [];
-    const dailyBars = allBarsDaily[ti] || [];
-    if (bars.length < 250) return { sym, ti, sA: 0, sB: 0, sC: 0, sD: 0, sAR: 0, mtfGate: false };
-
-    // Multi-timeframe confluence: compute 4h trend
-    // Gate: only full score if 1h + 4h trend agree (same direction)
-    let mtfGate = true; // default open
-    let mtfNote = 'no 4h data';
-    if (bars4h.length >= 20) {
-      const c4h = bars4h.map(b => b.close);
-      const n4h = c4h.length;
-      const ema4h_fast = c4h.slice(-20).reduce((s,p,i,a) => i===0 ? p : s*(1-2/13)+p*(2/13), c4h[n4h-20]);
-      const ema4h_slow = c4h.slice(-30).reduce((s,p,i,a) => i===0 ? p : s*(1-2/27)+p*(2/27), c4h[Math.max(0,n4h-30)]);
-      const trend4h = ema4h_fast > ema4h_slow ? 'up' : 'down';
-      // 1h trend from hourly bars
-      const c1h = bars.map(b => b.close);
-      const n1h = c1h.length;
-      const ema1h_fast = c1h.slice(-20).reduce((s,p,i) => i===0 ? p : s*0.857+p*0.143, c1h[n1h-20]);
-      const ema1h_slow = c1h.slice(-26).reduce((s,p,i) => i===0 ? p : s*0.926+p*0.074, c1h[Math.max(0,n1h-26)]);
-      const trend1h = ema1h_fast > ema1h_slow ? 'up' : 'down';
-      mtfGate = trend1h === trend4h; // confluent = both agree
-      mtfNote = `1h=${trend1h} 4h=${trend4h} → ${mtfGate ? '✓ aligned' : '✗ diverging'}`;
-    }
-
-    // Autoresearch score — Venice-evolved signal function
-    let sAR = 0;
-    if (candidate?.scoreToken) {
-      try {
-        const attn = checkrAttention[sym] || {};
-        sAR = candidate.scoreToken({
-          prices:            dailyBars.map(b => b.close),
-          volumes:           dailyBars.map(b => b.volume || 0),
-          btcPrices:         btcDailyCloses,
-          flowSignal:        flowSignals[sym]?.flowScore || 0,
-          attentionDelta:    attn.attentionDelta || 0,
-          attentionVelocity: attn.velocity || 0,
-          divergence:        attn.divergence ? 1 : 0,
-        }) || 0;
-        sAR = Math.max(0, Math.min(1, sAR)); // clamp 0-1
-      } catch(e) { sAR = 0; }
-    }
-
-    return {
-      sym, ti,
-      sA:  scoreTemplateA(bars),
-      sB:  scoreTemplateB(bars),
-      sC:  scoreTemplateC(bars, allBars),
-      sD:  scoreTemplateD(bars),
-      sAR,
-    };
-  });
-
-  // Regime-gated combined score
-  // sAR = autoresearch score (Venice-evolved, contributes 20% weight in BULL)
+    // ── STEP 3: Build candidate list from onchain signals only ──────────────────
+  // No fixed universe. Candidates come from:
+  //   A) Bankr trending (Base + ETH by txn count)
+  //   B) Checkr spikes / rotation gainers
+  //   C) Trending entry (Alchemy quant brain on Base trending)
+  // Each candidate gets a quant score from the evolved brain.
   const state = regime.state;
-  const hasAR = scores.some(s => s.sAR > 0);
-  const ranked = scores.map(s => {
-    let combined = 0;
-    let template = 'none';
-    // AR weight: 20% in BULL, 10% in RANGE, 0% in BEAR
-    const arW = state.startsWith('BULL') ? 0.20 : state.startsWith('RANGE') ? 0.10 : 0;
-    const rem = 1 - arW;
-    if (state === 'BULL_HOT') {
-      combined = rem * (0.50 * s.sA + 0.25 * s.sC + 0.15 * s.sB + 0.10 * s.sD) + arW * s.sAR;
-      template = s.sAR > s.sA && hasAR ? 'AR' : s.sA > s.sC ? 'A' : 'C';
-    } else if (state === 'BULL_COOL') {
-      combined = rem * (0.40 * s.sA + 0.30 * s.sD + 0.20 * s.sB + 0.10 * s.sC) + arW * s.sAR;
-      template = s.sD > s.sA ? 'D' : 'A';
-    } else if (state === 'RANGE_TIGHT') {
-      combined = rem * (0.50 * s.sB + 0.35 * s.sD + 0.15 * s.sA) + arW * s.sAR;
-      template = s.sB > s.sD ? 'B' : 'D';
-    } else if (state === 'RANGE_WIDE') {
-      combined = rem * (0.70 * s.sD + 0.30 * s.sB) + arW * s.sAR;
-      template = 'D';
-    }
-    // BEAR: combined = 0 for all
-    // Multi-timeframe gate: reduce score by 40% if 1h and 4h disagree
-    if (!s.mtfGate && combined > 0) combined *= 0.6;
-    return { ...s, combined, template };
-  }).sort((a, b) => b.combined - a.combined);
+  const ranked = []; // will be populated from trendingEntries below
 
-  console.log('  Top tokens:');
-  for (const s of ranked.slice(0, 3)) {
-    console.log(`    ${s.sym.padEnd(6)} A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} mtf=${s.mtfGate?'✓':'✗'} → combined=${s.combined.toFixed(3)} [${s.template}]`);
-  }
-
-  // 4. [Layer 1] Bankr LLM screen — fast pre-filter
+  // 4. [Layer 1] Bankr LLM screen — fast pre-filter on checkrAttention signals
   console.log('\n[bankr-screen] Screening...');
   const screen = await bankrScreen(regime, ranked, checkrAttention);
   console.log(`[bankr-screen] skip=${screen.skip} | interesting=[${screen.interesting.join(',')}] | "${screen.reason}" (${screen.layer})`);
@@ -814,84 +700,40 @@ async function runCycle() {
     return;
   }
 
-  // Filter ranked to only tokens Bankr screen found interesting
-  const interestingRanked = screen.interesting.length > 0
-    ? ranked.filter(s => screen.interesting.includes(s.sym))
-    : ranked;
-  if (interestingRanked.length === 0) {
-    console.log('[bankr-screen] No tokens passed filter — holding');
-    return;
-  }
-
-  // 5. Build Venice context (shortlisted tokens only)
-  const topToken = interestingRanked[0];
-  const recentPrices = SYMBOLS.map((sym, ti) => {
-    const bars = allBars[ti];
-    if (!bars.length) return `${sym}: N/A`;
-    const c = bars[bars.length-1].close;
-    const r24h = bars.length > 24 ? ((c - bars[bars.length-25].close) / bars[bars.length-25].close * 100).toFixed(1) : 'N/A';
-    return `${sym}: $${c.toFixed(4)} (${r24h}% 24h)`;
-  });
-
-  const rsiVals = SYMBOLS.map((sym, ti) => {
-    const bars = allBars[ti];
-    if (!bars.length) return `${sym}: N/A`;
-    const r = rsi(bars.slice(-20).map(b => b.close));
-    return `${sym}: ${r ?? 'N/A'}`;
-  });
-
+    // 5. Build Venice context — onchain-first, position-aware
+  const arState = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../autoresearch/state.json'),'utf8')); } catch { return null; } })();
   const arNote = arState
-    ? `\n## Autoresearch (Venice self-improvement loop)\nExperiments run: ${arState.expCount} | Best validation Sharpe: ${arState.bestValSharpe.toFixed(3)}\nAR scores reflect a scoring function Venice has been autonomously evolving.\n`
+    ? `\n## Autoresearch Loop\nExperiments: ${arState.expCount} | Best val Sharpe: ${arState.bestValSharpe?.toFixed(3)}\n`
     : '';
 
   const context = `## Market Regime
 State: ${state}
 BTC: $${Math.round(regime.btcNow)} — ${(regime.pctFrom200 * 100).toFixed(1)}% ${regime.pctFrom200 > 0 ? 'above' : 'below'} 200d MA
+BTC regime: ${regime.btcState} | ETH regime: ${regime.ethState}
 Volatility ratio (7d/30d): ${regime.volRatio.toFixed(2)} — ${regime.volRatio > PARAMS.volHighMult ? 'HIGH VOL' : 'normal'}
-Market breadth: ${regime.breadthFraction} tokens above 200d MA
+Note: BEAR = context not a gate. Cross-sectional alpha (sector rotation, Base memes, AI tokens) works in any regime.
 ${arNote}
-## Pre-Screen (Bankr LLM)
-Tokens flagged as interesting: ${screen.interesting.join(', ') || 'none'}
-Screen rationale: "${screen.reason}"
 
-## Prices & 24h Change
-${recentPrices.join('\n')}
-
-## RSI (14, hourly)
-${rsiVals.join('\n')}
-
-## Social Attention + Rotation (Checkr — X/CT mindshare, velocity, capital rotation)
-Signal key: vel=mention velocity (>3=spike), div=attention/price divergence, ROT_IN=receiving rotation capital, ROT_OUT=bleeding attention
-${Object.keys(checkrAttention).length > 0
-  ? interestingRanked.map(s => {
-      const a = checkrAttention[s.sym];
-      if (!a) return `${s.sym}: no data`;
-      const rot = a.isGainer
-        ? ` ROT_IN(ATT+${a.attGrowth?.toFixed(1)}% flow=${a.netFlow} from=[${(a.rotatingFrom||[]).slice(0,3).join(',')}]${a.topCreator ? ' creator=@'+a.topCreator.username : ''})`
-        : a.isLoser ? ` ROT_OUT(ATT${a.attGrowth?.toFixed(1)}% flow=${a.netFlow})` : '';
-      return `${s.sym}: vel=${a.velocity?.toFixed(1)} div=${a.divergence?'YES':'no'} delta=${a.attentionDelta?.toFixed(3)}${rot}`;
-    }).join(' | ')
-  : 'Checkr unavailable this cycle'}
-
-## Signal Scores — Shortlisted tokens (A=trend B=OBV C=rank D=bounce AR=self-evolved vel=social-velocity)
-${interestingRanked.map(s => {
-  const a = checkrAttention[s.sym];
-  const velStr = a ? ` vel=${a.velocity?.toFixed(1)}` : '';
-  return `${s.sym.padEnd(6)}: A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)}${velStr} → ${s.combined.toFixed(3)} [${s.template}]`;
-}).join('\n')}
-
-## Top Candidate
-${topToken.combined > 0.05
-  ? `${topToken.sym} via Template ${topToken.template} | score=${topToken.combined.toFixed(3)}`
-  : 'None — below threshold'}
-
-## Auto-Discovered Tokens (not in fixed universe — vetted live this cycle)
-${discoveredTokens.length
-  ? discoveredTokens.map(d =>
-      `${d.symbol} | score=${d.score.toFixed(3)} | liq=$${Math.round(d.liq/1000)}K | age=${d.ageDays.toFixed(1)}d | ${d.change24h?.toFixed(1)}% 24h | vol/liq=${(d.volLiq*100).toFixed(0)}% | source=${d.source} | signals: ${Object.entries(d.signals||{}).map(([k,v])=>k+'='+v).join(' ')}`
+## Open Positions — Live Intelligence
+${positionAssessments.length > 0
+  ? positionAssessments.map(p =>
+      `${p.sym}: pnl=${p.pnlPct !== null ? (p.pnlPct > 0 ? '+' : '') + p.pnlPct.toFixed(1) + '%' : '?'} quant=${p.quantScore?.toFixed(3) ?? 'n/a'} vol=${p.volumeTrend} ret1h=${p.ret1h != null ? (p.ret1h*100).toFixed(1)+'%' : '?'} buyers=${p.transferStats?.uniqueBuyers ?? '?'} buyRatio=${p.transferStats?.buyRatio?.toFixed(2) ?? '?'} → ${p.recommendation}`
     ).join('\n')
-  : 'None this cycle'}
-Note: Discovered tokens bypass fixed universe scoring — trade if conviction is high and size is conservative ($10 minimum).
+  : 'No open positions'}
+
+## Social Attention + Rotation (Checkr)
+Signal key: vel=velocity spike, ROT_IN=creators rotating in (ATT growth confirmed), ROT_OUT=bleeding creators
+${Object.keys(checkrAttention).length > 0
+  ? Object.entries(checkrAttention)
+      .sort((a, b) => (b[1].velocity || 0) - (a[1].velocity || 0))
+      .slice(0, 8)
+      .map(([sym, a]) => {
+        const rot = a.isGainer
+          ? ` ROT_IN(ATT+${a.attGrowth?.toFixed(1)}% flow=${a.netFlow} from=[${(a.rotatingFrom||[]).slice(0,3).join(',')}]${a.topCreator ? ' @'+a.topCreator.username : ''})`
+          : a.isLoser ? ` ROT_OUT(ATT${a.attGrowth?.toFixed(1)}% flow=${a.netFlow})` : '';
+        return `${sym}: vel=${(a.velocity||0).toFixed(1)} div=${a.divergence?'YES':'no'}${rot}`;
+      }).join('\n')
+  : 'Checkr unavailable this cycle'}
 
 ## 🔥 Onchain Trending Entries (Base — Alchemy price data + transfer stats)
 These are Base tokens currently trending onchain. NOT in fixed universe. Execution via Bankr swap by contract address.
@@ -950,7 +792,6 @@ What is your allocation decision?`;
         ? { winRate: stats.wins / stats.totalTrades, avgWin: Math.max(0.01, stats.avgPnl / 100), avgLoss: 0.05 }
         : { winRate: 0.52, avgWin: 0.08, avgLoss: 0.05 }; // conservative defaults until calibrated
 
-      const openPositions = journal.loadPositions().filter(p => p.status === 'open');
       const kelly = kellySize(decision.confidence, ACTIVE_TRANCHE_USD, kellyParams);
       const corr  = correlationAdjust(openPositions.map(p => ({ token: p.sym })), decision.asset, kelly.sizeUsd);
       const finalSizeUsd = Math.max(10, corr.adjustedSize); // $10 Bankr minimum
@@ -965,23 +806,16 @@ What is your allocation decision?`;
       // Record entry + compute dynamic trailing stop
       if (decision.action === 'buy' || decision.action === 'long') {
         const entryPrice = await bankr.getPrice(decision.asset).catch(() => 0);
-        // Dynamic ATR-based trailing stop
-        const tokenIdx   = SYMBOLS.indexOf(decision.asset);
-        const tokenBars  = tokenIdx >= 0 ? allBarsDaily[tokenIdx] : [];
-        const stopConfig = dynamicTrailStop(
-          tokenBars.map(b => b.close),
-          tokenBars.map(b => b.high || b.close),
-          tokenBars.map(b => b.low  || b.close),
-          regime.state
-        );
+        // Default trailing stop — Bankr sets 5% natively, use that
+        const stopConfig = { trailPct: 5, activateAt: 1, rationale: 'Bankr native 5% trailing stop' };
         console.log(`[stops] ${decision.asset} trail=${stopConfig.trailPct}% activate=${stopConfig.activateAt}% | ${stopConfig.rationale}`);
         journal.recordEntry(decision.asset, entryPrice, finalSizeUsd, {
-          regime:        regime.state,
-          confidence:    decision.confidence,
-          signals:       ranked.find(s => s.sym === decision.asset),
-          kellyFraction: kelly.kellyFraction,
-          trailPct:      stopConfig.trailPct,
-          activateAt:    stopConfig.activateAt,
+          regime:          regime.state,
+          confidence:      decision.confidence,
+          contractAddress: decision.contractAddress || null,
+          kellyFraction:   kelly.kellyFraction,
+          trailPct:        stopConfig.trailPct,
+          activateAt:      stopConfig.activateAt,
         });
       }
     } catch (e) {
@@ -989,13 +823,14 @@ What is your allocation decision?`;
     }
   }
 
-  // 8. Log
+    // 8. Log
   const logEntry = {
     ts: cycleStart,
     regime: state,
     regime_detail: regime,
-    scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template, sA: s.sA, sB: s.sB, sC: s.sC, sD: s.sD })),
+    scores: [], // no fixed universe — onchain discovery is the signal
     trendingEntries: trendingEntries.map(t => ({ symbol: t.symbol, score: t.score, rank: t.rank, ret1h: t.ret1h, moveFrac: t.moveFrac, quantScore: t.quantScore })),
+    positionAssessments: positionAssessments.map(p => ({ sym: p.sym, pnlPct: p.pnlPct, quantScore: p.quantScore, volumeTrend: p.volumeTrend, recommendation: p.recommendation })),
     screen,
     decision,
     dry_run: DRY_RUN

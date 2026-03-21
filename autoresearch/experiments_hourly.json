@@ -1698,5 +1698,105 @@
     "score": 7.35835,
     "accepted": false,
     "description": "exp 170"
+  },
+  {
+    "n": 171,
+    "ts": "2026-03-21T19:11:40.963Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 171"
+  },
+  {
+    "n": 172,
+    "ts": "2026-03-21T19:13:24.275Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 172"
+  },
+  {
+    "n": 173,
+    "ts": "2026-03-21T19:15:06.420Z",
+    "valSharpe": 5.3264,
+    "audSharpe": 8.7276,
+    "isSharpe": 5.9345,
+    "score": 7.027,
+    "accepted": false,
+    "description": "exp 173"
+  },
+  {
+    "n": 174,
+    "ts": "2026-03-21T19:16:48.870Z",
+    "valSharpe": 6.0165,
+    "audSharpe": 9.6424,
+    "isSharpe": 4.8334,
+    "score": 7.82945,
+    "accepted": false,
+    "description": "exp 174"
+  },
+  {
+    "n": 175,
+    "ts": "2026-03-21T19:18:31.559Z",
+    "valSharpe": 4.7921,
+    "audSharpe": 8.4029,
+    "isSharpe": 5.7165,
+    "score": 6.5975,
+    "accepted": false,
+    "description": "exp 175"
+  },
+  {
+    "n": 176,
+    "ts": "2026-03-21T19:20:14.239Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 176"
+  },
+  {
+    "n": 177,
+    "ts": "2026-03-21T19:21:56.568Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 177"
+  },
+  {
+    "n": 178,
+    "ts": "2026-03-21T19:23:38.477Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 178"
+  },
+  {
+    "n": 179,
+    "ts": "2026-03-21T19:25:21.818Z",
+    "valSharpe": 4.5028,
+    "audSharpe": 9.1836,
+    "isSharpe": 5.2559,
+    "score": 6.8431999999999995,
+    "accepted": false,
+    "description": "exp 179"
+  },
+  {
+    "n": 180,
+    "ts": "2026-03-21T19:27:07.963Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 180"
   }
 ]
