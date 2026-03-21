@@ -77,7 +77,6 @@ function scoreToken(data) {
   const r7 = pctChange(prices, 7);
 
   // ── Regime detection: BTC 50d vs 200d MA ──
-  // Key fix: Base tokens (high vol) are aggressively penalized in BEAR regimes.
   let regimeMult = 1.0;
   let isBear = false;
   if (btcPrices.length >= 200) {
@@ -85,28 +84,29 @@ function scoreToken(data) {
     const btc200 = sma(btcPrices, 200);
     if (btc50 < btc200) {
       isBear = true;
-      // If it's a high-vol alt (likely a Base token) in a bear market, skip it.
-      // Majors (lower vol) get a small weight.
-      regimeMult = vol > 0.65 ? 0.0 : 0.20;
+      // High-vol alts (Base tokens) are skipped in bear markets.
+      // Majors get a small participation weight.
+      regimeMult = vol > 0.75 ? 0.0 : 0.20;
     }
   }
 
   // ── Falling knife protection ──
-  // If a token crashed >20% in a week, don't touch it.
   if (r7 < -0.20) return 0;
 
   // ── Trend strength filter ──
   const ema = emaGap(prices, 12, 26);
   if (Math.abs(ema) < 0.03) return 0;
 
-  // ── Momentum (multi-timeframe, vol-adjusted) ──
-  // Shifted weights slightly more toward 7d/20d for faster response in alts.
-  const r20  = pctChange(prices, 20);
-  const r60  = pctChange(prices, Math.min(60, n - 1));
+  // ── Momentum (Adaptive Lookbacks) ──
+  // High-vol tokens (Base) need faster response (r3/r7).
+  // Lower-vol tokens (Majors) benefit from longer-term trend confirmation (r20/r60).
+  const r3 = pctChange(prices, 3);
+  const r20 = pctChange(prices, 20);
+  const r60 = pctChange(prices, Math.min(60, n - 1));
 
-  const momentum = 0.45 * r7 / (1 + vol)
-                 + 0.35 * r20 / (1 + vol)
-                 + 0.20 * r60 / (1 + vol);
+  const momentum = vol > 0.75
+    ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
+    : (0.30 * r7 + 0.40 * r20 + 0.30 * r60) / (1 + vol);
 
   // ── Trend ──
   const trend = 0.20 * ema;
@@ -119,7 +119,6 @@ function scoreToken(data) {
   const volPenalty = -0.20 * Math.max(vol - 0.6, 0);
 
   // ── Funding rate signal ──
-  // In BEAR regime, require positive funding (crowded shorts) to trade.
   const fundingBoost = isBear
     ? (flowSignal > 0 ? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
