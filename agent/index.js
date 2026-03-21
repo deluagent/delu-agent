@@ -30,6 +30,7 @@ const { startDashboard } = require('./dashboard');
 const { dynamicTrailStop } = require('./stops');
 const { fetchAllFlows } = require('./flows');
 const { getBankrAttention } = require('./bankr_market');
+const { discover } = require('./discover');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -624,6 +625,34 @@ async function runCycle() {
     console.warn(`[bankr_market] Failed (skipping): ${e.message?.slice(0,80)}`);
   }
 
+  // ── Auto-discovery: find tokens NOT in fixed universe that are trending ───────
+  let discoveredTokens = [];
+  try {
+    console.log('\n[discover] Scanning for undiscovered trending tokens...');
+    const checkrSpikeList = Object.entries(checkrAttention)
+      .filter(([, d]) => (d.velocity || 0) >= 3.0)
+      .map(([sym, d]) => ({ symbol: sym, velocity: d.velocity }));
+    discoveredTokens = await discover(SYMBOLS, checkrSpikeList);
+    if (discoveredTokens.length) {
+      console.log(`[discover] ${discoveredTokens.length} discovery candidate(s) passed vetting:`);
+      for (const d of discoveredTokens) {
+        console.log(`  🔍 ${d.symbol} (${d.source}) score=${d.score.toFixed(3)} liq=$${Math.round(d.liq/1000)}K age=${d.ageDays.toFixed(1)}d`);
+        // Merge into checkrAttention so Venice sees it in context
+        if (!checkrAttention[d.symbol]) checkrAttention[d.symbol] = { attentionDelta: 0, velocity: 0, divergence: false };
+        checkrAttention[d.symbol].discovered     = true;
+        checkrAttention[d.symbol].discoveryScore = d.score;
+        checkrAttention[d.symbol].discoveryLiq   = d.liq;
+        checkrAttention[d.symbol].discoverySource = d.source;
+        checkrAttention[d.symbol].attentionDelta += d.score * 2; // strong boost for vetted discoveries
+        checkrAttention[d.symbol].velocity        = Math.max(checkrAttention[d.symbol].velocity, d.score * 5);
+      }
+    } else {
+      console.log('[discover] No new tokens passed vetting this cycle');
+    }
+  } catch (e) {
+    console.warn(`[discover] Failed (skipping): ${e.message?.slice(0, 80)}`);
+  }
+
   console.log('[signals] Scoring...');
   const btcDailyCloses = allBarsDaily[0]?.map(b => b.close) || [];
   const scores = SYMBOLS.map((sym, ti) => {
@@ -817,6 +846,14 @@ ${interestingRanked.map(s => {
 ${topToken.combined > 0.05
   ? `${topToken.sym} via Template ${topToken.template} | score=${topToken.combined.toFixed(3)}`
   : 'None — below threshold'}
+
+## Auto-Discovered Tokens (not in fixed universe — vetted live this cycle)
+${discoveredTokens.length
+  ? discoveredTokens.map(d =>
+      `${d.symbol} | score=${d.score.toFixed(3)} | liq=$${Math.round(d.liq/1000)}K | age=${d.ageDays.toFixed(1)}d | ${d.change24h?.toFixed(1)}% 24h | vol/liq=${(d.volLiq*100).toFixed(0)}% | source=${d.source} | signals: ${Object.entries(d.signals||{}).map(([k,v])=>k+'='+v).join(' ')}`
+    ).join('\n')
+  : 'None this cycle'}
+Note: Discovered tokens bypass fixed universe scoring — trade if conviction is high and size is conservative ($10 minimum).
 
 ## Portfolio Context
 Active tranche: $${ACTIVE_TRANCHE_USD} USDC

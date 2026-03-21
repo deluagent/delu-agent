@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "n": 1,
+    "ts": "2026-03-21T13:48:22.311Z",
+    "valSharpe": 2.8929,
+    "audSharpe": 8.6019,
+    "isSharpe": 7.3166,
+    "score": 5.747400000000001,
+    "accepted": false,
+    "description": "exp 1"
+  },
+  {
+    "n": 2,
+    "ts": "2026-03-21T13:50:09.994Z",
+    "valSharpe": 5.0871,
+    "audSharpe": 10.9136,
+    "isSharpe": 3.9193,
+    "score": 8.000350000000001,
+    "accepted": true,
+    "description": "exp 2"
+  },
+  {
+    "n": 3,
+    "ts": "2026-03-21T13:51:58.916Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 3"
+  },
+  {
+    "n": 4,
+    "ts": "2026-03-21T13:53:47.009Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 4"
+  },
+  {
+    "n": 5,
+    "ts": "2026-03-21T13:55:35.040Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 5"
+  },
+  {
+    "n": 6,
+    "ts": "2026-03-21T13:57:22.111Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 6"
+  },
+  {
+    "n": 7,
+    "ts": "2026-03-21T13:59:09.289Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 7"
+  }
+]

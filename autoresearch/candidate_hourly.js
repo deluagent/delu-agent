@@ -72,11 +72,17 @@ function scoreToken(data) {
   const btcRet8h   = bN >= 9 ? (btcPrices[bN-5] - btcPrices[bN-9]) / btcPrices[bN-9] : 0;
   const relAccel   = (tokenRet4h - btcRet4h) - (tokenRet8h - btcRet8h);
 
+  // ── Range compression detection ──────────────────────────────
+  const range4h = highs.slice(-4).reduce((m, h, i) => m + (h - lows[n-4+i]), 0) / 4;
+  const range48h = highs.slice(-48).reduce((m, h, i) => m + (h - lows[n-48+i]), 0) / 48;
+  const rangeCoil = 1 - (range4h / (range48h || range4h || 1));
+
   // ── Combined score [-1, +1] ──────────────────────────────────
-  const score = Math.tanh(relStr7d * 5) * 0.40   // 7d relative strength (primary)
+  const score = Math.tanh(relStr7d * 5) * 0.35   // 7d relative strength (primary)
               + Math.tanh(relStr4h * 30) * 0.30  // 4h relative strength (momentum)
               + volSignal * 0.15                  // volume confirmation
-              + Math.tanh(relAccel * 50) * 0.15;  // momentum acceleration
+              + Math.tanh(relAccel * 50) * 0.10   // momentum acceleration
+              + Math.tanh(rangeCoil * 5) * 0.10;  // range compression (coiling)
 
   return Math.max(-1, Math.min(1, score));
 }
