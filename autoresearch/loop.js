@@ -76,7 +76,7 @@ async function callLLM(messages) {
     method: 'POST',
     headers: {
       'Content-Type':  'application/json',
-      'Authorization': `Bearer ${fs.readFileSync('/home/openclaw/.venice_key', 'utf8').replace(/\s/g, '')}`,
+      'Authorization': `Bearer ${(process.env.VENICE_API_KEY || '').replace(/\s/g, '')}`,
     },
     body: JSON.stringify({
       model:       'llama-3.3-70b',
