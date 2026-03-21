@@ -1,158 +1,102 @@
 # delu autoresearch — program.md
-# The human edits this. The agent reads this. Never edit evaluate.js.
 
-## What you are doing
+## Mission
+Build a trading strategy that could scale to $1M AUM.
+We need Sharpe > 4.0 val AND audit > 1.5. Currently at val=3.711, aud=1.393.
 
-You are an autonomous trading strategy researcher.
-Your job: improve `candidate.js` so the **combined score** (0.7 × val_sharpe + 0.3 × audit_sharpe) increases.
-You commit every improvement to git. You revert every failure.
+## Setup
+- 55 tokens (50 Binance majors + 5 Base), 730 daily bars
+- Score all tokens daily, long top 5, equal weight, next-bar execution
+- In-sample: days 0-436 | Validation: 437-616 | Audit: 617-729
+- BEAR period dominates audit — strategy MUST work in bear (oversold bounces, funding divergence)
 
-## The evaluation setup
+## Current best (exp 252, val=3.719)
+Strategy: adaptive lookback momentum + EMA filter + OBV + funding rate + vol penalty + mean reversion
+Key: adaptive lookback (vol > 0.75 → short-term r3/r7, else long-term r20/r60)
+Key: hard knife filter (r7 < -0.20 → return 0)
+Key: EMA gap filter (|ema| < 0.03 → return 0, removes sideways)
 
-- `evaluate.js` is fixed — do not modify it.
-- `candidate.js` is yours — modify it freely.
-- Data: 55 tokens total — 50 majors (Binance 730d) + 5 Base tokens (GeckoTerminal 181d)
-  - Mar 2024 → Mar 2026 (2-year history, BULL + BEAR regimes)
-- Split (majors):
-  - In-sample  (IS):  bars 0–437   (60%) — Mar 2024–Jul 2025 — early bull + correction
-  - Validation (VAL): bars 438–583 (20%) — Jul 2025–Dec 2025 — bull continuation + peak
-  - Audit      (AUD): bars 584–729 (20%) — Dec 2025–Mar 2026 — bear drawdown (NEVER used for decisions)
-- Strategy: rank all tokens by scoreToken(), long top 5 if score > MIN_SCORE (0.05)
-- Metric: **combined score = 0.7 × val_sharpe + 0.3 × audit_sharpe**
-  - Both must be positive. Never sacrifice audit Sharpe for val Sharpe.
-  - Minimum bar: val_sharpe > 1.5 AND audit_sharpe > 0.3
-
-## Current baseline (exp 55, 2026-03-21)
-
+## What scoreToken receives
 ```
-In-Sample   (437d):  Sharpe=  0.700  ret=  52.1%  DD=55.3%  WR=40%
-Validation  (180d):  Sharpe=  3.126  ret= 162.5%  DD=19.1%  WR=47%  [majors=3.50 base=0.00]
-Audit       (180d):  Sharpe=  1.424  ret=  21.4%  DD= 9.0%  WR= 6%  [majors=1.59 base=0.00]
-Combined score: 0.7×3.126 + 0.3×1.424 = 2.615
+{ prices, volumes, highs, lows, btcPrices, flowSignal, attentionDelta }
+prices/btcPrices: daily close float[], oldest first
+volumes: daily volume float[]
+highs/lows: daily OHLC float[]
+flowSignal: Binance perp funding rate z-score INVERTED [-1,+1] (positive = bullish)
+attentionDelta: Checkr social attention velocity (0-1, higher = more social attention)
 ```
 
-Beat: combined > 2.615. Val alone is not enough — audit must stay positive.
+## Available helpers (already defined, do NOT redefine)
+pctChange(prices, lookback) → float
+realizedVol(prices, window) → annualized vol float
+sma(prices, period) → float
+emaVal(prices, period) → float
+emaGap(prices, fast, slow) → float (positive = bullish)
+zScore(prices, window) → float
+calculateObvSig(prices, volumes, window) → float [-1,+1]
 
-## What scoreToken receives (UPDATED — now includes OHLCV)
+## Untried ideas (priority order — try these next)
 
-```javascript
-scoreToken({
-  prices:         float[],  // daily close prices, oldest first
-  volumes:        float[],  // daily volumes (same length as prices) — NEW
-  opens:          float[],  // daily open prices — NEW  
-  highs:          float[],  // daily high prices — NEW
-  lows:           float[],  // daily low prices — NEW
-  btcPrices:      float[],  // BTC daily closes — for regime detection
-  flowSignal:     float,    // Binance perp funding z-score, INVERTED [-1,+1]
-                            // Positive = bullish (shorts paying = crowded short)
-  attentionDelta: float,    // 0 in backtest (future: social attention)
-})
-// → returns a number. Higher = stronger long signal. Return 0 or negative to skip.
-```
+### 1. Cross-sectional rank normalization
+Instead of raw momentum, use RANK of momentum across the universe.
+Rank-based signals are more robust than raw values.
+Problem: scoreToken is called per-token and doesn't see others.
+Workaround: use z-score of recent returns as a rank proxy.
 
-## Available helpers (already in candidate.js)
+### 2. ATR-based position quality filter
+If ATR(14) > 8% of price → very noisy, return 0 or heavy penalty.
+If ATR(14) < 2% of price → consolidating, good entry.
+atr = mean of (highs[i] - lows[i]) for last 14 bars / close
 
-- `pctChange(prices, lookback)` — % return over N bars
-- `realizedVol(prices, window)` — annualized realized vol (~0.3–1.5 for crypto)
-- `sma(prices, period)` — simple moving average of last N bars
-- `emaVal(prices, period)` — exponential moving average (use this, not ema())
-- `emaGap(prices, fast, slow)` — (ema_fast - ema_slow) / ema_slow
-- `zScore(prices, window)` — (price - mean) / std — mean reversion signal
+### 3. Volume confirmation (breakthrough filter)
+If price up > 3% but volume < 0.8× 20d average → false breakout, penalize
+If price up > 3% and volume > 1.5× 20d average → confirmed breakout, boost
 
-You can add new helpers. Keep them pure (no I/O, no randomness).
+### 4. Higher-timeframe trend alignment
+Use 90d trend as filter gate — only trade tokens trending up over 90 days
+pctChange(prices, 90) > 0 required for full score
 
-## NEW SIGNALS NOW AVAILABLE (volumes, highs, lows)
+### 5. Consecutive up-days streak
+Count consecutive days of positive closes. 3-5 in a row = momentum confirmed.
+Too many (>8) = overbought, penalize.
 
-These are from TRADING_BRAIN.md — our actual quant framework. Implement them:
+### 6. Price vs 52-week high
+Score = 1 - (price / max52w). Tokens near 52w high have momentum.
+Tokens far from 52w high in bear could be recovering.
 
-### OBV Divergence (high priority)
-```javascript
-// Price flat + OBV rising = accumulation = bullish
-// Build OBV series, compare OBV trend vs price trend
-// Divergence = OBV outperforming price
-let obv = 0;
-const obvSeries = [];
-for (let i = 1; i < n; i++) {
-  if (prices[i] > prices[i-1]) obv += volumes[i];
-  else if (prices[i] < prices[i-1]) obv -= volumes[i];
-  obvSeries.push(obv);
-}
-// Compare OBV 20d slope vs price 20d slope → divergence signal
-```
+### 7. Multi-factor composite with strict filters
+Require ALL of: EMA bullish + OBV positive + r20 > 0 + not oversold on z-score
+Return 0 if ANY filter fails. Only score tokens that pass all gates.
+This reduces number of trades but improves quality.
 
-### Volume Surprise (confirmation signal)
-```javascript
-// Today's volume vs 30d rolling average
-// High vol on up day = strong move. High vol on down day = distribution.
-const avgVol = sma(volumes.slice(0, n-1), 30);
-const volSurprise = avgVol > 0 ? (volumes[n-1] - avgVol) / avgVol : 0;
-// Use directionally: volSurprise * sign(momentum) as confirmation
-```
+### 8. GARCH-style vol forecast
+Use ratio of short-vol to long-vol as regime signal:
+shortVol = realizedVol(prices, 5)
+longVol = realizedVol(prices, 30)
+If shortVol > 1.5 × longVol → vol expanding → reduce position
+If shortVol < 0.7 × longVol → vol contracting → boost position
 
-### ATR Penalty (risk sizing — from TRADING_BRAIN)
-```javascript
-// ATR as % of price — tokens with huge daily swings are harder to trade
-// Penalize if ATR > 5% of price
-const trs = [];
-for (let i = Math.max(1, n-14); i < n; i++) {
-  trs.push(Math.max(highs[i]-lows[i], Math.abs(highs[i]-prices[i-1]), Math.abs(lows[i]-prices[i-1])));
-}
-const atr = trs.reduce((s,v) => s+v, 0) / trs.length;
-const atrPct = prices[n-1] > 0 ? atr / prices[n-1] : 0.03;
-const atrPenalty = -Math.max(0, atrPct - 0.05) * 1.5;
-```
+### 9. Drawdown recovery signal
+If price is recovering from a recent -20% drawdown:
+max20 = max of last 20 prices
+drawdown = (max20 - price) / max20
+If drawdown > 0.20 and recovering (r7 > 0) → oversold bounce → boost in BEAR
 
-### GARCH(1,1) Vol Proxy (better than realized vol)
-```javascript
-// σ²_t = ω + α·ε²_{t-1} + β·σ²_{t-1}  (Engle/Bollerslev)
-// Better than realized vol because it captures vol clustering
-const omega = 0.000001, alpha = 0.10, beta = 0.85;
-const rets = [];
-for (let i = n-20; i < n; i++) if (prices[i-1] > 0) rets.push(Math.log(prices[i]/prices[i-1]));
-let garchVar = rets.reduce((s,r) => s + r*r, 0) / rets.length;
-for (let i = 1; i < rets.length; i++) garchVar = omega + alpha*rets[i-1]**2 + beta*garchVar;
-const garchVol = Math.sqrt(Math.max(garchVar, 0) * 252);
-// Use garchVol instead of realizedVol for vol-scaling momentum
-```
+### 10. Funding rate + momentum alignment
+Currently funding is additive. Try: if funding bullish AND momentum > 0 → double boost.
+If disagreement → cancel out. Require alignment, not just addition.
 
-### RSI Divergence (contrarian signal)
-```javascript
-// Price new high but RSI weakening = bearish divergence
-// Price new low but RSI strengthening = bullish divergence
-function rsi(prices, period=14) {
-  let gains=0, losses=0;
-  for (let i = prices.length-period; i < prices.length; i++) {
-    const d = prices[i] - prices[i-1];
-    if (d > 0) gains += d; else losses -= d;
-  }
-  const rs = losses === 0 ? 100 : gains/losses;
-  return 100 - 100/(1+rs);
-}
-```
+## What NOT to do
+- Don't remove the adaptive lookback (it's core to val=3.719)
+- Don't remove the falling knife filter (r7 < -0.20)
+- Don't remove the EMA gap filter
+- Don't just tweak weights (we've done 1500 experiments of that)
+- Don't add noise signals with no economic intuition
 
-## Hypotheses to test (ONE per experiment)
+## Target
+val_sharpe > 4.0 AND aud_sharpe > 1.5
+Combined score = 0.7 × val + 0.3 × aud > 3.25
 
-### Volume-based (new, unexplored — high expected value)
-1. **OBV divergence**: add OBV trend vs price trend divergence signal (weight 0.10–0.15)
-2. **Volume surprise confirmation**: directional vol surprise = momentum × volSurprise × small_weight
-3. **Volume on breakout**: only enter momentum positions when today's vol > 1.5× 30d avg
-
-### Risk sizing improvements
-4. **ATR penalty**: penalize tokens where daily ATR > 5% of price (reduces drawdown)
-5. **GARCH vol**: replace realizedVol with garchVol in the vol penalty — better vol clustering
-
-### Regime refinements
-6. **Volatility regime**: add σ_7d / σ_30d ratio — if > 1.8, reduce all scores by 50% (panic signal)
-7. **RSI divergence**: add as small contrarian overlay (±0.06)
-
-### Momentum improvements
-8. **120d lookback**: add r120d = pctChange(prices, 120) with weight 0.15 (longer trend)
-9. **Cross-sectional**: current ranking is already cross-sectional — try wider spread
-
-## Rules
-
-- Make ONE small, specific change per experiment.
-- If combined score (0.7×val + 0.3×aud) improves AND audit > -0.5: commit.
-- Otherwise: revert.
-- **Current target**: combined > 2.615 (val=3.126, aud=1.424)
-- Vol signals (OBV, volume surprise) are the highest priority — never tried, maximum info gain.
+## Acceptance rule (enforced in loop.js)
+New combined score must beat 0.7×3.711 + 0.3×1.393 = 3.016
+AND audit must be > -0.5
