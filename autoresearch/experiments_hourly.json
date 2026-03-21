@@ -1178,5 +1178,215 @@
     "score": 7.35835,
     "accepted": false,
     "description": "exp 118"
+  },
+  {
+    "n": 119,
+    "ts": "2026-03-21T17:20:18.407Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 119"
+  },
+  {
+    "n": 120,
+    "ts": "2026-03-21T17:22:00.693Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 120"
+  },
+  {
+    "n": 121,
+    "ts": "2026-03-21T17:23:43.606Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 121"
+  },
+  {
+    "n": 122,
+    "ts": "2026-03-21T17:25:27.232Z",
+    "valSharpe": 4.5028,
+    "audSharpe": 9.1836,
+    "isSharpe": 5.2559,
+    "score": 6.8431999999999995,
+    "accepted": false,
+    "description": "exp 122"
+  },
+  {
+    "n": 123,
+    "ts": "2026-03-21T17:27:10.675Z",
+    "valSharpe": 4.5918,
+    "audSharpe": 10.5387,
+    "isSharpe": 5.0241,
+    "score": 7.565250000000001,
+    "accepted": false,
+    "description": "exp 123"
+  },
+  {
+    "n": 124,
+    "ts": "2026-03-21T17:28:53.610Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 124"
+  },
+  {
+    "n": 125,
+    "ts": "2026-03-21T17:30:37.512Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 125"
+  },
+  {
+    "n": 126,
+    "ts": "2026-03-21T17:32:20.923Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 126"
+  },
+  {
+    "n": 127,
+    "ts": "2026-03-21T17:34:03.742Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 127"
+  },
+  {
+    "n": 128,
+    "ts": "2026-03-21T17:35:46.549Z",
+    "valSharpe": 4.5918,
+    "audSharpe": 10.5387,
+    "isSharpe": 5.0241,
+    "score": 7.565250000000001,
+    "accepted": false,
+    "description": "exp 128"
+  },
+  {
+    "n": 129,
+    "ts": "2026-03-21T17:37:28.579Z",
+    "valSharpe": 5.1093,
+    "audSharpe": 8.4531,
+    "isSharpe": 5.2709,
+    "score": 6.7812,
+    "accepted": false,
+    "description": "exp 129"
+  },
+  {
+    "n": 130,
+    "ts": "2026-03-21T17:39:10.681Z",
+    "valSharpe": 5.6807,
+    "audSharpe": 8.395,
+    "isSharpe": 4.5049,
+    "score": 7.03785,
+    "accepted": false,
+    "description": "exp 130"
+  },
+  {
+    "n": 131,
+    "ts": "2026-03-21T17:40:52.594Z",
+    "valSharpe": 5.6807,
+    "audSharpe": 8.395,
+    "isSharpe": 4.5049,
+    "score": 7.03785,
+    "accepted": false,
+    "description": "exp 131"
+  },
+  {
+    "n": 132,
+    "ts": "2026-03-21T17:42:34.864Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 132"
+  },
+  {
+    "n": 133,
+    "ts": "2026-03-21T17:44:17.122Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 133"
+  },
+  {
+    "n": 134,
+    "ts": "2026-03-21T17:45:58.898Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 134"
+  },
+  {
+    "n": 135,
+    "ts": "2026-03-21T17:47:40.943Z",
+    "valSharpe": 4.7593,
+    "audSharpe": 7.2756,
+    "isSharpe": 4.9825,
+    "score": 6.01745,
+    "accepted": false,
+    "description": "exp 135"
+  },
+  {
+    "n": 136,
+    "ts": "2026-03-21T17:49:23.018Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 136"
+  },
+  {
+    "n": 137,
+    "ts": "2026-03-21T17:51:05.017Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 137"
+  },
+  {
+    "n": 138,
+    "ts": "2026-03-21T17:52:47.269Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 138"
+  },
+  {
+    "n": 139,
+    "ts": "2026-03-21T17:54:29.521Z",
+    "valSharpe": 5.8614,
+    "audSharpe": 9.2085,
+    "isSharpe": 4.9182,
+    "score": 7.53495,
+    "accepted": false,
+    "description": "exp 139"
   }
 ]

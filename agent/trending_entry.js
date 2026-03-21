@@ -19,6 +19,7 @@
 const https = require('https');
 const fs    = require('fs');
 const path  = require('path');
+const { getTokenSignal } = require('./onchain_ohlcv');
 
 const SNAPSHOTS_FILE = path.join(__dirname, '../data/trending_snapshots.jsonl');
 
@@ -234,14 +235,7 @@ async function getTrendingEntries(bankrApiKey) {
     const priorSnap = getPriorSnapshot(sym);
     const priorRanks = getPriorRank(sym);
 
-    let poolData = null;
-    try {
-      poolData = await getPoolData(token.address);
-    } catch (e) {
-      console.warn(`  [trending_entry] GT error for ${sym}:`, e.message);
-    }
-
-    // Save snapshot regardless
+    // Save snapshot regardless (before price fetch)
     saveSnapshot({
       ts, symbol: sym, rank,
       price: token.priceUSD,
@@ -252,32 +246,52 @@ async function getTrendingEntries(bankrApiKey) {
       mcap: token.marketCap,
     });
 
-    if (!poolData || poolData.ohlcv.length < 6) continue;
+    // Fetch Alchemy price history + transfer stats
+    let signal = null;
+    try {
+      signal = await getTokenSignal(token.address, 48);
+    } catch (e) {
+      console.warn(`  [trending_entry] Alchemy error for ${sym}:`, e.message);
+    }
+
+    if (!signal) continue;
+
+    // Build OHLCV-compatible array for scoreEntry
+    const ohlcv = signal.bars.map(b => [b.ts, b.open, b.high, b.low, b.close, b.volume]);
 
     const { score, reason, ret1h, ret6h, ret24h, moveFrac } = scoreEntry(
-      token, rank, poolData.ohlcv, priorRanks, priorSnap
+      token, rank, ohlcv, priorRanks, priorSnap
     );
 
-    if (score >= ENTRY.minScore) {
+    // Augment score with transfer stats (buyer ratio)
+    let finalScore = score;
+    if (signal.transferStats) {
+      const { buyRatio, uniqueBuyers } = signal.transferStats;
+      const transferBoost = (buyRatio > 0.6 ? 0.05 : buyRatio < 0.4 ? -0.05 : 0)
+                          + (uniqueBuyers > 30 ? 0.03 : 0);
+      finalScore = Math.min(1, score + transferBoost);
+    }
+
+    if (finalScore >= ENTRY.minScore) {
       results.push({
         symbol: sym,
         address: token.address,
-        poolAddress: poolData.poolAddr,
         rank,
-        score,
-        reason,
-        entryPrice: poolData.currentPrice || token.priceUSD,
-        liquidity: poolData.liq,
+        score: finalScore,
+        reason: reason + (signal.transferStats ? ` buyers=${signal.transferStats.uniqueBuyers} buyRatio=${signal.transferStats.buyRatio.toFixed(2)}` : ''),
+        entryPrice: signal.currentPrice || token.priceUSD,
+        liquidity: token.liquidity,
         marketCap: token.marketCap,
         volume24h: token.volume24h,
         txnCount24h: token.txnCount24h,
         priceChange24h: token.priceChange24h,
         ret1h, ret6h, ret24h, moveFrac,
+        transferStats: signal.transferStats,
         priorRanks,
       });
     }
 
-    await sleep(400); // GT rate limit: 30/min
+    await sleep(200); // Alchemy rate limit buffer
   }
 
   // Sort by score descending
