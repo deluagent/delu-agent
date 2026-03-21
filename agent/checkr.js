@@ -56,6 +56,16 @@ async function getToken(symbol) {
   return checkrGet(`/v1/token/${symbol}`);
 }
 
+async function getRotation(hours = 4) {
+  console.log(`[checkr] Fetching rotation (${hours}h window, ~$0.10)...`);
+  return checkrGet(`/v1/rotation?hours=${hours}`);
+}
+
+async function getBankrAgents(hours = 4) {
+  console.log(`[checkr] Fetching bankr agents attention (~$0.05)...`);
+  return checkrGet(`/v1/bankr?hours=${hours}`);
+}
+
 function parseSpikes(data) {
   if (!data?.spikes) return [];
   return data.spikes
@@ -66,8 +76,46 @@ function parseSpikes(data) {
       divergence: t.divergence || false,
       viral_class: t.hawkes?.viral_class || 'UNKNOWN',
       narrative: t.narrative_summary || null,
+      signal_type: t.signal_type || null,
+      rotating_from: t.rotating_from || [],
     }))
     .slice(0, 10);
 }
 
-module.exports = { getSpikes, getLeaderboard, getToken, parseSpikes };
+/**
+ * Parse rotation response into attention map entries
+ * Returns { SYM: { rotationGain, rotationRank, rotatingFrom, rotatingTo } }
+ */
+function parseRotation(data) {
+  const map = {};
+  if (!data) return map;
+
+  // Top gainers — tokens receiving attention rotation
+  if (data.gainers) {
+    data.gainers.forEach((t, idx) => {
+      const sym = (t.symbol || '').toUpperCase();
+      map[sym] = {
+        rotationGain:  t.ATT_delta || t.delta || 0,
+        rotationRank:  idx + 1,
+        isGainer:      true,
+        rotatingFrom:  t.rotating_from || [],
+        narrative:     t.narrative_summary || null,
+      };
+    });
+  }
+
+  // Top losers — tokens bleeding attention (avoid or short signal)
+  if (data.losers) {
+    data.losers.forEach((t, idx) => {
+      const sym = (t.symbol || '').toUpperCase();
+      if (!map[sym]) map[sym] = {};
+      map[sym].rotationLoss = Math.abs(t.ATT_delta || t.delta || 0);
+      map[sym].isLoser      = true;
+      map[sym].rotationRank = idx + 1;
+    });
+  }
+
+  return map;
+}
+
+module.exports = { getSpikes, getLeaderboard, getToken, getRotation, getBankrAgents, parseSpikes, parseRotation };

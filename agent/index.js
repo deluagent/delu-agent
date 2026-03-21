@@ -313,7 +313,7 @@ async function bankrScreen(regime, ranked, checkrAttention = {}) {
   // In BEAR: only skip if nothing is oversold — otherwise look for bounce plays
   if (state === 'BEAR') {
     // Check if any token has a non-zero score OR spiking attention (oversold bounce / divergence)
-    const hasSocialSpike = Object.values(checkrAttention).some(a => a.velocity >= 3.0 && a.divergence);
+    const hasSocialSpike = Object.values(checkrAttention).some(a => (a.velocity >= 3.0 && a.divergence) || (a.isGainer && a.rotationGain >= 2.0));
     const hasSignal = ranked.some(s => s.sAR > 0 || s.sD > 0.05) || hasSocialSpike;
     if (!hasSignal) {
       return { skip: true, interesting: [], reason: 'BEAR regime, no oversold signals — yield only', layer: 'hardcoded' };
@@ -326,7 +326,7 @@ async function bankrScreen(regime, ranked, checkrAttention = {}) {
   const scoreLines = ranked
     .map(s => {
       const attn = checkrAttention[s.sym];
-      const attnStr = attn ? ` vel=${attn.velocity?.toFixed(1)} div=${attn.divergence?1:0}${attn.bankrSignal ? ' bankr='+attn.bankrSignal.toFixed(2) : ''}${attn.txnCount24h ? ' txns='+attn.txnCount24h : ''}` : '';
+      const attnStr = attn ? ` vel=${attn.velocity?.toFixed(1)} div=${attn.divergence?1:0}${attn.isGainer?' ROT_IN':''}${attn.isLoser?' ROT_OUT':''}${attn.bankrSignal ? ' bankr='+attn.bankrSignal.toFixed(2) : ''}${attn.txnCount24h ? ' txns='+attn.txnCount24h : ''}` : '';
       return `${s.sym}: combined=${s.combined.toFixed(3)} [A=${s.sA.toFixed(2)} B=${s.sB.toFixed(2)} AR=${s.sAR.toFixed(2)}${attnStr}]`;
     })
     .join('\n');
@@ -525,13 +525,20 @@ async function runCycle() {
     console.warn('[flows] Skipped:', e.message?.slice(0,60));
   }
 
-  // 3c. Fetch Checkr social attention signals (pay-per-call via x402, ~$0.02)
-  let checkrAttention = {}; // sym → { attentionDelta, velocity, divergence, viral_class }
+  // 3c. Fetch Checkr social attention signals (pay-per-call via x402)
+  let checkrAttention = {}; // sym → { attentionDelta, velocity, divergence, viral_class, rotationGain, isGainer }
   try {
-    console.log('\n[checkr] Fetching attention leaderboard...');
-    const lb = await checkr.getLeaderboard(20);
-    if (lb?.tokens) {
-      for (const t of lb.tokens) {
+    console.log('\n[checkr] Fetching leaderboard + spikes + rotation...');
+    // Run all 3 in parallel — $0.02 + $0.05 + $0.10 = $0.17/cycle
+    const [lb, spikes, rotation] = await Promise.allSettled([
+      checkr.getLeaderboard(20),
+      checkr.getSpikes(2.0),
+      checkr.getRotation(4),
+    ]);
+
+    // Leaderboard — baseline attention data
+    if (lb.status === 'fulfilled' && lb.value?.tokens) {
+      for (const t of lb.value.tokens) {
         const sym = (t.symbol || '').toUpperCase();
         checkrAttention[sym] = {
           attentionDelta: t.ATT_delta_1h ?? t.att_delta_1h ?? 0,
@@ -540,20 +547,55 @@ async function runCycle() {
         };
       }
     }
-    // Also fetch spikes for high-velocity signals
-    const spikes = await checkr.getSpikes(2.0);
-    for (const t of checkr.parseSpikes(spikes)) {
-      const sym = t.token.toUpperCase();
-      if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
-      checkrAttention[sym].velocity    = Math.max(checkrAttention[sym].velocity, t.velocity);
-      checkrAttention[sym].divergence  = t.divergence;
-      checkrAttention[sym].viral_class = t.viral_class;
-      // Spike = strong positive attention delta
-      if (t.velocity >= 2.0) checkrAttention[sym].attentionDelta = Math.max(checkrAttention[sym].attentionDelta, t.velocity * 0.1);
+
+    // Spikes — high-velocity signals
+    if (spikes.status === 'fulfilled') {
+      for (const t of checkr.parseSpikes(spikes.value)) {
+        const sym = t.token.toUpperCase();
+        if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
+        checkrAttention[sym].velocity    = Math.max(checkrAttention[sym].velocity, t.velocity);
+        checkrAttention[sym].divergence  = t.divergence;
+        checkrAttention[sym].viral_class = t.viral_class;
+        checkrAttention[sym].signal_type = t.signal_type;
+        checkrAttention[sym].rotating_from = t.rotating_from;
+        if (t.velocity >= 2.0) checkrAttention[sym].attentionDelta = Math.max(checkrAttention[sym].attentionDelta, t.velocity * 0.1);
+      }
     }
+
+    // Rotation — capital flow direction (biggest alpha signal)
+    if (rotation.status === 'fulfilled') {
+      const rotMap = checkr.parseRotation(rotation.value);
+      for (const [sym, d] of Object.entries(rotMap)) {
+        if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
+        // Gainers: receiving capital rotation = strong buy signal
+        if (d.isGainer) {
+          checkrAttention[sym].rotationGain = d.rotationGain;
+          checkrAttention[sym].rotationRank = d.rotationRank;
+          checkrAttention[sym].isGainer     = true;
+          checkrAttention[sym].rotatingFrom = d.rotatingFrom;
+          // Boost attention delta based on rotation strength
+          checkrAttention[sym].attentionDelta += d.rotationGain * 0.5;
+          checkrAttention[sym].velocity = Math.max(checkrAttention[sym].velocity || 0, d.rotationGain);
+        }
+        // Losers: bleeding attention = avoid or underweight
+        if (d.isLoser) {
+          checkrAttention[sym].rotationLoss = d.rotationLoss;
+          checkrAttention[sym].isLoser      = true;
+          // Reduce attention delta for losers
+          checkrAttention[sym].attentionDelta -= d.rotationLoss * 0.3;
+        }
+      }
+      const gainers = Object.entries(rotMap).filter(([,d]) => d.isGainer).slice(0,3);
+      const losers  = Object.entries(rotMap).filter(([,d]) => d.isLoser).slice(0,3);
+      if (gainers.length) console.log('[checkr] Rotation gainers:', gainers.map(([s,d]) => `${s}(+${d.rotationGain?.toFixed(2)})`).join(' '));
+      if (losers.length)  console.log('[checkr] Rotation losers: ', losers.map(([s,d]) => `${s}(-${d.rotationLoss?.toFixed(2)})`).join(' '));
+    } else {
+      console.warn('[checkr] Rotation failed:', rotation.reason?.message?.slice(0,60));
+    }
+
     console.log(`[checkr] Got attention data for ${Object.keys(checkrAttention).length} tokens`);
     const topAttn = Object.entries(checkrAttention).sort((a,b) => b[1].velocity - a[1].velocity).slice(0,3);
-    for (const [sym, d] of topAttn) console.log(`  ${sym}: vel=${d.velocity?.toFixed(2)} div=${d.divergence} attnDelta=${d.attentionDelta?.toFixed(3)}`);
+    for (const [sym, d] of topAttn) console.log(`  ${sym}: vel=${d.velocity?.toFixed(2)} div=${d.divergence} gain=${d.rotationGain?.toFixed(2)||'-'} gainer=${d.isGainer||false}`);
   } catch(e) {
     console.warn(`[checkr] Failed (skipping): ${e.message?.slice(0,80)}`);
   }
@@ -753,11 +795,14 @@ ${recentPrices.join('\n')}
 ## RSI (14, hourly)
 ${rsiVals.join('\n')}
 
-## Social Attention (Checkr — X/CT mindshare, velocity, divergence)
+## Social Attention + Rotation (Checkr — X/CT mindshare, velocity, capital rotation)
+Signal key: vel=mention velocity (>3=spike), div=attention/price divergence, ROT_IN=receiving rotation capital, ROT_OUT=bleeding attention
 ${Object.keys(checkrAttention).length > 0
   ? interestingRanked.map(s => {
       const a = checkrAttention[s.sym];
-      return a ? `${s.sym}: vel=${a.velocity?.toFixed(1)} div=${a.divergence?'YES':'no'} delta=${a.attentionDelta?.toFixed(3)}` : `${s.sym}: no data`;
+      if (!a) return `${s.sym}: no data`;
+      const rot = a.isGainer ? ` ROT_IN(+${a.rotationGain?.toFixed(2)})` : a.isLoser ? ` ROT_OUT(-${a.rotationLoss?.toFixed(2)})` : '';
+      return `${s.sym}: vel=${a.velocity?.toFixed(1)} div=${a.divergence?'YES':'no'} delta=${a.attentionDelta?.toFixed(3)}${rot}`;
     }).join(' | ')
   : 'Checkr unavailable this cycle'}
 
