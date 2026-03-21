@@ -132,7 +132,7 @@ function scoreToken(data) {
 
   //  Mean reversion 
   const z = zScore(prices, 20);
-  const meanRev = z < -2.0 ? 0.08 : (z > 2.5 ? -0.08 : 0);
+  const meanRev = z < -1.8 ? 0.10 : (z > 2.5 ? -0.08 : 0);
 
   //  Volatility penalty 
   const volPenalty = -0.20 * Math.max(vol - 0.6, 0);
