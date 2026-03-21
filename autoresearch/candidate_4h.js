@@ -1,102 +1,65 @@
-/**
- * candidate_hourly.js — Intraday signal candidate (LONG/SHORT, hourly bars)
- *
- * Returns score in [-1, +1]:
- *   +1 = strong long (buy)
- *    0 = neutral (hold cash)
- *   -1 = strong short (sell)
- *
- * Data: 1h bars, 180 days (4320 bars)
- * Rebalance: every 4h
- * All periods = BEAR (Sep 2025 → Mar 2026)
- * Key signal: relative strength vs BTC + volume direction
- */
-
 'use strict';
-
-function ema(prices, period) {
-  const k = 2 / (period + 1);
-  let val = prices[0];
-  for (let i = 1; i < prices.length; i++) val = prices[i] * k + val * (1 - k);
-  return val;
+function sma(prices, period) { const n=Math.min(period,prices.length); return prices.slice(-n).reduce((s,p)=>s+p,0)/n; }
+function rsi(prices, period) {
+  if (prices.length < period+1) return 50;
+  let g=0,l=0; const st=prices.length-period;
+  for (let i=st;i<prices.length;i++){const d=prices[i]-prices[i-1];if(d>0)g+=d;else l-=d;}
+  if(l===0)return 100; return 100-100/(1+(g/period)/(l/period));
 }
-
-function sma(prices, period) {
-  const slice = prices.slice(-period);
-  return slice.reduce((s, p) => s + p, 0) / slice.length;
+function relStr(prices, btc, period) {
+  if(prices.length<period||btc.length<period)return 0;
+  const tr=(prices[prices.length-1]-prices[prices.length-period])/prices[prices.length-period];
+  const br=(btc[btc.length-1]-btc[btc.length-period])/btc[btc.length-period];
+  return tr-br;
 }
-
-function realizedVol(prices, period) {
-  const n = Math.min(period, prices.length - 1);
-  let sum = 0;
-  for (let i = prices.length - n; i < prices.length; i++) {
-    const r = Math.log(prices[i] / prices[i - 1]);
-    sum += r * r;
-  }
-  return Math.sqrt(sum / n);
-}
-
-function zScore(arr) {
-  const n = arr.length;
-  const mean = arr.reduce((s, v) => s + v, 0) / n;
-  const std  = Math.sqrt(arr.reduce((s, v) => s + (v - mean) ** 2, 0) / n);
-  return std > 0 ? (arr[n - 1] - mean) / std : 0;
-}
-
 function scoreToken(data) {
-  const { prices, volumes, highs, lows, opens, btcPrices } = data;
-  const n  = prices.length;
-  const bN = (btcPrices || []).length;
-  if (n < 169 || bN < 169) return 0;
-
-  // ── Relative strength vs BTC (7d) ───────────────────────────
-  const tokenRet7d = (prices[n-1] - prices[n-169]) / prices[n-169];
-  const btcRet7d   = (btcPrices[bN-1] - btcPrices[bN-169]) / btcPrices[bN-169];
-  const relStr7d   = tokenRet7d - btcRet7d;
-
-  // ── Relative strength vs BTC (4h) ───────────────────────────
-  const tokenRet4h = n >= 5 ? (prices[n-1] - prices[n-5]) / prices[n-5] : 0;
-  const btcRet4h   = bN >= 5 ? (btcPrices[bN-1] - btcPrices[bN-5]) / btcPrices[bN-5] : 0;
-  const relStr4h   = tokenRet4h - btcRet4h;
-
-  // ── Volume direction ─────────────────────────────────────────
-  const vol4h  = volumes.slice(-4).reduce((s, v) => s + v, 0) / 4;
-  const vol48h = volumes.slice(-48).reduce((s, v) => s + v, 0) / 48;
-  const volBurst = vol4h / (vol48h || 1);
-  const dir4h    = tokenRet4h > 0 ? 1 : tokenRet4h < 0 ? -1 : 0;
-  const volSignal = Math.tanh((volBurst - 1) * dir4h * 2);
-
-  // ── Momentum acceleration (4h change rate) ───────────────────
-  const tokenRet8h = n >= 9 ? (prices[n-5] - prices[n-9]) / prices[n-9] : 0;
-  const btcRet8h   = bN >= 9 ? (btcPrices[bN-5] - btcPrices[bN-9]) / btcPrices[bN-9] : 0;
-  const relAccel   = (tokenRet4h - btcRet4h) - (tokenRet8h - btcRet8h);
-
-  // ── Range compression detection ──────────────────────────────
-  const range4h = highs.slice(-4).reduce((m, h, i) => m + (h - lows[n-4+i]), 0) / 4;
-  const range48h = highs.slice(-48).reduce((m, h, i) => m + (h - lows[n-48+i]), 0) / 48;
-  const rangeCoil = 1 - (range4h / (range48h || range4h || 1));
-
-  // ── Volatility regime filter (avoid chop) ────────────────────
-  const rv12h = realizedVol(prices.slice(-12));
-  const rv48h = realizedVol(prices.slice(-48));
-  const volRegime = rv12h > rv48h * 0.5 ? 1 : 0.7;
-
-  // ── OBV microstructure (hourly buy/sell pressure) ────────────
-  let obv = 0;
-  for (let i = Math.max(0, n - 4); i < n; i++) {
-    obv += volumes[i] * (prices[i] > opens[i] ? 1 : -1);
-  }
-  const obvSignal = Math.tanh(obv / (vol4h * 100 || 1) * 0.5);
-
-  // ── Combined score [-1, +1] ──────────────────────────────────
-  const score = (Math.tanh(relStr7d * 5) * 0.33
-              + Math.tanh(relStr4h * 35) * 0.26
-              + volSignal * 0.17
-              + Math.tanh(relAccel * 50) * 0.10
-              + Math.tanh(rangeCoil * 5) * 0.08
-              + obvSignal * 0.06) * volRegime;
-
-  return Math.max(-1, Math.min(1, score));
+  const {prices,volumes,btcPrices}=data;
+  if(!prices||prices.length<50)return 0;
+  
+  const rsi8=rsi(prices,8);
+  const sma12=sma(prices,12);
+  const sma36=sma(prices,Math.min(36,prices.length));
+  
+  const len=prices.length;
+  const mid=sma(prices,20);
+  const stdDev=Math.sqrt(prices.slice(-20).reduce((sum,p,i)=>{
+    const diff=p-mid[len-20+i];
+    return sum+diff*diff;
+  },0)/20);
+  const bbUpper=mid[len-1]+2*stdDev;
+  const bbLower=mid[len-1]-2*stdDev;
+  const bbWidth=bbUpper-bbLower;
+  
+  const bbWidthSMA=sma(prices.slice(-30).map(p=>{
+    const m=sma(prices.slice(0,prices.indexOf(p)+1),20)[prices.indexOf(p)];
+    const s=Math.sqrt(prices.slice(Math.max(0,prices.indexOf(p)-19),prices.indexOf(p)+1).reduce((sum,px)=>{
+      return sum+(px-m)*(px-m);
+    },0)/20);
+    return m+2*s-(m-2*s);
+  }),10);
+  const bbCompression=bbWidth<bbWidthSMA[bbWidthSMA.length-1]*0.5?1:-0.5;
+  
+  const volNow=volumes?volumes.slice(-3).reduce((s,v)=>s+v,0)/3:1;
+  const volBase=volumes?volumes.slice(-24).reduce((s,v)=>s+v,0)/24:1;
+  const volR=volBase>0?volNow/volBase:1;
+  const volConfirm=volR>1.2?1:-0.3;
+  
+  const rsiOversold=rsi8<30?1:-0.4;
+  const rsiOverbought=rsi8>70?-1:0.4;
+  const rsiSignal=rsiOversold+rsiOverbought;
+  
+  const trendSignal=(sma12>sma36)?1:-1;
+  
+  const votes=[
+    rsiSignal>0.2?1:0,
+    bbCompression>0?1:0,
+    volConfirm>0?1:0,
+    trendSignal>0?1:0
+  ];
+  
+  const voteSum=votes.reduce((a,b)=>a+b,0);
+  const ensembleSignal=voteSum>=2?1:(voteSum===0?-1:0);
+  
+  return Math.max(-1,Math.min(1,ensembleSignal*0.8+bbCompression*0.15+rsiSignal*0.05));
 }
-
-module.exports = { scoreToken };
+module.exports={scoreToken};

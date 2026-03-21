@@ -108,7 +108,8 @@ function runEval(allData) {
       const rebalBars = cfg.rebal;
       const dailyRets = [];
       
-      for (let bar = start + 168; bar < end - rebalBars; bar += rebalBars) {
+      const warmup = Math.min(50, Math.floor((end - start) * 0.1));
+      for (let bar = start + warmup; bar < end - rebalBars; bar += rebalBars) {
         const scores = allData.map(({ sym, bars }) => {
           const slice = bars.slice(0, bar);
           if (slice.length < 100) return { sym, score: 0 };

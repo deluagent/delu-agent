@@ -1,6 +1,6 @@
 {
-  "bestValSharpe": -999,
-  "bestAudSharpe": -999,
-  "bestScore": -999,
-  "expCount": 178
+  "bestValSharpe": 0.6087,
+  "bestAudSharpe": -7.6709,
+  "bestScore": -3.5311,
+  "expCount": 301
 }
