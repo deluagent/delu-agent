@@ -40,12 +40,33 @@ async function buildStatus(regimeData) {
   const costDaily   = readJSON(path.join(AUTORES_DIR, 'cost_track.json'), {});
   const costHourly  = readJSON(path.join(AUTORES_DIR, 'cost_track_hourly.json'), {});
 
-  // Last cycle from log
+  // Cycle history from log (last 20 cycles for site feed)
   let lastCycle = null;
+  let cycleHistory = [];
   try {
     const lines = fs.readFileSync(path.join(DATA_DIR, 'agent_log.jsonl'), 'utf8')
       .trim().split('\n').filter(Boolean);
-    if (lines.length) lastCycle = JSON.parse(lines[lines.length - 1]);
+    if (lines.length) {
+      lastCycle = JSON.parse(lines[lines.length - 1]);
+      // Last 20 cycles, newest first
+      cycleHistory = lines.slice(-20).reverse().map(l => {
+        try {
+          const c = JSON.parse(l);
+          return {
+            ts:        c.ts,
+            regime:    c.regime,
+            action:    c.decision?.action || 'hold',
+            asset:     c.decision?.asset  || null,
+            reasoning: c.decision?.reasoning || c.screen?.reason || null,
+            confidence:c.decision?.confidence || null,
+            screened:  c.scores?.length || 0,
+            topToken:  c.scores?.[0] ? { sym: c.scores[0].sym, score: c.scores[0].combined } : null,
+            trendingEntries: c.trendingEntries || [],
+            layers:    c.decision?.layers_used || [],
+          };
+        } catch { return null; }
+      }).filter(Boolean);
+    }
   } catch {}
 
   const regime    = regimeData?.state || lastCycle?.regime || 'BEAR';
@@ -142,6 +163,8 @@ async function buildStatus(regimeData) {
       winRate:      closedTrades.length ? `${winCount}/${closedTrades.length}` : null,
       recentTrades: closedTrades,
     },
+
+    cycleHistory,
 
     reasoningTraces: (() => {
       try {

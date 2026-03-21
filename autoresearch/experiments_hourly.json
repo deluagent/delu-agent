@@ -1688,5 +1688,15 @@
     "score": 7.35835,
     "accepted": false,
     "description": "exp 169"
+  },
+  {
+    "n": 170,
+    "ts": "2026-03-21T19:09:58.698Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 170"
   }
 ]

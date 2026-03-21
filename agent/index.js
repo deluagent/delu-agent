@@ -995,6 +995,7 @@ What is your allocation decision?`;
     regime: state,
     regime_detail: regime,
     scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template, sA: s.sA, sB: s.sB, sC: s.sC, sD: s.sD })),
+    trendingEntries: trendingEntries.map(t => ({ symbol: t.symbol, score: t.score, rank: t.rank, ret1h: t.ret1h, moveFrac: t.moveFrac, quantScore: t.quantScore })),
     screen,
     decision,
     dry_run: DRY_RUN
