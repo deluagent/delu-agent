@@ -414,10 +414,11 @@ You respond ONLY with valid JSON:
 }
 
 Rules:
-- BEAR regime → always yield (action=yield, asset=USDC) UNLESS a trending token has score≥0.65 and move<40%done
+- BEAR regime = context, NOT a gate. BTC down ≠ everything down. Sector rotation is real (AI tokens, Base memes, agent coins can 10x in any macro regime). Trade on signal strength, not regime alone.
+- BUY if: top signal score ≥ 0.05 AND confidence ≥ 65 AND strong cross-sectional alpha (token outperforming BTC regardless of macro)
+- YIELD only if: no token clears the signal threshold — park idle capital at best available APY
 - confidence < 65 → hold
 - Never allocate more than 20% in one position
-- If top signal score < 0.05 → hold
 - Trending token buys: max $15, must include contractAddress`;
 
   const res = await fetch(VENICE_API, {
@@ -780,21 +781,25 @@ async function runCycle() {
   console.log(`[bankr-screen] skip=${screen.skip} | interesting=[${screen.interesting.join(',')}] | "${screen.reason}" (${screen.layer})`);
 
   if (screen.skip) {
-    console.log('[bankr-screen] Skip signal → entering Smart Yield mode');
-    
-    // In BEAR or no signal: smart yield rebalance
-    // 1. Check if we're already in the best yield
-    // 2. Move if >1% better available
-    if (!DRY_RUN && state === 'BEAR') {
-      console.log('\n[bankr] Checking Smart Yield opportunities...');
-      try {
-        const result = await bankr.smartYieldRebalance();
-        console.log(`[bankr] Result:\n${result}`);
-      } catch (e) {
-        console.error('[bankr] Yield rebalance failed:', e.message);
+    console.log('[bankr-screen] Skip signal → no trade this cycle');
+    // Smart yield rebalance only if genuinely idle capital exists (>$15 liquid USDC)
+    // Don't yield every cycle — keep reserve for trading opportunities
+    if (!DRY_RUN) {
+      const balances = await bankr.getBalances().catch(() => null);
+      const usdcLiquid = balances?.usdc || 0;
+      if (usdcLiquid > 15) {
+        console.log(`\n[bankr] $${usdcLiquid.toFixed(2)} USDC idle — checking Smart Yield opportunities...`);
+        try {
+          const result = await bankr.smartYieldRebalance();
+          console.log(`[bankr] Result:\n${result}`);
+        } catch (e) {
+          console.error('[bankr] Yield rebalance failed:', e.message);
+        }
+      } else {
+        console.log(`\n[delu] No idle USDC to yield ($${usdcLiquid.toFixed(2)} liquid) — keeping reserve`);
       }
     } else if (DRY_RUN) {
-      console.log(`\n[delu] DRY RUN — would run smartYieldRebalance()`);
+      console.log(`\n[delu] DRY RUN — would check smartYieldRebalance() if >$15 USDC idle`);
     }
 
     const logEntry = {
@@ -920,6 +925,18 @@ What is your allocation decision?`;
   }
 
   // 7. Execute
+  // Reserve check — always keep $15 available for trading opportunities
+  // Only yield if we have >$15 liquid USDC sitting idle
+  const RESERVE_USD = 15;
+  if (decision.action === 'yield') {
+    const balances = await bankr.getBalances().catch(() => null);
+    const usdcLiquid = balances?.usdc || 0;
+    if (usdcLiquid < RESERVE_USD) {
+      console.log(`\n[delu] YIELD skipped — only $${usdcLiquid.toFixed(2)} liquid USDC (need >$${RESERVE_USD} to yield, keep reserve for trades)`);
+      decision = { ...decision, action: 'hold', reasoning: `Insufficient liquid USDC ($${usdcLiquid.toFixed(2)}) to yield — keeping reserve for trade opportunities` };
+    }
+  }
+
   if (decision.confidence < 65 || decision.action === 'hold') {
     console.log(`\n[delu] Skipping — confidence ${decision.confidence}% or hold`);
   } else if (DRY_RUN) {
