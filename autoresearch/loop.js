@@ -187,12 +187,19 @@ CRITICAL OUTPUT RULES:
 
   const response = await callLLM([{ role: 'user', content: prompt }]);
 
-  // Strip any accidental markdown fences
-  return response
-    .replace(/^```javascript\n?/, '')
-    .replace(/^```js\n?/, '')
-    .replace(/```$/, '')
-    .trim();
+  // Aggressively strip markdown — Gemini often wraps in fences despite instructions
+  let code = response.trim();
+  // Remove opening fence (```javascript, ```js, ```, etc.)
+  code = code.replace(/^```[a-zA-Z]*\n?/, '');
+  // Remove closing fence
+  code = code.replace(/\n?```\s*$/, '');
+  // If there's still a ``` somewhere in the middle, extract just the code block
+  if (code.includes('```')) {
+    const match = code.match(/```[a-zA-Z]*\n([\s\S]+?)\n?```/);
+    if (match) code = match[1];
+    else code = code.replace(/```[a-zA-Z]*/g, '').replace(/```/g, '');
+  }
+  return code.trim();
 }
 
 // ── Main loop ────────────────────────────────────────────────

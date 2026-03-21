@@ -9062,5 +9062,13 @@
     "accepted": false,
     "description": "error: evaluator returned null",
     "ts": 1774052237956
+  },
+  {
+    "n": 19,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Invalid or unexpec",
+    "ts": 1774052313519
   }
 ]

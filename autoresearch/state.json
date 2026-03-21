@@ -1,6 +1,6 @@
 {
   "bestValSharpe": 1.4051,
-  "expCount": 18,
+  "expCount": 19,
   "resetAt": "2026-03-20",
   "baselineNote": "55 tokens: 50 majors (Binance 730d) + 5 Base (GT 181d). LONG_COUNT=5, MIN_SCORE=0.05. val=1.405 audit=1.327"
 }
