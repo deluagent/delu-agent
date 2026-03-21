@@ -9094,5 +9094,53 @@
     "accepted": false,
     "description": "error: syntax error in generated code: Invalid or unexpec",
     "ts": 1774052635316
+  },
+  {
+    "n": 23,
+    "valSharpe": 0.1922,
+    "isSharpe": 1.256,
+    "accepted": false,
+    "description": "experiment 23",
+    "ts": 1774052710492
+  },
+  {
+    "n": 24,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: missing ) after ar",
+    "ts": 1774052846603
+  },
+  {
+    "n": 25,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Unexpected token '",
+    "ts": 1774052982407
+  },
+  {
+    "n": 26,
+    "valSharpe": 1.3551,
+    "isSharpe": 1.7193,
+    "accepted": false,
+    "description": "experiment 26",
+    "ts": 1774053113647
+  },
+  {
+    "n": 27,
+    "valSharpe": -0.1382,
+    "isSharpe": 0.9966,
+    "accepted": false,
+    "description": "experiment 27",
+    "ts": 1774053236790
+  },
+  {
+    "n": 28,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Unexpected token '",
+    "ts": 1774053373240
   }
 ]
