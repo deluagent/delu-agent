@@ -280,7 +280,7 @@ async function main() {
       valSharpe = result.validation.sharpe;
       audSharpe = result.audit.sharpe;
       isSharpe  = result.inSample.sharpe;
-      score     = 0.7 * valSharpe + 0.3 * audSharpe;
+      score     = 0.5 * valSharpe + 0.5 * audSharpe;
 
       const improvement = score - (state.bestScore || -999);
       console.log(`   Result: val=${valSharpe.toFixed(3)} aud=${audSharpe.toFixed(3)} score=${score.toFixed(3)} (${improvement >= 0 ? '+' : ''}${improvement.toFixed(3)}) | is=${isSharpe.toFixed(3)}`);

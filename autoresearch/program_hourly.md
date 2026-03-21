@@ -1,67 +1,64 @@
-# Hourly Signal Research Program
+# Hourly Signal Research — Long/Short Strategy
 
 ## Context
-- 50 tokens, 180 days of 1h bars (4320 bars)
-- Rebalance every 4h, hold top 5
-- Val period = BEAR (Q1 2026), Aud = BEAR continuation
-- Target: val_sharpe > 4.0, combined > 3.5
+- 50 tokens, 180 days of 1h bars (4320 bars total)
+- Rebalance every 4h
+- ALL periods = BEAR (Sep 2025 → Mar 2026)
+- Score range: [-1, +1] — positive = long, negative = short
+- Top 3 long + bottom 2 short each cycle
+- Metric: 0.5*val_sharpe + 0.5*aud_sharpe (equal weight — both bear periods)
 
-## What makes hourly different from daily
-1. Volume bursts are detectable (4h spike vs 24h avg)
-2. Momentum acceleration is measurable (rate of change)
-3. Range compression / coiling is visible before breakout
-4. Mean reversion works at short horizons (1-4h oversold)
-5. BTC correlation moves are fast (4h window matters)
+## Current baseline
+- val_sharpe=2.501 (Jan→Feb crash), aud_sharpe=-0.681 (Feb→Mar recovery)
+- combined=0.910
+- Signal: 7d rel strength vs BTC (50%) + 4h rel strength (30%) + volume direction (20%)
 
-## Hypotheses to test (in order of expected impact)
+## Key insight
+- AUD period (Feb→Mar) = partial BTC recovery ($67k→$71k)
+- Best signal for this period: tokens with momentum + volume confirmation
+- Short candidates: weakest relative performers with volume on the downside
 
-### H1: Volume burst + direction alignment
-- volRatio > 2.0 AND ret4h > 0 → strong signal
-- volRatio < 0.5 AND ret4h < 0 → capitulation → fade?
+## Hypotheses to try (in order of expected impact)
 
-### H2: Momentum acceleration gate
-- Only trade when 4h momentum is accelerating (vs 8h ago)
-- Filters out decelerating moves about to reverse
+### H1: Shorter relative strength window for AUD
+- 7d is too slow for Feb→Mar recovery (short, sharp moves)
+- Try 24h and 48h relative strength as primary signal
 
-### H3: Range compression breakout
-- ATR(4h)/ATR(24h) < 0.3 → coiling
-- Price in top 80% of 24h range → bullish setup
-- Weight this signal heavily
+### H2: OBV divergence from price
+- OBV rising while price flat/down = accumulation = long signal
+- OBV falling while price flat/up = distribution = short signal
 
-### H4: Multi-horizon EMA alignment
-- EMA12 > EMA48 > EMA168 all aligned up = strongest setup
-- Score proportional to alignment count (0, 1, 2, 3 aligned)
+### H3: Volume burst asymmetry
+- Large vol + price up AND rel outperform BTC = strong long
+- Large vol + price down AND rel underperform BTC = strong short
 
-### H5: OBV slope (rolling 12h vs 24h)
-- OBV rising faster than price = accumulation
-- Compare OBV 12h slope vs 24h slope
+### H4: Mean reversion component
+- After large 24h move in either direction, fade it slightly
+- Works in bear: gap downs tend to recover partially
 
-### H6: BTC beta adjustment
-- High-beta tokens (DOGE, SHIB, PEPE) get reduced score in BEAR
-- Low-beta (LINK, AAVE) get slight boost
+### H5: EMA acceleration
+- Rate of change of EMA12 vs EMA48 gap
+- Widening positively = bullish acceleration = long
+- Narrowing from positive = losing steam = reduce position
 
-### H7: Mean reversion at oversold hourly RSI
-- RSI(14, 1h) < 30 → potential bounce
-- Only in context of longer-term uptrend (EMA48 > EMA168)
+### H6: Multi-window relative strength composite
+- Average of rel strength at 4h, 24h, 7d windows
+- Each normalised independently then combined
 
-### H8: Liquidity-weighted momentum
-- Volume × price_change as "momentum intensity"
-- Normalise cross-sectionally
+### H7: Regime-aware weighting
+- IS period (deep bear): weight short signals more
+- AUD period (partial recovery): weight long signals more
+- Detect regime from BTC 48h return
 
-### H9: Gap detection
-- Large candle (body > 2× avg body) → momentum confirmation
-- Price gap up from prior close → buy signal
-
-### H10: Intraday volatility regime
-- Low vol (ATR < median ATR) → trending conditions → momentum
-- High vol → mean reversion works better → switch strategy
+### H8: Sector rotation
+- Layer 1s (BTC, ETH) vs Layer 2s (ARB, OP, MATIC)
+- During recovery, L2s tend to outperform L1s with lag
 
 ## Signals available
 prices[], volumes[], highs[], lows[], opens[], btcPrices[]
-flowSignal (0 in eval), attentionDelta (0 in eval)
 
-## Constraints
-- No lookahead (only use data up to current bar)
+## Hard constraints
+- Score must be in [-1, +1]
 - No redefined helpers (ema, sma, realizedVol, zScore)
-- Score must be in [0, 1] range
-- Min bars needed: 48 (2 days hourly)
+- Min bars needed: 169 (7 days hourly)
+- No lookahead bias

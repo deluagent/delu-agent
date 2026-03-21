@@ -23,12 +23,13 @@ const path = require('path');
 
 const HISTORY_DIR = path.join(__dirname, '../data/history');
 
-const TOTAL_BARS = 4320;  // 180 days × 24h
-const IS_END     = 2592;  // 60%
-const VAL_END    = 3456;  // 80%
-const REBAL_BARS = 4;     // rebalance every 4h
-const LONG_COUNT = 5;
-const MIN_SCORE  = 0.05;
+const TOTAL_BARS  = 4320;  // 180 days × 24h
+const IS_END      = 2592;  // 60% — Sep 2025 → Jan 2026 (bear)
+const VAL_END     = 3456;  // 80% — Jan → Feb 2026 (crash)
+const REBAL_BARS  = 4;     // rebalance every 4h
+const LONG_COUNT  = 3;     // top 3 longs
+const SHORT_COUNT = 2;     // bottom 2 shorts (where score < -MIN_SCORE)
+const MIN_SCORE   = 0.05;  // minimum absolute score to trade
 
 const TOKENS = [
   'BTC','ETH','BNB','SOL','XRP','ADA','AVAX','DOGE','TRX','HBAR',
@@ -92,26 +93,41 @@ function simulatePeriod(history, scoreToken, startBar, endBar) {
       } catch(e) { scores[sym] = 0; }
     }
 
-    const ranked = Object.entries(scores)
+    // Long: top LONG_COUNT where score > MIN_SCORE
+    const longs = Object.entries(scores)
       .filter(([, s]) => typeof s === 'number' && s > MIN_SCORE && isFinite(s))
       .sort(([, a], [, b]) => b - a)
       .slice(0, LONG_COUNT);
 
-    if (ranked.length === 0) {
-      // Push REBAL_BARS zeros (hold period)
+    // Short: bottom SHORT_COUNT where score < -MIN_SCORE
+    const shorts = Object.entries(scores)
+      .filter(([, s]) => typeof s === 'number' && s < -MIN_SCORE && isFinite(s))
+      .sort(([, a], [, b]) => a - b)
+      .slice(0, SHORT_COUNT);
+
+    if (longs.length === 0 && shorts.length === 0) {
       for (let i = 0; i < Math.min(REBAL_BARS, endBar - bar - 1); i++) returns.push(0);
       continue;
     }
 
-    // Hold for REBAL_BARS bars, compute return over the window
     let ret = 0, count = 0;
-    for (const [sym] of ranked) {
+    for (const [sym] of longs) {
       const bars  = history[sym];
       const entry = bars[bar + 1]?.open;
       const exitBar = Math.min(bar + REBAL_BARS, endBar - 1);
       const exit  = bars[exitBar]?.close;
       if (entry && exit && entry > 0) {
         ret += (exit - entry) / entry;
+        count++;
+      }
+    }
+    for (const [sym] of shorts) {
+      const bars  = history[sym];
+      const entry = bars[bar + 1]?.open;
+      const exitBar = Math.min(bar + REBAL_BARS, endBar - 1);
+      const exit  = bars[exitBar]?.close;
+      if (entry && exit && entry > 0) {
+        ret += -(exit - entry) / entry; // inverted for short
         count++;
       }
     }
