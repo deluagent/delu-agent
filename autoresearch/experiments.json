@@ -14728,5 +14728,13 @@
     "accepted": false,
     "description": "experiment 722",
     "ts": 1774125633377
+  },
+  {
+    "n": 723,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 723",
+    "ts": 1774125731774
   }
 ]

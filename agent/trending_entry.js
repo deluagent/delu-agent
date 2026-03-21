@@ -249,6 +249,7 @@ async function getTrendingEntries(bankrApiKey) {
         quantScore: quantScore ?? null,
         transferStats: signal.transferStats,
         priorRanks,
+        source: 'bankr_trending', // Bankr onchain txn count → Alchemy OHLCV scored
       });
     }
 

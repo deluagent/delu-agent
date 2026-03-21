@@ -664,7 +664,28 @@ async function runCycle() {
     console.warn(`[trending_entry] Failed (skipping): ${e.message?.slice(0, 80)}`);
   }
 
-    // ── STEP 3: Build candidate list from onchain signals only ──────────────────
+  // Merge high-velocity Checkr spikes as additional entries (tagged source=checkr)
+  for (const [sym, a] of Object.entries(checkrAttention)) {
+    if ((a.velocity || 0) >= 3.0 && !trendingEntries.find(t => t.symbol === sym)) {
+      trendingEntries.push({
+        symbol:         sym,
+        source:         'checkr',
+        score:          Math.min(1, (a.velocity || 0) / 15),
+        velocity:       a.velocity,
+        attentionDelta: a.attentionDelta || 0,
+        rank:           null,
+        ret1h:          null,
+        ret6h:          null,
+        moveFrac:       null,
+        quantScore:     null,
+        isGainer:       a.isGainer || false,
+        rotatingFrom:   a.rotatingFrom || [],
+        topCreator:     a.topCreator || null,
+      });
+    }
+  }
+
+  // ── STEP 3: Build candidate list from onchain signals only ──────────────────
   // No fixed universe. Candidates come from:
   //   A) Bankr trending (Base + ETH by txn count)
   //   B) Checkr spikes / rotation gainers
