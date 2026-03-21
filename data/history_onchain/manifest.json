@@ -1,0 +1,27 @@
+{
+  "fetchedAt": "2026-03-21T23:29:03.846Z",
+  "tokens": [
+    "WETH",
+    "cbBTC",
+    "USDC",
+    "AERO",
+    "WELL",
+    "VIRTUAL",
+    "AIXBT",
+    "BRETT",
+    "DEGEN",
+    "TOSHI",
+    "HIGHER",
+    "MOCHI",
+    "FARCAST",
+    "MOLT",
+    "KTA",
+    "SOL_B",
+    "BLUE",
+    "LUKSO"
+  ],
+  "bars": 721,
+  "interval": "1h",
+  "source": "alchemy-base-mainnet",
+  "dataDir": "/data/workspace/delu-agent/data/history_onchain"
+}
