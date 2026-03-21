@@ -19,7 +19,14 @@ let _client = null;
 function getClient() {
   if (_client) return _client;
 
-  const privateKey = fs.readFileSync('/home/openclaw/.x402_key', 'utf8').trim();
+  // Try file first, fall back to env var X402_PRIVATE_KEY
+  let privateKey;
+  try {
+    privateKey = fs.readFileSync('/home/openclaw/.x402_key', 'utf8').trim();
+  } catch {
+    privateKey = process.env.X402_PRIVATE_KEY || '';
+  }
+  if (!privateKey) throw new Error('x402 key not found — set X402_PRIVATE_KEY in .env or restore /home/openclaw/.x402_key');
   const account = privateKeyToAccount(privateKey);
   const signer = toClientEvmSigner(account);
 
@@ -83,36 +90,108 @@ function parseSpikes(data) {
 }
 
 /**
- * Parse rotation response into attention map entries
- * Returns { SYM: { rotationGain, rotationRank, rotatingFrom, rotatingTo } }
+ * Parse rotation response (new schema: nodes + edges directed graph)
+ * Returns { SYM: { rotationGain, rotationRank, isGainer, isLoser, rotatingFrom, topCreator, attGrowth, netFlow } }
+ *
+ * New schema fields:
+ *   nodes[].net_flow      — inflow minus outflow (positive = net gaining creators)
+ *   nodes[].ATT_growth    — relative attention growth % over window
+ *   nodes[].inflow        — unique creators arriving from other tokens
+ *   nodes[].outflow       — unique creators leaving to other tokens
+ *   edges[].from / .to    — directed creator transition
+ *   edges[].weight        — number of distinct creators who made this transition
+ *   edges[].top_creator   — highest-signal creator for this edge
  */
 function parseRotation(data) {
   const map = {};
   if (!data) return map;
 
-  // Top gainers — tokens receiving attention rotation
-  if (data.gainers) {
-    data.gainers.forEach((t, idx) => {
+  // New schema: nodes array with confirmed rotation
+  if (data.nodes && Array.isArray(data.nodes)) {
+    // Sort by net_flow descending — highest net inflow = strongest rotation target
+    const sorted = [...data.nodes].sort((a, b) => (b.net_flow || 0) - (a.net_flow || 0));
+
+    sorted.forEach((node, idx) => {
+      const sym = (node.symbol || '').toUpperCase();
+      if (!sym) return;
+
+      const netFlow   = node.net_flow    || 0;
+      const attGrowth = node.ATT_growth  || 0;
+      const inflow    = node.inflow      || 0;
+      const outflow   = node.outflow     || 0;
+
+      if (netFlow > 0) {
+        // Net gainer — creators rotating IN
+        map[sym] = {
+          rotationGain:  attGrowth,          // ATT_growth % (e.g. 34.2 = +34.2%)
+          rotationRank:  idx + 1,
+          isGainer:      true,
+          netFlow,
+          inflow,
+          outflow,
+          attGrowth,
+          rotatingFrom:  [],                 // populated from edges below
+          topCreator:    null,               // populated from edges below
+          narrative:     null,
+        };
+      } else if (netFlow < 0) {
+        // Net loser — creators rotating OUT
+        map[sym] = {
+          rotationLoss:  Math.abs(attGrowth),
+          rotationRank:  idx + 1,
+          isLoser:       true,
+          netFlow,
+          inflow,
+          outflow,
+          attGrowth,
+        };
+      }
+    });
+  }
+
+  // Legacy schema fallback (gainers/losers)
+  if (!data.nodes && data.gainers) {
+    (data.gainers || []).forEach((t, idx) => {
       const sym = (t.symbol || '').toUpperCase();
       map[sym] = {
-        rotationGain:  t.ATT_delta || t.delta || 0,
+        rotationGain:  t.ATT_delta || t.delta || t.ATT_growth || 0,
         rotationRank:  idx + 1,
         isGainer:      true,
         rotatingFrom:  t.rotating_from || [],
         narrative:     t.narrative_summary || null,
       };
     });
-  }
-
-  // Top losers — tokens bleeding attention (avoid or short signal)
-  if (data.losers) {
-    data.losers.forEach((t, idx) => {
+    (data.losers || []).forEach((t, idx) => {
       const sym = (t.symbol || '').toUpperCase();
       if (!map[sym]) map[sym] = {};
       map[sym].rotationLoss = Math.abs(t.ATT_delta || t.delta || 0);
       map[sym].isLoser      = true;
       map[sym].rotationRank = idx + 1;
     });
+  }
+
+  // Enrich from edges — add rotatingFrom sources and topCreator for each gainer
+  if (data.edges && Array.isArray(data.edges)) {
+    data.edges.forEach(edge => {
+      const toSym   = (edge.to   || '').toUpperCase();
+      const fromSym = (edge.from || '').toUpperCase();
+      if (map[toSym]?.isGainer) {
+        // Track which tokens are feeding this one
+        if (!map[toSym].rotatingFrom) map[toSym].rotatingFrom = [];
+        if (fromSym && !map[toSym].rotatingFrom.includes(fromSym)) {
+          map[toSym].rotatingFrom.push(fromSym);
+        }
+        // Keep highest-weight edge's top_creator
+        const w = edge.weight || 0;
+        if (!map[toSym].topCreator || w > (map[toSym]._topWeight || 0)) {
+          map[toSym].topCreator   = edge.top_creator || null;
+          map[toSym]._topWeight   = w;
+          map[toSym].edgeWeight   = w;
+        }
+      }
+    });
+    // Clean up internal field
+    Object.values(map).forEach(v => delete v._topWeight);
   }
 
   return map;

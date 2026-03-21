@@ -14152,5 +14152,21 @@
     "accepted": false,
     "description": "experiment 650",
     "ts": 1774118388810
+  },
+  {
+    "n": 651,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 651",
+    "ts": 1774118486881
+  },
+  {
+    "n": 652,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 652",
+    "ts": 1774118584904
   }
 ]

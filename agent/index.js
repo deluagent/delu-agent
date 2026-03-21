@@ -571,28 +571,34 @@ async function runCycle() {
       const rotMap = checkr.parseRotation(rotation.value);
       for (const [sym, d] of Object.entries(rotMap)) {
         if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
-        // Gainers: receiving capital rotation = strong buy signal
+        // Gainers: receiving creator rotation (confirmed net_flow>0 + ATT_growth>0)
         if (d.isGainer) {
-          checkrAttention[sym].rotationGain = d.rotationGain;
-          checkrAttention[sym].rotationRank = d.rotationRank;
-          checkrAttention[sym].isGainer     = true;
-          checkrAttention[sym].rotatingFrom = d.rotatingFrom;
-          // Boost attention delta based on rotation strength
-          checkrAttention[sym].attentionDelta += d.rotationGain * 0.5;
-          checkrAttention[sym].velocity = Math.max(checkrAttention[sym].velocity || 0, d.rotationGain);
+          checkrAttention[sym].rotationGain  = d.rotationGain || d.attGrowth || 0;
+          checkrAttention[sym].rotationRank  = d.rotationRank;
+          checkrAttention[sym].isGainer      = true;
+          checkrAttention[sym].rotatingFrom  = d.rotatingFrom || [];
+          checkrAttention[sym].netFlow       = d.netFlow || 0;
+          checkrAttention[sym].attGrowth     = d.attGrowth || 0;
+          checkrAttention[sym].topCreator    = d.topCreator || null;
+          // Boost: ATT_growth is now a % (e.g. 34.2 = +34.2%), normalize to [0,1] for delta
+          const growthNorm = Math.min((d.attGrowth || 0) / 50, 1.0);
+          checkrAttention[sym].attentionDelta += growthNorm * 0.5;
+          checkrAttention[sym].velocity = Math.max(checkrAttention[sym].velocity || 0, growthNorm * 3);
         }
-        // Losers: bleeding attention = avoid or underweight
+        // Losers: bleeding creators = avoid / underweight
         if (d.isLoser) {
-          checkrAttention[sym].rotationLoss = d.rotationLoss;
+          checkrAttention[sym].rotationLoss = d.rotationLoss || Math.abs(d.attGrowth || 0);
           checkrAttention[sym].isLoser      = true;
-          // Reduce attention delta for losers
-          checkrAttention[sym].attentionDelta -= d.rotationLoss * 0.3;
+          checkrAttention[sym].netFlow      = d.netFlow || 0;
+          checkrAttention[sym].attentionDelta -= Math.min(Math.abs(d.attGrowth || 0) / 50, 0.5) * 0.3;
         }
       }
       const gainers = Object.entries(rotMap).filter(([,d]) => d.isGainer).slice(0,3);
       const losers  = Object.entries(rotMap).filter(([,d]) => d.isLoser).slice(0,3);
-      if (gainers.length) console.log('[checkr] Rotation gainers:', gainers.map(([s,d]) => `${s}(+${d.rotationGain?.toFixed(2)})`).join(' '));
-      if (losers.length)  console.log('[checkr] Rotation losers: ', losers.map(([s,d]) => `${s}(-${d.rotationLoss?.toFixed(2)})`).join(' '));
+      if (gainers.length) console.log('[checkr] Rotation gainers:', gainers.map(([s,d]) =>
+        `${s}(ATT+${d.attGrowth?.toFixed(1)}% flow=${d.netFlow} from=[${(d.rotatingFrom||[]).join(',')}])`).join(' '));
+      if (losers.length)  console.log('[checkr] Rotation losers: ', losers.map(([s,d]) =>
+        `${s}(ATT${d.attGrowth?.toFixed(1)}% flow=${d.netFlow})`).join(' '));
     } else {
       console.warn('[checkr] Rotation failed:', rotation.reason?.message?.slice(0,60));
     }
@@ -855,7 +861,9 @@ ${Object.keys(checkrAttention).length > 0
   ? interestingRanked.map(s => {
       const a = checkrAttention[s.sym];
       if (!a) return `${s.sym}: no data`;
-      const rot = a.isGainer ? ` ROT_IN(+${a.rotationGain?.toFixed(2)})` : a.isLoser ? ` ROT_OUT(-${a.rotationLoss?.toFixed(2)})` : '';
+      const rot = a.isGainer
+        ? ` ROT_IN(ATT+${a.attGrowth?.toFixed(1)}% flow=${a.netFlow} from=[${(a.rotatingFrom||[]).slice(0,3).join(',')}]${a.topCreator ? ' creator=@'+a.topCreator.username : ''})`
+        : a.isLoser ? ` ROT_OUT(ATT${a.attGrowth?.toFixed(1)}% flow=${a.netFlow})` : '';
       return `${s.sym}: vel=${a.velocity?.toFixed(1)} div=${a.divergence?'YES':'no'} delta=${a.attentionDelta?.toFixed(3)}${rot}`;
     }).join(' | ')
   : 'Checkr unavailable this cycle'}
