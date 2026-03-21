@@ -26,7 +26,7 @@ const EXPERIMENTS   = path.join(DIR, 'experiments_hourly.json');
 const COST_TRACK    = path.join(DIR, 'cost_track_hourly.json');
 const FEEDBACK_FILE = path.join(DIR, 'live_feedback.json');
 
-const INTERVAL_S    = 90;
+const INTERVAL_S    = 5;  // 5s — maximize experiment throughput
 const COST_LIMIT    = 999;
 const COST_PER_CALL = 0.003;
 

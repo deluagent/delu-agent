@@ -15000,5 +15000,117 @@
     "accepted": false,
     "description": "experiment 756",
     "ts": 1774128967124
+  },
+  {
+    "n": 757,
+    "valSharpe": 4.067,
+    "isSharpe": 1.3444,
+    "accepted": false,
+    "description": "experiment 757",
+    "ts": 1774129067426
+  },
+  {
+    "n": 758,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 758",
+    "ts": 1774129164992
+  },
+  {
+    "n": 759,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 759",
+    "ts": 1774129263526
+  },
+  {
+    "n": 760,
+    "valSharpe": 4.2108,
+    "isSharpe": 1.5958,
+    "accepted": false,
+    "description": "experiment 760",
+    "ts": 1774129360861
+  },
+  {
+    "n": 761,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 761",
+    "ts": 1774129460129
+  },
+  {
+    "n": 762,
+    "valSharpe": 4.3524,
+    "isSharpe": 1.4304,
+    "accepted": false,
+    "description": "experiment 762",
+    "ts": 1774129557450
+  },
+  {
+    "n": 763,
+    "valSharpe": 3.949,
+    "isSharpe": 1.4003,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection (ratio of current to 20-day average volume) to ca",
+    "ts": 1774129657311
+  },
+  {
+    "n": 764,
+    "valSharpe": 2.8824,
+    "isSharpe": 1.1712,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection (ratio of current to 20-day average volume) to ca",
+    "ts": 1774129672122
+  },
+  {
+    "n": 765,
+    "valSharpe": 4.0688,
+    "isSharpe": 1.3395,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection (ratio of current to 20-day average volume) to ca",
+    "ts": 1774129685679
+  },
+  {
+    "n": 766,
+    "valSharpe": 3.0542,
+    "isSharpe": 0.9148,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection (ratio of current to 20-day average volume) to ca",
+    "ts": 1774129699090
+  },
+  {
+    "n": 767,
+    "valSharpe": 4.2192,
+    "isSharpe": 1.3628,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection (volume spike ratio vs 20-day MA) to reduce false",
+    "ts": 1774129713203
+  },
+  {
+    "n": 768,
+    "valSharpe": 3.5184,
+    "isSharpe": 1.097,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection (current volume vs 20-day MA ratio) to catch brea",
+    "ts": 1774129726616
+  },
+  {
+    "n": 769,
+    "valSharpe": 3.2277,
+    "isSharpe": 1.271,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; add volume surprise detection (current volume vs 20-day MA ra",
+    "ts": 1774129740960
+  },
+  {
+    "n": 770,
+    "valSharpe": 3.0387,
+    "isSharpe": 0.9295,
+    "accepted": false,
+    "description": "Replace ATR penalty with dynamic volume surprise detection using current volume vs 20-day MA ratio, ",
+    "ts": 1774129754854
   }
 ]

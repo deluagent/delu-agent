@@ -27,7 +27,7 @@ const CANDIDATE    = path.join(DIR, 'candidate.js');
 const PROGRAM      = path.join(DIR, 'program.md');
 const EXPERIMENTS  = path.join(DIR, 'experiments.json');
 const STATE        = path.join(DIR, 'state.json');
-const INTERVAL_MS  = 90_000;   // 90s between experiments
+const INTERVAL_MS  = 5_000;   // 5s — maximize experiment throughput   // 90s between experiments
 
 // Model: Venice AI — claude-sonnet-4-6 with private mode
 // Private inference: no data logging, no training on our strategy
