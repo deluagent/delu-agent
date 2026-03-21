@@ -9402,5 +9402,21 @@
     "accepted": false,
     "description": "error: syntax error in generated code: Invalid or unexpec",
     "ts": 1774055783851
+  },
+  {
+    "n": 60,
+    "valSharpe": 3.3922,
+    "isSharpe": 1.2206,
+    "accepted": false,
+    "description": "experiment 60",
+    "ts": 1774055904416
+  },
+  {
+    "n": 61,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: missing ) after ar",
+    "ts": 1774055955620
   }
 ]
