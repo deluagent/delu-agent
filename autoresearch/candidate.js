@@ -84,8 +84,6 @@ function calculateObvSig(prices, volumes, window = 20) {
   }
   return totalVol > 0 ? obvDelta / totalVol : 0;
 }
-
-
 function scoreToken(data) {
   const { 
     prices, 
@@ -147,7 +145,7 @@ function scoreToken(data) {
   //  OBV Signal (Volume Accumulation) with Volume Surge Multiplier 
   const obvSig = calculateObvSig(prices, volumes, 15);
   const relVol = volumes[n - 1] / (sma(volumes, 15) || 1);
-  const obvBoost = 0.08 * obvSig * Math.min(relVol, 1.4);
+  const obvBoost = 0.06 * obvSig * Math.min(relVol, 1.4);
 
   //  Combined 
   const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost;

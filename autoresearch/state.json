@@ -1,8 +1,8 @@
 {
-  "bestValSharpe": 3.3922,
+  "bestValSharpe": 3.7031,
   "bestAudSharpe": 1.4022,
-  "bestScore": 2.7951999999999995,
-  "expCount": 64,
+  "bestScore": 3.0128299999999997,
+  "expCount": 242,
   "resetAt": "2026-03-21",
   "baselineNote": "exp55 — val=3.126 aud=1.424 combined=2.615. Volume signals now available (volumes/highs/lows). program.md updated with TRADING_BRAIN quant framework."
 }
