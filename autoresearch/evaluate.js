@@ -148,7 +148,11 @@ function simulatePeriod(history, scoreToken, startBar, endBar, fundingSignals = 
     for (const sym of symbols) {
       const bars   = history[sym];
       if (!bars || bars.length <= day + 1) continue;
-      const prices = bars.slice(0, day + 1).map(b => b.close);
+      const prices  = bars.slice(0, day + 1).map(b => b.close);
+      const volumes = bars.slice(0, day + 1).map(b => b.volume || 0);
+      const opens   = bars.slice(0, day + 1).map(b => b.open   || b.close);
+      const highs   = bars.slice(0, day + 1).map(b => b.high   || b.close);
+      const lows    = bars.slice(0, day + 1).map(b => b.low    || b.close);
 
       // Get funding signal for this day (0 if not available — backward compatible)
       const dayDate = new Date(bars[day]?.time || Date.now()).toISOString?.().slice(0, 10)
@@ -156,7 +160,7 @@ function simulatePeriod(history, scoreToken, startBar, endBar, fundingSignals = 
       const fundingSignal = (fundingSignals[sym] || {})[dayDate] || 0;
 
       try {
-        scores[sym] = scoreToken({ prices, btcPrices, flowSignal: fundingSignal, attentionDelta: 0 });
+        scores[sym] = scoreToken({ prices, volumes, opens, highs, lows, btcPrices, flowSignal: fundingSignal, attentionDelta: 0 });
       } catch (e) {
         scores[sym] = 0;
       }

@@ -1,7 +1,8 @@
 {
-  "bestValSharpe": 3.1255,
-  "bestScore": 2.6151400000000002,
+  "bestValSharpe": 3.126,
+  "bestAudSharpe": 1.424,
+  "bestScore": 2.6153999999999997,
   "expCount": 55,
   "resetAt": "2026-03-21",
-  "baselineNote": "combined score metric. val=1.405 aud=1.327 score=1.382"
+  "baselineNote": "exp55 — val=3.126 aud=1.424 combined=2.615. Volume signals now available (volumes/highs/lows). program.md updated with TRADING_BRAIN quant framework."
 }
