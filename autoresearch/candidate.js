@@ -106,7 +106,6 @@ function scoreToken(data) {
     const btc200 = sma(btcPrices, 200);
     if (btc50 < btc200) {
       isBear = true;
-      // High-vol alts are heavily penalized in bear markets. Majors get 20% weight.
       regimeMult = vol > 0.75 ? 0.05 : 0.20;
     }
   }
@@ -146,6 +145,10 @@ function scoreToken(data) {
   const obvSig = calculateObvSig(prices, volumes, 15);
   const relVol = volumes[n - 1] / (sma(volumes, 15) || 1);
   const obvBoost = 0.06 * obvSig * Math.min(relVol, 1.4);
+
+  //  Price acceleration filter
+  const r1 = pctChange(prices, 1);
+  if (r1 > 0.15 && vol > 0.9) return raw * regimeMult * 0.5;
 
   //  Combined 
   const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost;
