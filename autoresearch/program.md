@@ -60,3 +60,43 @@ YES: **Improve VAL slightly** — val=3.888 has room to 4.5+
 
 ## Target
 val > 4.2, aud > 2.0 (combined > 3.54)
+
+---
+
+## Nunchi hypotheses (added March 21, from 103-experiment Hyperliquid study)
+Source: github.com/Nunchi-trade/auto-researchtrading — Sharpe 2.7 → 20.6 over 103 experiments
+
+### H1: RSI period 8 instead of 14 ⭐ HIGH PRIORITY
+- Their single biggest gain: +5.0 Sharpe
+- "Standard 14-period RSI is too slow for hourly crypto"
+- We use RSI in several candidate variants — try both `rsi(closes, 8)` and combined rsi8+rsi14 signal
+- Test: replace RSI 14 with RSI 8 in momentum component; also try rsi(8) < 40 as entry gate
+
+### H2: ATR trailing multiplier 5.5× not 1.5× 
+- They found ATR 5.5× (up from 3.5×) gained +1.0 Sharpe — holds winners much longer
+- Our stops.js uses 1.5× ATR which may be cutting winners early
+- In the scoring context: use ATR as a hold-signal (if price > ema - 5.5×ATR, still valid)
+- Test: if current price is within 5.5× ATR of recent high, keep bullish signal active
+
+### H3: Remove multi-timeframe confirmation gate
+- They found "+0.8 Sharpe from simplifying momentum — removing multi-timeframe confirmation"
+- We apply a 40% score penalty when 1h and 4h trends diverge
+- Test: remove the MTF penalty entirely from scoreToken — let the primary signal run
+
+### H4: Bollinger Band width percentile as extra signal
+- BB width compression before breakout: added +0.9 Sharpe as 6th ensemble signal
+- BB width = (upper - lower) / middle band
+- Test: add bb_width_pct = percentile of bb_width over last 60 days
+  - If bb_width_pct < 20 (compression): boost score by 0.05-0.10 (coiling before move)
+  - If bb_width_pct > 80 (expansion already in progress): slight boost too
+
+### H5: Uniform position sizing (remove score-weighting)
+- "+1.7 Sharpe from uniform sizing vs momentum-weighted sizing"
+- Our signal feeds into Kelly sizing — conviction-weighted
+- In the evaluator context: try equal-weight the top 5 picks (ignore score magnitude for sizing)
+- Note: this is evaluate.js territory — CAN'T change evaluate.js
+- Instead: test if a flatter score distribution (scores compressed toward 0.5) performs better
+
+### Priority order: H1 (RSI-8) → H3 (remove MTF gate) → H4 (BB width) → H2 (ATR) → H5
+### Context: their universe = BTC/ETH/SOL perps. Ours = 55 tokens, daily, long-only
+### Don't blindly copy — run on our data, trust the evaluator
