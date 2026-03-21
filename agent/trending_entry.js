@@ -110,99 +110,67 @@ async function getPoolData(tokenAddress) {
   return { poolAddr, liq, currentPrice, ohlcv };
 }
 
-// ── Score a single trending token ─────────────────────────────
-function scoreEntry(token, rank, ohlcv, priorRanks, priorSnap) {
+const { scoreTokenHourly } = require('./quant_score');
+
+// ── Score a single trending token — FULL QUANT BRAIN ─────────
+// Uses the evolved candidate.js logic (same weights, hourly-adapted lookbacks)
+// Augmented with onchain-only signals: buyer ratio, rank acceleration
+function scoreEntry(token, rank, ohlcv, priorRanks, priorSnap, transferStats) {
   const n = ohlcv.length;
   if (n < 6) return { score: 0, reason: 'not enough OHLCV data' };
 
-  const now   = ohlcv[n - 1][4];
-  const h1    = ohlcv[n - 2]?.[4] || now;
-  const h6    = ohlcv[n >= 6  ? n - 7  : 0]?.[4] || ohlcv[0][4];
-  const h12   = ohlcv[n >= 12 ? n - 13 : 0]?.[4] || ohlcv[0][4];
-  const h24   = ohlcv[n >= 24 ? n - 25 : 0]?.[4] || ohlcv[0][4];
+  // Extract arrays for quant brain
+  const prices  = ohlcv.map(b => b[4]);  // close
+  const volumes = ohlcv.map(b => b[5]);  // volume
+  const highs   = ohlcv.map(b => b[2]);  // high
 
-  const ret1h  = (now - h1)  / h1;
-  const ret6h  = (now - h6)  / h6;
-  const ret12h = (now - h12) / h12;
-  const ret24h = (now - h24) / h24;
+  // Simple price stats for context display
+  const now  = prices[n - 1];
+  const h1   = prices[Math.max(0, n - 2)];
+  const h6   = prices[Math.max(0, n - 7)];
+  const h24  = prices[Math.max(0, n - 25)];
 
-  const volLiq = token.volume24h / (token.liquidity || 1);
-
-  // ── Component 1: Where-in-the-move (0–1) ──────────────────
-  // ret6h / ret24h = fraction of move in last 6h
-  // Early entry: ret6h < 0.35 * ret24h (most of move still ahead)
-  // Mid entry:   ret6h < 0.60 * ret24h
-  // Late:        ret6h > 0.60 * ret24h (already blown)
+  const ret1h  = h1  > 0 ? (now - h1)  / h1  : 0;
+  const ret6h  = h6  > 0 ? (now - h6)  / h6  : 0;
+  const ret24h = h24 > 0 ? (now - h24) / h24 : 0;
   const moveFrac = ret24h > 0.01 ? Math.max(0, ret6h) / ret24h : 1;
+
+  // Run full quant brain
+  const quantScore = scoreTokenHourly({
+    prices,
+    volumes,
+    highs,
+    flowSignal: 0, // no perp funding for Base microcaps — neutral
+    uniqueBuyers:  transferStats?.uniqueBuyers  ?? null,
+    uniqueSellers: transferStats?.uniqueSellers ?? null,
+    buyRatio:      transferStats?.buyRatio      ?? null,
+    trendingRank:  rank,
+    priorRanks,
+  });
+
+  // Map raw quant score to 0–1 range (quant returns ~-0.1 to +0.3 for good tokens)
+  // Scale: 0 → 0.30, 0.05 → 0.55, 0.10 → 0.70, 0.20+ → 1.0
+  const normalizedQuant = Math.max(0, Math.min(1, (quantScore + 0.05) / 0.20));
+
+  // Blend: 70% quant brain, 30% move-timing (where-in-the-move — not in daily model)
   const moveScore = moveFrac < 0.25 ? 1.0
                   : moveFrac < 0.40 ? 0.75
                   : moveFrac < 0.60 ? 0.45
-                  : 0.10; // late
-
-  // ── Component 2: Rank acceleration (0–1) ──────────────────
-  // Rising rank (lower number) across cycles = strong signal
-  let rankScore = 0.3; // default neutral
-  if (priorRanks.length >= 2) {
-    const rankTrend = priorRanks[priorRanks.length - 1] - rank; // positive = rising
-    rankScore = rankTrend >= 3 ? 1.0
-              : rankTrend >= 1 ? 0.7
-              : rankTrend === 0 ? 0.4
-              : 0.1; // falling in rank
-  } else if (rank <= 3) {
-    rankScore = 0.5; // first appearance but already top 3
-  } else if (rank <= 6) {
-    rankScore = 0.4;
-  }
-
-  // ── Component 3: Momentum quality (0–1) ───────────────────
-  // Consistent hourly gains with acceleration
-  const lastHours = ohlcv.slice(-4).map(b => (b[4] - b[1]) / b[1]);
-  const positiveHours = lastHours.filter(r => r > 0).length;
-  const latestHour = lastHours[lastHours.length - 1] || 0;
-  const momScore = latestHour > 0.05 ? 1.0   // >5% last hour
-                 : latestHour > 0.02 ? 0.75
-                 : latestHour > 0    ? 0.5
-                 : latestHour > -0.03 ? 0.3
-                 : 0.0;
-
-  // ── Component 4: Volume conviction (0–1) ──────────────────
-  const volScore = volLiq > 0.5 ? 1.0
-                 : volLiq > 0.2 ? 0.75
-                 : volLiq > 0.1 ? 0.5
-                 : 0.2;
-
-  // ── Component 5: Transaction acceleration ─────────────────
-  let txnScore = 0.5;
-  if (priorSnap) {
-    const txnDelta = token.txnCount24h - priorSnap.txns;
-    txnScore = txnDelta > 100 ? 1.0
-             : txnDelta > 0   ? 0.7
-             : txnDelta > -50 ? 0.4
-             : 0.1;
-  } else {
-    txnScore = token.txnCount24h > 1000 ? 0.8
-             : token.txnCount24h > 500  ? 0.6
-             : 0.4;
-  }
-
-  // ── Combine (weighted) ────────────────────────────────────
-  const score = moveScore  * 0.30
-              + rankScore  * 0.25
-              + momScore   * 0.20
-              + volScore   * 0.15
-              + txnScore   * 0.10;
+                  : 0.10;
+  const score = 0.70 * normalizedQuant + 0.30 * moveScore;
 
   const reason = [
-    `rank=${rank}(${priorRanks.length?priorRanks.join('→'):'?'}→${rank})`,
+    `rank=${rank}(${priorRanks.length ? priorRanks.join('→') : '?'}→${rank})`,
+    `quant=${quantScore.toFixed(4)}`,
     `ret1h=${(ret1h*100).toFixed(1)}%`,
     `ret6h=${(ret6h*100).toFixed(1)}%`,
     `ret24h=${(ret24h*100).toFixed(1)}%`,
     `move=${(moveFrac*100).toFixed(0)}%done`,
-    `v/l=${volLiq.toFixed(2)}`,
+    `v/l=${(token.volume24h/(token.liquidity||1)).toFixed(2)}`,
     `txns=${token.txnCount24h}`,
   ].join(' ');
 
-  return { score, reason, ret1h, ret6h, ret24h, moveFrac };
+  return { score, reason, ret1h, ret6h, ret24h, moveFrac, quantScore };
 }
 
 // ── Main: run every agent cycle ───────────────────────────────
@@ -259,18 +227,10 @@ async function getTrendingEntries(bankrApiKey) {
     // Build OHLCV-compatible array for scoreEntry
     const ohlcv = signal.bars.map(b => [b.ts, b.open, b.high, b.low, b.close, b.volume]);
 
-    const { score, reason, ret1h, ret6h, ret24h, moveFrac } = scoreEntry(
-      token, rank, ohlcv, priorRanks, priorSnap
+    const { score, reason, ret1h, ret6h, ret24h, moveFrac, quantScore } = scoreEntry(
+      token, rank, ohlcv, priorRanks, priorSnap, signal.transferStats
     );
-
-    // Augment score with transfer stats (buyer ratio)
-    let finalScore = score;
-    if (signal.transferStats) {
-      const { buyRatio, uniqueBuyers } = signal.transferStats;
-      const transferBoost = (buyRatio > 0.6 ? 0.05 : buyRatio < 0.4 ? -0.05 : 0)
-                          + (uniqueBuyers > 30 ? 0.03 : 0);
-      finalScore = Math.min(1, score + transferBoost);
-    }
+    const finalScore = score;
 
     if (finalScore >= ENTRY.minScore) {
       results.push({
@@ -286,6 +246,7 @@ async function getTrendingEntries(bankrApiKey) {
         txnCount24h: token.txnCount24h,
         priceChange24h: token.priceChange24h,
         ret1h, ret6h, ret24h, moveFrac,
+        quantScore: quantScore ?? null,
         transferStats: signal.transferStats,
         priorRanks,
       });

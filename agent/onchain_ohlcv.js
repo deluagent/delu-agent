@@ -68,16 +68,28 @@ async function getHourlyBars(tokenAddress, hours = 48) {
   // Build OHLCV-compatible bars
   // Alchemy gives one price per hour — use as close price
   // Approximate open = prior bar's close
+  // Volume proxy: use price-change magnitude as activity proxy (1 = avg activity)
+  // This lets OBV/volume signals work even without true volume data
+  const closes = data.map(b => parseFloat(b.value) || 0);
+  const avgAbsChange = closes.reduce((s, c, i) => {
+    if (i === 0) return s;
+    const prev = closes[i - 1];
+    return s + (prev > 0 ? Math.abs(c - prev) / prev : 0);
+  }, 0) / Math.max(1, closes.length - 1);
+
   return data.map((b, i) => {
     const close = parseFloat(b.value) || 0;
     const open  = i > 0 ? parseFloat(data[i - 1].value) || close : close;
     const high  = Math.max(open, close);
     const low   = Math.min(open, close);
+    // Volume proxy: relative price change vs average (so "big" bars show higher volume)
+    const pctChg = open > 0 ? Math.abs(close - open) / open : 0;
+    const volProxy = avgAbsChange > 0 ? pctChg / avgAbsChange : 1;
     return {
       time:  b.timestamp,
       ts:    new Date(b.timestamp).getTime(),
       open, high, low, close,
-      volume: 0, // filled below if transfers available
+      volume: volProxy, // relative activity proxy (1 = average bar)
     };
   });
 }
