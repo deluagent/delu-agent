@@ -12872,5 +12872,21 @@
     "accepted": false,
     "description": "experiment 492",
     "ts": 1774100615572
+  },
+  {
+    "n": 493,
+    "valSharpe": 2.8811,
+    "isSharpe": 1.348,
+    "accepted": false,
+    "description": "experiment 493",
+    "ts": 1774100720824
+  },
+  {
+    "n": 494,
+    "valSharpe": 2.8899,
+    "isSharpe": 1.4382,
+    "accepted": false,
+    "description": "experiment 494",
+    "ts": 1774100825851
   }
 ]

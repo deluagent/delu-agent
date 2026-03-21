@@ -32,14 +32,21 @@ const SHORT_COUNT = 2;     // bottom 2 shorts (where score < -MIN_SCORE)
 const MIN_SCORE   = 0.05;  // minimum absolute score to trade
 
 const TOKENS = [
-  'BTC','ETH','BNB','SOL','XRP','ADA','AVAX','DOGE','TRX','HBAR',
-  'LINK','AAVE','UNI','MKR','CRV','COMP','SNX','BAL','YFI','SUSHI',
-  'ARB','OP','MATIC','STX','IMX',
-  'FET','AGIX','OCEAN','RNDR',
-  'PEPE','SHIB','BONK','WIF','FLOKI',
-  'NEAR','APT','SUI','INJ','ATOM','DOT','ALGO',
-  'LTC','BCH','FIL','ETC','XLM',
-  'SAND','MANA','AXS','1INCH',
+  // Large caps
+  'BTC','ETH','BNB','SOL','XRP','ADA','AVAX','DOGE',
+  // DeFi
+  'LINK','AAVE','UNI','MKR','CRV','COMP',
+  // L2/Infra
+  'ARB','OP','MATIC','STX',
+  // AI / data — the big movers (AGIX +368%, RNDR +254%, OCEAN +200%)
+  'FET','AGIX','OCEAN','RNDR','TAO','GRT','KAITO',
+  // Agent/meme tokens (new listings, high volatility)
+  'VIRTUAL','AIXBT','BERA','TRUMP','LUNA',
+  // Memes
+  'PEPE','SHIB','WIF','BONK',
+  // Other liquid alts
+  'NEAR','APT','SUI','INJ','ATOM','DOT',
+  'LTC','BCH','XLM','SAND','AXS',
 ];
 
 function loadHistory() {

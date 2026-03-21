@@ -67,10 +67,16 @@ function scoreToken(data) {
   const dir4h    = tokenRet4h > 0 ? 1 : tokenRet4h < 0 ? -1 : 0;
   const volSignal = Math.tanh((volBurst - 1) * dir4h * 2); // positive when volume confirms direction
 
+  // ── Momentum acceleration (4h change rate) ───────────────────
+  const tokenRet8h = n >= 9 ? (prices[n-5] - prices[n-9]) / prices[n-9] : 0;
+  const btcRet8h   = bN >= 9 ? (btcPrices[bN-5] - btcPrices[bN-9]) / btcPrices[bN-9] : 0;
+  const relAccel   = (tokenRet4h - btcRet4h) - (tokenRet8h - btcRet8h);
+
   // ── Combined score [-1, +1] ──────────────────────────────────
-  const score = Math.tanh(relStr7d * 5) * 0.5    // 7d relative strength (primary)
-              + Math.tanh(relStr4h * 30) * 0.3   // 4h relative strength (momentum)
-              + volSignal * 0.2;                  // volume confirmation
+  const score = Math.tanh(relStr7d * 5) * 0.40   // 7d relative strength (primary)
+              + Math.tanh(relStr4h * 30) * 0.30  // 4h relative strength (momentum)
+              + volSignal * 0.15                  // volume confirmation
+              + Math.tanh(relAccel * 50) * 0.15;  // momentum acceleration
 
   return Math.max(-1, Math.min(1, score));
 }
