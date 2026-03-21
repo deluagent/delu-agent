@@ -199,6 +199,9 @@ CRITICAL OUTPUT RULES:
     if (match) code = match[1];
     else code = code.replace(/```[a-zA-Z]*/g, '').replace(/```/g, '');
   }
+  // Strip non-ASCII characters that break JS parsing (e.g. → arrow copied from comments)
+  // Keep only printable ASCII + newlines + tabs
+  code = code.replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '');
   return code.trim();
 }
 

@@ -9394,5 +9394,13 @@
     "accepted": false,
     "description": "experiment 58",
     "ts": 1774055748202
+  },
+  {
+    "n": 59,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Invalid or unexpec",
+    "ts": 1774055783851
   }
 ]

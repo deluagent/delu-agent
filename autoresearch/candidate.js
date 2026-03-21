@@ -2,7 +2,7 @@
  * candidate.js — THE FILE THE AGENT MODIFIES
  *
  * Rules (enforced by evaluate.js):
- *  - Must export scoreToken(data) → number
+ *  - Must export scoreToken(data) -- returns number
  *  - data = { prices, volumes, opens, highs, lows, btcPrices, flowSignal, attentionDelta }
  *  - prices / btcPrices: float[] of daily closes, oldest first
  *  - flowSignal: Binance perp funding rate z-score, INVERTED [-1,+1]
