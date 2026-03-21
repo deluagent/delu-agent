@@ -2148,5 +2148,85 @@
     "score": 4.7658000000000005,
     "accepted": false,
     "description": "exp 215"
+  },
+  {
+    "n": 216,
+    "ts": "2026-03-21T20:29:23.293Z",
+    "valSharpe": 3.2917,
+    "audSharpe": 10.1268,
+    "isSharpe": 5.1422,
+    "score": 6.70925,
+    "accepted": false,
+    "description": "exp 216"
+  },
+  {
+    "n": 217,
+    "ts": "2026-03-21T20:31:07.004Z",
+    "valSharpe": 5.2996,
+    "audSharpe": 9.4291,
+    "isSharpe": 4.9574,
+    "score": 7.36435,
+    "accepted": false,
+    "description": "exp 217"
+  },
+  {
+    "n": 218,
+    "ts": "2026-03-21T20:32:49.901Z",
+    "valSharpe": 4.0719,
+    "audSharpe": 8.1404,
+    "isSharpe": 5.2752,
+    "score": 6.1061499999999995,
+    "accepted": false,
+    "description": "exp 218"
+  },
+  {
+    "n": 219,
+    "ts": "2026-03-21T20:34:33.918Z",
+    "valSharpe": 5.9964,
+    "audSharpe": 10.9174,
+    "isSharpe": 4.5787,
+    "score": 8.456900000000001,
+    "accepted": true,
+    "description": "exp 219"
+  },
+  {
+    "n": 220,
+    "ts": "2026-03-21T20:36:17.011Z",
+    "valSharpe": 6.5467,
+    "audSharpe": 8.74,
+    "isSharpe": 4.6446,
+    "score": 7.64335,
+    "accepted": false,
+    "description": "exp 220"
+  },
+  {
+    "n": 221,
+    "ts": "2026-03-21T20:37:59.649Z",
+    "valSharpe": 2.8563,
+    "audSharpe": 9.0008,
+    "isSharpe": 5.2751,
+    "score": 5.9285499999999995,
+    "accepted": false,
+    "description": "exp 221"
+  },
+  {
+    "n": 222,
+    "ts": "2026-03-21T20:39:42.703Z",
+    "valSharpe": 2.8563,
+    "audSharpe": 9.0008,
+    "isSharpe": 5.2751,
+    "score": 5.9285499999999995,
+    "accepted": false,
+    "description": "exp 222"
+  },
+  {
+    "n": 223,
+    "ts": "2026-03-21T20:40:52.217Z",
+    "valSharpe": 2.8563,
+    "audSharpe": 9.0008,
+    "isSharpe": 5.2751,
+    "score": 5.9285499999999995,
+    "accepted": false,
+    "description": "exp 223"
   }
 ]

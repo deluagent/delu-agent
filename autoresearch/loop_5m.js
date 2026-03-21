@@ -16,10 +16,11 @@ const fs   = require('fs');
 const path = require('path');
 const https = require('https');
 
-const DIR        = __dirname;
-const CANDIDATE  = path.join(DIR, 'candidate_5m.js');
-const PROGRAM    = path.join(DIR, 'program_5m.md');
-const STATE_FILE = path.join(DIR, 'state_5m.json');
+const DIR           = __dirname;
+const CANDIDATE     = path.join(DIR, 'candidate_5m.js');
+const PROGRAM       = path.join(DIR, 'program_5m.md');
+const STATE_FILE    = path.join(DIR, 'state_5m.json');
+const FEEDBACK_FILE = path.join(DIR, 'live_feedback.json');
 const EXPS_FILE  = path.join(DIR, 'experiments_5m.json');
 const COST_FILE  = path.join(DIR, 'cost_track_5m.json');
 
@@ -96,9 +97,23 @@ function validateCode(code) {
 }
 
 // ── Propose change ─────────────────────────────────────────────
+function loadLiveFeedback() {
+  try {
+    const fb = JSON.parse(fs.readFileSync(FEEDBACK_FILE, 'utf8'));
+    if (!fb.length) return '';
+    const wins = fb.filter(f => f.won).length;
+    const avg  = (fb.reduce((s, f) => s + f.pnlPct, 0) / fb.length).toFixed(2);
+    const recent = fb.slice(-5).map(f =>
+      `  ${f.sym} | ${f.won ? 'WIN' : 'LOSS'} ${f.pnlPct?.toFixed(2)}% | regime=${f.regime}`
+    ).join('\n');
+    return `## Live trade outcomes (${fb.length} closed | WR=${wins}/${fb.length} | avgPnL=${avg}%)\n${recent}`;
+  } catch { return ''; }
+}
+
 async function proposeChange(state, experiments) {
-  const programMd   = fs.existsSync(PROGRAM) ? fs.readFileSync(PROGRAM, 'utf8') : '# 5m research';
-  const candidateJs = fs.readFileSync(CANDIDATE, 'utf8');
+  const programMd    = fs.existsSync(PROGRAM) ? fs.readFileSync(PROGRAM, 'utf8') : '# 5m research';
+  const candidateJs  = fs.readFileSync(CANDIDATE, 'utf8');
+  const liveFeedback = loadLiveFeedback();
 
   const recentExps = experiments.slice(-6).map(e =>
     `  exp ${e.n}: combined=${e.score?.toFixed(3)} ${e.accepted ? '✅' : '❌'} val=${e.valSharpe?.toFixed(2)} aud=${e.audSharpe?.toFixed(2)}`
@@ -129,6 +144,7 @@ Min bars required: 288 (1 day)
 ## Research program
 ${programMd.slice(0, 1500)}
 
+${liveFeedback ? liveFeedback + '\n' : ''}
 ## Recent experiments
 ${recentExps}
 

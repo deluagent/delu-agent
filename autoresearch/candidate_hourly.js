@@ -79,14 +79,22 @@ function scoreToken(data) {
   // ── Volatility regime filter (avoid chop) ────────────────────
   const rv12h = realizedVol(prices.slice(-12));
   const rv48h = realizedVol(prices.slice(-48));
-  const volRegime = rv12h > rv48h * 0.5 ? 1 : 0.7; // reduce score in low vol regimes
+  const volRegime = rv12h > rv48h * 0.5 ? 1 : 0.7;
+
+  // ── OBV microstructure (hourly buy/sell pressure) ────────────
+  let obv = 0;
+  for (let i = Math.max(0, n - 4); i < n; i++) {
+    obv += volumes[i] * (prices[i] > opens[i] ? 1 : -1);
+  }
+  const obvSignal = Math.tanh(obv / (vol4h * 100 || 1) * 0.5);
 
   // ── Combined score [-1, +1] ──────────────────────────────────
-  const score = (Math.tanh(relStr7d * 5) * 0.35
-              + Math.tanh(relStr4h * 35) * 0.28
-              + volSignal * 0.18
+  const score = (Math.tanh(relStr7d * 5) * 0.33
+              + Math.tanh(relStr4h * 35) * 0.26
+              + volSignal * 0.17
               + Math.tanh(relAccel * 50) * 0.10
-              + Math.tanh(rangeCoil * 5) * 0.09) * volRegime;
+              + Math.tanh(rangeCoil * 5) * 0.08
+              + obvSignal * 0.06) * volRegime;
 
   return Math.max(-1, Math.min(1, score));
 }
