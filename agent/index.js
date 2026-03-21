@@ -782,13 +782,13 @@ async function runCycle() {
 
   if (screen.skip) {
     console.log('[bankr-screen] Skip signal → no trade this cycle');
-    // Smart yield rebalance only if genuinely idle capital exists (>$15 liquid USDC)
-    // Don't yield every cycle — keep reserve for trading opportunities
+    // Smart yield rebalance only if surplus above 25% reserve exists
     if (!DRY_RUN) {
       const balances = await bankr.getBalances().catch(() => null);
       const usdcLiquid = balances?.usdc || 0;
-      if (usdcLiquid > 15) {
-        console.log(`\n[bankr] $${usdcLiquid.toFixed(2)} USDC idle — checking Smart Yield opportunities...`);
+      const reserve = ACTIVE_TRANCHE_USD * 0.25;
+      if (usdcLiquid > reserve) {
+        console.log(`\n[bankr] $${usdcLiquid.toFixed(2)} USDC idle (reserve=$${reserve.toFixed(2)}) — checking Smart Yield...`);
         try {
           const result = await bankr.smartYieldRebalance();
           console.log(`[bankr] Result:\n${result}`);
@@ -796,10 +796,10 @@ async function runCycle() {
           console.error('[bankr] Yield rebalance failed:', e.message);
         }
       } else {
-        console.log(`\n[delu] No idle USDC to yield ($${usdcLiquid.toFixed(2)} liquid) — keeping reserve`);
+        console.log(`\n[delu] $${usdcLiquid.toFixed(2)} USDC liquid — at or below 25% reserve ($${reserve.toFixed(2)}), no yield`);
       }
     } else if (DRY_RUN) {
-      console.log(`\n[delu] DRY RUN — would check smartYieldRebalance() if >$15 USDC idle`);
+      console.log(`\n[delu] DRY RUN — would check smartYieldRebalance() if USDC > 25% reserve ($${(ACTIVE_TRANCHE_USD*0.25).toFixed(2)})`);
     }
 
     const logEntry = {
@@ -925,15 +925,15 @@ What is your allocation decision?`;
   }
 
   // 7. Execute
-  // Reserve check — always keep $15 available for trading opportunities
-  // Only yield if we have >$15 liquid USDC sitting idle
-  const RESERVE_USD = 15;
+  // Reserve check — always keep 25% of total tranche liquid for trading opportunities
+  // Only yield the surplus above the reserve
+  const RESERVE_USD = ACTIVE_TRANCHE_USD * 0.25;
   if (decision.action === 'yield') {
     const balances = await bankr.getBalances().catch(() => null);
     const usdcLiquid = balances?.usdc || 0;
-    if (usdcLiquid < RESERVE_USD) {
-      console.log(`\n[delu] YIELD skipped — only $${usdcLiquid.toFixed(2)} liquid USDC (need >$${RESERVE_USD} to yield, keep reserve for trades)`);
-      decision = { ...decision, action: 'hold', reasoning: `Insufficient liquid USDC ($${usdcLiquid.toFixed(2)}) to yield — keeping reserve for trade opportunities` };
+    if (usdcLiquid <= RESERVE_USD) {
+      console.log(`\n[delu] YIELD skipped — only $${usdcLiquid.toFixed(2)} liquid USDC (reserve=$${RESERVE_USD.toFixed(2)} = 25% of $${ACTIVE_TRANCHE_USD} tranche)`);
+      decision = { ...decision, action: 'hold', reasoning: `Liquid USDC ($${usdcLiquid.toFixed(2)}) at or below 25% reserve — keeping capital available for trades` };
     }
   }
 
