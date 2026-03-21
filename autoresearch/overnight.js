@@ -123,39 +123,34 @@ async function proposeExperiment(state, recentExps, cycleInsights) {
     `  exp ${e.n}: val=${e.valSharpe?.toFixed(3) || '?'} aud=${e.audSharpe?.toFixed(3) || '?'} ${e.accepted ? '✅' : '❌'} — ${e.description}`
   ).join('\n') || '  (none yet)';
 
-  const prompt = `You are a quant researcher improving a crypto momentum strategy.
-Universe: 55 tokens (50 majors + 5 Base chain tokens), 730 days of OHLCV data.
-Strategy: score tokens daily, hold top 5. Rebalance daily.
-Accept only if: combined score (0.7×val + 0.3×aud) improves AND audit_sharpe > -0.5.
+  // Keep prompt concise — avoid timeout from oversized context
+  const hypotheses = programMd.match(/## Hypotheses[\s\S]*?(?=\n## |\n# |$)/)?.[0]?.slice(0, 800) || '';
+  const cycleSummary = cycleInsights ? cycleInsights.slice(0, 400) : '';
 
-Current best:
-  val_sharpe=${state.bestValSharpe?.toFixed(3)} | aud_sharpe=${state.bestAudSharpe?.toFixed(3) || '?'} | combined=${state.bestScore?.toFixed(3)}
-Experiment #${(state.expCount || 0) + 1}
+  // Only send the scoreToken function body, not the full file — keeps prompt small
+  const scoreFnMatch = candidateJs.match(/function scoreToken[\s\S]*?^module\.exports/m);
+  const scoreFn = scoreFnMatch ? scoreFnMatch[0].slice(0, 1500) : candidateJs.slice(-1500);
 
-${cycleInsights ? `## Insights from this cycle\n${cycleInsights}\n` : ''}
+  const prompt = `Quant researcher: improve crypto trading score function.
+55 tokens, 730d OHLCV. Long top 5 daily. Metric: 0.7×val_sharpe + 0.3×aud_sharpe.
+Best: val=${state.bestValSharpe?.toFixed(3)} aud=${state.bestAudSharpe?.toFixed(3)||'?'} combined=${state.bestScore?.toFixed(3)}
 
-## Research program
-${programMd.slice(0, 2000)}
+Available signals in scoreToken({ prices, volumes, highs, lows, btcPrices, flowSignal }):
+- prices[]: daily closes | volumes[]: daily volume | highs/lows[]: OHLCV
+- flowSignal: funding rate z-score inverted (positive=bullish)
+- helpers: pctChange, realizedVol, sma, emaVal, emaGap, zScore
 
-## Current candidate.js
-\`\`\`javascript
-${candidateJs}
-\`\`\`
-
-## Recent experiments
+Recent results:
 ${recent}
 
-## Task
-Make ONE small, specific, logical change to improve the combined score.
-Think about: what's the weakest part of the current signal? What's untried?
-Priority this cycle: volume signals (OBV, volume surprise, ATR) — they are UNTESTED and have high expected value.
+${cycleSummary ? `Cycle insights: ${cycleSummary}\n` : ''}
 
-RULES — CRITICAL:
-1. Output ONLY valid JavaScript — NO markdown, NO fences, NO prose
-2. File MUST start with /** and end with: module.exports = { scoreToken };
-3. scoreToken MUST be defined and exported
-4. No require/import — pure JS only
-5. ONE change only — keep it minimal`;
+Current scoreToken (the ONLY function to modify):
+${scoreFn}
+
+Make ONE small improvement. Priority: OBV divergence, volume surprise, ATR penalty (all untested).
+Return the COMPLETE candidate.js (with helpers + scoreToken + module.exports).
+NO markdown fences. Start with /**, end with module.exports = { scoreToken };`;
 
   return callLLM([{ role: 'user', content: prompt }]);
 }

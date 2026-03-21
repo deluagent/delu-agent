@@ -79,9 +79,9 @@ async function callLLM(messages) {
       model:       BANKR_LLM_MODEL,
       messages,
       temperature: 0.7,
-      max_tokens:  8000,
+      max_tokens:  4000,
     }),
-    signal: AbortSignal.timeout(60000),
+    signal: AbortSignal.timeout(120000),
   });
 
   if (!res.ok) {
