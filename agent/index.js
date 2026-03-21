@@ -405,6 +405,7 @@ You respond ONLY with valid JSON:
 {
   "action": "buy" | "yield" | "hold",
   "asset": "token symbol or USDC",
+  "contractAddress": "0x... (only for onchain trending tokens discovered this cycle)",
   "size_pct": number (5-20 for buy, 100 for yield, 0 for hold),
   "confidence": number (0-100),
   "reasoning": "1-2 sentences",
@@ -413,10 +414,11 @@ You respond ONLY with valid JSON:
 }
 
 Rules:
-- BEAR regime → always yield (action=yield, asset=USDC)
+- BEAR regime → always yield (action=yield, asset=USDC) UNLESS a trending token has score≥0.65 and move<40%done
 - confidence < 65 → hold
 - Never allocate more than 20% in one position
-- If top signal score < 0.05 → hold`;
+- If top signal score < 0.05 → hold
+- Trending token buys: max $15, must include contractAddress`;
 
   const res = await fetch(VENICE_API, {
     method: 'POST',
@@ -877,6 +879,15 @@ ${discoveredTokens.length
     ).join('\n')
   : 'None this cycle'}
 Note: Discovered tokens bypass fixed universe scoring — trade if conviction is high and size is conservative ($10 minimum).
+
+## 🔥 Onchain Trending Entries (Base — Alchemy price data + transfer stats)
+These are Base tokens currently trending onchain. NOT in fixed universe. Execution via Bankr swap by contract address.
+${trendingEntries.length
+  ? trendingEntries.map(t =>
+      `${t.symbol} | score=${t.score.toFixed(2)} | rank=${t.rank}(${t.priorRanks.length?t.priorRanks.join('→')+'→':''}${t.rank}) | ret1h=${(t.ret1h*100).toFixed(1)}% ret6h=${(t.ret6h*100).toFixed(1)}% ret24h=${(t.priceChange24h||0).toFixed(1)}% | move=${(t.moveFrac*100).toFixed(0)}%done | liq=$${Math.round(t.liquidity/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | addr=${t.address}`
+    ).join('\n')
+  : 'No high-conviction trending entries this cycle'}
+If a trending token has score≥0.65 and move<50%done: consider BUY with $10–$15 size, set contractAddress to token address. Use Bankr to swap USDC→token.
 
 ## Portfolio Context
 Active tranche: $${ACTIVE_TRANCHE_USD} USDC

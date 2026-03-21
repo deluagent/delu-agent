@@ -48,15 +48,25 @@ async function execute(decision, activeTrancheUsd) {
   let bankrPrompt;
 
   switch (decision.action) {
-    case 'buy':
-      bankrPrompt = `swap $${sizeUsd} USDC to ${decision.asset} on Base`;
+    case 'buy': {
+      // Support contract address swaps for onchain-discovered tokens
+      const assetRef = decision.contractAddress
+        ? decision.contractAddress   // use address directly for Base microcaps
+        : decision.asset;            // use symbol for known tokens
+      bankrPrompt = `swap $${sizeUsd} USDC to ${assetRef} on Base`;
       if (decision.stop_loss_pct) {
         bankrPrompt += ` with ${decision.stop_loss_pct}% stop loss`;
       }
       break;
+    }
 
     case 'sell':
-      bankrPrompt = `sell all my ${decision.asset} on Base`;
+      // Support sell by contract address too
+      if (decision.contractAddress) {
+        bankrPrompt = `sell all my ${decision.contractAddress} on Base`;
+      } else {
+        bankrPrompt = `sell all my ${decision.asset} on Base`;
+      }
       break;
 
     case 'yield':
