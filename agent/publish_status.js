@@ -140,6 +140,17 @@ async function buildStatus(regimeData) {
       recentTrades: closedTrades,
     },
 
+    reasoningTraces: (() => {
+      try {
+        const tracesFile = path.join(__dirname, '../data/reasoning_traces.jsonl');
+        if (!fs.existsSync(tracesFile)) return [];
+        return fs.readFileSync(tracesFile, 'utf8')
+          .split('\n').filter(Boolean)
+          .map(l => JSON.parse(l))
+          .slice(-5); // last 5 trades
+      } catch { return []; }
+    })(),
+
     autoresearch: {
       daily: {
         expCount:      arDaily.expCount || 0,

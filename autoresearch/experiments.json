@@ -14024,5 +14024,45 @@
     "accepted": false,
     "description": "experiment 634",
     "ts": 1774115736118
+  },
+  {
+    "n": 635,
+    "valSharpe": 2.9637,
+    "isSharpe": 1.5382,
+    "accepted": false,
+    "description": "experiment 635",
+    "ts": 1774116919012
+  },
+  {
+    "n": 636,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 636",
+    "ts": 1774117016931
+  },
+  {
+    "n": 637,
+    "valSharpe": 4.1795,
+    "isSharpe": 1.3038,
+    "accepted": false,
+    "description": "experiment 637",
+    "ts": 1774117114271
+  },
+  {
+    "n": 638,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 638",
+    "ts": 1774117211912
+  },
+  {
+    "n": 639,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "experiment 639",
+    "ts": 1774117310382
   }
 ]
