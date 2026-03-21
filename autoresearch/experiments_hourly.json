@@ -1908,5 +1908,25 @@
     "score": 7.35835,
     "accepted": false,
     "description": "exp 191"
+  },
+  {
+    "n": 192,
+    "ts": "2026-03-21T19:47:44.557Z",
+    "valSharpe": 4.9314,
+    "audSharpe": 9.7853,
+    "isSharpe": 5.3558,
+    "score": 7.35835,
+    "accepted": false,
+    "description": "exp 192"
+  },
+  {
+    "n": 193,
+    "ts": "2026-03-21T19:49:29.146Z",
+    "valSharpe": 5.6807,
+    "audSharpe": 8.395,
+    "isSharpe": 4.5049,
+    "score": 7.03785,
+    "accepted": false,
+    "description": "exp 193"
   }
 ]

@@ -140,18 +140,53 @@ async function buildStatus(regimeData) {
   };
 
   // Last cycle summary
-  const decision = lastCycle?.decision || {};
+    const decision = lastCycle?.decision || {};
   const scores   = (lastCycle?.scores || []).slice(0, 5);
+  const trendingEntries = lastCycle?.trendingEntries || [];
+  const posAssessments  = lastCycle?.positionAssessments || [];
+
+  // "ago" label — how long since last cycle ran
+  const lastTs   = lastCycle?.ts ? new Date(lastCycle.ts) : null;
+  const agoMs    = lastTs ? Date.now() - lastTs.getTime() : null;
+  const agoLabel = agoMs == null ? 'never'
+    : agoMs < 60000 ? `${Math.round(agoMs/1000)}s ago`
+    : agoMs < 3600000 ? `${Math.round(agoMs/60000)}m ago`
+    : `${Math.round(agoMs/3600000)}h ago`;
+
+  // Seen = trending tokens evaluated this cycle + position checks
+  const seenCount = trendingEntries.length + (lastCycle?.screen?.interesting?.length || 0);
+
+  // Flagged = tokens that cleared signal threshold (score >= 0.65)
+  const flagged = trendingEntries.filter(t => (t.score || 0) >= 0.65).map(t => t.symbol);
+
+  // Traded = assets actually executed this cycle
+  const traded = (decision.action === 'buy' || decision.action === 'long') && decision.asset
+    ? [decision.asset] : [];
+
+  // Top signal — best trending entry or top score
+  const topSignal = trendingEntries.length > 0
+    ? `${trendingEntries[0].symbol} score=${trendingEntries[0].score?.toFixed(2)} ret1h=${((trendingEntries[0].ret1h||0)*100).toFixed(1)}%`
+    : scores.length > 0
+    ? `${scores[0].sym} score=${scores[0].combined?.toFixed(3)}`
+    : null;
+
   const cycleOut = {
-    ts:       lastCycle?.ts || new Date().toISOString(),
+    ts:         lastCycle?.ts || new Date().toISOString(),
+    ago:        agoLabel,
     regime,
-    screened: lastCycle?.scores?.length || 37,
-    action:   decision.action || 'smart_yield',
-    asset:    decision.asset || null,
+    seenCount,
+    screened:   seenCount,
+    flagged,
+    traded,
+    action:     decision.action || 'hold',
+    asset:      decision.asset || null,
     confidence: decision.confidence || null,
-    reasoning: decision.reasoning
-      ? decision.reasoning.slice(0, 300)
-      : `${regime} regime — monitoring market, capital in yield`,
+    reasoning:  decision.reasoning
+      ? decision.reasoning.slice(0, 400)
+      : `${regime} regime — monitoring market`,
+    topSignal,
+    trendingEntries: trendingEntries.slice(0, 5),
+    positionUpdates: posAssessments,
     topScores: scores.map(s => ({
       sym:      s.sym,
       score:    parseFloat((s.combined || 0).toFixed(3)),
