@@ -154,6 +154,8 @@ async function buildStatus(regimeData, balanceStr = null) {
         pnlPct,
         peakPct:         parseFloat((p.peakPct || 0).toFixed(2)),
         trailStop:       p.trailPct || 5,
+        hardSlPct:       p.hardSlPct || 3,
+        trailActivated:  (p.peakPct || 0) >= (p.activateAt || 1),
         openedAt:        p.openedAt,
         entryTx:         p.entryTx || p.txHash || null,
         contractAddress: p.contractAddress || null,
@@ -256,19 +258,23 @@ async function buildStatus(regimeData, balanceStr = null) {
     breadth,
     nextCycle,
 
-    // Wallet summary — total portfolio value + unrealised PnL across all positions
+    // Wallet summary — total live portfolio value from Bankr balance
     wallet: (() => {
-      const posValue  = openPositions.reduce((s, p) => s + (p.sizeUSD || 0), 0);
+      // Sum all live token values from Bankr balance (excludes USDC)
+      const posValue  = openPositions.reduce((s, p) => s + (p.currentUSD || p.sizeUSD || 0), 0);
+      const usdcVal   = liveBalanceMap['USDC']?.valueUSD || 0;
       const yieldVal  = yieldPosition.amountUSD || 0;
-      const totalUSD  = parseFloat((posValue + yieldVal).toFixed(2));
-      // Unrealised PnL: sum of (peakPct × sizeUSD) for each position (approximation)
-      const unrealPnl = openPositions.reduce((s, p) => s + ((p.peakPct || 0) / 100 * (p.sizeUSD || 0)), 0);
+      const totalUSD  = parseFloat((posValue + usdcVal + yieldVal).toFixed(2));
+      // True unrealised PnL: currentUSD - sizeUSD (entry) for each open position
+      const unrealPnl = openPositions.reduce((s, p) => s + ((p.currentUSD || p.sizeUSD || 0) - (p.sizeUSD || 0)), 0);
+      const entryTotal = openPositions.reduce((s, p) => s + (p.sizeUSD || 0), 0);
       return {
         totalUSD,
         positionsUSD: parseFloat(posValue.toFixed(2)),
+        liquidUSDC:   parseFloat(usdcVal.toFixed(2)),
         yieldUSD:     parseFloat(yieldVal.toFixed(2)),
         unrealPnlUSD: parseFloat(unrealPnl.toFixed(2)),
-        unrealPnlPct: posValue > 0 ? parseFloat((unrealPnl / posValue * 100).toFixed(2)) : 0,
+        unrealPnlPct: entryTotal > 0 ? parseFloat((unrealPnl / entryTotal * 100).toFixed(2)) : 0,
       };
     })(),
 

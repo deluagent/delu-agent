@@ -15760,5 +15760,405 @@
     "accepted": false,
     "description": "Remove obvDivergence and atrPenalty penalties that consistently hurt performance; restore pure volum",
     "ts": 1774130865261
+  },
+  {
+    "n": 852,
+    "valSharpe": 3.5657,
+    "isSharpe": 1.0066,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.09 with v",
+    "ts": 1774130880711
+  },
+  {
+    "n": 853,
+    "valSharpe": 4.0074,
+    "isSharpe": 1.1927,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volume surprise metric that boosts score when volume spike",
+    "ts": 1774130894310
+  },
+  {
+    "n": 854,
+    "valSharpe": 2.7882,
+    "isSharpe": 1.0158,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.10 for st",
+    "ts": 1774130906166
+  },
+  {
+    "n": 855,
+    "valSharpe": 3.6426,
+    "isSharpe": 1.3183,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties that consistently underperform; increase obvBoost mult",
+    "ts": 1774130918784
+  },
+  {
+    "n": 856,
+    "valSharpe": 3.2363,
+    "isSharpe": 1.0008,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.12 with s",
+    "ts": 1774130930691
+  },
+  {
+    "n": 857,
+    "valSharpe": 3.5126,
+    "isSharpe": 1.1866,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.08 with s",
+    "ts": 1774130943461
+  },
+  {
+    "n": 858,
+    "valSharpe": 3.4547,
+    "isSharpe": 0.9386,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.11 with volume surg",
+    "ts": 1774130956076
+  },
+  {
+    "n": 859,
+    "valSharpe": 3.3857,
+    "isSharpe": 1.116,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.09 and ca",
+    "ts": 1774130969567
+  },
+  {
+    "n": 860,
+    "valSharpe": 2.9706,
+    "isSharpe": 1.0826,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volumeSurprise metric to capture sustained volume accelera",
+    "ts": 1774130983342
+  },
+  {
+    "n": 861,
+    "valSharpe": 3.6525,
+    "isSharpe": 1.211,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.07 with volume surg",
+    "ts": 1774130996422
+  },
+  {
+    "n": 862,
+    "valSharpe": 2.7882,
+    "isSharpe": 1.0158,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.10 with v",
+    "ts": 1774131010065
+  },
+  {
+    "n": 863,
+    "valSharpe": 3.5602,
+    "isSharpe": 1.1218,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.08 with v",
+    "ts": 1774131022904
+  },
+  {
+    "n": 864,
+    "valSharpe": 2.6917,
+    "isSharpe": 1.0982,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.12 with v",
+    "ts": 1774131036005
+  },
+  {
+    "n": 865,
+    "valSharpe": 3.5785,
+    "isSharpe": 1.2864,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.075 with ",
+    "ts": 1774131049646
+  },
+  {
+    "n": 866,
+    "valSharpe": 3.5643,
+    "isSharpe": 0.9864,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.09 with volume surg",
+    "ts": 1774131062745
+  },
+  {
+    "n": 867,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.3066,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost from 0.06 to 0.065 with volume surge cap at 2",
+    "ts": 1774131077291
+  },
+  {
+    "n": 868,
+    "valSharpe": 3.9494,
+    "isSharpe": 1.3495,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.055 and cap relVol ",
+    "ts": 1774131090047
+  },
+  {
+    "n": 869,
+    "valSharpe": 4.0051,
+    "isSharpe": 1.3438,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.062 with volume sur",
+    "ts": 1774131102686
+  },
+  {
+    "n": 870,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.2337,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.068 with ",
+    "ts": 1774131117557
+  },
+  {
+    "n": 871,
+    "valSharpe": 3.6278,
+    "isSharpe": 1.1958,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.075 with ",
+    "ts": 1774131130259
+  },
+  {
+    "n": 872,
+    "valSharpe": 4.0651,
+    "isSharpe": 1.2493,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise detection to boost OBV signal when volume s",
+    "ts": 1774131144404
+  },
+  {
+    "n": 873,
+    "valSharpe": 4.0926,
+    "isSharpe": 1.2135,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol exceeds 2.5x average.",
+    "ts": 1774131159372
+  },
+  {
+    "n": 874,
+    "valSharpe": 3.3246,
+    "isSharpe": 1.2091,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol exceeds 2.0x and price is",
+    "ts": 1774131172341
+  },
+  {
+    "n": 875,
+    "valSharpe": 4.0888,
+    "isSharpe": 1.1642,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol exceeds 2.5x and price mo",
+    "ts": 1774131185892
+  },
+  {
+    "n": 876,
+    "valSharpe": 3.5602,
+    "isSharpe": 1.1218,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.08 with v",
+    "ts": 1774131198007
+  },
+  {
+    "n": 877,
+    "valSharpe": 3.6799,
+    "isSharpe": 0.955,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; boost obvBoost multiplier from 0.06 to 0.09 with volume surpris",
+    "ts": 1774131211449
+  },
+  {
+    "n": 878,
+    "valSharpe": 3.2363,
+    "isSharpe": 1.0008,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.12 with volume surp",
+    "ts": 1774131224263
+  },
+  {
+    "n": 879,
+    "valSharpe": 2.3634,
+    "isSharpe": 1.4735,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add ATR-based volatility filter to reject extreme spikes before",
+    "ts": 1774131239381
+  },
+  {
+    "n": 880,
+    "valSharpe": 2.7956,
+    "isSharpe": 1.041,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.10 and ca",
+    "ts": 1774131253111
+  },
+  {
+    "n": 881,
+    "valSharpe": 3.6153,
+    "isSharpe": 1.1089,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.08 and ad",
+    "ts": 1774131266065
+  },
+  {
+    "n": 882,
+    "valSharpe": 3.6525,
+    "isSharpe": 1.211,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.07 with v",
+    "ts": 1774131278424
+  },
+  {
+    "n": 883,
+    "valSharpe": 3.5551,
+    "isSharpe": 1.2378,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.09 and add volume s",
+    "ts": 1774131291401
+  },
+  {
+    "n": 884,
+    "valSharpe": 3.591,
+    "isSharpe": 1.3801,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.065 with ",
+    "ts": 1774131303207
+  },
+  {
+    "n": 885,
+    "valSharpe": 3.3049,
+    "isSharpe": 1.2536,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.08 and ad",
+    "ts": 1774131317504
+  },
+  {
+    "n": 886,
+    "valSharpe": 3.072,
+    "isSharpe": 0.8345,
+    "accepted": false,
+    "description": "Add volume surprise detection (volume spike above 2 of 20-day MA) as positive signal when price mome",
+    "ts": 1774131332163
+  },
+  {
+    "n": 887,
+    "valSharpe": 2.7882,
+    "isSharpe": 1.0158,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.10 with v",
+    "ts": 1774131344684
+  },
+  {
+    "n": 888,
+    "valSharpe": 3.6426,
+    "isSharpe": 1.2807,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.075 with ",
+    "ts": 1774131357809
+  },
+  {
+    "n": 889,
+    "valSharpe": 3.5655,
+    "isSharpe": 0.9708,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.085 with ",
+    "ts": 1774131371510
+  },
+  {
+    "n": 890,
+    "valSharpe": 3.6525,
+    "isSharpe": 1.1921,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.073 with ",
+    "ts": 1774131384281
+  },
+  {
+    "n": 891,
+    "valSharpe": 3.6278,
+    "isSharpe": 1.1958,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.076 with ",
+    "ts": 1774131397000
+  },
+  {
+    "n": 892,
+    "valSharpe": 3.6577,
+    "isSharpe": 1.3873,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.065 with ",
+    "ts": 1774131410337
+  },
+  {
+    "n": 893,
+    "valSharpe": 1.9345,
+    "isSharpe": 1.3242,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volume surprise metric using volume percentile rank to cat",
+    "ts": 1774131424161
+  },
+  {
+    "n": 894,
+    "valSharpe": 3.0067,
+    "isSharpe": 1.2512,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volume surprise metric using volume percentile rank to cap",
+    "ts": 1774131438265
+  },
+  {
+    "n": 895,
+    "valSharpe": 3.6675,
+    "isSharpe": 1.2337,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.068 with ",
+    "ts": 1774131451074
+  },
+  {
+    "n": 896,
+    "valSharpe": 3.996,
+    "isSharpe": 1.3871,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.062 with ",
+    "ts": 1774131463810
+  },
+  {
+    "n": 897,
+    "valSharpe": 3.6525,
+    "isSharpe": 1.2022,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.072 with ",
+    "ts": 1774131476696
+  },
+  {
+    "n": 898,
+    "valSharpe": 3.6278,
+    "isSharpe": 1.1958,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.075 with ",
+    "ts": 1774131489245
+  },
+  {
+    "n": 899,
+    "valSharpe": 3.591,
+    "isSharpe": 1.3801,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.065 with ",
+    "ts": 1774131503699
+  },
+  {
+    "n": 900,
+    "valSharpe": 3.9277,
+    "isSharpe": 1.3835,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.061 with ",
+    "ts": 1774131516225
+  },
+  {
+    "n": 901,
+    "valSharpe": 3.9476,
+    "isSharpe": 1.3368,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.059 with ",
+    "ts": 1774131528811
   }
 ]
