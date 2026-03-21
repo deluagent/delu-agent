@@ -1,8 +1,8 @@
 {
-  "bestValSharpe": 3.574,
+  "bestValSharpe": 3.6751,
   "bestAudSharpe": 1.858,
-  "bestScore": 3.0591999999999997,
-  "expCount": 406,
+  "bestScore": 3.1317999999999997,
+  "expCount": 412,
   "resetAt": "2026-03-21",
   "baselineNote": "bench sprint: vol confirm + 52w high proximity — val=3.574 aud=1.858 combined=3.059"
 }

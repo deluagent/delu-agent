@@ -89,7 +89,8 @@ function scoreToken(data) {
     prices, 
     volumes = [], 
     btcPrices = [], 
-    flowSignal = 0 
+    flowSignal = 0,
+    highs = []
   } = data;
   
   const n = prices.length;
@@ -123,7 +124,7 @@ function scoreToken(data) {
   const r60 = pctChange(prices, Math.min(60, n - 1));
 
   const momentum = vol > 0.75
-   ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
+  ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
     : (0.30 * r7 + 0.40 * r20 + 0.30 * r60) / (1 + vol);
 
   //  Trend 
@@ -138,7 +139,7 @@ function scoreToken(data) {
 
   //  Funding rate signal 
   const fundingBoost = isBear
-   ? (flowSignal > 0? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
+  ? (flowSignal > 0? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
 
   //  OBV Signal (Volume Accumulation) with Volume Surge Multiplier 
@@ -151,16 +152,21 @@ function scoreToken(data) {
   if (r1 > 0.15 && vol > 0.9) return (momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost) * regimeMult * 0.5;
 
   // Volume confirmation
-  const vol20avg = volumes.length >= 20 ? sma(volumes, 20) : 0;
-  const relVolume = vol20avg > 0 ? volumes[volumes.length-1] / vol20avg : 1;
-  const volConfirm = r1 > 0.03 ? (relVolume > 1.5 ? 0.05 : relVolume < 0.8 ? -0.04 : 0) : 0;
+  const vol20avg = volumes.length >= 20? sma(volumes, 20) : 0;
+  const relVolume = vol20avg > 0? volumes[volumes.length-1] / vol20avg : 1;
+  const volConfirm = r1 > 0.03? (relVolume > 1.5? 0.05 : relVolume < 0.8? -0.04 : 0) : 0;
   // 52w proximity: near ATH in BULL = momentum quality boost
   const high52 = Math.max(...prices.slice(Math.max(0, n-252)));
   const pctFromHigh = (high52 - prices[n-1]) / (high52||1);
-  const highProximity = !isBear && pctFromHigh < 0.12 ? 0.01 : 0;
+  const highProximity =!isBear && pctFromHigh < 0.12? 0.01 : 0;
+
+  //  OBV Divergence
+  const obv = calculateObvSig(prices, volumes, 20);
+  const priceChange = prices[n - 1] - prices[n - 20];
+  const obvDivergence = obv > 0 && priceChange < 0? -0.02 : obv < 0 && priceChange > 0? 0.02 : 0;
 
   //  Combined 
-  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity;
+  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity + obvDivergence;
   
   return raw * regimeMult;
 }
