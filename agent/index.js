@@ -27,6 +27,8 @@ const checkr  = require('./checkr');
 const journal = require('./journal');
 const { kellySize, correlationAdjust, calibrateFromLog } = require('./kelly');
 const { startDashboard } = require('./dashboard');
+const { dynamicTrailStop } = require('./stops');
+const { fetchAllFlows } = require('./flows');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -54,8 +56,11 @@ function loadCandidate() {
 const { fetchBinanceHourly, fetchGeckoTerminal, GECKO_TERMINAL_FALLBACK } = require('../backtest/fetch.js');
 
 const TOKENS = [
-  // Majors (Binance)
+  // Top Binance majors (liquid, high volume)
   'BTC','ETH','SOL','BNB','DOGE','AAVE','ARB',
+  'LINK','AVAX','DOT','UNI','ATOM','LTC','XRP',
+  'ADA','NEAR','OP','INJ','SUI','APT','TIA',
+  'WLD','PEPE','WIF','TON','FTM','SEI',
   // Base ecosystem (GeckoTerminal)
   'BRETT','DEGEN','AERO','VIRTUAL','CLANKER',
   'ODAI','JUNO','FELIX','CLAWD','CLAWNCH'
@@ -459,19 +464,23 @@ async function runCycle() {
   console.log('\n[data] Fetching bars...');
   const allBarsDaily = [];  // 1d bars, 220 candles
   const allBars = [];       // 1h bars, 500 candles
+  const allBars4h = [];     // 4h bars, 120 candles (multi-timeframe confluence)
   for (let i = 0; i < TOKENS.length; i++) {
     try {
-      const [daily, hourly] = await Promise.all([
+      const [daily, hourly, bars4h] = await Promise.all([
         fetchBars(TOKENS[i], '1d', 220),
         fetchBars(TOKENS[i], '1h', 500),
+        fetchBars(TOKENS[i], '4h', 120).catch(() => []),
       ]);
       allBarsDaily.push(daily);
       allBars.push(hourly);
+      allBars4h.push(bars4h);
       process.stdout.write(`  ${SYMBOLS[i]} ✓  `);
     } catch (e) {
       console.error(`  ${SYMBOLS[i]} FAILED: ${e.message}`);
       allBarsDaily.push([]);
       allBars.push([]);
+      allBars4h.push([]);
     }
     await sleep(2000); // 2s delay to avoid GeckoTerminal 429s (30 req/min limit)
   }
@@ -504,7 +513,18 @@ async function runCycle() {
   const arState = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../autoresearch/state.json'),'utf8')); } catch { return null; } })();
   if (arState) console.log(`\n[autoresearch] exp=${arState.expCount} bestValSharpe=${arState.bestValSharpe.toFixed(3)} — candidate loaded ${candidate ? '✓' : '✗'}`);
 
-  // 3b. Fetch Checkr social attention signals (pay-per-call via x402, ~$0.02)
+  // 3b. Fetch market flow signals (Binance OI + volume, free)
+  let flowSignals = {};
+  try {
+    console.log('\n[flows] Fetching Binance OI + volume signals...');
+    flowSignals = await fetchAllFlows(TOKENS.filter(t => require('./flows').SYMBOL_MAP[t]));
+    const topFlow = Object.entries(flowSignals).sort((a,b) => b[1].flowScore - a[1].flowScore).slice(0,3);
+    console.log('[flows] Top flows:', topFlow.map(([s,f]) => `${s}:${f.flowScore.toFixed(2)}`).join(' '));
+  } catch(e) {
+    console.warn('[flows] Skipped:', e.message?.slice(0,60));
+  }
+
+  // 3c. Fetch Checkr social attention signals (pay-per-call via x402, ~$0.02)
   let checkrAttention = {}; // sym → { attentionDelta, velocity, divergence, viral_class }
   try {
     console.log('\n[checkr] Fetching attention leaderboard...');
@@ -540,9 +560,30 @@ async function runCycle() {
   console.log('[signals] Scoring...');
   const btcDailyCloses = allBarsDaily[0]?.map(b => b.close) || [];
   const scores = SYMBOLS.map((sym, ti) => {
-    const bars = allBars[ti];
+    const bars     = allBars[ti];
+    const bars4h   = allBars4h[ti] || [];
     const dailyBars = allBarsDaily[ti] || [];
-    if (bars.length < 250) return { sym, ti, sA: 0, sB: 0, sC: 0, sD: 0, sAR: 0 };
+    if (bars.length < 250) return { sym, ti, sA: 0, sB: 0, sC: 0, sD: 0, sAR: 0, mtfGate: false };
+
+    // Multi-timeframe confluence: compute 4h trend
+    // Gate: only full score if 1h + 4h trend agree (same direction)
+    let mtfGate = true; // default open
+    let mtfNote = 'no 4h data';
+    if (bars4h.length >= 20) {
+      const c4h = bars4h.map(b => b.close);
+      const n4h = c4h.length;
+      const ema4h_fast = c4h.slice(-20).reduce((s,p,i,a) => i===0 ? p : s*(1-2/13)+p*(2/13), c4h[n4h-20]);
+      const ema4h_slow = c4h.slice(-30).reduce((s,p,i,a) => i===0 ? p : s*(1-2/27)+p*(2/27), c4h[Math.max(0,n4h-30)]);
+      const trend4h = ema4h_fast > ema4h_slow ? 'up' : 'down';
+      // 1h trend from hourly bars
+      const c1h = bars.map(b => b.close);
+      const n1h = c1h.length;
+      const ema1h_fast = c1h.slice(-20).reduce((s,p,i) => i===0 ? p : s*0.857+p*0.143, c1h[n1h-20]);
+      const ema1h_slow = c1h.slice(-26).reduce((s,p,i) => i===0 ? p : s*0.926+p*0.074, c1h[Math.max(0,n1h-26)]);
+      const trend1h = ema1h_fast > ema1h_slow ? 'up' : 'down';
+      mtfGate = trend1h === trend4h; // confluent = both agree
+      mtfNote = `1h=${trend1h} 4h=${trend4h} → ${mtfGate ? '✓ aligned' : '✗ diverging'}`;
+    }
 
     // Autoresearch score — Venice-evolved signal function
     let sAR = 0;
@@ -553,7 +594,7 @@ async function runCycle() {
           prices:            dailyBars.map(b => b.close),
           volumes:           dailyBars.map(b => b.volume || 0),
           btcPrices:         btcDailyCloses,
-          flowSignal:        0,
+          flowSignal:        flowSignals[sym]?.flowScore || 0,
           attentionDelta:    attn.attentionDelta || 0,
           attentionVelocity: attn.velocity || 0,
           divergence:        attn.divergence ? 1 : 0,
@@ -596,12 +637,14 @@ async function runCycle() {
       template = 'D';
     }
     // BEAR: combined = 0 for all
+    // Multi-timeframe gate: reduce score by 40% if 1h and 4h disagree
+    if (!s.mtfGate && combined > 0) combined *= 0.6;
     return { ...s, combined, template };
   }).sort((a, b) => b.combined - a.combined);
 
   console.log('  Top tokens:');
   for (const s of ranked.slice(0, 3)) {
-    console.log(`    ${s.sym.padEnd(6)} A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} → combined=${s.combined.toFixed(3)} [${s.template}]`);
+    console.log(`    ${s.sym.padEnd(6)} A=${s.sA.toFixed(3)} B=${s.sB.toFixed(3)} C=${s.sC.toFixed(3)} D=${s.sD.toFixed(3)} AR=${s.sAR.toFixed(3)} mtf=${s.mtfGate?'✓':'✗'} → combined=${s.combined.toFixed(3)} [${s.template}]`);
   }
 
   // 4. [Layer 1] Bankr LLM screen — fast pre-filter
@@ -753,14 +796,26 @@ What is your allocation decision?`;
       const result = await bankr.execute(kellyDecision, ACTIVE_TRANCHE_USD);
       console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
 
-      // Record entry in journal with Kelly metadata
+      // Record entry + compute dynamic trailing stop
       if (decision.action === 'buy' || decision.action === 'long') {
         const entryPrice = await bankr.getPrice(decision.asset).catch(() => 0);
+        // Dynamic ATR-based trailing stop
+        const tokenIdx   = SYMBOLS.indexOf(decision.asset);
+        const tokenBars  = tokenIdx >= 0 ? allBarsDaily[tokenIdx] : [];
+        const stopConfig = dynamicTrailStop(
+          tokenBars.map(b => b.close),
+          tokenBars.map(b => b.high || b.close),
+          tokenBars.map(b => b.low  || b.close),
+          regime.state
+        );
+        console.log(`[stops] ${decision.asset} trail=${stopConfig.trailPct}% activate=${stopConfig.activateAt}% | ${stopConfig.rationale}`);
         journal.recordEntry(decision.asset, entryPrice, finalSizeUsd, {
-          regime:     regime.state,
-          confidence: decision.confidence,
-          signals:    ranked.find(s => s.sym === decision.asset),
+          regime:        regime.state,
+          confidence:    decision.confidence,
+          signals:       ranked.find(s => s.sym === decision.asset),
           kellyFraction: kelly.kellyFraction,
+          trailPct:      stopConfig.trailPct,
+          activateAt:    stopConfig.activateAt,
         });
       }
     } catch (e) {

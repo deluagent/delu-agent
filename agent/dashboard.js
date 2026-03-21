@@ -107,8 +107,8 @@ function getStatus() {
 
     stack: {
       tradeReasoning:   'Venice llama-3.3-70b (E2EE private inference)',
-      screening:        'Bankr LLM gemini-2.5-flash',
-      research:         'Bankr LLM claude-sonnet-4-5',
+      screening:        'Bankr LLM gemini-2.5-flash (fast pre-filter)',
+      research:         'Bankr LLM claude-sonnet-4-5 (self-improving autoresearch)',
       signals:          ['momentum', 'OBV', 'funding_rate', 'social_attention (Checkr)', 'volume_confirmation', '52w_high_proximity'],
       execution:        'Bankr API (onchain, Base)',
       stopManagement:   'Bankr native trailing stops (5% trail)',

@@ -12551,5 +12551,37 @@
     "accepted": false,
     "description": "experiment 452",
     "ts": 1774096373058
+  },
+  {
+    "n": 453,
+    "valSharpe": 3.6363,
+    "isSharpe": 1.2338,
+    "accepted": false,
+    "description": "experiment 453",
+    "ts": 1774096478281
+  },
+  {
+    "n": 454,
+    "valSharpe": 3.6838,
+    "isSharpe": 1.2711,
+    "accepted": false,
+    "description": "experiment 454",
+    "ts": 1774096584468
+  },
+  {
+    "n": 455,
+    "valSharpe": 3.6047,
+    "isSharpe": 1.4719,
+    "accepted": false,
+    "description": "experiment 455",
+    "ts": 1774096689817
+  },
+  {
+    "n": 456,
+    "valSharpe": 3.6751,
+    "isSharpe": 1.2884,
+    "accepted": false,
+    "description": "experiment 456",
+    "ts": 1774096796452
   }
 ]
