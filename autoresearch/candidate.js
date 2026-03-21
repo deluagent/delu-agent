@@ -155,6 +155,7 @@ function scoreToken(data) {
   const vol20avg = volumes.length >= 20? sma(volumes, 20) : 0;
   const relVolume = vol20avg > 0? volumes[volumes.length-1] / vol20avg : 1;
   const volConfirm = r1 > 0.03? (relVolume > 1.5? 0.05 : relVolume < 0.8? -0.04 : 0) : 0;
+  
   // 52w proximity: near ATH in BULL = momentum quality boost
   const high52 = Math.max(...prices.slice(Math.max(0, n-252)));
   const pctFromHigh = (high52 - prices[n-1]) / (high52||1);
@@ -165,13 +166,12 @@ function scoreToken(data) {
   const priceChange = prices[n - 1] - prices[n - 20];
   const obvDivergence = obv > 0 && priceChange < 0? -0.02 : obv < 0 && priceChange > 0? 0.02 : 0;
 
-  //  Volume Surprise 
-  const avgVol = sma(volumes, 14);
-  const surprise = volumes[n-1] / (avgVol || 1);
-  const surprisePenalty = surprise > 2? -0.01 : surprise < 0.5? 0.01 : 0;
+  //  ATR penalty for high volatility
+  const atr = highs.length >= 14 ? realizedVol(highs, 14) : vol;
+  const atrPenalty = atr > 0.8 ? -0.03 : 0;
 
   //  Combined 
-  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity + obvDivergence + surprisePenalty;
+  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity + obvDivergence + atrPenalty;
   
   return raw * regimeMult;
 }

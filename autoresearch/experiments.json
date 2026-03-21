@@ -12607,5 +12607,22 @@
     "accepted": false,
     "description": "experiment 459",
     "ts": 1774097116210
+  },
+  {
+    "n": 460,
+    "valSharpe": 3.6751,
+    "isSharpe": 1.218,
+    "accepted": false,
+    "description": "experiment 460",
+    "ts": 1774097222806
+  },
+  {
+    "n": 461,
+    "valSharpe": 3.8884,
+    "audSharpe": 1.8589,
+    "isSharpe": 1.1587,
+    "accepted": true,
+    "description": "experiment 461",
+    "ts": 1774097329259
   }
 ]
