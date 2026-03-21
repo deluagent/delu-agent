@@ -68,7 +68,6 @@ function zScore(prices, window = 20) {
 /**
  * Net Volume Flow (OBV-style)
  * Measures the percentage of volume that occurred on "up" days over a window.
- * Returns a value between -1 and 1.
  */
 function calculateObvSig(prices, volumes, window = 20) {
   const n = prices.length;
@@ -146,10 +145,10 @@ function scoreToken(data) {
     ? (flowSignal > 0 ? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
 
-  // ── OBV Signal (Volume Accumulation) ──
-  // Check if volume is confirming the price action over the last 15 days.
+  // ── OBV Signal (Volume Accumulation) with Volume Surge Multiplier ──
   const obvSig = calculateObvSig(prices, volumes, 15);
-  const obvBoost = 0.08 * obvSig;
+  const relVol = volumes[n - 1] / (sma(volumes, 15) || 1);
+  const obvBoost = 0.08 * obvSig * Math.min(relVol, 1.4);
 
   // ── Combined ──
   const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost;
