@@ -1,102 +1,74 @@
-# delu autoresearch — program.md
+# Autoresearch Program — Daily Signals
 
-## Mission
-Build a trading strategy that could scale to $1M AUM.
-We need Sharpe > 4.0 val AND audit > 1.5. Currently at val=3.711, aud=1.393.
+## Current state (as of exp 555)
+- Best: val=3.888, aud=1.858, combined=3.280
+- IS period:  Mar 2024 – Jun 2025 (BULL, BTC $40k→$111k)  
+- VAL period: Jun 2025 – Oct 2025 (BULL, BTC $65k→$111k) ← primary metric
+- AUD period: Oct 2025 – Mar 2026 (BEAR, BTC $111k→$70k) ← secondary metric
 
-## Setup
-- 55 tokens (50 Binance majors + 5 Base), 730 daily bars
-- Score all tokens daily, long top 5, equal weight, next-bar execution
-- In-sample: days 0-436 | Validation: 437-616 | Audit: 617-729
-- BEAR period dominates audit — strategy MUST work in bear (oversold bounces, funding divergence)
+## Observation: we are at a local optimum on VAL
+Val=3.888 is strong. The LLM has been tweaking signal weights for 100+ experiments with no improvement.
 
-## Current best (exp 252, val=3.719)
-Strategy: adaptive lookback momentum + EMA filter + OBV + funding rate + vol penalty + mean reversion
-Key: adaptive lookback (vol > 0.75 → short-term r3/r7, else long-term r20/r60)
-Key: hard knife filter (r7 < -0.20 → return 0)
-Key: EMA gap filter (|ema| < 0.03 → return 0, removes sideways)
+## New focus: IMPROVE AUD (currently 1.858)
 
-## What scoreToken receives
-```
-{ prices, volumes, highs, lows, btcPrices, flowSignal, attentionDelta }
-prices/btcPrices: daily close float[], oldest first
-volumes: daily volume float[]
-highs/lows: daily OHLC float[]
-flowSignal: Binance perp funding rate z-score INVERTED [-1,+1] (positive = bullish)
-attentionDelta: Checkr social attention velocity (0-1, higher = more social attention)
-```
+The audit period is BEAR — BTC fell from $111k to $70k.
+A signal that works in AUD must:
+1. Identify tokens that hold up better than BTC in a downtrend (relative strength)
+2. Reduce position sizing or go flat when market-wide momentum is negative
+3. NOT require a hard zero in BEAR — that kills selectivity
 
-## Available helpers (already defined, do NOT redefine)
-pctChange(prices, lookback) → float
-realizedVol(prices, window) → annualized vol float
-sma(prices, period) → float
-emaVal(prices, period) → float
-emaGap(prices, fast, slow) → float (positive = bullish)
-zScore(prices, window) → float
-calculateObvSig(prices, volumes, window) → float [-1,+1]
+## Top tokens driving VAL returns:
+- RNDR: +79.5% (70 selections, core holding)
+- ETH: +38.1% (50 selections)
+- MKR: +34.2% (12 selections, high avg ret)
+- IMX: +27.1% (6 selections, very high avg ret)
+- HBAR: +22.3% (1 selection — lucky?)
 
-## Untried ideas (priority order — try these next)
+## Hypotheses to improve AUD (BEAR robustness)
 
-### 1. Cross-sectional rank normalization
-Instead of raw momentum, use RANK of momentum across the universe.
-Rank-based signals are more robust than raw values.
-Problem: scoreToken is called per-token and doesn't see others.
-Workaround: use z-score of recent returns as a rank proxy.
+### H1: Add a drawdown dampener
+- If token is down >15% from its 90d high → reduce score by 50%
+- Avoids holding fallen knives in BEAR
+- Should help AUD without hurting VAL
 
-### 2. ATR-based position quality filter
-If ATR(14) > 8% of price → very noisy, return 0 or heavy penalty.
-If ATR(14) < 2% of price → consolidating, good entry.
-atr = mean of (highs[i] - lows[i]) for last 14 bars / close
+### H2: Relative strength vs BTC as primary AUD signal
+- In BEAR, tokens outperforming BTC are the winners
+- Add: `relBTC = (r20_token - r20_btc) * weight`
+- Boost tokens beating BTC, penalise those losing to BTC
 
-### 3. Volume confirmation (breakthrough filter)
-If price up > 3% but volume < 0.8× 20d average → false breakout, penalize
-If price up > 3% and volume > 1.5× 20d average → confirmed breakout, boost
+### H3: Sector rotation signal
+- In BEAR: AI/DePIN sector (RNDR, FET, AGIX, OCEAN) tends to hold up better
+- Already in universe — add sector momentum: avg of AI-token recent returns
+- If AI sector momentum positive → boost all AI tokens
 
-### 4. Higher-timeframe trend alignment
-Use 90d trend as filter gate — only trade tokens trending up over 90 days
-pctChange(prices, 90) > 0 required for full score
+### H4: Volatility-adjusted momentum
+- In BEAR, high-vol tokens bleed more
+- Divide momentum by recent realised vol
+- Sharpe-ratio-style signal: ret/vol as score component
 
-### 5. Consecutive up-days streak
-Count consecutive days of positive closes. 3-5 in a row = momentum confirmed.
-Too many (>8) = overbought, penalize.
+### H5: Time-weighted momentum (recent > old)
+- Standard equal-weight r7/r20/r60 doesn't decay
+- Try: exponential decay so last 3 days matter 3x more than day 10-20
+- Should help AUD where moves are sharper and shorter
 
-### 6. Price vs 52-week high
-Score = 1 - (price / max52w). Tokens near 52w high have momentum.
-Tokens far from 52w high in bear could be recovering.
+### H6: Bear-specific mean reversion
+- Oversold bounces exist in BEAR (RSI<30 → short-term rally)
+- Add: if r7 < -20% → mean reversion score boost of 0.1
+- Gate: only when BTC itself is not crashing (BTC r3 > -5%)
 
-### 7. Multi-factor composite with strict filters
-Require ALL of: EMA bullish + OBV positive + r20 > 0 + not oversold on z-score
-Return 0 if ANY filter fails. Only score tokens that pass all gates.
-This reduces number of trades but improves quality.
+## Hard constraints
+- NEVER zero out entire score based on BTC regime — causes phantom Sharpe
+- MIN_SCORE=0.05 already filters weak tokens
+- Keep scoreToken returning [0, 1] (not negative — no shorts in daily evaluator)
+- Don't redefine existing helpers
+- ONE change per experiment — isolate what works
 
-### 8. GARCH-style vol forecast
-Use ratio of short-vol to long-vol as regime signal:
-shortVol = realizedVol(prices, 5)
-longVol = realizedVol(prices, 30)
-If shortVol > 1.5 × longVol → vol expanding → reduce position
-If shortVol < 0.7 × longVol → vol contracting → boost position
-
-### 9. Drawdown recovery signal
-If price is recovering from a recent -20% drawdown:
-max20 = max of last 20 prices
-drawdown = (max20 - price) / max20
-If drawdown > 0.20 and recovering (r7 > 0) → oversold bounce → boost in BEAR
-
-### 10. Funding rate + momentum alignment
-Currently funding is additive. Try: if funding bullish AND momentum > 0 → double boost.
-If disagreement → cancel out. Require alignment, not just addition.
-
-## What NOT to do
-- Don't remove the adaptive lookback (it's core to val=3.719)
-- Don't remove the falling knife filter (r7 < -0.20)
-- Don't remove the EMA gap filter
-- Don't just tweak weights (we've done 1500 experiments of that)
-- Don't add noise signals with no economic intuition
+## What has been tried and failed (do not repeat)
+- Hard BEAR gate (regimeMult=0.05) — kills all VAL/AUD discriminating power
+- Adding funding rate as primary signal — doesn't move the needle
+- Changing momentum weights slightly (r7/r20/r60 ratios) — exhausted
+- GARCH vol regime — too complex, overfits IS
+- Trend gate |emaGap|<0.03 — zeros too many tokens
 
 ## Target
-val_sharpe > 4.0 AND aud_sharpe > 1.5
-Combined score = 0.7 × val + 0.3 × aud > 3.25
-
-## Acceptance rule (enforced in loop.js)
-New combined score must beat 0.7×3.711 + 0.3×1.393 = 3.016
-AND audit must be > -0.5
+val > 4.0 AND aud > 2.5 (combined > 3.55)

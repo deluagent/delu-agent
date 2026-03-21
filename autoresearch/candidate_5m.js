@@ -53,48 +53,45 @@ function scoreToken(data) {
   const n  = prices.length;
   const bN = (btcPrices || []).length;
 
-  // Need at least 288 bars (1 day of 5m) for meaningful signals
   if (n < 288 || bN < 288) return 0;
 
-  // ── Micro-momentum hierarchy ─────────────────────────────────
-  // 5m (1 bar), 15m (3 bars), 1h (12 bars), 4h (48 bars)
-  const ret1  = (prices[n-1] - prices[n-2])  / prices[n-2];   // 5m
-  const ret3  = (prices[n-1] - prices[n-4])  / prices[n-4];   // 15m
+  // ── Core momentum: 1h and 4h only (avoid 5m/15m noise) ──────
   const ret12 = (prices[n-1] - prices[n-13]) / prices[n-13];  // 1h
   const ret48 = n >= 49 ? (prices[n-1] - prices[n-49]) / prices[n-49] : 0; // 4h
 
-  // Hierarchy: all pointing same direction = conviction
-  const momScore = Math.tanh(ret1*200)*0.15
-                 + Math.tanh(ret3*80)*0.25
-                 + Math.tanh(ret12*30)*0.35
-                 + Math.tanh(ret48*10)*0.25;
+  // Strengthen alignment requirement - zero out if opposing signals
+  const aligned = (ret12 > 0 && ret48 > 0) || (ret12 < 0 && ret48 < 0);
+  if (!aligned) return 0;
+  
+  const momScore = Math.tanh(ret12 * 30) * 0.5 + Math.tanh(ret48 * 10) * 0.5;
 
-  // ── Volume burst ─────────────────────────────────────────────
-  // Last 12 bars (1h) vs prior 48 bars (4h avg)
+  // ── Volume burst (12 bars vs 48 bars) ───────────────────────
   const vol12 = volumes.slice(-12).reduce((s, v) => s + v, 0) / 12;
   const vol48 = volumes.slice(-60, -12).reduce((s, v) => s + v, 0) / 48;
   const burst  = vol12 / (vol48 || 1);
   const dir12  = ret12 > 0 ? 1 : ret12 < 0 ? -1 : 0;
-  const volSignal = Math.tanh((burst - 1) * dir12 * 3) * 0.2;
+  const volSignal = Math.tanh((burst - 1.2) * dir12 * 4) * 0.3;
 
-  // ── Relative strength vs BTC ─────────────────────────────────
+  // ── Relative strength vs BTC (4h horizon) ────────────────────
   const tokenRet48 = ret48;
   const btcRet48   = bN >= 49 ? (btcPrices[bN-1] - btcPrices[bN-49]) / btcPrices[bN-49] : 0;
-  const relBTC     = Math.tanh((tokenRet48 - btcRet48) * 20) * 0.2;
+  const relBTC     = Math.tanh((tokenRet48 - btcRet48) * 25) * 0.25;
 
-  // ── Range compression/expansion ──────────────────────────────
-  // Tight range (coiling) before breakout = signal
-  const hiLo12  = Math.max(...highs.slice(-12)) - Math.min(...lows.slice(-12));
-  const hiLo48  = Math.max(...highs.slice(-60,-12)) - Math.min(...lows.slice(-60,-12));
-  const rangeRatio = hiLo12 / (hiLo48 || 1);
-  // Breakout: range just expanded AND direction is up
-  const breakout = rangeRatio > 1.5 && ret12 > 0 ? 0.1 : 0;
+  // ── VWAP deviation (1h window) ───────────────────────────────
+  let sumPV = 0, sumV = 0;
+  for (let i = n - 12; i < n; i++) {
+    sumPV += prices[i] * volumes[i];
+    sumV  += volumes[i];
+  }
+  const vwap = sumV > 0 ? sumPV / sumV : prices[n-1];
+  const vwapDev = (prices[n-1] - vwap) / vwap;
+  const vwapSignal = Math.tanh(vwapDev * 50) * 0.2;
 
-  // ── BTC gate ─────────────────────────────────────────────────
+  // ── BTC gate (halve if BTC dumping >1.5% this hour) ──────────
   const btcRet12 = bN >= 13 ? (btcPrices[bN-1] - btcPrices[bN-13]) / btcPrices[bN-13] : 0;
-  const btcGate  = btcRet12 < -0.015 ? 0.5 : 1.0; // halve score if BTC dumping >1.5% this hour
+  const btcGate  = btcRet12 < -0.015 ? 0.4 : btcRet12 > 0.015 ? 1.1 : 1.0;
 
-  const score = (momScore + volSignal + relBTC + breakout) * btcGate;
+  const score = (momScore + volSignal + relBTC + vwapSignal) * btcGate;
   return Math.max(-1, Math.min(1, score));
 }
 

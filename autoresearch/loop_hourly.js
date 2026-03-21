@@ -52,23 +52,24 @@ function saveCostTrack(c) { fs.writeFileSync(COST_TRACK, JSON.stringify(c)); }
 
 // ── LLM call (Bankr LLM) ────────────────────────────────────
 async function callLLM(messages) {
-  const key = process.env.BANKR_LLM_KEY || process.env.BANKR_API_KEY;
-  if (!key) throw new Error('No BANKR_LLM_KEY in env');
+  const key = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
+  if (!key) throw new Error('No ANTHROPIC_API_KEY in env');
 
   const body = JSON.stringify({
-    model: 'claude-sonnet-4-5',
+    model: 'claude-haiku-4-5-20251001',
     max_tokens: 4000,
-    messages,
+    messages: messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
   });
 
   return new Promise((resolve, reject) => {
     const req = https.request({
-      hostname: 'llm.bankr.bot',
-      path: '/v1/chat/completions',
+      hostname: 'api.anthropic.com',
+      path: '/v1/messages',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`,
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
         'Content-Length': Buffer.byteLength(body),
       },
     }, (res) => {
@@ -77,7 +78,8 @@ async function callLLM(messages) {
       res.on('end', () => {
         try {
           const j = JSON.parse(data);
-          resolve(j.choices?.[0]?.message?.content || '');
+          if (j.error) throw new Error(`Anthropic error: ${JSON.stringify(j.error)}`);
+          resolve(j.content?.[0]?.text || '');
         } catch(e) { reject(new Error(`LLM parse error: ${data.slice(0,200)}`)); }
       });
     });
