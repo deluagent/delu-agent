@@ -40,7 +40,7 @@ const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
 const BANKR_API_KEY   = process.env.BANKR_API_KEY;
 
 // Cost guard (Venice is within plan — just track calls)
-const COST_PER_CALL_EST = 0.001; // nominal
+const COST_PER_CALL_EST = 0.003; // claude-sonnet-4-5 ~3k tokens in+out
 const MAX_SPEND_USD     = 999;   // effectively unlimited on Venice plan
 const COST_TRACK_FILE   = path.join(DIR, 'cost_track.json');
 
@@ -75,15 +75,14 @@ async function callLLM(messages) {
 
   // Venice llama-3.3-70b — private, free, proven to work
   const _t0 = Date.now();
-  // Use raw https.request — works reliably in nohup background (no undici/node-fetch issues)
+  // Use Bankr LLM — claude-sonnet-4-5, fast (~8s), full output
   const data = await new Promise((resolve, reject) => {
     const body = JSON.stringify({
-      model: 'llama-3.3-70b', messages, temperature: 0.7, max_tokens: 3000,
-      venice_parameters: { enable_web_search: 'off', include_venice_system_prompt: false },
+      model: 'claude-sonnet-4-5', messages, temperature: 0.7, max_tokens: 4000,
     });
-    const key = (process.env.VENICE_API_KEY || '').replace(/\s/g, '');
+    const key = (process.env.BANKR_API_KEY || '').replace(/\s/g, '');
     const req = https.request({
-      hostname: 'api.venice.ai', path: '/api/v1/chat/completions', method: 'POST',
+      hostname: 'llm.bankr.bot', path: '/v1/chat/completions', method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}`, 'Content-Length': Buffer.byteLength(body) },
     }, (res) => {
       let raw = '';
@@ -94,7 +93,7 @@ async function callLLM(messages) {
       });
     });
     req.on('error', reject);
-    const _timeout = setTimeout(() => { req.destroy(); reject(new Error('Venice timeout after 90s')); }, 90000);
+    const _timeout = setTimeout(() => { req.destroy(); reject(new Error('Bankr LLM timeout after 60s')); }, 60000);
     req.on('close', () => clearTimeout(_timeout));
     req.write(body);
     req.end();
@@ -213,7 +212,7 @@ async function loop() {
   console.log('🔬 delu autoresearch loop starting...');
   console.log(`   candidate: ${CANDIDATE}`);
   console.log(`   interval:  ${INTERVAL_MS / 1000}s`);
-  console.log(`   model:     llama-3.3-70b via Venice (private, e2ee)`);
+  console.log(`   model:     claude-sonnet-4-5 via Bankr LLM`);
   const ct = loadCostTrack();
   console.log(`   budget:    $${ct.estimatedSpend.toFixed(3)} spent / $${MAX_SPEND_USD} limit (${ct.totalCalls} calls)\n`);
 
