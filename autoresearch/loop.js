@@ -148,11 +148,25 @@ function loadAgentHistory() {
   } catch { return '## Agent history: none yet'; }
 }
 
+function loadLiveFeedback() {
+  try {
+    const fb = JSON.parse(fs.readFileSync(path.join(DIR, 'live_feedback.json'), 'utf8'));
+    if (!fb.length) return '';
+    const wins = fb.filter(f => f.won).length;
+    const avg  = (fb.reduce((s, f) => s + f.pnlPct, 0) / fb.length).toFixed(2);
+    const recent = fb.slice(-5).map(f =>
+      `  ${f.sym} | ${f.won ? 'WIN' : 'LOSS'} ${f.pnlPct?.toFixed(2)}% | regime=${f.regime} | reason=${f.reason}`
+    ).join('\n');
+    return `## Live trade outcomes (${fb.length} closed trades | WR=${wins}/${fb.length} | avgPnL=${avg}%)\n${recent}`;
+  } catch { return ''; }
+}
+
 // ── Propose change via Venice ────────────────────────────────
 async function proposeChange(state, experiments) {
   const programMd    = fs.readFileSync(PROGRAM, 'utf8');
   const candidateJs  = fs.readFileSync(CANDIDATE, 'utf8');
   const agentHistory = loadAgentHistory();
+  const liveFeedback = loadLiveFeedback();
 
   const recentExps = experiments.slice(-6).map(e =>
     `  exp ${e.n}: val_sharpe=${e.valSharpe.toFixed(3)} ${e.accepted ? '✅ KEPT' : '❌ reverted'} — ${e.description}`
@@ -173,7 +187,7 @@ scoreToken receives: { prices, volumes, highs, lows, btcPrices, flowSignal }
 ## Recent experiments
 ${recentExps}
 
-## Key hypotheses to try (pick ONE)
+${liveFeedback ? liveFeedback + '\n' : ''}## Key hypotheses to try (pick ONE)
 ${programMd.match(/## Hypotheses[\s\S]*?(?=\n##|\n#|$)/)?.[0]?.slice(0, 600) || '- Try OBV divergence\n- Try volume surprise\n- Try ATR penalty'}
 
 ## Current scoreToken function

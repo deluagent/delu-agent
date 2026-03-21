@@ -24,6 +24,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
 const bankr   = require('./bankr');
 const checkr  = require('./checkr');
+const journal = require('./journal');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -482,6 +483,18 @@ async function runCycle() {
   }
   console.log(`\n[regime] ${regime.state} | BTC $${Math.round(regime.btcNow)} | ${((regime.pctFrom200)*100).toFixed(1)}% from 200d MA | breadth ${regime.breadthFraction} | volRatio ${regime.volRatio.toFixed(2)}`);
 
+  // 2b. Reconcile positions with Bankr (point 1: track closes)
+  console.log('\n[journal] Reconciling positions...');
+  const currentPricesForReconcile = {};
+  try {
+    const balanceResp = await bankr.getBalances();
+    const updatedPositions = await journal.reconcilePositions(balanceResp, currentPricesForReconcile);
+    const open = updatedPositions.filter(p => p.status === 'open');
+    console.log(`[journal] ${open.length} open positions after reconcile`);
+  } catch(e) {
+    console.warn(`[journal] Reconcile skipped: ${e.message?.slice(0,60)}`);
+  }
+
   // (checkr attention fetched below in step 3b)
 
   // 3. Score all tokens
@@ -722,6 +735,16 @@ What is your allocation decision?`;
     try {
       const result = await bankr.execute(decision, ACTIVE_TRANCHE_USD);
       console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
+      // Point 1: record entry in journal
+      if (decision.action === 'buy' || decision.action === 'long') {
+        const entryPrice = await bankr.getPrice(decision.asset).catch(() => 0);
+        const sizeUsd    = Math.round((decision.size_pct / 100) * ACTIVE_TRANCHE_USD * 100) / 100;
+        journal.recordEntry(decision.asset, entryPrice, sizeUsd, {
+          regime:     regime.state,
+          confidence: decision.confidence,
+          signals:    ranked.find(s => s.sym === decision.asset),
+        });
+      }
     } catch (e) {
       console.error('[bankr] Execution failed:', e.message);
     }
@@ -740,6 +763,38 @@ What is your allocation decision?`;
   const logPath = require('path').join(__dirname, '../data/agent_log.jsonl');
   require('fs').appendFileSync(logPath, JSON.stringify(logEntry) + '\n');
   console.log(`\n[log] → ${logPath}`);
+
+  // Point 2: write human-readable cycle summary
+  try {
+    journal.writeSummary({
+      regime,
+      scores:   ranked.slice(0, 8),
+      decision,
+      positions: journal.loadPositions(),
+      screen,
+      cycleTs:  cycleStart,
+    });
+  } catch(e) { console.warn('[journal] Summary failed:', e.message); }
+
+  // Point 3: feed closed trade outcomes back to autoresearch
+  try {
+    const closedThisCycle = journal.loadPositions().filter(p =>
+      p.status === 'closed' && p.closedAt &&
+      (Date.now() - new Date(p.closedAt).getTime()) < CYCLE_MS * 1.5
+    );
+    if (closedThisCycle.length > 0) {
+      journal.feedbackToResearch(closedThisCycle);
+    }
+  } catch(e) { console.warn('[journal] Feedback failed:', e.message); }
+
+  // Print live stats
+  try {
+    const stats = journal.getStats();
+    if (stats.totalTrades > 0) {
+      console.log(`\n[stats] ${stats.totalTrades} closed trades | WR=${stats.wins}/${stats.totalTrades} | avgPnL=${stats.avgPnl.toFixed(2)}%`);
+    }
+  } catch(e) {}
+
   console.log('\n' + '═'.repeat(60));
 }
 
