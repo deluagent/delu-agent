@@ -9418,5 +9418,13 @@
     "accepted": false,
     "description": "error: syntax error in generated code: missing ) after ar",
     "ts": 1774055955620
+  },
+  {
+    "n": 62,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Invalid or unexpec",
+    "ts": 1774056177113
   }
 ]

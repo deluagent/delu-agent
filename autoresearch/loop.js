@@ -149,60 +149,53 @@ async function proposeChange(state, experiments) {
     `  exp ${e.n}: val_sharpe=${e.valSharpe.toFixed(3)} ${e.accepted ? '✅ KEPT' : '❌ reverted'} — ${e.description}`
   ).join('\n') || '  (none yet)';
 
-  const prompt = `You are an autonomous trading strategy researcher.
-You are continuously improving a token-scoring function used by a live crypto trading agent.
-The agent uses your score (as "AR signal") alongside other signals (trend, OBV, cross-rank, panic-bounce).
-The agent currently has AR score weighted at 20% in BULL regime, 10% in RANGE, 0% in BEAR.
+  // Extract just the scoreToken function body to keep prompt small (avoid gateway token cap)
+  const scoreTokenMatch = candidateJs.match(/\/\/ ── Score function[\s\S]*/);
+  const scoreTokenSection = scoreTokenMatch ? scoreTokenMatch[0] : candidateJs.slice(-2000);
+  const helperSection = candidateJs.slice(0, candidateJs.indexOf('// ── Score function'));
 
-## Current state
-- Best validation Sharpe so far: ${state.bestValSharpe.toFixed(3)}
-- Experiment count: ${state.expCount}
+  const prompt = `You are improving a crypto momentum trading strategy (55 tokens, 730 days OHLCV).
+Strategy: score tokens daily, hold top 5. Metric: 0.7*val_sharpe + 0.3*aud_sharpe.
+Current best: val=${state.bestValSharpe.toFixed(3)} combined=${(state.bestScore||0).toFixed(3)}
 
-## Research brief (program.md)
-${programMd}
-
-## Current candidate.js
-\`\`\`javascript
-${candidateJs}
-\`\`\`
+Available helpers already defined (DO NOT redefine): pctChange, realizedVol, sma, emaVal, emaGap, zScore
+scoreToken receives: { prices, volumes, highs, lows, btcPrices, flowSignal }
 
 ## Recent experiments
 ${recentExps}
 
-${agentHistory}
+## Key hypotheses to try (pick ONE)
+${programMd.match(/## Hypotheses[\s\S]*?(?=\n##|\n#|$)/)?.[0]?.slice(0, 600) || '- Try OBV divergence\n- Try volume surprise\n- Try ATR penalty'}
 
-## Your task
-Propose ONE specific, small, logical change to improve validation Sharpe.
-Avoid overfitting: changes that work only in-sample will be rejected.
-Prefer: regime filters, vol-adjusted signals, tighter entry criteria.
-The function receives: { prices, btcPrices, flowSignal, attentionDelta }
-It must return a number. Higher = stronger buy signal. Return 0 to skip token.
+## Current scoreToken function
+${scoreTokenSection}
 
-CRITICAL OUTPUT RULES:
-1. Return ONLY valid JavaScript code — no markdown, no fences, no prose
-2. The file MUST start with a comment block (/**) and end with: module.exports = { scoreToken };
-3. scoreToken MUST be defined as a function and exported
-4. No import/require statements — pure JS only
-5. Test your logic mentally before outputting`;
+## Task
+Return ONLY the new scoreToken function + module.exports line.
+Start with: function scoreToken(data) {
+End with: }
+
+module.exports = { scoreToken };
+
+ONE small change. No helpers redefined. No markdown. Pure JS only.`;
 
   const response = await callLLM([{ role: 'user', content: prompt }]);
 
-  // Aggressively strip markdown — Gemini often wraps in fences despite instructions
-  let code = response.trim();
-  // Remove opening fence (```javascript, ```js, ```, etc.)
-  code = code.replace(/^```[a-zA-Z]*\n?/, '');
-  // Remove closing fence
-  code = code.replace(/\n?```\s*$/, '');
-  // If there's still a ``` somewhere in the middle, extract just the code block
-  if (code.includes('```')) {
-    const match = code.match(/```[a-zA-Z]*\n([\s\S]+?)\n?```/);
-    if (match) code = match[1];
-    else code = code.replace(/```[a-zA-Z]*/g, '').replace(/```/g, '');
+  // Reconstruct full candidate: helpers + new scoreToken
+  const stripped = response
+    .replace(/^```[a-zA-Z]*\n?/, '').replace(/\n?```\s*$/, '')
+    .replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '')
+    .trim();
+
+  // If response has full file (starts with /**), use as-is
+  if (stripped.startsWith('/**') || stripped.startsWith('//')) {
+    return stripped;
   }
-  // Strip non-ASCII characters that break JS parsing (e.g. → arrow copied from comments)
-  // Keep only printable ASCII + newlines + tabs
-  code = code.replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '');
-  return code.trim();
+  // Otherwise prepend helpers
+  if (stripped.includes('function scoreToken')) {
+    return helperSection + '\n' + stripped;
+  }
+  return stripped; // fallback — syntax check will catch it
 }
 
 // ── Main loop ────────────────────────────────────────────────
