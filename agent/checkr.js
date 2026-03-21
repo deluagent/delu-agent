@@ -49,13 +49,15 @@ async function checkrGet(path) {
 // ─── Public API ───────────────────────────────────────────────
 
 async function getSpikes(minVelocity = 2.0) {
-  console.log('[checkr] Fetching spikes (~$0.05)...');
-  return checkrGet(`/v1/spikes?min_velocity=${minVelocity}`);
+  // Use 1h window + min_mentions for freshness — catches newest spikes only
+  console.log('[checkr] Fetching spikes 1h (~$0.05)...');
+  return checkrGet(`/v1/spikes?min_velocity=${minVelocity}&min_mentions=3`);
 }
 
 async function getLeaderboard(limit = 10) {
-  console.log('[checkr] Fetching leaderboard (~$0.02)...');
-  return checkrGet(`/v1/leaderboard?limit=${limit}`);
+  // 1h window, sorted by ATT_delta (who's growing fastest right now)
+  console.log('[checkr] Fetching leaderboard 1h sorted by growth (~$0.02)...');
+  return checkrGet(`/v1/leaderboard?limit=${limit}&hours=1&sort_by=ATT_delta`);
 }
 
 async function getToken(symbol) {
@@ -63,9 +65,10 @@ async function getToken(symbol) {
   return checkrGet(`/v1/token/${symbol}`);
 }
 
-async function getRotation(hours = 4) {
-  console.log(`[checkr] Fetching rotation (${hours}h window, ~$0.10)...`);
-  return checkrGet(`/v1/rotation?hours=${hours}`);
+async function getRotation(hours = 1) {
+  // 1h window — tightest signal, real-time creator transitions
+  console.log(`[checkr] Fetching rotation ${hours}h (~$0.10)...`);
+  return checkrGet(`/v1/rotation?window=${hours}h`);
 }
 
 async function getBankrAgents(hours = 4) {

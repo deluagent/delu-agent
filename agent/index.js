@@ -502,20 +502,31 @@ async function runCycle() {
   try {
     console.log('\n[checkr] Fetching leaderboard + spikes + rotation...');
     // Run all 3 in parallel — $0.02 + $0.05 + $0.10 = $0.17/cycle
+    // All on 1h window: freshest signal, fastest rotation detection
     const [lb, spikes, rotation] = await Promise.allSettled([
-      checkr.getLeaderboard(20),
-      checkr.getSpikes(2.0),
-      checkr.getRotation(4),
+      checkr.getLeaderboard(20),   // 1h, sorted by ATT_delta (fastest growers)
+      checkr.getSpikes(2.0),       // 1h, min_mentions=3 (newest spikes only)
+      checkr.getRotation(1),       // 1h window (real-time creator transitions)
     ]);
 
-    // Leaderboard — baseline attention data
+    // Leaderboard — 1h window sorted by ATT_delta: fastest growers first
     if (lb.status === 'fulfilled' && lb.value?.tokens) {
-      for (const t of lb.value.tokens) {
+      const tokens = lb.value.tokens;
+      // Log top 3 growers by ATT_delta
+      const topGrowers = [...tokens].sort((a, b) => (b.ATT_delta ?? 0) - (a.ATT_delta ?? 0)).slice(0, 3);
+      if (topGrowers.length) console.log('[checkr] Top 1h growers:', topGrowers.map(t =>
+        `${t.symbol}(Δ${t.ATT_delta?.toFixed(2)}pp vel=${t.velocity?.toFixed(1)})`).join(' '));
+      for (const t of tokens) {
         const sym = (t.symbol || '').toUpperCase();
+        // ATT_delta = change in attention share in pp — primary signal for 1h growth
+        const attDelta = t.ATT_delta ?? t.ATT_delta_1h ?? t.att_delta_1h ?? 0;
         checkrAttention[sym] = {
-          attentionDelta: t.ATT_delta_1h ?? t.att_delta_1h ?? 0,
+          attentionDelta: attDelta,
           velocity:       t.velocity ?? 0,
           divergence:     t.divergence ?? false,
+          attPct:         t.ATT_pct ?? 0,
+          attTrend:       t.ATT_trend_direction ?? null,
+          attAccelerating: t.ATT_accelerating ?? false,
         };
       }
     }
@@ -731,7 +742,8 @@ ${Object.keys(checkrAttention).length > 0
         const rot = a.isGainer
           ? ` ROT_IN(ATT+${a.attGrowth?.toFixed(1)}% flow=${a.netFlow} from=[${(a.rotatingFrom||[]).slice(0,3).join(',')}]${a.topCreator ? ' @'+a.topCreator.username : ''})`
           : a.isLoser ? ` ROT_OUT(ATT${a.attGrowth?.toFixed(1)}% flow=${a.netFlow})` : '';
-        return `${sym}: vel=${(a.velocity||0).toFixed(1)} div=${a.divergence?'YES':'no'}${rot}`;
+        const trend = a.attTrend ? ` trend=${a.attTrend}${a.attAccelerating?' ⚡':''}` : '';
+        return `${sym}: vel=${(a.velocity||0).toFixed(1)} Δ1h=${(a.attentionDelta||0).toFixed(2)}pp div=${a.divergence?'YES':'no'}${trend}${rot}`;
       }).join('\n')
   : 'Checkr unavailable this cycle'}
 
