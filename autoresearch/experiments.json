@@ -9426,5 +9426,13 @@
     "accepted": false,
     "description": "error: syntax error in generated code: Invalid or unexpec",
     "ts": 1774056177113
+  },
+  {
+    "n": 63,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Missing initialize",
+    "ts": 1774056373816
   }
 ]

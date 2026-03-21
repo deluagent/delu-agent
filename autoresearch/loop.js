@@ -30,7 +30,7 @@ const INTERVAL_MS  = 90_000;   // 90s between experiments
 // Model: Bankr LLM Gateway — Gemini 2.5 Flash (fast, cheap, smarter than llama for code)
 // Fallback key order: BANKR_API_KEY (from .env)
 const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
-const BANKR_LLM_MODEL = 'gemini-2.5-pro';
+const BANKR_LLM_MODEL = 'claude-sonnet-4-5';
 const BANKR_API_KEY   = process.env.BANKR_API_KEY;
 
 // Credit guard: estimated cost per call ~$0.002 (3000 tokens in+out)
@@ -149,10 +149,10 @@ async function proposeChange(state, experiments) {
     `  exp ${e.n}: val_sharpe=${e.valSharpe.toFixed(3)} ${e.accepted ? '✅ KEPT' : '❌ reverted'} — ${e.description}`
   ).join('\n') || '  (none yet)';
 
-  // Extract just the scoreToken function body to keep prompt small (avoid gateway token cap)
-  const scoreTokenMatch = candidateJs.match(/\/\/ ── Score function[\s\S]*/);
-  const scoreTokenSection = scoreTokenMatch ? scoreTokenMatch[0] : candidateJs.slice(-2000);
-  const helperSection = candidateJs.slice(0, candidateJs.indexOf('// ── Score function'));
+  // Extract just the scoreToken function to keep prompt small (avoid Bankr LLM token cap)
+  const scoreTokenIdx = candidateJs.indexOf('\nfunction scoreToken');
+  const scoreTokenSection = scoreTokenIdx >= 0 ? candidateJs.slice(scoreTokenIdx).trim() : candidateJs.slice(-2000);
+  const helperSection = scoreTokenIdx >= 0 ? candidateJs.slice(0, scoreTokenIdx).trim() : '';
 
   const prompt = `You are improving a crypto momentum trading strategy (55 tokens, 730 days OHLCV).
 Strategy: score tokens daily, hold top 5. Metric: 0.7*val_sharpe + 0.3*aud_sharpe.
