@@ -69,25 +69,24 @@ function loadExperiments() {
 }
 function saveExperiments(exps) { fs.writeFileSync(EXPERIMENTS, JSON.stringify(exps, null, 2)); }
 
-// ── Venice LLM call (claude-sonnet-4-6, private mode) ────────
+// ── Bankr LLM gateway (claude-haiku via bankr.bot) ────────────
 async function callLLM(messages) {
   const track = checkBudget();
-
-  // Anthropic claude-sonnet-4-6 — direct API
   const _t0 = Date.now();
-  const anthropicKey = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
-  if (!anthropicKey) throw new Error('No ANTHROPIC_API_KEY');
+  const bankrKey = (process.env.BANKR_API_KEY || '').replace(/\s/g, '');
+  if (!bankrKey) throw new Error('No BANKR_API_KEY');
+  const body = JSON.stringify({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 4000,
+    messages,
+  });
   const data = await new Promise((resolve, reject) => {
-    const body = JSON.stringify({
-      model: 'claude-haiku-4-5-20251001', max_tokens: 4000,
-      messages: messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
-    });
     const req = https.request({
-      hostname: 'api.anthropic.com', path: '/v1/messages', method: 'POST',
+      hostname: 'llm.bankr.bot', port: 443, method: 'POST',
+      path: '/v1/chat/completions',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': anthropicKey,
-        'anthropic-version': '2023-06-01',
+        'Authorization': `Bearer ${bankrKey}`,
         'Content-Length': Buffer.byteLength(body),
       },
     }, (res) => {
@@ -99,25 +98,16 @@ async function callLLM(messages) {
       });
     });
     req.on('error', reject);
-    const _timeout = setTimeout(() => { req.destroy(); reject(new Error('Anthropic timeout after 60s')); }, 60000);
+    const _timeout = setTimeout(() => { req.destroy(); reject(new Error('Bankr LLM timeout 60s')); }, 60000);
     req.on('close', () => clearTimeout(_timeout));
     req.write(body); req.end();
   });
-  const content = data.content?.[0]?.text || '';
-  // Wrap in OpenAI-compatible shape for downstream code
-  const wrapped = { choices: [{ message: { content } }], usage: data.usage };
-  console.log(`   [llm] ${((Date.now()-_t0)/1000).toFixed(1)}s | tokens=${data.usage?.output_tokens}`);
-  if (data.error) throw new Error(`Anthropic API error: ${JSON.stringify(data.error).slice(0,150)}`);
-  const data_orig = data; void data_orig;
-  // reassign for downstream
-  Object.assign(data, wrapped);
+  console.log(`   [bankr-llm] ${((Date.now()-_t0)/1000).toFixed(1)}s | tokens=${data.usage?.completion_tokens}`);
+  if (data.error) throw new Error(`Bankr LLM error: ${JSON.stringify(data.error).slice(0,100)}`);
 
-  // Update cost tracking
   track.totalCalls++;
   track.estimatedSpend += COST_PER_CALL_EST;
   saveCostTrack(track);
-
-  process.stdout.write(`   💰 est. spend: $${track.estimatedSpend.toFixed(3)} / $${MAX_SPEND_USD} (${(MAX_SPEND_USD - track.estimatedSpend).toFixed(2)} remaining)\n`);
 
   return data.choices?.[0]?.message?.content || '';
 }

@@ -15112,5 +15112,653 @@
     "accepted": false,
     "description": "Replace ATR penalty with dynamic volume surprise detection using current volume vs 20-day MA ratio, ",
     "ts": 1774129754854
+  },
+  {
+    "n": 771,
+    "valSharpe": 3.4688,
+    "isSharpe": 1.1793,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; strengthen OBV boost with volume spike detection to catch bre",
+    "ts": 1774129767432
+  },
+  {
+    "n": 772,
+    "valSharpe": 2.9808,
+    "isSharpe": 0.8656,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; strengthen OBV boost with dynamic volume spike detection to c",
+    "ts": 1774129779972
+  },
+  {
+    "n": 773,
+    "valSharpe": 3.5502,
+    "isSharpe": 1.2819,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; boost OBV signal with dynamic volume surprise ratio to catch ",
+    "ts": 1774129793081
+  },
+  {
+    "n": 774,
+    "valSharpe": 3.0871,
+    "isSharpe": 1.1412,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; add volume surprise detection (current volume vs 20-day MA ra",
+    "ts": 1774129806318
+  },
+  {
+    "n": 775,
+    "valSharpe": 3.3354,
+    "isSharpe": 1.2644,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774129819463
+  },
+  {
+    "n": 776,
+    "valSharpe": 2.5262,
+    "isSharpe": 0.7985,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection using current volume vs 20-day",
+    "ts": 1774129833702
+  },
+  {
+    "n": 777,
+    "valSharpe": 2.5685,
+    "isSharpe": 0.5788,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774129847257
+  },
+  {
+    "n": 778,
+    "valSharpe": 3.4112,
+    "isSharpe": 1.1885,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774129860470
+  },
+  {
+    "n": 779,
+    "valSharpe": 2.5969,
+    "isSharpe": 0.6478,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with volume surprise detection using current volume v",
+    "ts": 1774129873553
+  },
+  {
+    "n": 780,
+    "valSharpe": 2.4905,
+    "isSharpe": 1.0273,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current volume vs 20-day MA p",
+    "ts": 1774129886920
+  },
+  {
+    "n": 781,
+    "valSharpe": 2.5228,
+    "isSharpe": 1.1523,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774129900181
+  },
+  {
+    "n": 782,
+    "valSharpe": 3.2482,
+    "isSharpe": 1.1949,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774129914028
+  },
+  {
+    "n": 783,
+    "valSharpe": 2.5505,
+    "isSharpe": 0.911,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current volume vs 20-day MA p",
+    "ts": 1774129927783
+  },
+  {
+    "n": 784,
+    "valSharpe": 2.6813,
+    "isSharpe": 1.2633,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current volume vs 20-day MA p",
+    "ts": 1774129941309
+  },
+  {
+    "n": 785,
+    "valSharpe": 2.4905,
+    "isSharpe": 1.0273,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection using current volume vs 20-day",
+    "ts": 1774129954839
+  },
+  {
+    "n": 786,
+    "valSharpe": 2.9518,
+    "isSharpe": 1.2998,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current volume vs 20-day MA p",
+    "ts": 1774129967901
+  },
+  {
+    "n": 787,
+    "valSharpe": 3.2326,
+    "isSharpe": 1.1766,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with volume surprise detection (current volume vs 20-",
+    "ts": 1774129980634
+  },
+  {
+    "n": 788,
+    "valSharpe": 3.0804,
+    "isSharpe": 1.1082,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current volume vs 20-day MA) ",
+    "ts": 1774129993946
+  },
+  {
+    "n": 789,
+    "valSharpe": 3.1071,
+    "isSharpe": 0.6859,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection (current volume vs 20-day MA wi",
+    "ts": 1774130007604
+  },
+  {
+    "n": 790,
+    "valSharpe": 2.4659,
+    "isSharpe": 0.7821,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130021176
+  },
+  {
+    "n": 791,
+    "valSharpe": 3.1241,
+    "isSharpe": 1.0443,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current volume vs 20-day MA w",
+    "ts": 1774130034430
+  },
+  {
+    "n": 792,
+    "valSharpe": 2.7594,
+    "isSharpe": 1.2112,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130047970
+  },
+  {
+    "n": 793,
+    "valSharpe": 3.0804,
+    "isSharpe": 1.0627,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection (current volume vs 20-day MA wi",
+    "ts": 1774130068968
+  },
+  {
+    "n": 794,
+    "valSharpe": 1.8924,
+    "isSharpe": 0.6892,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple volume surprise detection (current volume",
+    "ts": 1774130082347
+  },
+  {
+    "n": 795,
+    "valSharpe": 1.5463,
+    "isSharpe": 1.4277,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple volume surprise detection (current volume",
+    "ts": 1774130095747
+  },
+  {
+    "n": 796,
+    "valSharpe": 3.2326,
+    "isSharpe": 1.1766,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple volume surge detection (current volume vs",
+    "ts": 1774130108726
+  },
+  {
+    "n": 797,
+    "valSharpe": 2.5391,
+    "isSharpe": 1.2419,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130121502
+  },
+  {
+    "n": 798,
+    "valSharpe": 2.7024,
+    "isSharpe": 0.9762,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130134532
+  },
+  {
+    "n": 799,
+    "valSharpe": 3.6272,
+    "isSharpe": 1.3747,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple RSI oversold bounce detection (RSI < 30 =",
+    "ts": 1774130148189
+  },
+  {
+    "n": 800,
+    "valSharpe": 3.1681,
+    "isSharpe": 1.1821,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130161062
+  },
+  {
+    "n": 801,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130174493
+  },
+  {
+    "n": 802,
+    "valSharpe": 2.5509,
+    "isSharpe": 1.035,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130188416
+  },
+  {
+    "n": 803,
+    "valSharpe": 2.0487,
+    "isSharpe": 1.0661,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130204703
+  },
+  {
+    "n": 804,
+    "valSharpe": 2.8729,
+    "isSharpe": 1.2699,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection using current volume vs 20-day ",
+    "ts": 1774130217474
+  },
+  {
+    "n": 805,
+    "valSharpe": 2.5405,
+    "isSharpe": 0.96,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection using current volume vs 20-day",
+    "ts": 1774130230821
+  },
+  {
+    "n": 806,
+    "valSharpe": 1.9277,
+    "isSharpe": 0.884,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection using current volume vs 20-day",
+    "ts": 1774130245964
+  },
+  {
+    "n": 807,
+    "valSharpe": 2.8673,
+    "isSharpe": 0.9766,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current vol vs 20-day MA with",
+    "ts": 1774130259703
+  },
+  {
+    "n": 808,
+    "valSharpe": 2.9922,
+    "isSharpe": 1.0934,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection using current volume vs 20-day",
+    "ts": 1774130273698
+  },
+  {
+    "n": 809,
+    "valSharpe": 2.9836,
+    "isSharpe": 1.0859,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with volume surprise detection (current vol vs 20-day",
+    "ts": 1774130287056
+  },
+  {
+    "n": 810,
+    "valSharpe": 3.0329,
+    "isSharpe": 0.902,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current vol vs 20-day MA) to ",
+    "ts": 1774130300365
+  },
+  {
+    "n": 811,
+    "valSharpe": 2.8545,
+    "isSharpe": 1.2908,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection using current volume vs 20-day",
+    "ts": 1774130313699
+  },
+  {
+    "n": 812,
+    "valSharpe": 2.532,
+    "isSharpe": 0.8557,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current vol vs 20-day MA) to ",
+    "ts": 1774130326992
+  },
+  {
+    "n": 813,
+    "valSharpe": 3.2326,
+    "isSharpe": 1.1979,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection (current vol vs 20-day MA) as p",
+    "ts": 1774130340042
+  },
+  {
+    "n": 814,
+    "valSharpe": 3.2326,
+    "isSharpe": 1.1815,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with volume surprise detection using current volume v",
+    "ts": 1774130352826
+  },
+  {
+    "n": 815,
+    "valSharpe": 2.9646,
+    "isSharpe": 1.1061,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection (current vol vs 20-day MA) as p",
+    "ts": 1774130366068
+  },
+  {
+    "n": 816,
+    "valSharpe": 1.4877,
+    "isSharpe": 0.9912,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise detection (current vol vs 20-day MA) as p",
+    "ts": 1774130379295
+  },
+  {
+    "n": 817,
+    "valSharpe": 2.827,
+    "isSharpe": 1.1815,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current vol vs 20-day MA) wei",
+    "ts": 1774130392821
+  },
+  {
+    "n": 818,
+    "valSharpe": 2.3882,
+    "isSharpe": 1.1559,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with volume surprise detection (current vol vs 20-day",
+    "ts": 1774130406656
+  },
+  {
+    "n": 819,
+    "valSharpe": 3.1123,
+    "isSharpe": 1.0781,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple volume surprise detection (current vol vs",
+    "ts": 1774130421180
+  },
+  {
+    "n": 820,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3182,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple ATR-based volatility filter that rejects ",
+    "ts": 1774130433936
+  },
+  {
+    "n": 821,
+    "valSharpe": 3.0518,
+    "isSharpe": 1.236,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with volume-weighted momentum acceleration that boost",
+    "ts": 1774130447372
+  },
+  {
+    "n": 822,
+    "valSharpe": 2.4718,
+    "isSharpe": 0.9829,
+    "accepted": false,
+    "description": "Replace OBV divergence and ATR penalty with volume surprise detection (current vol vs 20-day MA) wei",
+    "ts": 1774130461192
+  },
+  {
+    "n": 823,
+    "valSharpe": 1.5608,
+    "isSharpe": 0.9676,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add RSI oversold/overbought mean reversion boost with volume ",
+    "ts": 1774130476555
+  },
+  {
+    "n": 824,
+    "valSharpe": 2.9856,
+    "isSharpe": 1.0933,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple volume surprise detection (current vol vs",
+    "ts": 1774130498858
+  },
+  {
+    "n": 825,
+    "valSharpe": 3.9755,
+    "isSharpe": 1.5001,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple ATR-based volatility filter that caps sco",
+    "ts": 1774130514654
+  },
+  {
+    "n": 826,
+    "valSharpe": 3.0804,
+    "isSharpe": 1.1082,
+    "accepted": false,
+    "description": "Remove ATR penalty and OBV divergence; add simple volume surprise boost when current volume exceeds ",
+    "ts": 1774130528735
+  },
+  {
+    "n": 827,
+    "valSharpe": 3.2326,
+    "isSharpe": 1.1766,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; replace with simple volume surprise boost when current volume",
+    "ts": 1774130541527
+  },
+  {
+    "n": 828,
+    "valSharpe": 3.0804,
+    "isSharpe": 1.1082,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add simple volume surprise boost when current volume exceeds ",
+    "ts": 1774130554051
+  },
+  {
+    "n": 829,
+    "valSharpe": 3.2223,
+    "isSharpe": 1.0858,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 2x the ",
+    "ts": 1774130570840
+  },
+  {
+    "n": 830,
+    "valSharpe": 4.0365,
+    "isSharpe": 1.0317,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 2.5x th",
+    "ts": 1774130584320
+  },
+  {
+    "n": 831,
+    "valSharpe": 3.202,
+    "isSharpe": 0.863,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 2.0x th",
+    "ts": 1774130597505
+  },
+  {
+    "n": 832,
+    "valSharpe": 4.1218,
+    "isSharpe": 1.2021,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 3.0x th",
+    "ts": 1774130610283
+  },
+  {
+    "n": 833,
+    "valSharpe": 3.2062,
+    "isSharpe": 1.0224,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 2.2x th",
+    "ts": 1774130622909
+  },
+  {
+    "n": 834,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; boost volume surprise when current volume exceeds 2.8x the 15",
+    "ts": 1774130635521
+  },
+  {
+    "n": 835,
+    "valSharpe": 3.473,
+    "isSharpe": 1.4635,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; simplify to core momentum+trend+meanrev signals with volume c",
+    "ts": 1774130648154
+  },
+  {
+    "n": 836,
+    "valSharpe": 4.0871,
+    "isSharpe": 1.1639,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 3.5x th",
+    "ts": 1774130662222
+  },
+  {
+    "n": 837,
+    "valSharpe": 4.1038,
+    "isSharpe": 1.2057,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; add volume surprise boost when current volume exceeds 4.0x th",
+    "ts": 1774130675189
+  },
+  {
+    "n": 838,
+    "valSharpe": 4.0517,
+    "isSharpe": 1.1431,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; restore volume surprise boost when current volume exceeds 2.5",
+    "ts": 1774130687994
+  },
+  {
+    "n": 839,
+    "valSharpe": 3.6537,
+    "isSharpe": 1.286,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; restore core volume surprise boost when current volume exceed",
+    "ts": 1774130700881
+  },
+  {
+    "n": 840,
+    "valSharpe": 2.8232,
+    "isSharpe": 1.0455,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; boost obvBoost multiplier from 0.06 to 0.10 and relVol cap fr",
+    "ts": 1774130713809
+  },
+  {
+    "n": 841,
+    "valSharpe": 2.8195,
+    "isSharpe": 1.0882,
+    "accepted": false,
+    "description": "Remove OBV divergence and ATR penalty; boost obvBoost multiplier from 0.06 to 0.12 and relVol cap fr",
+    "ts": 1774130726887
+  },
+  {
+    "n": 842,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties that have consistently hurt performance; restore pure ",
+    "ts": 1774130739212
+  },
+  {
+    "n": 843,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties that consistently hurt performance; restore pure volum",
+    "ts": 1774130752008
+  },
+  {
+    "n": 844,
+    "valSharpe": 3.8494,
+    "isSharpe": 1.207,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; restore pure volume surprise boost when current volum",
+    "ts": 1774130764576
+  },
+  {
+    "n": 845,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties that consistently hurt performance; restore pure volum",
+    "ts": 1774130776821
+  },
+  {
+    "n": 846,
+    "valSharpe": 2.7976,
+    "isSharpe": 0.93,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.15 to strengthen vo",
+    "ts": 1774130789165
+  },
+  {
+    "n": 847,
+    "valSharpe": 2.7882,
+    "isSharpe": 1.0158,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.10 to str",
+    "ts": 1774130801642
+  },
+  {
+    "n": 848,
+    "valSharpe": 2.7063,
+    "isSharpe": 1.0762,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties that consistently hurt performance; increase obvBoost ",
+    "ts": 1774130813870
+  },
+  {
+    "n": 849,
+    "valSharpe": 2.7063,
+    "isSharpe": 1.0762,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.12 to str",
+    "ts": 1774130826663
+  },
+  {
+    "n": 850,
+    "valSharpe": 3.5126,
+    "isSharpe": 1.1866,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties; increase obvBoost multiplier from 0.06 to 0.08 with s",
+    "ts": 1774130852787
+  },
+  {
+    "n": 851,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty penalties that consistently hurt performance; restore pure volum",
+    "ts": 1774130865261
   }
 ]

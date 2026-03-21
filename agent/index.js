@@ -41,7 +41,7 @@ const VENICE_API   = 'https://api.venice.ai/api/v1/chat/completions';
 const VENICE_MODEL = 'llama-3.3-70b'; // private GPU, E2EE inference
 
 const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
-const BANKR_LLM_MODEL = 'gemini-2.5-flash'; // fast screen layer — cheap, ~1s, ~$0.0001/call
+const BANKR_LLM_MODEL = 'claude-haiku-4-5-20251001'; // fast screen layer via Bankr LLM gateway
 
 // Autoresearch candidate — Venice continuously improves this function
 // Agent loads it fresh every cycle so improvements flow in automatically
@@ -773,7 +773,7 @@ ${Object.keys(checkrAttention).length > 0
 These are Base tokens currently trending onchain. NOT in fixed universe. Execution via Bankr swap by contract address.
 ${trendingEntries.length
   ? trendingEntries.map(t =>
-      `${t.symbol} | score=${t.score.toFixed(2)} | rank=${t.rank}(${t.priorRanks.length?t.priorRanks.join('→')+'→':''}${t.rank}) | ret1h=${(t.ret1h*100).toFixed(1)}% ret6h=${(t.ret6h*100).toFixed(1)}% ret24h=${(t.priceChange24h||0).toFixed(1)}% | move=${(t.moveFrac*100).toFixed(0)}%done | liq=$${Math.round(t.liquidity/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | addr=${t.address}`
+      `${t.symbol} | score=${t.score.toFixed(2)} | rank=${t.rank}(${(t.priorRanks||[]).length?(t.priorRanks||[]).join('→')+'→':''}${t.rank}) | ret1h=${(t.ret1h*100).toFixed(1)}% ret6h=${(t.ret6h*100).toFixed(1)}% ret24h=${(t.priceChange24h||0).toFixed(1)}% | move=${(t.moveFrac*100).toFixed(0)}%done | liq=$${Math.round((t.liquidity||0)/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | addr=${t.address}`
     ).join('\n')
   : 'No high-conviction trending entries this cycle'}
 If a trending token has score≥0.65 and move<50%done: consider BUY with $10–$15 size, set contractAddress to token address. Use Bankr to swap USDC→token.
