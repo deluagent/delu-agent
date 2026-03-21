@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "sym": "MOLT",
+    "pnlPct": -5.2,
+    "won": false,
+    "regime": "unknown",
+    "signals": {},
+    "closedAt": "2026-03-21T19:44:01.587Z",
+    "reason": "bankr_stop"
+  }
+]

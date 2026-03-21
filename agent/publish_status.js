@@ -82,30 +82,61 @@ async function buildStatus(regimeData) {
   const remaining = Math.max(0, 30 - elapsed);
   const nextCycle = remaining < 1 ? '< 1 min' : `in ${Math.round(remaining)} min`;
 
-  // Open positions — strip internal fields, keep public ones
+  // Open positions — fetch live prices from Bankr balances string
+  // Format: "SOL - 0.1591 $14.28\nETH - 0.0070 $15.15\n..."
+  let liveBalanceMap = {}; // sym -> { qty, valueUSD }
+  try {
+    const bankr = require('./bankr');
+    const balStr = await bankr.getBalances();
+    if (typeof balStr === 'string') {
+      for (const line of balStr.split('\n')) {
+        const m = line.match(/^([A-Za-z0-9]+)\s*[-–]\s*([\d.]+)\s*\$([\d.]+)/);
+        if (m) liveBalanceMap[m[1].toUpperCase()] = { qty: parseFloat(m[2]), valueUSD: parseFloat(m[3]) };
+      }
+    }
+  } catch(e) { /* live prices unavailable — fall back to journal */ }
+
   const openPositions = positions
     .filter(p => p.status === 'open')
-    .map(p => ({
-      sym:             p.sym,
-      entryPrice:      p.entryPrice,
-      sizeUSD:         p.sizeUsd,
-      peakPct:         parseFloat((p.peakPct || 0).toFixed(2)),
-      trailStop:       p.trailPct || 5,
-      openedAt:        p.openedAt,
-      entryTx:         p.entryTx || p.txHash || null,
-      contractAddress: p.contractAddress || null,
-      source:          p.source || 'universe',
-      chain:           p.chain || 'base',
-    }));
+    .map(p => {
+      const live = liveBalanceMap[p.sym.toUpperCase()];
+      const currentUSD = live?.valueUSD || p.sizeUsd || 0;
+      const entryUSD   = p.sizeUsd || 0;
+      const pnlUSD     = parseFloat((currentUSD - entryUSD).toFixed(2));
+      const pnlPct     = entryUSD > 0 ? parseFloat((pnlUSD / entryUSD * 100).toFixed(2)) : 0;
+      // Approximate current price from live value / qty
+      const currentPrice = (live && p.qty) ? live.valueUSD / p.qty
+        : (live && p.sizeUsd && p.entryPrice) ? (live.valueUSD / p.sizeUsd) * p.entryPrice
+        : null;
+      return {
+        sym:             p.sym,
+        entryPrice:      p.entryPrice,
+        currentPrice:    currentPrice ? parseFloat(currentPrice.toFixed(6)) : null,
+        sizeUSD:         p.sizeUsd,
+        currentUSD:      parseFloat(currentUSD.toFixed(2)),
+        pnlUSD,
+        pnlPct,
+        peakPct:         parseFloat((p.peakPct || 0).toFixed(2)),
+        trailStop:       p.trailPct || 5,
+        openedAt:        p.openedAt,
+        entryTx:         p.entryTx || p.txHash || null,
+        contractAddress: p.contractAddress || null,
+        source:          p.source || 'universe',
+        chain:           p.chain || 'base',
+      };
+    });
 
-  // Yield position (hardcoded Morpho — update when rebalanced)
+  // Liquid USDC from live Bankr balance
+  const liquidUSDC = liveBalanceMap['USDC']?.valueUSD ?? 0;
+
+  // Yield position — show actual liquid USDC (ready to deploy)
   const yieldPosition = {
-    protocol:  'Morpho',
-    vault:     'Moonwell Flagship USDC',
+    protocol:  'Bankr Wallet',
+    vault:     'Liquid USDC',
     chain:     'Base',
-    amountUSD: 5.35,
-    apy:       3.91,
-    note:      'Capital parked here while in BEAR regime — earning yield while waiting for signal',
+    amountUSD: parseFloat(liquidUSDC.toFixed(2)),
+    apy:       0,
+    note:      'Liquid USDC available for next trade entry',
   };
 
   // Last cycle summary

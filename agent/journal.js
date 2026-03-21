@@ -58,26 +58,39 @@ async function reconcilePositions(bankrBalanceResponse, currentPrices = {}) {
       continue;
     }
 
-    // Check if Bankr response mentions this token as having zero balance
-    // (simple heuristic — Bankr free text mentions token holdings)
+    // Check if token has disappeared from Bankr balances (trailing stop or manual close)
+    // Bankr balance string format: "ETH - 0.0070 $15.15\nSOL - 0.1591 $14.28\n..."
     if (bankrBalanceResponse) {
-      const symLower = sym.toLowerCase();
-      const resp     = bankrBalanceResponse.toLowerCase();
-      // If balance response explicitly says 0 or "no X" and position was open
-      const zeroPatterns = [
-        `0 ${symLower}`, `no ${symLower}`, `${symLower}: 0`, `${symLower} balance: 0`
-      ];
-      const likelyClosed = zeroPatterns.some(p => resp.includes(p));
-      if (likelyClosed) {
+      // Parse all token symbols currently held (non-zero balance)
+      const heldSymbols = new Set();
+      const lines = bankrBalanceResponse.split('\n');
+      for (const line of lines) {
+        // Match "TOKEN - 0.xxxx $xx.xx"
+        const m = line.match(/^([A-Za-z0-9]+)\s*[-–]\s*([\d.]+)\s*\$/);
+        if (m) {
+          const qty = parseFloat(m[2]);
+          if (qty > 0) heldSymbols.add(m[1].toUpperCase());
+        }
+      }
+
+      // For non-contract tokens (majors): if sym not in held list, position is closed
+      // For contract address tokens (MOLT etc): check if contract addr appears in balance,
+      // or if qty explicitly 0; if neither, assume stopped by Bankr since we can't verify
+      const isContractToken = !!pos.contractAddress;
+      const isHeld = heldSymbols.has(sym.toUpperCase());
+
+      if (!isContractToken && !isHeld && heldSymbols.size > 0) {
+        // Bankr gave us a real balance list and this token isn't in it — stopped out
         const pnlPct = currentPrice
           ? ((currentPrice - pos.entryPrice) / pos.entryPrice * 100)
           : null;
         pos.status      = 'closed';
-        pos.closeReason = 'bankr_stop'; // trailing stop hit
+        pos.closeReason = 'bankr_stop';
         pos.closedAt    = new Date().toISOString();
         pos.closePrice  = currentPrice || null;
         pos.pnlPct      = pnlPct;
         closed.push(pos);
+        console.log(`[journal] ${sym} not in Bankr balances → marked closed (bankr_stop)`);
         continue;
       }
     }
