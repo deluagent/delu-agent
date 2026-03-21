@@ -30,7 +30,7 @@ const INTERVAL_MS  = 90_000;   // 90s between experiments
 // Model: Bankr LLM Gateway — Gemini 2.5 Flash (fast, cheap, smarter than llama for code)
 // Fallback key order: BANKR_API_KEY (from .env)
 const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
-const BANKR_LLM_MODEL = 'gemini-2.5-flash';
+const BANKR_LLM_MODEL = 'gemini-3-flash';
 const BANKR_API_KEY   = process.env.BANKR_API_KEY;
 
 // Credit guard: estimated cost per call ~$0.002 (3000 tokens in+out)
@@ -79,7 +79,7 @@ async function callLLM(messages) {
       model:       BANKR_LLM_MODEL,
       messages,
       temperature: 0.7,
-      max_tokens:  3000,
+      max_tokens:  8000,
     }),
     signal: AbortSignal.timeout(60000),
   });

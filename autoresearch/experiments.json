@@ -9070,5 +9070,29 @@
     "accepted": false,
     "description": "error: syntax error in generated code: Invalid or unexpec",
     "ts": 1774052313519
+  },
+  {
+    "n": 20,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Unexpected token '",
+    "ts": 1774052428256
+  },
+  {
+    "n": 21,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Invalid or unexpec",
+    "ts": 1774052531088
+  },
+  {
+    "n": 22,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax error in generated code: Invalid or unexpec",
+    "ts": 1774052635316
   }
 ]
