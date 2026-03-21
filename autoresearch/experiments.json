@@ -9142,5 +9142,21 @@
     "accepted": false,
     "description": "error: syntax error in generated code: Unexpected token '",
     "ts": 1774053373240
+  },
+  {
+    "n": 29,
+    "valSharpe": 1.484,
+    "isSharpe": 1.8064,
+    "accepted": true,
+    "description": "experiment 29",
+    "ts": 1774053532086
+  },
+  {
+    "n": 30,
+    "valSharpe": -0.5692,
+    "isSharpe": 1.7244,
+    "accepted": false,
+    "description": "experiment 30",
+    "ts": 1774053566123
   }
 ]

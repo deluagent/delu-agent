@@ -74,7 +74,6 @@ function scoreToken(data) {
   if (n < 60) return 0;
 
   // ── Regime detection: BTC Price vs 200d MA ──
-  // Updated to match the "BTC below 200d MA" definition for BEAR regime
   let regimeMult = 1.0;
   let isBear = false;
   if (btcPrices.length >= 200) {
@@ -88,29 +87,28 @@ function scoreToken(data) {
 
   // ── Trend strength filter ──
   const ema = emaGap(prices, 12, 26);
-  if (Math.abs(ema) < 0.015) return 0; // Lowered from 0.03 to be more inclusive of emerging trends
+  if (Math.abs(ema) < 0.01) return 0; // Slightly lowered to allow emerging trends
 
-  // ── Momentum (multi-timeframe, vol-adjusted) ──
-  // Shifted weights to favor the medium-term (20d) trend for validation period stability
+  // ── Momentum (multi-timeframe + relative strength) ──
   const vol = realizedVol(prices, 14);
   const r7   = pctChange(prices, 7);
   const r20  = pctChange(prices, 20);
   const r60  = pctChange(prices, Math.min(60, n - 1));
+  const btcR20 = pctChange(btcPrices, 20);
 
-  const momentum = 0.25 * r7 / (1 + vol)
-                 + 0.50 * r20 / (1 + vol)
-                 + 0.25 * r60 / (1 + vol);
+  // Incorporate Relative Strength (outperforming BTC) to filter for leaders
+  const relStrength = r20 - btcR20;
+  
+  const momentum = (0.25 * r7 + 0.25 * r20 + 0.25 * relStrength + 0.25 * r60) / (1 + vol);
 
   // ── Trend ──
   const trend = 0.20 * ema;
 
   // ── Mean reversion ──
-  // Removed overbought penalty (z > 2.5) as it often cuts winners in momentum regimes
   const z = zScore(prices, 20);
   const meanRev = z < -2.0 ? 0.10 : 0;
 
   // ── Volatility penalty ──
-  // Increased threshold as many high-performing tokens have vol > 0.6
   const volPenalty = -0.15 * Math.max(vol - 0.75, 0);
 
   // ── Funding rate signal ──
