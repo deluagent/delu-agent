@@ -29,6 +29,7 @@ const { kellySize, correlationAdjust, calibrateFromLog } = require('./kelly');
 const { startDashboard } = require('./dashboard');
 const { dynamicTrailStop } = require('./stops');
 const { fetchAllFlows } = require('./flows');
+const { getBankrAttention } = require('./bankr_market');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -325,7 +326,7 @@ async function bankrScreen(regime, ranked, checkrAttention = {}) {
   const scoreLines = ranked
     .map(s => {
       const attn = checkrAttention[s.sym];
-      const attnStr = attn ? ` vel=${attn.velocity?.toFixed(1)} div=${attn.divergence?1:0}` : '';
+      const attnStr = attn ? ` vel=${attn.velocity?.toFixed(1)} div=${attn.divergence?1:0}${attn.bankrSignal ? ' bankr='+attn.bankrSignal.toFixed(2) : ''}${attn.txnCount24h ? ' txns='+attn.txnCount24h : ''}` : '';
       return `${s.sym}: combined=${s.combined.toFixed(3)} [A=${s.sA.toFixed(2)} B=${s.sB.toFixed(2)} AR=${s.sAR.toFixed(2)}${attnStr}]`;
     })
     .join('\n');
@@ -555,6 +556,30 @@ async function runCycle() {
     for (const [sym, d] of topAttn) console.log(`  ${sym}: vel=${d.velocity?.toFixed(2)} div=${d.divergence} attnDelta=${d.attentionDelta?.toFixed(3)}`);
   } catch(e) {
     console.warn(`[checkr] Failed (skipping): ${e.message?.slice(0,80)}`);
+  }
+
+  // 3d. Bankr onchain trending — DEX txn count + volume from Uniswap/Aerodrome
+  let bankrAttention = {};
+  try {
+    console.log('\n[bankr_market] Fetching onchain trending (Base + ETH)...');
+    bankrAttention = await getBankrAttention(process.env.BANKR_API_KEY);
+    const topTrending = Object.entries(bankrAttention).sort((a,b) => b[1].bankrSignal - a[1].bankrSignal).slice(0,5);
+    console.log('[bankr_market] Top trending:', topTrending.map(([s,d]) => `${s}(txns=${d.txnCount24h} signal=${d.bankrSignal})`).join(' '));
+    // Merge bankr trending into checkrAttention map
+    for (const [sym, d] of Object.entries(bankrAttention)) {
+      if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
+      // bankrSignal boosts attentionDelta — onchain txn spikes = real demand
+      checkrAttention[sym].attentionDelta += d.bankrSignal * 0.3;
+      checkrAttention[sym].bankrSignal     = d.bankrSignal;
+      checkrAttention[sym].txnCount24h     = d.txnCount24h;
+      checkrAttention[sym].trendingRank    = d.trendingRank;
+      // isSpike from Bankr = strong onchain attention → treat like Checkr spike
+      if (d.isSpike) {
+        checkrAttention[sym].velocity = Math.max(checkrAttention[sym].velocity || 0, d.bankrSignal * 3);
+      }
+    }
+  } catch(e) {
+    console.warn(`[bankr_market] Failed (skipping): ${e.message?.slice(0,80)}`);
   }
 
   console.log('[signals] Scoring...');
