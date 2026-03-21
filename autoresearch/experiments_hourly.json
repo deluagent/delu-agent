@@ -68,5 +68,255 @@
     "score": 5.9861,
     "accepted": false,
     "description": "exp 7"
+  },
+  {
+    "n": 8,
+    "ts": "2026-03-21T14:00:57.181Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 8"
+  },
+  {
+    "n": 9,
+    "ts": "2026-03-21T14:02:44.759Z",
+    "valSharpe": 4.8843,
+    "audSharpe": 10.9256,
+    "isSharpe": 5.3643,
+    "score": 7.9049499999999995,
+    "accepted": false,
+    "description": "exp 9"
+  },
+  {
+    "n": 10,
+    "ts": "2026-03-21T14:04:31.813Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 10"
+  },
+  {
+    "n": 11,
+    "ts": "2026-03-21T14:06:19.081Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 11"
+  },
+  {
+    "n": 12,
+    "ts": "2026-03-21T14:08:07.412Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 12"
+  },
+  {
+    "n": 13,
+    "ts": "2026-03-21T14:09:55.464Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 13"
+  },
+  {
+    "n": 14,
+    "ts": "2026-03-21T14:11:43.930Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 14"
+  },
+  {
+    "n": 15,
+    "ts": "2026-03-21T14:13:31.689Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 15"
+  },
+  {
+    "n": 16,
+    "ts": "2026-03-21T14:15:20.128Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 16"
+  },
+  {
+    "n": 17,
+    "ts": "2026-03-21T14:17:08.502Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 17"
+  },
+  {
+    "n": 18,
+    "ts": "2026-03-21T14:18:56.244Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 18"
+  },
+  {
+    "n": 19,
+    "ts": "2026-03-21T14:20:44.330Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 19"
+  },
+  {
+    "n": 20,
+    "ts": "2026-03-21T14:22:31.445Z",
+    "valSharpe": 3.7423,
+    "audSharpe": 9.8529,
+    "isSharpe": 3.7711,
+    "score": 6.7976,
+    "accepted": false,
+    "description": "exp 20"
+  },
+  {
+    "n": 21,
+    "ts": "2026-03-21T14:24:18.930Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 21"
+  },
+  {
+    "n": 22,
+    "ts": "2026-03-21T14:26:06.393Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 22"
+  },
+  {
+    "n": 23,
+    "ts": "2026-03-21T14:27:53.306Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 23"
+  },
+  {
+    "n": 24,
+    "ts": "2026-03-21T14:29:41.925Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 24"
+  },
+  {
+    "n": 25,
+    "ts": "2026-03-21T14:31:29.976Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 25"
+  },
+  {
+    "n": 26,
+    "ts": "2026-03-21T14:33:17.391Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 26"
+  },
+  {
+    "n": 27,
+    "ts": "2026-03-21T14:35:04.609Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 27"
+  },
+  {
+    "n": 28,
+    "ts": "2026-03-21T14:36:52.218Z",
+    "valSharpe": 5.3615,
+    "audSharpe": 6.6107,
+    "isSharpe": 4.1355,
+    "score": 5.9861,
+    "accepted": false,
+    "description": "exp 28"
+  },
+  {
+    "n": 29,
+    "ts": "2026-03-21T14:38:39.794Z",
+    "valSharpe": 5.4547,
+    "audSharpe": 10.6956,
+    "isSharpe": 4.6691,
+    "score": 8.07515,
+    "accepted": true,
+    "description": "exp 29"
+  },
+  {
+    "n": 30,
+    "ts": "2026-03-21T14:40:27.455Z",
+    "valSharpe": 4.7315,
+    "audSharpe": 7.621,
+    "isSharpe": 4.1143,
+    "score": 6.17625,
+    "accepted": false,
+    "description": "exp 30"
+  },
+  {
+    "n": 31,
+    "ts": "2026-03-21T14:42:15.370Z",
+    "valSharpe": 4.7315,
+    "audSharpe": 7.621,
+    "isSharpe": 4.1143,
+    "score": 6.17625,
+    "accepted": false,
+    "description": "exp 31"
+  },
+  {
+    "n": 32,
+    "ts": "2026-03-21T14:44:04.928Z",
+    "valSharpe": 4.7315,
+    "audSharpe": 7.621,
+    "isSharpe": 4.1143,
+    "score": 6.17625,
+    "accepted": false,
+    "description": "exp 32"
   }
 ]

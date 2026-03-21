@@ -79,7 +79,7 @@ function scoreToken(data) {
 
   // ── Combined score [-1, +1] ──────────────────────────────────
   const score = Math.tanh(relStr7d * 5) * 0.35   // 7d relative strength (primary)
-              + Math.tanh(relStr4h * 30) * 0.30  // 4h relative strength (momentum)
+              + Math.tanh(relStr4h * 35) * 0.30  // 4h relative strength (momentum) - increased sensitivity
               + volSignal * 0.15                  // volume confirmation
               + Math.tanh(relAccel * 50) * 0.10   // momentum acceleration
               + Math.tanh(rangeCoil * 5) * 0.10;  // range compression (coiling)

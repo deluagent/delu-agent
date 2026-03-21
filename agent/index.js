@@ -975,6 +975,12 @@ What is your allocation decision?`;
     }
   } catch(e) {}
 
+  // Publish live status to delu-site repo (Vercel reads this)
+  try {
+    const { publish } = require('./publish_status');
+    await publish(regime);
+  } catch(e) { console.warn('[publish] Failed:', e.message?.slice(0, 60)); }
+
   console.log('\n' + '═'.repeat(60));
 }
 

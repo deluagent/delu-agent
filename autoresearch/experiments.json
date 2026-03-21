@@ -12936,5 +12936,221 @@
     "accepted": false,
     "description": "experiment 500",
     "ts": 1774101460144
+  },
+  {
+    "n": 501,
+    "valSharpe": 3.7325,
+    "isSharpe": 1.393,
+    "accepted": false,
+    "description": "experiment 501",
+    "ts": 1774101565487
+  },
+  {
+    "n": 502,
+    "valSharpe": 2.9725,
+    "isSharpe": 1.3659,
+    "accepted": false,
+    "description": "experiment 502",
+    "ts": 1774101671300
+  },
+  {
+    "n": 503,
+    "valSharpe": 3.7014,
+    "isSharpe": 1.3978,
+    "accepted": false,
+    "description": "experiment 503",
+    "ts": 1774101777451
+  },
+  {
+    "n": 504,
+    "valSharpe": 3.6119,
+    "isSharpe": 1.3745,
+    "accepted": false,
+    "description": "experiment 504",
+    "ts": 1774101883121
+  },
+  {
+    "n": 505,
+    "valSharpe": 2.8747,
+    "isSharpe": 1.2721,
+    "accepted": false,
+    "description": "experiment 505",
+    "ts": 1774101988964
+  },
+  {
+    "n": 506,
+    "valSharpe": 3.6119,
+    "isSharpe": 1.3745,
+    "accepted": false,
+    "description": "experiment 506",
+    "ts": 1774102095088
+  },
+  {
+    "n": 507,
+    "valSharpe": 3.3993,
+    "isSharpe": 1.2938,
+    "accepted": false,
+    "description": "experiment 507",
+    "ts": 1774102201625
+  },
+  {
+    "n": 508,
+    "valSharpe": 2.8811,
+    "isSharpe": 1.348,
+    "accepted": false,
+    "description": "experiment 508",
+    "ts": 1774102306701
+  },
+  {
+    "n": 509,
+    "valSharpe": 2.851,
+    "isSharpe": 1.3364,
+    "accepted": false,
+    "description": "experiment 509",
+    "ts": 1774102412034
+  },
+  {
+    "n": 510,
+    "valSharpe": 3.7325,
+    "isSharpe": 1.4242,
+    "accepted": false,
+    "description": "experiment 510",
+    "ts": 1774102517850
+  },
+  {
+    "n": 511,
+    "valSharpe": 3.4773,
+    "isSharpe": 1.3281,
+    "accepted": false,
+    "description": "experiment 511",
+    "ts": 1774102623868
+  },
+  {
+    "n": 512,
+    "valSharpe": 2.9954,
+    "isSharpe": 1.1647,
+    "accepted": false,
+    "description": "experiment 512",
+    "ts": 1774102729984
+  },
+  {
+    "n": 513,
+    "valSharpe": 2.9725,
+    "isSharpe": 1.3659,
+    "accepted": false,
+    "description": "experiment 513",
+    "ts": 1774102835730
+  },
+  {
+    "n": 514,
+    "valSharpe": 3.7325,
+    "isSharpe": 1.393,
+    "accepted": false,
+    "description": "experiment 514",
+    "ts": 1774102941390
+  },
+  {
+    "n": 515,
+    "valSharpe": 2.9763,
+    "isSharpe": 1.3355,
+    "accepted": false,
+    "description": "experiment 515",
+    "ts": 1774103047138
+  },
+  {
+    "n": 516,
+    "valSharpe": 2.8811,
+    "isSharpe": 1.348,
+    "accepted": false,
+    "description": "experiment 516",
+    "ts": 1774103152279
+  },
+  {
+    "n": 517,
+    "valSharpe": 3.0351,
+    "isSharpe": 1.4756,
+    "accepted": false,
+    "description": "experiment 517",
+    "ts": 1774103258351
+  },
+  {
+    "n": 518,
+    "valSharpe": 3.4773,
+    "isSharpe": 1.3281,
+    "accepted": false,
+    "description": "experiment 518",
+    "ts": 1774103364146
+  },
+  {
+    "n": 519,
+    "valSharpe": 2.8747,
+    "isSharpe": 1.3007,
+    "accepted": false,
+    "description": "experiment 519",
+    "ts": 1774103470196
+  },
+  {
+    "n": 520,
+    "valSharpe": 2.9763,
+    "isSharpe": 1.3355,
+    "accepted": false,
+    "description": "experiment 520",
+    "ts": 1774103575979
+  },
+  {
+    "n": 521,
+    "valSharpe": 2.9763,
+    "isSharpe": 1.3355,
+    "accepted": false,
+    "description": "experiment 521",
+    "ts": 1774103681664
+  },
+  {
+    "n": 522,
+    "valSharpe": 2.8747,
+    "isSharpe": 1.2721,
+    "accepted": false,
+    "description": "experiment 522",
+    "ts": 1774103787500
+  },
+  {
+    "n": 523,
+    "valSharpe": 3.3607,
+    "isSharpe": 1.2593,
+    "accepted": false,
+    "description": "experiment 523",
+    "ts": 1774103893899
+  },
+  {
+    "n": 524,
+    "valSharpe": 2.9763,
+    "isSharpe": 1.3355,
+    "accepted": false,
+    "description": "experiment 524",
+    "ts": 1774103999539
+  },
+  {
+    "n": 525,
+    "valSharpe": 2.9763,
+    "isSharpe": 1.3355,
+    "accepted": false,
+    "description": "experiment 525",
+    "ts": 1774104105242
+  },
+  {
+    "n": 526,
+    "valSharpe": 2.9725,
+    "isSharpe": 1.3659,
+    "accepted": false,
+    "description": "experiment 526",
+    "ts": 1774104211022
+  },
+  {
+    "n": 527,
+    "valSharpe": 2.9763,
+    "isSharpe": 1.3355,
+    "accepted": false,
+    "description": "experiment 527",
+    "ts": 1774104317198
   }
 ]
