@@ -11349,5 +11349,525 @@
     "accepted": true,
     "description": "experiment 302",
     "ts": 1774080065652
+  },
+  {
+    "n": 303,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 303",
+    "ts": 1774080164990
+  },
+  {
+    "n": 304,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 304",
+    "ts": 1774080264364
+  },
+  {
+    "n": 305,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 305",
+    "ts": 1774080363648
+  },
+  {
+    "n": 306,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 306",
+    "ts": 1774080463153
+  },
+  {
+    "n": 307,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 307",
+    "ts": 1774080562451
+  },
+  {
+    "n": 308,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 308",
+    "ts": 1774080661776
+  },
+  {
+    "n": 309,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 309",
+    "ts": 1774080760977
+  },
+  {
+    "n": 310,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 310",
+    "ts": 1774080860638
+  },
+  {
+    "n": 311,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 311",
+    "ts": 1774080960169
+  },
+  {
+    "n": 312,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 312",
+    "ts": 1774081059783
+  },
+  {
+    "n": 313,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 313",
+    "ts": 1774081159108
+  },
+  {
+    "n": 314,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 314",
+    "ts": 1774081258419
+  },
+  {
+    "n": 315,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 315",
+    "ts": 1774081357997
+  },
+  {
+    "n": 316,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 316",
+    "ts": 1774081457407
+  },
+  {
+    "n": 317,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 317",
+    "ts": 1774081556752
+  },
+  {
+    "n": 318,
+    "valSharpe": 3.2032,
+    "isSharpe": 1.2557,
+    "accepted": false,
+    "description": "experiment 318",
+    "ts": 1774081658483
+  },
+  {
+    "n": 319,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 319",
+    "ts": 1774081757759
+  },
+  {
+    "n": 320,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 320",
+    "ts": 1774081857176
+  },
+  {
+    "n": 321,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 321",
+    "ts": 1774081956455
+  },
+  {
+    "n": 322,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 322",
+    "ts": 1774082055761
+  },
+  {
+    "n": 323,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 323",
+    "ts": 1774082155194
+  },
+  {
+    "n": 324,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 324",
+    "ts": 1774082254519
+  },
+  {
+    "n": 325,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 325",
+    "ts": 1774082353908
+  },
+  {
+    "n": 326,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 326",
+    "ts": 1774082453126
+  },
+  {
+    "n": 327,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 327",
+    "ts": 1774082552455
+  },
+  {
+    "n": 328,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 328",
+    "ts": 1774082651869
+  },
+  {
+    "n": 329,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 329",
+    "ts": 1774082751162
+  },
+  {
+    "n": 330,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 330",
+    "ts": 1774082850610
+  },
+  {
+    "n": 331,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 331",
+    "ts": 1774082949788
+  },
+  {
+    "n": 332,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 332",
+    "ts": 1774083049149
+  },
+  {
+    "n": 333,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 333",
+    "ts": 1774083151993
+  },
+  {
+    "n": 334,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 334",
+    "ts": 1774083251491
+  },
+  {
+    "n": 335,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 335",
+    "ts": 1774083351031
+  },
+  {
+    "n": 336,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 336",
+    "ts": 1774083450293
+  },
+  {
+    "n": 337,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 337",
+    "ts": 1774083549561
+  },
+  {
+    "n": 338,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774083640261
+  },
+  {
+    "n": 339,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774083730972
+  },
+  {
+    "n": 340,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774083821666
+  },
+  {
+    "n": 341,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774083912353
+  },
+  {
+    "n": 342,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084002883
+  },
+  {
+    "n": 343,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084093579
+  },
+  {
+    "n": 344,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084184112
+  },
+  {
+    "n": 345,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084274669
+  },
+  {
+    "n": 346,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084365372
+  },
+  {
+    "n": 347,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084456059
+  },
+  {
+    "n": 348,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084546771
+  },
+  {
+    "n": 349,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084637486
+  },
+  {
+    "n": 350,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084728175
+  },
+  {
+    "n": 351,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084818714
+  },
+  {
+    "n": 352,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084909247
+  },
+  {
+    "n": 353,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774084999933
+  },
+  {
+    "n": 354,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085090619
+  },
+  {
+    "n": 355,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085181304
+  },
+  {
+    "n": 356,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085271993
+  },
+  {
+    "n": 357,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085362686
+  },
+  {
+    "n": 358,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085453390
+  },
+  {
+    "n": 359,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085544088
+  },
+  {
+    "n": 360,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085634623
+  },
+  {
+    "n": 361,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085725347
+  },
+  {
+    "n": 362,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085816040
+  },
+  {
+    "n": 363,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085906731
+  },
+  {
+    "n": 364,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774085997408
+  },
+  {
+    "n": 365,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774086088099
+  },
+  {
+    "n": 366,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774086178794
+  },
+  {
+    "n": 367,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
+    "ts": 1774086269489
   }
 ]

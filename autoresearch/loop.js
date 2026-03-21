@@ -27,16 +27,19 @@ const EXPERIMENTS  = path.join(DIR, 'experiments.json');
 const STATE        = path.join(DIR, 'state.json');
 const INTERVAL_MS  = 90_000;   // 90s between experiments
 
-// Model: Bankr LLM Gateway — Gemini 2.5 Flash (fast, cheap, smarter than llama for code)
-// Fallback key order: BANKR_API_KEY (from .env)
+// Model: Venice AI — claude-sonnet-4-6 with private mode
+// Private inference: no data logging, no training on our strategy
+const VENICE_API      = 'https://api.venice.ai/api/v1/chat/completions';
+const VENICE_MODEL    = 'claude-sonnet-4-6';
+const VENICE_KEY      = fs.readFileSync('/home/openclaw/.venice_key', 'utf8').trim();
+
+// Keep Bankr as fallback reference (credits exhausted)
 const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
-const BANKR_LLM_MODEL = 'claude-sonnet-4-5';
 const BANKR_API_KEY   = process.env.BANKR_API_KEY;
 
-// Credit guard: estimated cost per call ~$0.002 (3000 tokens in+out)
-// Stop loop if we've spent more than $4.50 to keep $0.50 buffer on $5 budget
-const COST_PER_CALL_EST = 0.002;
-const MAX_SPEND_USD     = 4.50;
+// Cost guard (Venice is within plan — just track calls)
+const COST_PER_CALL_EST = 0.001; // nominal
+const MAX_SPEND_USD     = 999;   // effectively unlimited on Venice plan
 const COST_TRACK_FILE   = path.join(DIR, 'cost_track.json');
 
 function loadCostTrack() {
@@ -64,29 +67,29 @@ function loadExperiments() {
 }
 function saveExperiments(exps) { fs.writeFileSync(EXPERIMENTS, JSON.stringify(exps, null, 2)); }
 
-// ── Bankr LLM call (Gemini 2.5 Flash) ───────────────────────
+// ── Venice LLM call (claude-sonnet-4-6, private mode) ────────
 async function callLLM(messages) {
-  // Track spend before call
   const track = checkBudget();
 
-  const res = await fetch(BANKR_LLM_API, {
+  const res = await fetch(VENICE_API, {
     method: 'POST',
     headers: {
       'Content-Type':  'application/json',
-      'Authorization': `Bearer ${BANKR_API_KEY}`,
+      'Authorization': `Bearer ${VENICE_KEY}`,
     },
     body: JSON.stringify({
-      model:       BANKR_LLM_MODEL,
+      model:       VENICE_MODEL,
       messages,
       temperature: 0.7,
       max_tokens:  4000,
+      venice_parameters: { enable_web_search: false, include_venice_system_prompt: false },
     }),
     signal: AbortSignal.timeout(120000),
   });
 
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Bankr LLM ${res.status}: ${err.slice(0, 200)}`);
+    throw new Error(`Venice ${res.status}: ${err.slice(0, 200)}`);
   }
 
   const data = await res.json();
@@ -203,7 +206,7 @@ async function loop() {
   console.log('🔬 delu autoresearch loop starting...');
   console.log(`   candidate: ${CANDIDATE}`);
   console.log(`   interval:  ${INTERVAL_MS / 1000}s`);
-  console.log(`   model:     ${BANKR_LLM_MODEL} via Bankr LLM Gateway`);
+  console.log(`   model:     ${VENICE_MODEL} via Venice (private mode)`);
   const ct = loadCostTrack();
   console.log(`   budget:    $${ct.estimatedSpend.toFixed(3)} spent / $${MAX_SPEND_USD} limit (${ct.totalCalls} calls)\n`);
 
