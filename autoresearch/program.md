@@ -29,7 +29,9 @@ Validation  (180d):  Sharpe=  1.183  ret= +41.4%  DD=17.6%  WR=31%  [majors=1.55
 Audit       (180d):  Sharpe=  0.364  ret=  +2.1%  DD= 5.6%  WR= 1%  [majors=1.87 base=-2.72]
 ```
 
-Val Sharpe 1.183 is your starting point. Beat it.
+Val Sharpe 1.405 is your starting point. Beat it.
+**CRITICAL**: Audit Sharpe must stay positive. If audit < 0, the strategy fails in the current BEAR regime.
+Optimize for: val_sharpe > 1.5 AND audit_sharpe > 0.3. Don't sacrifice audit for val.
 Key insight: **Base tokens (BRETT, VIRTUAL, AERO, DEGEN, CLANKER) are dragging the combined score**.
 The current signal works well for majors (1.55) but fails on Base alts (-3.56).
 This means the regime filter + momentum signals need to be adapted for high-beta Base tokens.

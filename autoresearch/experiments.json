@@ -9158,5 +9158,69 @@
     "accepted": false,
     "description": "experiment 30",
     "ts": 1774053566123
+  },
+  {
+    "n": 31,
+    "valSharpe": 1.7785,
+    "isSharpe": 1.3992,
+    "accepted": true,
+    "description": "experiment 31",
+    "ts": 1774053599105
+  },
+  {
+    "n": 32,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax: Unexpected token '}'",
+    "ts": 1774053644149
+  },
+  {
+    "n": 33,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax: Unexpected token ')'",
+    "ts": 1774053690438
+  },
+  {
+    "n": 34,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: syntax: Unexpected token ')'",
+    "ts": 1774053735366
+  },
+  {
+    "n": 35,
+    "valSharpe": 0.0717,
+    "isSharpe": 1.6763,
+    "accepted": false,
+    "description": "experiment 35",
+    "ts": 1774053777567
+  },
+  {
+    "n": 36,
+    "valSharpe": 1.3844,
+    "isSharpe": 1.9007,
+    "accepted": false,
+    "description": "experiment 36",
+    "ts": 1774053812212
+  },
+  {
+    "n": 37,
+    "valSharpe": 0.5631,
+    "isSharpe": 1.4157,
+    "accepted": false,
+    "description": "experiment 37",
+    "ts": 1774053839496
+  },
+  {
+    "n": 38,
+    "valSharpe": 0.8629,
+    "isSharpe": 1.1406,
+    "accepted": false,
+    "description": "experiment 38",
+    "ts": 1774053872904
   }
 ]

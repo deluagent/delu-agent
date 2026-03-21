@@ -73,48 +73,49 @@ function scoreToken(data) {
   const n = prices.length;
   if (n < 60) return 0;
 
-  // ── Regime detection: BTC Price vs 200d MA ──
+  // ── Regime detection: BTC 50d vs 200d MA ──
+  // BEAR = soft penalty (0.3×), not hard zero — there are still tradeable tokens in BEAR
+  // BULL = full weight (1.0×)
   let regimeMult = 1.0;
   let isBear = false;
   if (btcPrices.length >= 200) {
-    const btcPrice = btcPrices[btcPrices.length - 1];
+    const btc50  = sma(btcPrices, 50);
     const btc200 = sma(btcPrices, 200);
-    if (btcPrice < btc200) {
+    if (btc50 < btc200) {
       isBear = true;
-      regimeMult = 0.3; // BEAR penalty
+      regimeMult = 0.3;
     }
   }
 
   // ── Trend strength filter ──
   const ema = emaGap(prices, 12, 26);
-  if (Math.abs(ema) < 0.01) return 0; // Slightly lowered to allow emerging trends
+  if (Math.abs(ema) < 0.03) return 0;   // skip choppy/flat — no trend to ride
 
-  // ── Momentum (multi-timeframe + relative strength) ──
+  // ── Momentum (multi-timeframe, vol-adjusted) ──
   const vol = realizedVol(prices, 14);
   const r7   = pctChange(prices, 7);
   const r20  = pctChange(prices, 20);
   const r60  = pctChange(prices, Math.min(60, n - 1));
-  const btcR20 = pctChange(btcPrices, 20);
 
-  // Incorporate Relative Strength (outperforming BTC) to filter for leaders
-  const relStrength = r20 - btcR20;
-  
-  const momentum = (0.25 * r7 + 0.25 * r20 + 0.25 * relStrength + 0.25 * r60) / (1 + vol);
+  const momentum = 0.40 * r7 / (1 + vol)
+                 + 0.35 * r20 / (1 + vol)
+                 + 0.25 * r60 / (1 + vol);
 
   // ── Trend ──
   const trend = 0.20 * ema;
 
   // ── Mean reversion ──
   const z = zScore(prices, 20);
-  const meanRev = z < -2.0 ? 0.10 : 0;
+  const meanRev = z < -2.0 ? 0.08 : (z > 2.5 ? -0.08 : 0);
 
   // ── Volatility penalty ──
-  const volPenalty = -0.15 * Math.max(vol - 0.75, 0);
+  const volPenalty = -0.15 * Math.max(vol - 0.6, 0);
 
   // ── Funding rate signal ──
+  // In BEAR regime, require positive funding (crowded shorts = bullish) to trade
   const fundingBoost = isBear
-    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.10 * Math.abs(flowSignal))
-    : 0.10 * flowSignal;
+    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.10 * Math.abs(flowSignal))  // BEAR: funding matters more
+    : 0.10 * flowSignal;  // BULL: lighter touch
 
   // ── Combined ──
   const raw = momentum + trend + meanRev + volPenalty + fundingBoost;

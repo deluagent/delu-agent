@@ -267,18 +267,25 @@ async function loop() {
       if (!result) throw new Error('evaluator returned null');
 
       const newValSharpe = result.validation.sharpe;
-      const improvement  = newValSharpe - state.bestValSharpe;
+      const newAudSharpe = result.audit.sharpe;
+      // Combined score: val must improve AND audit must stay >= 0
+      // Weight: 70% val, 30% audit (want val to lead but audit can't collapse)
+      const newScore    = 0.7 * newValSharpe + 0.3 * newAudSharpe;
+      const oldScore    = state.bestScore ?? (0.7 * state.bestValSharpe + 0.3 * 0);
+      const improvement = newValSharpe - state.bestValSharpe;
 
-      console.log(`   Result: val_sharpe=${newValSharpe.toFixed(3)} (${improvement >= 0 ? '+' : ''}${improvement.toFixed(3)}) | is_sharpe=${result.inSample.sharpe.toFixed(3)}`);
+      console.log(`   Result: val=${newValSharpe.toFixed(3)} aud=${newAudSharpe.toFixed(3)} score=${newScore.toFixed(3)} (${improvement >= 0 ? '+' : ''}${improvement.toFixed(3)} val) | is=${result.inSample.sharpe.toFixed(3)}`);
 
-      if (newValSharpe > state.bestValSharpe) {
+      // Accept only if combined score improves AND audit is non-catastrophic (> -0.5)
+      if (newScore > oldScore && newAudSharpe > -0.5) {
         // Keep it — commit
         state.bestValSharpe = newValSharpe;
+        state.bestScore     = newScore;
         saveState(state);
         accepted = true;
-        const commitMsg = `exp ${state.expCount}: +${improvement.toFixed(3)} val_sharpe — ${description}`;
+        const commitMsg = `exp ${state.expCount}: +${improvement.toFixed(3)} val_sharpe (aud=${newAudSharpe.toFixed(2)}) — ${description}`;
         try {
-          saveExperiments([...experiments, { n: state.expCount, valSharpe: newValSharpe, isSharpe: result.inSample.sharpe, accepted, description, ts: Date.now() }]);
+          saveExperiments([...experiments, { n: state.expCount, valSharpe: newValSharpe, audSharpe: newAudSharpe, isSharpe: result.inSample.sharpe, accepted, description, ts: Date.now() }]);
           gitCommit(commitMsg.replace(/"/g, "'"));
           console.log(`   ✅ KEPT — committed: "${commitMsg}"`);
         } catch(e) { console.log(`   ✅ KEPT (commit failed: ${e.message})`); }
