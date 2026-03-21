@@ -62,3 +62,42 @@ prices[], volumes[], highs[], lows[], opens[], btcPrices[]
 - No redefined helpers (ema, sma, realizedVol, zScore)
 - Min bars needed: 169 (7 days hourly)
 - No lookahead bias
+
+---
+
+## Nunchi hypotheses (added March 21 — from 103-experiment Hyperliquid hourly study)
+Source: github.com/Nunchi-trade/auto-researchtrading — Sharpe 2.7 → 20.6 on hourly perp data
+**These are directly relevant — Nunchi's data is also hourly crypto**
+
+### H-N1: RSI period 8 ⭐ HIGHEST PRIORITY — their single biggest gain (+5.0 Sharpe)
+- "Standard 14-period RSI is too slow for hourly crypto"
+- RSI 8 is much more responsive — catches intraday momentum shifts faster
+- Test: replace any RSI 14 component with RSI 8
+- Also test: RSI(8) > 55 as long signal, RSI(8) < 45 as short signal
+- Combined: use (rsi8 - 50) / 50 as a continuous score component [-1, +1]
+
+### H-N2: Bollinger Band width percentile as compression signal (+0.9 Sharpe)
+- bbWidth = (upper20 - lower20) / middle20
+- bbWidthPct = percentile of bbWidth over last 168 bars (1 week)
+- BB compression (bbWidthPct < 20) = coiling before breakout
+- Direction from price vs middle band: above = long, below = short
+- Test: if bbWidthPct < 25 → signal = 0.4 × sign(close - middleBand)
+
+### H-N3: Remove multi-timeframe confirmation penalty (+0.8 Sharpe from simplification)
+- Our hourly scoring may penalise cross-timeframe divergence
+- Test: pure single-timeframe signal — just 1h bars, no 4h cross-check
+- Simpler is often better once you have enough experiments proving it
+
+### H-N4: ATR trailing multiplier — use 5.5× for stop/hold logic
+- Holds winners much longer (1.5× too tight, cuts too early)
+- In scoring context: if close > ema20 - 5.5×atr, stay long (don't flip)
+- Test: add persistence bonus — if scored > 0.3 last bar AND within 5.5×ATR of high → maintain signal
+
+### H-N5: Ensemble voting (their key architecture breakthrough, +5.6 Sharpe at exp15)
+- Instead of weighted sum, use majority vote across signals
+- 5 signals vote: RSI8, OBV direction, rel strength vs BTC, BB position, vol burst
+- If 3/5 agree → trade at that strength; if 2/5 or less → 0
+- Vote strength: count agreements, normalize to [-1, +1]
+
+### Priority: H-N1 (RSI-8) → H-N5 (ensemble vote) → H-N2 (BB width) → H-N3 (no MTF) → H-N4 (ATR hold)
+### Key difference from daily: hourly data has more noise — RSI-8 and ensemble voting address this directly
