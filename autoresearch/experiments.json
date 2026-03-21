@@ -11893,5 +11893,29 @@
     "accepted": false,
     "description": "experiment 370",
     "ts": 1774086482917
+  },
+  {
+    "n": 371,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 371",
+    "ts": 1774086514484
+  },
+  {
+    "n": 372,
+    "valSharpe": 3.5569,
+    "isSharpe": 1.3065,
+    "accepted": false,
+    "description": "experiment 372",
+    "ts": 1774086580596
+  },
+  {
+    "n": 373,
+    "valSharpe": 3.7105,
+    "isSharpe": 1.5136,
+    "accepted": false,
+    "description": "experiment 373",
+    "ts": 1774086758939
   }
 ]

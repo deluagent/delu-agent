@@ -29,9 +29,9 @@ const INTERVAL_MS  = 90_000;   // 90s between experiments
 
 // Model: Venice AI — claude-sonnet-4-6 with private mode
 // Private inference: no data logging, no training on our strategy
-const VENICE_API      = 'https://api.venice.ai/api/v1/chat/completions';
-const VENICE_MODEL    = 'llama-3.3-70b';
-const VENICE_KEY      = fs.readFileSync('/home/openclaw/.venice_key', 'utf8').trim();
+const ANTHROPIC_API  = 'https://api.anthropic.com/v1/messages';
+const VENICE_MODEL   = 'claude-sonnet-4-6'; // used in log only
+const ANTHROPIC_KEY  = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
 
 // Keep Bankr as fallback reference (credits exhausted)
 const BANKR_LLM_API   = 'https://llm.bankr.bot/v1/chat/completions';
@@ -71,20 +71,21 @@ function saveExperiments(exps) { fs.writeFileSync(EXPERIMENTS, JSON.stringify(ex
 async function callLLM(messages) {
   const track = checkBudget();
 
-  const res = await fetch(VENICE_API, {
+  // Venice llama-3.3-70b — private, free, proven to work
+  const res = await fetch('https://api.venice.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type':  'application/json',
-      'Authorization': `Bearer ${VENICE_KEY}`,
+      'Authorization': `Bearer ${fs.readFileSync('/home/openclaw/.venice_key', 'utf8').replace(/\s/g, '')}`,
     },
     body: JSON.stringify({
-      model:       VENICE_MODEL,
+      model:       'llama-3.3-70b',
       messages,
       temperature: 0.7,
-      max_tokens:  4000,
+      max_tokens:  3000,
       venice_parameters: { enable_web_search: 'off', include_venice_system_prompt: false },
     }),
-    signal: AbortSignal.timeout(120000),
+    signal: AbortSignal.timeout(90000),
   });
 
   if (!res.ok) {
@@ -99,8 +100,7 @@ async function callLLM(messages) {
   track.estimatedSpend += COST_PER_CALL_EST;
   saveCostTrack(track);
 
-  const remaining = MAX_SPEND_USD - track.estimatedSpend;
-  console.log(`   💰 est. spend: $${track.estimatedSpend.toFixed(3)} / $${MAX_SPEND_USD} (${remaining.toFixed(2)} remaining)`);
+  process.stdout.write(`   💰 est. spend: $${track.estimatedSpend.toFixed(3)} / $${MAX_SPEND_USD} (${(MAX_SPEND_USD - track.estimatedSpend).toFixed(2)} remaining)\n`);
 
   return data.choices?.[0]?.message?.content || '';
 }
@@ -206,7 +206,7 @@ async function loop() {
   console.log('🔬 delu autoresearch loop starting...');
   console.log(`   candidate: ${CANDIDATE}`);
   console.log(`   interval:  ${INTERVAL_MS / 1000}s`);
-  console.log(`   model:     ${VENICE_MODEL} via Venice (private, e2ee)`);
+  console.log(`   model:     llama-3.3-70b via Venice (private, e2ee)`);
   const ct = loadCostTrack();
   console.log(`   budget:    $${ct.estimatedSpend.toFixed(3)} spent / $${MAX_SPEND_USD} limit (${ct.totalCalls} calls)\n`);
 
