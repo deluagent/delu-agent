@@ -11869,5 +11869,29 @@
     "accepted": false,
     "description": "error: Bankr LLM 402: {\"error\":{\"message\":\"Insufficient L",
     "ts": 1774086269489
+  },
+  {
+    "n": 368,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Venice 400: {\"details\":{\"_errors\":[],\"venice_param",
+    "ts": 1774086342256
+  },
+  {
+    "n": 369,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 369",
+    "ts": 1774086363107
+  },
+  {
+    "n": 370,
+    "valSharpe": 3.6372,
+    "isSharpe": 1.2552,
+    "accepted": false,
+    "description": "experiment 370",
+    "ts": 1774086482917
   }
 ]

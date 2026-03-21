@@ -30,7 +30,7 @@ const INTERVAL_MS  = 90_000;   // 90s between experiments
 // Model: Venice AI — claude-sonnet-4-6 with private mode
 // Private inference: no data logging, no training on our strategy
 const VENICE_API      = 'https://api.venice.ai/api/v1/chat/completions';
-const VENICE_MODEL    = 'claude-sonnet-4-6';
+const VENICE_MODEL    = 'llama-3.3-70b';
 const VENICE_KEY      = fs.readFileSync('/home/openclaw/.venice_key', 'utf8').trim();
 
 // Keep Bankr as fallback reference (credits exhausted)
@@ -82,7 +82,7 @@ async function callLLM(messages) {
       messages,
       temperature: 0.7,
       max_tokens:  4000,
-      venice_parameters: { enable_web_search: false, include_venice_system_prompt: false },
+      venice_parameters: { enable_web_search: 'off', include_venice_system_prompt: false },
     }),
     signal: AbortSignal.timeout(120000),
   });
@@ -206,7 +206,7 @@ async function loop() {
   console.log('🔬 delu autoresearch loop starting...');
   console.log(`   candidate: ${CANDIDATE}`);
   console.log(`   interval:  ${INTERVAL_MS / 1000}s`);
-  console.log(`   model:     ${VENICE_MODEL} via Venice (private mode)`);
+  console.log(`   model:     ${VENICE_MODEL} via Venice (private, e2ee)`);
   const ct = loadCostTrack();
   console.log(`   budget:    $${ct.estimatedSpend.toFixed(3)} spent / $${MAX_SPEND_USD} limit (${ct.totalCalls} calls)\n`);
 
