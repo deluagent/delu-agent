@@ -284,17 +284,28 @@ async function buildStatus(regimeData, balanceStr = null) {
 
     // Wallet summary — total live portfolio value from Bankr balance
     wallet: (() => {
-      // Sum all live token values from Bankr balance (excludes USDC)
-      const posValue  = openPositions.reduce((s, p) => s + (p.currentUSD || p.sizeUSD || 0), 0);
-      const usdcVal   = liveBalanceMap['USDC']?.valueUSD || 0;
-      const yieldVal  = yieldPosition.amountUSD || 0;
-      const totalUSD  = parseFloat((posValue + usdcVal + yieldVal).toFixed(2));
-      // True unrealised PnL: currentUSD - sizeUSD (entry) for each open position
-      const unrealPnl = openPositions.reduce((s, p) => s + ((p.currentUSD || p.sizeUSD || 0) - (p.sizeUSD || 0)), 0);
+      const usdcVal  = liveBalanceMap['USDC']?.valueUSD || 0;
+      const yieldVal = yieldPosition.amountUSD || 0;
+
+      // Total from Bankr balance map (includes ETH, cbBTC, all tokens Bankr sees)
+      const bankrTotal = Object.entries(liveBalanceMap)
+        .filter(([sym]) => sym !== 'USDC')
+        .reduce((s, [, v]: any) => s + (v.valueUSD || 0), 0);
+
+      // For open micro-cap positions NOT in Bankr balance, use assessment prices
+      const microCapVal = openPositions
+        .filter(p => !liveBalanceMap[p.sym.toUpperCase()])
+        .reduce((s, p) => s + (p.currentUSD || p.sizeUSD || 0), 0);
+
+      const totalUSD = parseFloat((bankrTotal + microCapVal + usdcVal + yieldVal).toFixed(2));
+
+      // Unrealised PnL for tracked open positions
+      const unrealPnl  = openPositions.reduce((s, p) => s + ((p.currentUSD || p.sizeUSD || 0) - (p.sizeUSD || 0)), 0);
       const entryTotal = openPositions.reduce((s, p) => s + (p.sizeUSD || 0), 0);
+
       return {
         totalUSD,
-        positionsUSD: parseFloat(posValue.toFixed(2)),
+        positionsUSD: parseFloat((bankrTotal + microCapVal).toFixed(2)),
         liquidUSDC:   parseFloat(usdcVal.toFixed(2)),
         yieldUSD:     parseFloat(yieldVal.toFixed(2)),
         unrealPnlUSD: parseFloat(unrealPnl.toFixed(2)),
