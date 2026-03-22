@@ -32,6 +32,7 @@ const { fetchAllFlows } = require('./flows');
 const { getBankrAttention } = require('./bankr_market');
 const { discover } = require('./discover');
 const { discoverAlchemy } = require('./discover_alchemy');
+const { scoreMultiTF } = require('./multi_tf_score');
 const { getTrendingEntries } = require('./trending_entry');
 const { rugCheck }           = require('./rug_check');
 
@@ -879,7 +880,36 @@ async function runCycle() {
     return;
   }
 
-    // 5. Build Venice context — onchain-first, position-aware
+    // 5a. Multi-timeframe enrichment — run 5m + 4h + onchain scores on top candidates
+  const topCandidates = [...trendingEntries]
+    .sort((a, b) => (b.score || 0) - (a.score || 0))
+    .slice(0, 4); // only top 4 — GT rate limit
+
+  if (topCandidates.length > 0) {
+    console.log(`\n[multi_tf] Enriching top ${topCandidates.length} candidates with 5m/4h/onchain signals...`);
+    const btcBars = regime.btcHourly || [];
+    for (const t of topCandidates) {
+      try {
+        const alchSignal = t.alchemySignal || null;
+        const mtf = await scoreMultiTF(t.symbol, t.contractAddress || t.address, alchSignal, btcBars);
+        if (mtf.score != null) {
+          t.multiTFScore    = mtf.score;
+          t.scoreH          = mtf.scoreH;
+          t.score5m         = mtf.score5m;
+          t.scoreOnchain    = mtf.scoreOC;
+          t.score4h         = mtf.score4h;
+          t.multiTFBreakdown = mtf.breakdown;
+          // Blend original score with multi-TF (60/40)
+          t.score = parseFloat((0.60 * (t.score || 0) + 0.40 * mtf.score).toFixed(3));
+          console.log(`  [multi_tf] ${t.symbol}: blended=${t.score.toFixed(3)} | ${mtf.breakdown}`);
+        }
+      } catch(e) {
+        console.warn(`  [multi_tf] ${t.symbol} failed: ${e.message?.slice(0,50)}`);
+      }
+    }
+  }
+
+    // 5b. Build Venice context — onchain-first, position-aware
   const arState = (() => { try { return JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../autoresearch/state.json'),'utf8')); } catch { return null; } })();
   const arNote = arState
     ? `\n## Autoresearch Loop\nExperiments: ${arState.expCount} | Best val Sharpe: ${arState.bestValSharpe?.toFixed(3)}\n`
@@ -921,11 +951,14 @@ ${Object.keys(checkrAttention).length > 0
 ## 🔥 Onchain Trending Entries (Base — Alchemy price data + transfer stats)
 These are Base tokens currently trending onchain. NOT in fixed universe. Execution via Bankr swap by contract address.
 ${trendingEntries.length
-  ? trendingEntries.map(t =>
-      `${t.symbol} | score=${t.score.toFixed(2)} | rank=${t.rank}(${(t.priorRanks||[]).length?(t.priorRanks||[]).join('→')+'→':''}${t.rank}) | ret1h=${(t.ret1h*100).toFixed(1)}% ret6h=${(t.ret6h*100).toFixed(1)}% ret24h=${(t.priceChange24h||0).toFixed(1)}% | move=${(t.moveFrac*100).toFixed(0)}%done | liq=$${Math.round((t.liquidity||0)/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | rug=${t.rugVerdict||'?'}(${t.rugScore||'?'}/100)${t.rugFlags?.length?' flags='+t.rugFlags.map(f=>f.split(':')[0]).join('+'):''} | addr=${t.address}`
-    ).join('\n')
+  ? trendingEntries.map(t => {
+      const mtf = t.multiTFBreakdown ? ` | MTF=[${t.multiTFBreakdown}]` : '';
+      const ret1h = t.ret1h != null ? (t.ret1h*100).toFixed(1) : '?';
+      const ret6h = t.ret6h != null ? (t.ret6h*100).toFixed(1) : '?';
+      return `${t.symbol} | score=${t.score?.toFixed(2)||'?'}${mtf} | rank=${t.rank||'?'} | ret1h=${ret1h}% ret6h=${ret6h}% | move=${t.moveFrac!=null?(t.moveFrac*100).toFixed(0)+'%done':'?'} | liq=$${Math.round((t.liquidity||0)/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | rug=${t.rugVerdict||'?'}(${t.rugScore||'?'}/100) | addr=${t.address||'?'}`;
+    }).join('\n')
   : 'No high-conviction trending entries this cycle'}
-If a trending token has score≥0.65 and move<50%done: consider BUY with $10–$15 size, set contractAddress to token address. Use Bankr to swap USDC→token.
+If a trending token has score≥0.65 and move<50%done: consider BUY with $10–$15 size. MTF=[1h|5m|onchain|4h] shows multi-timeframe signal alignment — all positive = strong conviction.
 
 ## Portfolio Context
 Active tranche: $${ACTIVE_TRANCHE_USD} USDC
@@ -1060,6 +1093,13 @@ What is your allocation decision?`;
         momentumWindows:  ca.momentumWindows  || 0,
         sustainedMomentum: ca.sustainedMomentum || false,
         rotatingFrom:     ca.rotating_from    || ca.rotatingFrom || [],
+        // Multi-timeframe scores
+        multiTFScore:     t.multiTFScore      || null,
+        scoreH:           t.scoreH            || null,
+        score5m:          t.score5m           || null,
+        scoreOnchain:     t.scoreOnchain      || null,
+        score4h:          t.score4h           || null,
+        multiTFBreakdown: t.multiTFBreakdown  || null,
       };
     }),
     positionAssessments: positionAssessments.map(p => ({
