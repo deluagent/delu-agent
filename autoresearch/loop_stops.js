@@ -287,7 +287,7 @@ async function main() {
     const exps = loadExperiments();
 
     // Ask LLM to propose a mutation
-    const proposal = await proposeParams(state, exps);
+    let proposal = await proposeParams(state, exps);
     if (!proposal || !proposal.param || proposal.value == null) {
       log(`Exp ${state.expCount}: LLM returned null — random perturbation`);
       proposal = {};
