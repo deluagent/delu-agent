@@ -288,20 +288,18 @@ async function buildStatus(regimeData, balanceStr = null) {
 
     // Wallet summary — total live portfolio value from Bankr balance
     wallet: (() => {
-      const usdcVal  = liveBalanceMap['USDC']?.valueUSD || 0;
-      const yieldVal = yieldPosition.amountUSD || 0;
-
-      // Total from Bankr balance map (includes ETH, cbBTC, all tokens Bankr sees)
-      const bankrTotal = Object.entries(liveBalanceMap)
-        .filter(([sym]) => sym !== 'USDC')
-        .reduce((s, [, v]) => s + (v.valueUSD || 0), 0);
+      // Total = everything in Bankr balance map (USDC + ETH + cbBTC + tokens)
+      // yieldPosition.amountUSD is just liquid USDC relabelled — do NOT add again
+      const bankrTotal = Object.values(liveBalanceMap)
+        .reduce((s, v) => s + (v.valueUSD || 0), 0);
 
       // For open micro-cap positions NOT in Bankr balance, use assessment prices
       const microCapVal = openPositions
         .filter(p => !liveBalanceMap[p.sym.toUpperCase()])
         .reduce((s, p) => s + (p.currentUSD || p.sizeUSD || 0), 0);
 
-      const totalUSD = parseFloat((bankrTotal + microCapVal + usdcVal + yieldVal).toFixed(2));
+      const usdcVal = liveBalanceMap['USDC']?.valueUSD || 0;
+      const totalUSD = parseFloat((bankrTotal + microCapVal).toFixed(2));
 
       // Unrealised PnL for tracked open positions
       const unrealPnl  = openPositions.reduce((s, p) => s + ((p.currentUSD || p.sizeUSD || 0) - (p.sizeUSD || 0)), 0);
@@ -309,9 +307,9 @@ async function buildStatus(regimeData, balanceStr = null) {
 
       return {
         totalUSD,
-        positionsUSD: parseFloat((bankrTotal + microCapVal).toFixed(2)),
+        positionsUSD: parseFloat((microCapVal).toFixed(2)),
         liquidUSDC:   parseFloat(usdcVal.toFixed(2)),
-        yieldUSD:     parseFloat(yieldVal.toFixed(2)),
+        yieldUSD:     parseFloat((yieldPosition.amountUSD || 0).toFixed(2)),
         unrealPnlUSD: parseFloat(unrealPnl.toFixed(2)),
         unrealPnlPct: entryTotal > 0 ? parseFloat((unrealPnl / entryTotal * 100).toFixed(2)) : 0,
       };
