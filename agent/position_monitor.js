@@ -278,7 +278,7 @@ async function runAtrStops(openPositions, bankr, DRY_RUN = false) {
               ? `Sell all ${qty} ${pos.sym} → USDC (ATR stop)`
               : `Sell all ${pos.sym} → USDC (ATR stop)`;
             console.log(`  [bankr] ${sellMsg}`);
-            await bankr.executeOrder({ action: 'sell', symbol: pos.sym, contractAddress: pos.contractAddress });
+            await bankr.execute({ action: 'sell', asset: pos.sym, contractAddress: pos.contractAddress, size_pct: 100 }, 27);
             if (idx >= 0) {
               allPositions[idx].status      = 'closed';
               allPositions[idx].closeReason = 'atr_stop';
