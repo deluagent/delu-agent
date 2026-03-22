@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-22 13:17 UTC — HOLD (0% conf)
+**Regime:** BEAR | BTC $68783 | -3.9% from 200d MA
+**Venice:** "No token clears the signal threshold, and confidence is below the required level for a buy decision."
+**Discovered:** TIBBIR(score=0.31 ret1h=0.0%) · CLAWD(score=0.32 ret1h=0.0%) · DRB(score=0.29 ret1h=0.0%) · JUNO(score=0.95 ret1h=0.0%)
+**Positions:** KTA +0.0%, BNKR +0.0%, MOLT +12.0%, BLUEAGENT +0.6%, CLAWNCH +0.0%, MOLTEN +0.0%, DRB +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-22 10:44 UTC — HOLD (0% conf)
 **Regime:** BEAR | BTC $68586 | -4.3% from 200d MA
 **Venice:** "No token clears the signal threshold of score ≥ 0.65, and confidence ≥ 65, so we hold our current position."
