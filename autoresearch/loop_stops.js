@@ -290,6 +290,7 @@ async function main() {
     const proposal = await proposeParams(state, exps);
     if (!proposal || !proposal.param || proposal.value == null) {
       log(`Exp ${state.expCount}: LLM returned null — random perturbation`);
+      proposal = {};
       // Random fallback
       const keys = Object.keys(state.bestParams);
       const key  = keys[Math.floor(Math.random() * keys.length)];
