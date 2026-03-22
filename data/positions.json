@@ -250,7 +250,7 @@
   },
   {
     "sym": "MOLTEN",
-    "entryPrice": 5.66,
+    "entryPrice": 0.0000085,
     "sizeUsd": 10,
     "trailPct": 5,
     "activateAt": 1,
@@ -263,10 +263,10 @@
     "confidence": 70,
     "contractAddress": "0x59c0d5c34c301ac0600147924d6c9be22a2f0b07",
     "kellyFraction": 22,
-    "atrStop": 5.4902,
-    "atrValue": 1.3e-7,
+    "atrStop": null,
+    "atrValue": null,
     "lastChecked": "2026-03-22T14:17:20.162Z",
-    "peakPrice": 5.66
+    "peakPrice": 0.0000085
   },
   {
     "sym": "DRB",
