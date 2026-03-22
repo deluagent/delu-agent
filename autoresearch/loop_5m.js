@@ -54,14 +54,12 @@ async function callLLM(messages) {
           res.on("end", () => {
             try {
               const j = JSON.parse(d);
-              if (j.error?.type === "insufficient_credits" || (j.error?.message || "").includes("Insufficient")) {
+              if (j.error || !j.choices) {
                 reject(new Error("bankr_credits"));
-              } else if (j.error) {
-                reject(new Error("Bankr: " + j.error.message));
               } else {
                 resolve(j.choices?.[0]?.message?.content || "");
               }
-            } catch(e) { reject(new Error("parse: " + d.slice(0,80))); }
+            } catch(e) { reject(new Error("bankr_credits")); }
           });
         });
         req.on("error", reject);
