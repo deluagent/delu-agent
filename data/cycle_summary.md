@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-22 21:13 UTC — BUY ROBOTMONEY (80% conf)
+**Regime:** BEAR | BTC $67726 | -5.3% from 200d MA
+**Venice:** "ROBOTMONEY has a high onchain trend score of 0.69 and sustained social attention, indicating strong cross-sectional alpha and a potential buying opportunity in the current BEAR regime."
+**Discovered:** ROBOTMONEY(score=0.69 ret1h=0.0%) · TIBBIR(score=0.50 ret1h=0.0%) · DRB(score=0.34 ret1h=0.0%) · VVV(score=0.64 ret1h=0.0%)
+**Positions:** DRB +0.0%, JUNO +0.0%, MOLTEN +0.0%, VVV +0.0%, ROBOTMONEY +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-22 21:05 UTC — BUY ROBOTMONEY (80% conf)
 **Regime:** BEAR | BTC $67603 | -5.5% from 200d MA
 **Venice:** "ROBOTMONEY has a high onchain trend score of 0.69 and sustained social attention, indicating strong cross-sectional alpha and potential for further growth."
