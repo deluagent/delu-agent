@@ -1112,6 +1112,7 @@ What is your allocation decision?`;
     const { publish } = require('./publish_status');
     await publish(regime, balanceResp);
     try { const { publishResearch } = require('./publish_research'); await publishResearch(); } catch(e) { console.warn('[research] publish failed:', e.message?.slice(0,50)); }
+    try { const { run } = require('./publish_brain'); run(); } catch(e) { console.warn('[brain] publish failed:', e.message?.slice(0,50)); }
   } catch(e) { console.warn('[publish] Failed:', e.message?.slice(0, 60)); }
 
   console.log('\n' + '═'.repeat(60));
