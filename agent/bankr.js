@@ -150,18 +150,31 @@ async function smartYieldRebalance() {
     increaseMatch? parseFloat(increaseMatch[1]): 0,
   );
 
-  // Detect idle USDC with no active yield position → deploy immediately
+  // Detect idle USDC with no active yield position → deploy surplus only
+  // Keep ACTIVE_TRANCHE_USD liquid for trading, yield only the surplus
+  const ACTIVE_TRANCHE_USD = parseFloat(process.env.ACTIVE_TRANCHE_USD || '27');
   const hasNoYield = /no active.*(yield|stablecoin|position)|sitting idle|no.*position/i.test(response);
   const hasIdleUSDC = /\d+\.?\d*\s*usdc.*idle|idle.*\d+\.?\d*\s*usdc/i.test(response);
 
   if (hasNoYield || hasIdleUSDC) {
-    console.log(`[bankr] No yield position + idle USDC detected — deploying to best vault`);
+    // Extract current USDC balance from response text
+    const balMatch = response.match(/(\d+\.?\d*)\s*usdc/);
+    const currentUSDC = balMatch ? parseFloat(balMatch[1]) : 0;
+    const surplusUSDC = Math.max(0, currentUSDC - ACTIVE_TRANCHE_USD);
+
+    if (surplusUSDC < 5) {
+      console.log(`[bankr] No yield surplus (USDC=${currentUSDC.toFixed(2)}, tranche=${ACTIVE_TRANCHE_USD}, surplus=${surplusUSDC.toFixed(2)}) — keeping liquid`);
+      return `No surplus to yield. Keeping $${currentUSDC.toFixed(2)} liquid for trading.`;
+    }
+
+    console.log(`[bankr] Deploying $${surplusUSDC.toFixed(2)} surplus USDC to yield (keeping $${ACTIVE_TRANCHE_USD} liquid)`);
     const deployJob = await prompt(
-      `I have idle USDC in my wallet with no yield position. ` +
-      `Deposit all my available USDC into the highest APY USDC vault on Base (Aave v3, Morpho, or Moonwell). Execute now.`
+      `I have $${currentUSDC.toFixed(2)} USDC in my wallet. ` +
+      `Keep $${ACTIVE_TRANCHE_USD.toFixed(2)} USDC liquid for trading. ` +
+      `Deposit the remaining $${surplusUSDC.toFixed(2)} USDC into the highest APY USDC vault on Base (Aave v3, Morpho, or Moonwell). Execute now.`
     );
     const deployResult = await waitForJob(deployJob.jobId);
-    return `Deployed idle USDC to yield.\n\n${deployResult.response}`;
+    return `Deployed $${surplusUSDC.toFixed(2)} surplus USDC to yield.\n\n${deployResult.response}`;
   }
 
   if (bestDelta < 1.0) {
