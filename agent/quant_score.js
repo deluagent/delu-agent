@@ -48,8 +48,8 @@ function scoreToken(data) {
   if (n < 20) return null;  // insufficient history — signal unknown, not neutral
 
   // ── Trend filter: 4h close above 20-SMA ──────────────────────
-  const sma20 = sma(prices, 20);
-  const trendFilter = prices[n-1] > sma20[n-1] ? 1 : 0.5;
+  const sma20 = sma(prices, 20); // returns scalar
+  const trendFilter = prices[n-1] > sma20 ? 1 : 0.5;
 
   // ── Relative strength vs BTC (7d) — requires 169 bars ───────
   const has7d = n >= 169 && bN >= 169;
