@@ -225,9 +225,15 @@ async function buildStatus(regimeData, balanceStr = null) {
   // Flagged = tokens that cleared signal threshold (score >= 0.65)
   const flagged = trendingEntries.filter(t => (t.score || 0) >= 0.65).map(t => t.symbol);
 
-  // Traded = assets actually executed this cycle
+  // Traded = assets actually confirmed on-chain this cycle
+  // Cross-reference against positions.json — only show if position was opened (has openedAt within last 35min)
+  const recentCutoff = new Date(Date.now() - 35 * 60 * 1000).toISOString();
   const traded = (decision.action === 'buy' || decision.action === 'long') && decision.asset
-    ? [decision.asset] : [];
+    ? positions.filter(p =>
+        p.sym === decision.asset &&
+        p.openedAt && p.openedAt >= recentCutoff
+      ).map(p => p.sym)
+    : [];
 
   // Top signal — best trending entry or top score
   const topSignal = trendingEntries.length > 0
