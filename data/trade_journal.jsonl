@@ -18,3 +18,4 @@
 {"type":"open","sym":"BLUEAGENT","entryPrice":0.000001026,"sizeUsd":10,"openedAt":"2026-03-22T19:04:50.123Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T19:04:50.123Z"}
 {"type":"open","sym":"MOLTEN","entryPrice":5.66,"sizeUsd":10,"openedAt":"2026-03-22T19:15:13.249Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T19:15:13.250Z"}
 {"type":"open","sym":"MOLTEN","entryPrice":5.66,"sizeUsd":10,"openedAt":"2026-03-22T20:07:17.943Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T20:07:17.943Z"}
+{"type":"open","sym":"VVV","entryPrice":0.00010536,"sizeUsd":10,"openedAt":"2026-03-22T20:37:26.831Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T20:37:26.831Z"}
