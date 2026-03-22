@@ -138,13 +138,15 @@ async function buildStatus(regimeData, balanceStr = null) {
     .filter(p => p.status === 'open')
     .map(p => {
       const live = liveBalanceMap[p.sym.toUpperCase()];
-      const currentUSD = live?.valueUSD || p.sizeUsd || 0;
-      const entryUSD   = p.sizeUsd || 0;
+      const entryUSD   = p.sizeUsd || p.sizeUSD || 0;
+      const currentUSD = live?.valueUSD || entryUSD;
       const pnlUSD     = parseFloat((currentUSD - entryUSD).toFixed(2));
       const pnlPct     = entryUSD > 0 ? parseFloat((pnlUSD / entryUSD * 100).toFixed(2)) : 0;
+      // Derive qty from entryPrice if not stored directly
+      const qty = p.qty || (p.entryPrice > 0 ? entryUSD / p.entryPrice : 0);
       // Approximate current price from live value / qty
-      const currentPrice = (live && p.qty) ? live.valueUSD / p.qty
-        : (live && p.sizeUsd && p.entryPrice) ? (live.valueUSD / p.sizeUsd) * p.entryPrice
+      const currentPrice = (live && qty > 0) ? live.valueUSD / qty
+        : (live && entryUSD > 0 && p.entryPrice) ? (live.valueUSD / entryUSD) * p.entryPrice
         : null;
       return {
         sym:             p.sym,
