@@ -15,3 +15,5 @@
 {"type":"open","sym":"JUNO","entryPrice":0.0249,"sizeUsd":10,"openedAt":"2026-03-22T14:18:26.927Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T14:18:26.928Z"}
 {"type":"open","sym":"JUNO","entryPrice":0.02528,"sizeUsd":10,"openedAt":"2026-03-22T15:14:12.558Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T15:14:12.558Z"}
 {"type":"open","sym":"ROBOTMONEY","entryPrice":0.00001222,"sizeUsd":10,"openedAt":"2026-03-22T17:16:23.147Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T17:16:23.147Z"}
+{"type":"open","sym":"BLUEAGENT","entryPrice":0.000001026,"sizeUsd":10,"openedAt":"2026-03-22T19:04:50.123Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T19:04:50.123Z"}
+{"type":"open","sym":"MOLTEN","entryPrice":5.66,"sizeUsd":10,"openedAt":"2026-03-22T19:15:13.249Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T19:15:13.250Z"}

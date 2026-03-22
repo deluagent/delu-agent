@@ -1,6 +1,22 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-22 19:13 UTC — BUY MOLTEN (80% conf)
+**Regime:** BEAR | BTC $68439 | -4.4% from 200d MA
+**Venice:** "MOLTEN has a high score of 1.00 and is currently trending onchain, indicating strong momentum and potential for further growth. The portfolio context and active tranche size support a $15 allocation."
+**Discovered:** BOTCOIN(score=0.80 ret1h=0.0%) · TIBBIR(score=0.74 ret1h=0.0%) · NOX(score=0.63 ret1h=0.0%) · DRB(score=0.62 ret1h=0.0%)
+**Positions:** DRB +0.0%, JUNO +0.0%, BLUEAGENT +4.5%, MOLTEN +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
+## 2026-03-22 19:02 UTC — BUY BLUEAGENT (80% conf)
+**Regime:** BEAR | BTC $68564 | -4.2% from 200d MA
+**Venice:** "BLUEAGENT has a high score of 0.47 and a significant return in the last 24 hours, indicating strong momentum and potential for further growth."
+**Discovered:** BLUEAGENT(score=0.47 ret1h=2.3%) · BOTCOIN(score=0.80 ret1h=0.0%) · TIBBIR(score=0.74 ret1h=0.0%) · ROBOTMONEY(score=0.80 ret1h=0.0%)
+**Positions:** MOLTEN +2.9%, DRB +0.0%, JUNO +0.0%, ROBOTMONEY +118.7%, BLUEAGENT +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-22 17:14 UTC — BUY ROBOTMONEY (80% conf)
 **Regime:** BEAR | BTC $68814 | -3.9% from 200d MA
 **Venice:** "ROBOTMONEY has a high onchain trend score of 0.80 and sustained social attention, indicating strong cross-sectional alpha and potential for further growth."
