@@ -880,13 +880,13 @@ async function runCycle() {
     return;
   }
 
-    // 5a. Multi-timeframe enrichment — run 5m + 4h + onchain scores on top candidates
-  const topCandidates = [...trendingEntries]
-    .sort((a, b) => (b.score || 0) - (a.score || 0))
-    .slice(0, 4); // only top 4 — GT rate limit
+    // 5a. Multi-timeframe enrichment — run 5m + 4h + onchain on Bankr-screen finalists only
+  // screen.interesting = the tokens that passed pre-filter (typically 2-3)
+  const finalistSyms = new Set(screen.interesting || []);
+  const topCandidates = trendingEntries.filter(t => finalistSyms.has(t.symbol));
 
   if (topCandidates.length > 0) {
-    console.log(`\n[multi_tf] Enriching top ${topCandidates.length} candidates with 5m/4h/onchain signals...`);
+    console.log(`\n[multi_tf] Enriching ${topCandidates.length} finalists with 5m/4h/onchain signals: [${topCandidates.map(t=>t.symbol).join(',')}]`);
     const btcBars = regime.btcHourly || [];
     for (const t of topCandidates) {
       try {
