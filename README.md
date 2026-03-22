@@ -15,18 +15,23 @@ delu is an autonomous trading agent that manages a live treasury on Base mainnet
 Every 30 minutes:
 
 ```
-Bankr LLM → regime + trending discovery
-     ↓
-Alchemy   → onchain price data, transfer stats, rug check
-     ↓
-Checkr    → multi-window social attention (1h/4h/8h/12h) via x402
-     ↓
-Quant     → evolved scoring model (self-improved via autoresearch)
-     ↓
-Venice    → private E2EE reasoning (llama-3.3-70b)
-     ↓
-Bankr     → execute swap + set ATR trailing stop
+Step 1: Bankr LLM     → regime (BTC/ETH/breadth) + trending token list (Base top 10)
+                                 ↓
+Step 2: [PARALLEL]
+         Checkr x402  → 4-window attention (1h/4h/8h/12h) + spikes + rotation
+         Alchemy       → per-token: hourly prices, transfer stats, rug check
+         GeckoTerminal → DEX buy/sell flows
+                                 ↓
+Step 3: Rug filter    → drop tokens with: low liquidity, bot wallets, dev dumps, whale concentration
+                                 ↓
+Step 4: Quant scoring → evolved model (auto-improved by autoresearch loops)
+                                 ↓
+Step 5: Venice        → private E2EE reasoning over all signals (llama-3.3-70b)
+                                 ↓
+Step 6: Bankr         → execute swap + set ATR trailing stop
 ```
+
+Checkr and Alchemy run in parallel (not sequentially) after Bankr provides the token universe.
 
 ---
 
@@ -39,10 +44,15 @@ Bankr     → execute swap + set ATR trailing stop
 - Whale concentration scoring (single wallet > 20% of buys)
 - Age penalty for pools < 1h old
 
-### Multi-Window Social Attention
-Checkr API called with 4 windows simultaneously (1h/4h/8h/12h) and weighted:
-- `sustainedMomentum` = token positive across 3+ windows
-- Flash pumps (1h only) distinguished from real trends
+### Multi-Window Social Attention (Checkr)
+Using the [Checkr skill](https://clawhub.com) via x402 micropayments — no API key, no subscription. Called in parallel with 4 time windows:
+- 1h leaderboard (fastest growers) — weight 40%
+- 4h leaderboard (building momentum) — weight 30%
+- 8h leaderboard (sustained) — weight 20%
+- 12h leaderboard (trend confirmation) — weight 10%
+- Plus: spike detection (min_mentions ≥ 3) and creator rotation graph
+
+`sustainedMomentum` = token positive in 3+ windows = real trend, not flash pump.
 
 ### ATR Trailing Stops
 - Stop = peak − 2.5 × ATR(14) from 1h bars
