@@ -294,7 +294,7 @@ async function buildStatus(regimeData, balanceStr = null) {
       // Total from Bankr balance map (includes ETH, cbBTC, all tokens Bankr sees)
       const bankrTotal = Object.entries(liveBalanceMap)
         .filter(([sym]) => sym !== 'USDC')
-        .reduce((s, [, v]: any) => s + (v.valueUSD || 0), 0);
+        .reduce((s, [, v]) => s + (v.valueUSD || 0), 0);
 
       // For open micro-cap positions NOT in Bankr balance, use assessment prices
       const microCapVal = openPositions
