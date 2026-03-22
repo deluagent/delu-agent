@@ -1,0 +1,13 @@
+{
+  "expCount": 3,
+  "bestScore": 6.1254171698040425,
+  "bestParams": {
+    "atrMult": 2.8,
+    "hardSlAtrMult": 3,
+    "hardSlMinPct": 10,
+    "hardSlMaxPct": 15,
+    "activateAt": 0.5
+  },
+  "bestWinRate": 0.5422594142259414,
+  "bestAvgPnl": 0.44638563388675406
+}

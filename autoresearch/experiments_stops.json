@@ -1,0 +1,65 @@
+[
+  {
+    "expN": 1,
+    "params": {
+      "atrMult": 2.5,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 8,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.3
+    },
+    "score": 5.678464940345374,
+    "sharpe": 0.7658678220297752,
+    "winRate": 0.5121338912133891,
+    "avgPnl": 0.3483842343931889,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "activateAt",
+      "value": 0.3,
+      "reasoning": "Lower activation threshold captures more upside before trailing kicks in, improving win rate on volatile micro-caps that spike quickly then retrace."
+    }
+  },
+  {
+    "expN": 2,
+    "params": {
+      "atrMult": 2.5,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.123189043650784,
+    "sharpe": 0.8692493267220408,
+    "winRate": 0.5489539748953974,
+    "avgPnl": 0.39804926267157875,
+    "trades": 1195,
+    "improved": true,
+    "proposal": {
+      "param": "hardSlMinPct",
+      "value": 10,
+      "reasoning": "Increase micro-cap hard SL floor from 8% to 10% to reduce noise-induced stops on volatile tokens while maintaining the 3.0 ATR multiplier protection."
+    }
+  },
+  {
+    "expN": 3,
+    "params": {
+      "atrMult": 2.8,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.1254171698040425,
+    "sharpe": 0.9592604212025049,
+    "winRate": 0.5422594142259414,
+    "avgPnl": 0.44638563388675406,
+    "trades": 1195,
+    "improved": true,
+    "proposal": {
+      "param": "atrMult",
+      "value": 2.8,
+      "reasoning": "Micro-cap volatility spikes require slightly wider trailing to reduce whipsaws while maintaining profit capture, moving from 2.5 toward the 3.0+ range where trailing becomes more stable."
+    }
+  }
+]

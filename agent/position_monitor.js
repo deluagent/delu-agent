@@ -21,9 +21,14 @@ const BINANCE_PRICE_URL  = sym => `https://api.binance.com/api/v3/ticker/price?s
 const BINANCE_KLINES_URL = (sym, interval, limit) =>
   `https://api.binance.com/api/v3/klines?symbol=${sym}USDT&interval=${interval}&limit=${limit}`;
 
-// ATR multiplier for trailing stop (2.5× ATR from peak)
-const ATR_MULT = 2.5;
-const ATR_BARS = 14;  // ATR period
+// ATR trailing stop params — auto-evolved by autoresearch/loop_stops.js
+// DO NOT edit manually — will be overwritten when loop finds improvement
+const ATR_MULT        = 2.8;   // ATR multiplier for trail (from peak)
+const ATR_BARS        = 14;    // ATR period
+const HARD_SL_ATR_MULT = 3;  // ATR multiplier for pre-trail hard SL
+const HARD_SL_MIN_PCT  = 10;    // minimum hard SL % for micro-caps
+const HARD_SL_MAX_PCT  = 15;   // absolute max loss % (floor)
+const ACTIVATE_AT      = 0.5;  // % gain to activate trail
 
 /**
  * Fetch recent OHLCV bars for majors from Binance
@@ -208,21 +213,20 @@ async function checkAtrStop(pos) {
   //   - After trail active: peak - ATR_MULT×ATR (unchanged, 2.5×ATR from peak)
   //     · floor: entry - 2×ATR (don't let trail drop below initial hard SL)
 
-  const activateAt  = pos.activateAt || 0.5;  // trail activates at +0.5% (was +1%)
+  const activateAt  = pos.activateAt || ACTIVATE_AT;
   const trailPct    = pos.trailPct   || 5;
   const trailActive = peakPct >= activateAt;
   const isMicroCap  = !!pos.contractAddress;
 
-  // ATR-based hard SL: 3×ATR below entry, minimum -8% for micro-caps
-  // If no ATR: -15% for micro-caps (gives room to breathe), -7% for majors
-  // This ensures we never get stopped on normal volatility before the position runs
-  const minHardSlPct  = isMicroCap ? 0.08 : 0.07;  // minimum 8% room for micro-caps
-  const atrHardSlPrice = atr
-    ? Math.min(pos.entryPrice - 3 * atr, pos.entryPrice * (1 - minHardSlPct))
-    : pos.entryPrice * (1 - (isMicroCap ? 0.15 : 0.07));
+  // ATR-based hard SL using evolved constants
+  const hardSlMultiplier = HARD_SL_ATR_MULT;
+  const minHardSlPct     = isMicroCap ? HARD_SL_MIN_PCT / 100 : 0.07;
+  const atrHardSlPrice   = atr
+    ? Math.min(pos.entryPrice - hardSlMultiplier * atr, pos.entryPrice * (1 - minHardSlPct))
+    : pos.entryPrice * (1 - (isMicroCap ? HARD_SL_MIN_PCT / 100 * 2 : 0.07));
 
-  // Absolute floor: never lose more than 25% (hard limit regardless of ATR)
-  const absoluteFloor = pos.entryPrice * 0.75;
+  // Absolute floor: never lose more than HARD_SL_MAX_PCT
+  const absoluteFloor = pos.entryPrice * (1 - HARD_SL_MAX_PCT / 100);
   const hardSlPrice   = Math.max(atrHardSlPrice, absoluteFloor);
 
   let stopPrice;
