@@ -69,9 +69,13 @@ function loadExperiments() {
 }
 function saveExperiments(exps) { fs.writeFileSync(EXPERIMENTS, JSON.stringify(exps, null, 2)); }
 
-// ── Bankr LLM gateway (claude-haiku via bankr.bot) ────────────
+// ── Anthropic direct (Bankr credits exhausted) ────────────────
 async function callLLM(messages) {
   const track = checkBudget();
+  const _t0 = Date.now();
+  return callAnthropic(messages).then(r => { track.totalCalls++; track.estimatedSpend += COST_PER_CALL_EST; saveCostTrack(track); return r; });
+}
+async function callLLM_BANKR_DISABLED(messages) {
   const _t0 = Date.now();
   const bankrKey = (process.env.BANKR_API_KEY || '').replace(/\s/g, '');
   if (!bankrKey) throw new Error('No BANKR_API_KEY');
