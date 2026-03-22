@@ -150,6 +150,20 @@ async function smartYieldRebalance() {
     increaseMatch? parseFloat(increaseMatch[1]): 0,
   );
 
+  // Detect idle USDC with no active yield position → deploy immediately
+  const hasNoYield = /no active.*(yield|stablecoin|position)|sitting idle|no.*position/i.test(response);
+  const hasIdleUSDC = /\d+\.?\d*\s*usdc.*idle|idle.*\d+\.?\d*\s*usdc/i.test(response);
+
+  if (hasNoYield || hasIdleUSDC) {
+    console.log(`[bankr] No yield position + idle USDC detected — deploying to best vault`);
+    const deployJob = await prompt(
+      `I have idle USDC in my wallet with no yield position. ` +
+      `Deposit all my available USDC into the highest APY USDC vault on Base (Aave v3, Morpho, or Moonwell). Execute now.`
+    );
+    const deployResult = await waitForJob(deployJob.jobId);
+    return `Deployed idle USDC to yield.\n\n${deployResult.response}`;
+  }
+
   if (bestDelta < 1.0) {
     console.log(`[bankr] Yield delta ${bestDelta.toFixed(2)}% — below 1% threshold, staying put`);
     return `No rebalance needed. Best available is only ${bestDelta.toFixed(2)}% better than current position.\n\n${checkResult.response}`;
