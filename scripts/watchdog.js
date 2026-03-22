@@ -14,7 +14,7 @@ const INTERVAL = 10 * 60 * 1000; // 10 min
 const LOG      = '/tmp/watchdog.log';
 
 const PROCESSES = [
-  { name: 'Agent',   match: 'agent/index.js',        cmd: 'node agent/index.js --loop',                   log: '/tmp/agent.log'               },
+  { name: 'Agent',   match: 'index.js --loop',        cmd: 'node agent/index.js --loop',                   log: '/tmp/agent.log'               },
   { name: 'Daily',   match: 'autoresearch/loop.js',   cmd: 'node -r dotenv/config autoresearch/loop.js',   log: '/tmp/autoresearch.log'         },
   { name: 'Hourly',  match: 'loop_hourly.js',         cmd: 'node -r dotenv/config autoresearch/loop_hourly.js', log: '/tmp/autoresearch_hourly.log' },
   { name: '5m',      match: 'loop_5m.js',             cmd: 'node -r dotenv/config autoresearch/loop_5m.js', log: '/tmp/autoresearch_5m.log'      },
