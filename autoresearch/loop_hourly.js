@@ -253,7 +253,12 @@ ONE small change. No helpers redefined. No markdown. Pure JS only.`;
   const tokens = Math.round(prompt.length / 3.5 + response.length / 3.5);
   console.log(`   [llm] ${(ms/1000).toFixed(1)}s | tokens≈${tokens}`);
 
-  const stripped = stripFences(response);
+  let stripped = stripFences(response);
+  // Extract and remove DESCRIPTION line before validation
+  const descMatch = stripped.match(/^DESCRIPTION:\s*(.+)/m);
+  let description = descMatch ? descMatch[1].trim().slice(0, 100) : null;
+  if (descMatch) stripped = stripped.replace(/^DESCRIPTION:.*\n?/m, '').trim();
+
   const full = helperSection + '\n\n' + stripped;
 
   if (!validateCode(full)) {
@@ -261,7 +266,7 @@ ONE small change. No helpers redefined. No markdown. Pure JS only.`;
     return null;
   }
 
-  return full;
+  return { code: full, description };
 }
 
 // ── Main loop ─────────────────────────────────────────────────
@@ -319,32 +324,29 @@ async function main() {
     console.log(`\n🧪 [exp ${expN}] Best: val=${state.bestValSharpe.toFixed(3)} combined=${(state.bestScore||0).toFixed(3)}`);
     console.log(`   Asking Claude for hourly signal improvement...`);
 
-    let newCode;
+    let proposed;
     try {
-      newCode = await proposeChange(state, experiments);
+      proposed = await proposeChange(state, experiments);
     } catch(e) {
       console.error('   [llm] Error:', e.message);
       await new Promise(r => setTimeout(r, 15000));
       continue;
     }
 
-    if (!newCode) {
+    if (!proposed) {
       await new Promise(r => setTimeout(r, INTERVAL_S * 1000));
       continue;
     }
 
+    const newCode = proposed.code || proposed;
+    let description = proposed.description || `exp ${expN}`;
+
     // Test new code
     const prevCode = fs.readFileSync(CANDIDATE, 'utf8');
-        // Extract DESCRIPTION line before writing
-    const descMatch = newCode.match(/^DESCRIPTION:\s*(.+)/m);
-    if (descMatch) {
-      description = descMatch[1].trim().slice(0, 100);
-      newCode = newCode.replace(/^DESCRIPTION:.*\n?/m, '').trim();
-    }
     fs.writeFileSync(CANDIDATE, newCode);
 
     const result = runEval();
-    let accepted = false, description = `exp ${expN}`;
+    let accepted = false;
     let valSharpe = -999, audSharpe = -999, score = -999, isSharpe = -999;
 
     if (result) {

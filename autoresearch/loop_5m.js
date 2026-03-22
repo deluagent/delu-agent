@@ -197,9 +197,15 @@ No helpers redefined. No markdown. Pure JS only.`;
   const ms = Date.now() - t0;
   console.log(`   [llm] ${(ms/1000).toFixed(1)}s`);
 
-  const stripped = stripFences(response);
+  let stripped = stripFences(response);
+  // Strip DESCRIPTION line before validation (it's not valid JS)
+  const descMatch = stripped.match(/^DESCRIPTION:\s*(.+)/m);
+  const description = descMatch ? descMatch[1].trim().slice(0, 100) : null;
+  if (descMatch) stripped = stripped.replace(/^DESCRIPTION:.*\n?/m, '').trim();
+
   const full = helpers ? helpers + '\n\n' + stripped : stripped;
-  return validateCode(full) ? full : null;
+  if (!validateCode(full)) return null;
+  return { code: full, description };
 }
 
 // ── Main loop ──────────────────────────────────────────────────
@@ -244,9 +250,8 @@ async function main() {
 
     if (!newCode) { await new Promise(r=>setTimeout(r,INTERVAL_S*1000)); continue; }
 
-    // Extract DESCRIPTION line
-    const descMatch = newCode.match(/^DESCRIPTION:\s*(.+)/m);
-    if (descMatch) { description = descMatch[1].trim().slice(0,100); newCode = newCode.replace(/^DESCRIPTION:.*\n?/m,'').trim(); }
+    // Handle {code, description} return from proposeChange
+    if (newCode && typeof newCode === 'object') { description = newCode.description || description; newCode = newCode.code; }
 
     const prevCode = fs.readFileSync(CANDIDATE, 'utf8');
     fs.writeFileSync(CANDIDATE, newCode);
