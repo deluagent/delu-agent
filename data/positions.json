@@ -353,12 +353,10 @@
   },
   {
     "sym": "MOLTEN",
-    "entryPrice": 5.66,
     "sizeUsd": 10,
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPrice": 5.66,
     "peakPct": 0,
     "openedAt": "2026-03-22T19:15:13.249Z",
     "timeStopAt": "2026-03-25T19:15:13.249Z",
@@ -366,6 +364,8 @@
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0x...MOLTEN_contract_address",
-    "kellyFraction": 22
+    "kellyFraction": 22,
+    "entryPrice": 0.000008799698808,
+    "peakPrice": 0.000008799698808
   }
 ]
