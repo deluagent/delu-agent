@@ -512,18 +512,59 @@ async function runCycle() {
   // 3c. Fetch Checkr social attention signals (pay-per-call via x402)
   let checkrAttention = {}; // sym → { attentionDelta, velocity, divergence, viral_class, rotationGain, isGainer }
   try {
-    console.log('\n[checkr] Fetching leaderboard + spikes + rotation...');
-    // Run all 3 in parallel — $0.02 + $0.05 + $0.10 = $0.17/cycle
-    // All on 1h window: freshest signal, fastest rotation detection
-    const [lb, spikes, rotation] = await Promise.allSettled([
-      checkr.getLeaderboard(20),   // 1h, sorted by ATT_delta (fastest growers)
-      checkr.getSpikes(2.0),       // 1h, min_mentions=3 (newest spikes only)
-      checkr.getRotation(1),       // 1h window (real-time creator transitions)
+    console.log('\n[checkr] Fetching multi-window attention (1h/4h/8h/12h) + spikes + rotation...');
+    // Multi-window leaderboards: 1h=freshness, 4h/8h/12h=sustained momentum
+    // Parallel fetch — ~$0.08 total for 4 leaderboard calls + spikes + rotation
+    const [lb1h, lb4h, lb8h, lb12h, spikes, rotation] = await Promise.allSettled([
+      checkr.getLeaderboard(20, 1),   // 1h fastest growers
+      checkr.getLeaderboard(20, 4),   // 4h momentum
+      checkr.getLeaderboard(20, 8),   // 8h sustained
+      checkr.getLeaderboard(20, 12),  // 12h trend
+      checkr.getSpikes(2.0),
+      checkr.getRotation(1),
     ]);
 
+    // Helper: extract token list from any window result
+    function extractTokens(result) {
+      if (result.status !== 'fulfilled') return [];
+      return result.value?.tokens || [];
+    }
+
+    // Build multi-window momentum map: sym → { att_1h, att_4h, att_8h, att_12h, windows }
+    const momentumMap = {};
+    const WINDOWS = [
+      { key: 'att_1h',  weight: 0.40, tokens: extractTokens(lb1h)  },
+      { key: 'att_4h',  weight: 0.30, tokens: extractTokens(lb4h)  },
+      { key: 'att_8h',  weight: 0.20, tokens: extractTokens(lb8h)  },
+      { key: 'att_12h', weight: 0.10, tokens: extractTokens(lb12h) },
+    ];
+    for (const { key, weight, tokens } of WINDOWS) {
+      for (const t of tokens) {
+        const sym = (t.symbol || '').toUpperCase();
+        if (!momentumMap[sym]) momentumMap[sym] = { windows: 0 };
+        const delta = t.ATT_delta ?? 0;
+        momentumMap[sym][key]    = delta;
+        momentumMap[sym].windows += (delta > 0 ? 1 : 0);
+        // Weighted momentum score: token appearing across multiple windows = sustained
+        momentumMap[sym].momentumScore = (momentumMap[sym].momentumScore || 0) + delta * weight;
+      }
+    }
+
+    // Log tokens with sustained multi-window momentum (appearing in 3+ windows)
+    const sustained = Object.entries(momentumMap)
+      .filter(([, d]) => d.windows >= 3)
+      .sort((a, b) => b[1].momentumScore - a[1].momentumScore)
+      .slice(0, 5);
+    if (sustained.length) {
+      console.log('[checkr] Sustained momentum (3+ windows):', sustained.map(([sym, d]) =>
+        `${sym}(1h=${d.att_1h?.toFixed(2)} 4h=${d.att_4h?.toFixed(2)} 8h=${d.att_8h?.toFixed(2)} score=${d.momentumScore?.toFixed(2)})`
+      ).join(' '));
+    }
+
     // Leaderboard — 1h window sorted by ATT_delta: fastest growers first
-    if (lb.status === 'fulfilled' && lb.value?.tokens) {
-      const tokens = lb.value.tokens;
+    const lb1hTokens = extractTokens(lb1h);
+    if (lb1hTokens.length) {
+      const tokens = lb1hTokens;
       // Log top 3 growers by ATT_delta
       const topGrowers = [...tokens].sort((a, b) => (b.ATT_delta ?? 0) - (a.ATT_delta ?? 0)).slice(0, 3);
       if (topGrowers.length) console.log('[checkr] Top 1h growers:', topGrowers.map(t =>
@@ -533,13 +574,33 @@ async function runCycle() {
         // ATT_delta = change in attention share in pp — primary signal for 1h growth
         const attDelta = t.ATT_delta ?? t.ATT_delta_1h ?? t.att_delta_1h ?? 0;
         checkrAttention[sym] = {
-          attentionDelta: attDelta,
-          velocity:       t.velocity ?? 0,
-          divergence:     t.divergence ?? false,
-          attPct:         t.ATT_pct ?? 0,
-          attTrend:       t.ATT_trend_direction ?? null,
-          attAccelerating: t.ATT_accelerating ?? false,
+          attentionDelta:   attDelta,
+          velocity:         t.velocity ?? 0,
+          divergence:       t.divergence ?? false,
+          attPct:           t.ATT_pct ?? 0,
+          attTrend:         t.ATT_trend_direction ?? null,
+          attAccelerating:  t.ATT_accelerating ?? false,
         };
+      }
+    }
+
+    // Merge multi-window momentum scores into checkrAttention
+    for (const [sym, mom] of Object.entries(momentumMap)) {
+      if (!checkrAttention[sym]) checkrAttention[sym] = { attentionDelta: 0, velocity: 0, divergence: false };
+      checkrAttention[sym].att_1h          = mom.att_1h   || 0;
+      checkrAttention[sym].att_4h          = mom.att_4h   || 0;
+      checkrAttention[sym].att_8h          = mom.att_8h   || 0;
+      checkrAttention[sym].att_12h         = mom.att_12h  || 0;
+      checkrAttention[sym].momentumWindows = mom.windows  || 0;
+      checkrAttention[sym].momentumScore   = mom.momentumScore || 0;
+      // Sustained momentum: token positive across 3+ windows = strong signal
+      checkrAttention[sym].sustainedMomentum = (mom.windows || 0) >= 3;
+      // Boost attention delta for sustained tokens
+      if (checkrAttention[sym].sustainedMomentum) {
+        checkrAttention[sym].attentionDelta = Math.max(
+          checkrAttention[sym].attentionDelta,
+          mom.momentumScore * 0.5
+        );
       }
     }
 
@@ -800,7 +861,10 @@ ${Object.keys(checkrAttention).length > 0
           ? ` ROT_IN(ATT+${a.attGrowth?.toFixed(1)}% flow=${a.netFlow} from=[${(a.rotatingFrom||[]).slice(0,3).join(',')}]${a.topCreator ? ' @'+a.topCreator.username : ''})`
           : a.isLoser ? ` ROT_OUT(ATT${a.attGrowth?.toFixed(1)}% flow=${a.netFlow})` : '';
         const trend = a.attTrend ? ` trend=${a.attTrend}${a.attAccelerating?' ⚡':''}` : '';
-        return `${sym}: vel=${(a.velocity||0).toFixed(1)} Δ1h=${(a.attentionDelta||0).toFixed(2)}pp div=${a.divergence?'YES':'no'}${trend}${rot}`;
+        const mom = a.sustainedMomentum
+          ? ` 🔥SUSTAINED(${a.momentumWindows}w score=${a.momentumScore?.toFixed(2)} 4h=${a.att_4h?.toFixed(2)} 8h=${a.att_8h?.toFixed(2)} 12h=${a.att_12h?.toFixed(2)})`
+          : (a.att_4h > 0 || a.att_8h > 0) ? ` multi(4h=${a.att_4h?.toFixed(2)} 8h=${a.att_8h?.toFixed(2)})` : '';
+        return `${sym}: vel=${(a.velocity||0).toFixed(1)} Δ1h=${(a.attentionDelta||0).toFixed(2)}pp div=${a.divergence?'YES':'no'}${trend}${mom}${rot}`;
       }).join('\n')
   : 'Checkr unavailable this cycle'}
 

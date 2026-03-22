@@ -54,10 +54,9 @@ async function getSpikes(minVelocity = 2.0) {
   return checkrGet(`/v1/spikes?min_velocity=${minVelocity}&min_mentions=3`);
 }
 
-async function getLeaderboard(limit = 10) {
-  // 1h window, sorted by ATT_delta (who's growing fastest right now)
-  console.log('[checkr] Fetching leaderboard 1h sorted by growth (~$0.02)...');
-  return checkrGet(`/v1/leaderboard?limit=${limit}&hours=1&sort_by=ATT_delta`);
+async function getLeaderboard(limit = 10, hours = 1) {
+  // Configurable window, sorted by ATT_delta
+  return checkrGet(`/v1/leaderboard?limit=${limit}&hours=${hours}&sort_by=ATT_delta`);
 }
 
 async function getToken(symbol) {

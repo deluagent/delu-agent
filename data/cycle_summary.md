@@ -1,3 +1,12 @@
+# delu — cycle log
+*Autonomous onchain trading agent · updated every 30 min*
+
+## 2026-03-22 00:49 UTC — HOLD (0% conf)
+**Regime:** BEAR | BTC $69091 | -3.7% from 200d MA
+**Venice:** "No token has a score ≥ 0.65 and move < 50% done, and the current regime is BEAR, so I will hold the current position."
+**Discovered:** KTA(score=0.47 ret1h=-2.4%) · VVV(score=0.47 ret1h=-1.7%) · TOSHI(score=0.57 ret1h=0.0%) · BNKR(score=0.98 ret1h=0.0%)
+**Positions:** KTA +0.0%
+
 # delu cycle summary
 **Time:** 2026-03-21T20:13:33.231Z
 **Regime:** RANGE_TIGHT | BTC $70428 | -1.9% from 200d MA
