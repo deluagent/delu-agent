@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * watchdog.js — monitors all delu processes, restarts dead ones every 10 min
+ * watchdog.js — monitors all delu processes, restarts dead ones every 5 min
+ * SAFE MODE: never kills a running process unless there are 3+ instances
  * Logs to /tmp/watchdog.log
  */
 'use strict';
@@ -10,65 +11,84 @@ const fs   = require('fs');
 const path = require('path');
 
 const DIR      = path.join(__dirname, '..');
-const INTERVAL = 10 * 60 * 1000; // 10 min
+const INTERVAL = 5 * 60 * 1000; // 5 min (was 10)
 const LOG      = '/tmp/watchdog.log';
 
 const PROCESSES = [
-  { name: 'Agent',   match: 'index.js --loop',        cmd: 'node agent/index.js --loop',                   log: '/tmp/agent.log'               },
-  { name: 'Daily',   match: 'autoresearch/loop.js',   cmd: 'node -r dotenv/config autoresearch/loop.js',   log: '/tmp/autoresearch.log'         },
-  { name: 'Hourly',  match: 'loop_hourly.js',         cmd: 'node -r dotenv/config autoresearch/loop_hourly.js', log: '/tmp/autoresearch_hourly.log' },
-  { name: '5m',      match: 'loop_5m.js',             cmd: 'node -r dotenv/config autoresearch/loop_5m.js', log: '/tmp/autoresearch_5m.log'      },
-  { name: 'Onchain', match: 'loop_onchain.js',        cmd: 'node -r dotenv/config autoresearch/loop_onchain.js', log: '/tmp/autoresearch_onchain.log'},
+  { name: 'Agent',   match: 'index.js --loop',             cmd: 'node agent/index.js --loop',                        log: '/tmp/agent.log'               },
+  { name: 'Daily',   match: 'autoresearch/loop.js',        cmd: 'node -r dotenv/config autoresearch/loop.js',        log: '/tmp/autoresearch.log'         },
+  { name: 'Hourly',  match: 'loop_hourly.js',              cmd: 'node -r dotenv/config autoresearch/loop_hourly.js', log: '/tmp/autoresearch_hourly.log'  },
+  { name: '5m',      match: 'loop_5m.js',                  cmd: 'node -r dotenv/config autoresearch/loop_5m.js',     log: '/tmp/autoresearch_5m.log'      },
+  { name: 'Onchain', match: 'loop_onchain.js',             cmd: 'node -r dotenv/config autoresearch/loop_onchain.js',log: '/tmp/autoresearch_onchain.log' },
 ];
 
 const EXP_FILES = [
-  { name: 'Daily',   file: 'autoresearch/experiments.json',         metric: 'valSharpe', alertAt: null  },
-  { name: 'Hourly',  file: 'autoresearch/experiments_hourly.json',  metric: 'score',     alertAt: 10    },
-  { name: '5m',      file: 'autoresearch/experiments_5m.json',      metric: 'score',     alertAt: 35    },
-  { name: 'Onchain', file: 'autoresearch/experiments_onchain.json', metric: 'score',     alertAt: 25    },
+  { name: 'Daily',   file: 'autoresearch/experiments.json',         metric: 'valSharpe', alertAt: null },
+  { name: 'Hourly',  file: 'autoresearch/experiments_hourly.json',  metric: 'score',     alertAt: 12  },
+  { name: '5m',      file: 'autoresearch/experiments_5m.json',      metric: 'score',     alertAt: 35  },
+  { name: 'Onchain', file: 'autoresearch/experiments_onchain.json', metric: 'score',     alertAt: 25  },
 ];
 
 function log(msg) {
   const line = `[${new Date().toISOString().slice(0,19).replace('T',' ')} UTC] ${msg}`;
   console.log(line);
-  fs.appendFileSync(LOG, line + '\n');
+  try { fs.appendFileSync(LOG, line + '\n'); } catch {}
+}
+
+function getPids(match) {
+  try {
+    return execSync(`pgrep -f "${match}"`, { encoding: 'utf8' })
+      .trim().split('\n').map(Number).filter(Boolean).sort((a,b) => a-b);
+  } catch { return []; }
 }
 
 function isRunning(match) {
-  try {
-    const out = execSync(`pgrep -f "${match}"`, { encoding: 'utf8' }).trim();
-    return out.length > 0;
-  } catch { return false; }
+  return getPids(match).length > 0;
 }
 
-function killDuplicates(match) {
-  try {
-    const pids = execSync(`pgrep -f "${match}"`, { encoding: 'utf8' }).trim().split('\n').map(Number).filter(Boolean).sort((a,b)=>a-b);
-    if (pids.length > 1) {
-      const toKill = pids.slice(0, -1);
-      log(`🔪 Duplicate ${match} — killing old PIDs: ${toKill.join(',')}`);
-      execSync(`kill -9 ${toKill.join(' ')}`, { stdio: 'ignore' });
-    }
-  } catch {}
+// SAFE: only kill extras if there are 3+ instances (1-2 is fine, could be mid-restart)
+function killExcessDuplicates(proc) {
+  const pids = getPids(proc.match);
+  if (pids.length >= 3) {
+    // Keep the 2 newest, kill the rest
+    const toKill = pids.slice(0, -2);
+    log(`⚠️  ${proc.name} has ${pids.length} instances — killing oldest: ${toKill.join(',')}`);
+    try { execSync(`kill ${toKill.join(' ')}`, { stdio: 'ignore' }); } catch {}
+  }
 }
 
 function restart(proc) {
-  log(`⚠️  ${proc.name} DEAD — restarting`);
+  log(`🔴 ${proc.name} is DOWN — restarting now`);
   try {
     const logStream = fs.openSync(proc.log, 'a');
-    const child = spawn('bash', ['-c', proc.cmd], {
+    const env = { ...process.env };
+    // Load .env vars
+    try {
+      const envFile = fs.readFileSync(path.join(DIR, '.env'), 'utf8');
+      envFile.split('\n').forEach(line => {
+        const m = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+        if (m) env[m[1]] = m[2].replace(/^['"]|['"]$/g, '');
+      });
+    } catch {}
+
+    const child = spawn('node', proc.cmd.replace(/^node\s+/, '').split(' '), {
       cwd: DIR,
       detached: true,
       stdio: ['ignore', logStream, logStream],
-      env: { ...process.env, ...require('dotenv').config({ path: path.join(DIR, '.env') }).parsed },
+      env,
     });
     child.unref();
+
+    // Verify after 5 seconds
     setTimeout(() => {
-      if (isRunning(proc.match)) log(`✅ ${proc.name} restarted OK (PID ${child.pid})`);
-      else log(`❌ ${proc.name} failed to restart`);
-    }, 3000);
+      if (isRunning(proc.match)) {
+        log(`✅ ${proc.name} restarted OK (PID ${child.pid})`);
+      } else {
+        log(`❌ ${proc.name} FAILED to restart — will retry next check`);
+      }
+    }, 5000);
   } catch(e) {
-    log(`❌ ${proc.name} restart error: ${e.message.slice(0,60)}`);
+    log(`❌ ${proc.name} restart error: ${e.message.slice(0,80)}`);
   }
 }
 
@@ -78,35 +98,44 @@ function checkExperiments() {
       const exps = JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'));
       const acc  = exps.filter(e => e.accepted);
       const best = acc.length ? Math.max(...acc.map(e => e[metric] || e.score || 0)) : 0;
-      log(`📊 ${name.padEnd(8)} ${exps.length} exp | best: ${best.toFixed(2)}`);
+      log(`📊 ${name.padEnd(8)} ${exps.length.toLocaleString()} exp | best: ${best.toFixed(2)}`);
       if (alertAt && best > alertAt) {
         log(`🚨 BREAKTHROUGH: ${name} best=${best.toFixed(2)} exceeded ${alertAt}!`);
       }
     } catch(e) {
-      log(`⚠️  ${name} experiments read error: ${e.message.slice(0,40)}`);
+      log(`⚠️  ${name} exp file error: ${e.message.slice(0,40)}`);
     }
   });
 }
 
 function run() {
-  log('═══ Watchdog check ═══');
+  log('━━━ watchdog check ━━━');
 
-  // Kill duplicates first
-  PROCESSES.forEach(p => killDuplicates(p.match));
+  // Step 1: kill excess duplicates ONLY (3+ instances = something wrong)
+  PROCESSES.forEach(killExcessDuplicates);
 
-  // Check and restart dead processes
+  // Step 2: restart anything that's dead (0 instances)
   PROCESSES.forEach(p => {
-    if (!isRunning(p.match)) restart(p);
+    if (!isRunning(p.match)) {
+      restart(p);
+    } else {
+      const count = getPids(p.match).length;
+      log(`✅ ${p.name.padEnd(8)} running${count > 1 ? ` (${count} instances)` : ''}`);
+    }
   });
 
-  // Log experiment progress
+  // Step 3: log experiment progress
   checkExperiments();
 
-  log('✓ done');
+  log('━━━ done ━━━');
 }
 
-// Run immediately then every 10 min
+// Run immediately, then every 5 min
+log('Watchdog v2 starting — safe mode, 5min interval');
 run();
 setInterval(run, INTERVAL);
 
-log('Watchdog started — checking every 10 min');
+// Self-healing: if watchdog itself crashes, Node will exit and OS won't restart it
+// So we catch unhandled rejections and keep going
+process.on('uncaughtException', e => log(`⚠️  uncaughtException: ${e.message.slice(0,80)}`));
+process.on('unhandledRejection', e => log(`⚠️  unhandledRejection: ${String(e).slice(0,80)}`));
