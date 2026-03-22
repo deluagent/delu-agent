@@ -10,6 +10,7 @@
 'use strict';
 
 const https = require('https');
+const { getTokenSignal } = require('./onchain_ohlcv');
 
 const BANKR_API = process.env.BANKR_API_KEY;
 
@@ -46,13 +47,22 @@ function get(url, headers = {}) {
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 /**
- * Fetch Bankr trending tokens for Base + ETH mainnet
+ * Fetch Bankr trending tokens — Base only, filter out stablecoins/bluechips
  * Returns array of { symbol, address, chain, txnCount24h, volume24h, priceChange24h }
  */
+
+// Tokens to always skip — stablecoins, wrapped assets, DeFi bluechips
+const SKIP_SYMS = new Set([
+  'USDC','USDT','WETH','ETH','WBTC','CBBTC','DAI','DOLA','LUSD','FRAX','CRVUSD',
+  'USR','PAXG','XAUT','AERO','WSTETH','STETH','RETH','CBETH','WEETH',
+  'BRETT','TOSHI','DEGEN','HIGHER','IMAGINE','GOR','MINI','FORGE',
+]);
+
 async function fetchBankrTrending() {
   if (!BANKR_API) return [];
   const results = [];
-  for (const chain of ['base', 'mainnet']) {
+  // Base only — ETH mainnet returns DeFi bluechips not meme coins
+  for (const chain of ['base']) {
     try {
       const r = await get(`https://api.bankr.bot/v1/trending?chain=${chain}`, {
         Authorization: `Bearer ${BANKR_API}`,
@@ -60,11 +70,11 @@ async function fetchBankrTrending() {
       const tokens = r.body?.data || r.body?.tokens || [];
       for (const t of tokens) {
         const sym = (t.symbol || t.ticker || '').toUpperCase();
-        if (!sym || sym === 'USDC' || sym === 'WETH' || sym === 'USDT') continue;
+        if (!sym || SKIP_SYMS.has(sym)) continue;
         results.push({
           symbol: sym,
           address: t.address || t.contractAddress || t.token_address,
-          chain: chain === 'mainnet' ? 'eth' : 'base',
+          chain: 'base',
           txnCount24h: t.txnCount24h || t.transactions_24h || 0,
           volume24h: t.volume24h || t.volume_24h || 0,
           priceChange24h: t.priceChange24h || t.price_change_24h || 0,
@@ -274,15 +284,32 @@ async function discover(knownSymbols = [], checkrSpikes = []) {
       continue;
     }
 
+    // Enrich with Alchemy transfer stats (buyer/seller/whale concentration)
+    let transferStats = null;
+    if (vet.address && vet.chain === 'base') {
+      try {
+        const alchSignal = await getTokenSignal(vet.address, 'base');
+        transferStats = alchSignal?.transferStats || null;
+        if (transferStats) {
+          // Penalise whale concentration > 50% — likely rug
+          if (transferStats.topBuyerConcentration > 0.6) {
+            console.log(`  [discover] ${cand.symbol}: ❌ Alchemy whale concentration ${(transferStats.topBuyerConcentration*100).toFixed(0)}% — skip`);
+            continue;
+          }
+        }
+      } catch { /* Alchemy optional — skip on error */ }
+    }
+
     const result = {
       ...cand,
       ...vet,
       score: scored.score,
       signals: scored.signals,
       barsAvailable: bars.length,
+      transferStats,
     };
 
-    console.log(`  [discover] ${cand.symbol}: ✅ score=${scored.score.toFixed(3)} | liq=$${Math.round(vet.liq/1000)}K | ${Object.entries(scored.signals).map(([k,v])=>k+'='+v).join(' ')}`);
+    console.log(`  [discover] ${cand.symbol}: ✅ score=${scored.score.toFixed(3)} | liq=$${Math.round(vet.liq/1000)}K | ${Object.entries(scored.signals).map(([k,v])=>k+'='+v).join(' ')}${transferStats ? ` | buyers=${transferStats.uniqueBuyers} whale=${(transferStats.topBuyerConcentration*100).toFixed(0)}%` : ''}`);
     results.push(result);
   }
 
