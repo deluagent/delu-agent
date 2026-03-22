@@ -194,30 +194,58 @@ async function checkAtrStop(pos) {
   const newPeak  = Math.max(prevPeak, currentPrice);
   const peakPct  = (newPeak - pos.entryPrice) / pos.entryPrice * 100;
 
-  // Calculate stop price
-  // Before trail activates: hard stop at entryPrice × (1 - hardSlPct/100)
-  // After trail activates (peakPct >= activateAt): peak - ATR_MULT × ATR  (or 5% if no ATR)
-  const hardSlPct    = pos.hardSlPct  || 3;
-  const activateAt   = pos.activateAt || 1;
-  const trailPct     = pos.trailPct   || 5;
-  const trailActive  = peakPct >= activateAt;
+  // ── Stop logic ────────────────────────────────────────────────
+  //
+  // For micro-cap Base tokens (contractAddress present), a fixed -3% hard SL
+  // is way too tight — normal spread+slippage+volatility wicks through it
+  // immediately, stopping out valid positions before they can run.
+  //
+  // Strategy:
+  //   - activateAt: trail activates after +0.5% gain (was +1%)
+  //   - Before trail active: hard SL = entry - 2×ATR (ATR-based, not fixed %)
+  //     · if no ATR: use -15% for contract tokens, -5% for majors
+  //     · floor: never worse than -20% (prevents runaway loss if ATR is huge)
+  //   - After trail active: peak - ATR_MULT×ATR (unchanged, 2.5×ATR from peak)
+  //     · floor: entry - 2×ATR (don't let trail drop below initial hard SL)
+
+  const activateAt  = pos.activateAt || 0.5;  // trail activates at +0.5% (was +1%)
+  const trailPct    = pos.trailPct   || 5;
+  const trailActive = peakPct >= activateAt;
+  const isMicroCap  = !!pos.contractAddress;
+
+  // ATR-based hard SL: 3×ATR below entry, minimum -8% for micro-caps
+  // If no ATR: -15% for micro-caps (gives room to breathe), -7% for majors
+  // This ensures we never get stopped on normal volatility before the position runs
+  const minHardSlPct  = isMicroCap ? 0.08 : 0.07;  // minimum 8% room for micro-caps
+  const atrHardSlPrice = atr
+    ? Math.min(pos.entryPrice - 3 * atr, pos.entryPrice * (1 - minHardSlPct))
+    : pos.entryPrice * (1 - (isMicroCap ? 0.15 : 0.07));
+
+  // Absolute floor: never lose more than 25% (hard limit regardless of ATR)
+  const absoluteFloor = pos.entryPrice * 0.75;
+  const hardSlPrice   = Math.max(atrHardSlPrice, absoluteFloor);
 
   let stopPrice;
   if (trailActive && atr) {
     stopPrice = newPeak - ATR_MULT * atr;
-    // Floor: never worse than entry - hardSlPct
-    const floorPrice = pos.entryPrice * (1 - hardSlPct / 100);
-    stopPrice = Math.max(stopPrice, floorPrice);
+    // Trail floor: don't let trail drop below the initial hard SL
+    stopPrice = Math.max(stopPrice, hardSlPrice);
   } else if (trailActive) {
-    // No ATR available — fall back to fixed % trail
+    // No ATR — fixed % trail
     stopPrice = newPeak * (1 - trailPct / 100);
   } else {
-    // Hard stop only
-    stopPrice = pos.entryPrice * (1 - hardSlPct / 100);
+    // Pre-trail: ATR-based hard SL
+    stopPrice = hardSlPrice;
   }
 
   const triggered = currentPrice <= stopPrice;
   const pnlPct    = (currentPrice - pos.entryPrice) / pos.entryPrice * 100;
+
+  // Human-readable stop description
+  const hardSlPct = ((pos.entryPrice - hardSlPrice) / pos.entryPrice * 100).toFixed(1);
+  const stopDesc  = atr
+    ? `2×ATR hard SL (-${hardSlPct}%)`
+    : `fixed hard SL (-${hardSlPct}%)`;
 
   return {
     triggered,
@@ -228,8 +256,10 @@ async function checkAtrStop(pos) {
     pnlPct,
     atr,
     trailActive,
+    hardSlPrice,
+    hardSlPct: parseFloat(hardSlPct),
     reason: triggered
-      ? (trailActive ? `ATR trail stop hit (${ATR_MULT}×ATR from peak)` : `Hard SL -${hardSlPct}% hit`)
+      ? (trailActive ? `ATR trail stop hit (${ATR_MULT}×ATR from peak)` : `${stopDesc} hit`)
       : 'holding',
   };
 }
@@ -250,10 +280,10 @@ async function runAtrStops(openPositions, bankr, DRY_RUN = false) {
   for (const pos of openPositions) {
     try {
       const check = await checkAtrStop(pos);
-      const atrStr  = check.atr ? `ATR=${check.atr.toFixed(4)}` : 'ATR=n/a';
+      const atrStr  = check.atr ? `ATR=${check.atr.toFixed(6)}` : 'ATR=n/a';
       const stopStr = check.stopPrice ? `stop=$${check.stopPrice.toFixed(6)}` : '';
       const pnlStr  = check.pnlPct != null ? `${check.pnlPct >= 0 ? '+' : ''}${check.pnlPct.toFixed(2)}%` : '?';
-      const trailStr = check.trailActive ? '🟢trail' : '🔴hardSL';
+      const trailStr = check.trailActive ? '🟢trail' : `🔴hardSL(-${check.hardSlPct}%)`;
       console.log(`  ${pos.sym.padEnd(6)} price=$${check.currentPrice?.toFixed(6)} ${pnlStr} ${trailStr} ${stopStr} ${atrStr} peak=$${check.peakPrice?.toFixed(6)}`);
 
       // Update peakPrice in positions.json
