@@ -98,7 +98,7 @@ function checkExperiments() {
   EXP_FILES.forEach(({ name, file, metric, alertAt }) => {
     try {
       const exps = JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'));
-      const acc  = exps.filter(e => e.accepted);
+      const acc  = exps.filter(e => e.accepted || e.improved);
       const best = acc.length ? Math.max(...acc.map(e => e[metric] || e.score || 0)) : 0;
       log(`📊 ${name.padEnd(8)} ${exps.length.toLocaleString()} exp | best: ${best.toFixed(2)}`);
       if (alertAt && best > alertAt) {
