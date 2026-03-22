@@ -309,8 +309,8 @@
     "contractAddress": "0x3ec2156d4c0a9cbdab4a016633b7bcf6a8d68ea2",
     "kellyFraction": 22,
     "atrStop": 0.0000683,
-    "atrValue": 5.8e-7,
-    "lastChecked": "2026-03-22T20:35:58.423Z"
+    "atrValue": 5.6e-7,
+    "lastChecked": "2026-03-22T21:05:58.551Z"
   },
   {
     "sym": "JUNO",
@@ -329,7 +329,7 @@
     "kellyFraction": 22,
     "atrStop": null,
     "atrValue": null,
-    "lastChecked": "2026-03-22T20:35:59.115Z"
+    "lastChecked": "2026-03-22T21:05:59.248Z"
   },
   {
     "sym": "BLUEAGENT",
@@ -342,14 +342,18 @@
     "peakPct": 4.4932,
     "openedAt": "2026-03-22T19:04:50.123Z",
     "timeStopAt": "2026-03-25T19:04:50.123Z",
-    "status": "open",
+    "status": "closed",
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0xf895783b2931c919955e18b5e3343e7c7c456ba3",
     "kellyFraction": 22,
     "atrStop": 0.000001,
     "atrValue": 4e-8,
-    "lastChecked": "2026-03-22T20:36:00.351Z"
+    "lastChecked": "2026-03-22T21:06:00.389Z",
+    "closeReason": "atr_stop",
+    "closedAt": "2026-03-22T21:06:22.705Z",
+    "closePrice": 8.813e-7,
+    "pnlPct": -14.1
   },
   {
     "sym": "MOLTEN",
@@ -368,7 +372,7 @@
     "kellyFraction": 22,
     "atrStop": null,
     "atrValue": null,
-    "lastChecked": "2026-03-22T20:36:00.995Z"
+    "lastChecked": "2026-03-22T21:06:23.414Z"
   },
   {
     "sym": "VVV",
@@ -377,7 +381,6 @@
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPrice": 0.00010536,
     "peakPct": 0,
     "openedAt": "2026-03-22T20:37:26.831Z",
     "timeStopAt": "2026-03-25T20:37:26.831Z",
@@ -385,6 +388,26 @@
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0x... (not provided, assume VVV contract address)",
+    "kellyFraction": 22,
+    "atrStop": null,
+    "atrValue": null,
+    "lastChecked": "2026-03-22T21:06:24.056Z"
+  },
+  {
+    "sym": "ROBOTMONEY",
+    "entryPrice": 0.0000133,
+    "sizeUsd": 10,
+    "trailPct": 5,
+    "activateAt": 1,
+    "hardSlPct": 3,
+    "peakPrice": 0.0000133,
+    "peakPct": 0,
+    "openedAt": "2026-03-22T21:08:16.164Z",
+    "timeStopAt": "2026-03-25T21:08:16.164Z",
+    "status": "open",
+    "regime": "BEAR",
+    "confidence": 80,
+    "contractAddress": "0x... (not provided, assume ROBOTMONEY contract address)",
     "kellyFraction": 22
   }
 ]
