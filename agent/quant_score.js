@@ -45,15 +45,16 @@ function scoreToken(data) {
   const { prices, volumes, highs, lows, opens, btcPrices } = data;
   const n  = prices.length;
   const bN = (btcPrices || []).length;
-  if (n < 169 || bN < 169) return 0;
+  if (n < 20) return null;  // insufficient history — signal unknown, not neutral
 
   // ── Trend filter: 4h close above 20-SMA ──────────────────────
   const sma20 = sma(prices, 20);
   const trendFilter = prices[n-1] > sma20[n-1] ? 1 : 0.5;
 
-  // ── Relative strength vs BTC (7d) ───────────────────────────
-  const tokenRet7d = (prices[n-1] - prices[n-169]) / prices[n-169];
-  const btcRet7d   = (btcPrices[bN-1] - btcPrices[bN-169]) / btcPrices[bN-169];
+  // ── Relative strength vs BTC (7d) — requires 169 bars ───────
+  const has7d = n >= 169 && bN >= 169;
+  const tokenRet7d = has7d ? (prices[n-1] - prices[n-169]) / prices[n-169] : 0;
+  const btcRet7d   = has7d ? (btcPrices[bN-1] - btcPrices[bN-169]) / btcPrices[bN-169] : 0;
   const relStr7d   = tokenRet7d - btcRet7d;
 
   // ── Relative strength vs BTC (4h) ───────────────────────────

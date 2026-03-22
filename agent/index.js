@@ -333,7 +333,7 @@ async function bankrScreen(regime, ranked, checkrAttention = {}, trendingEntries
     const sym  = s.symbol || s.sym;
     const attn = checkrAttention[sym] || {};
     const score = s.score ?? s.combined ?? 0;
-    const q     = s.quantScore != null ? ` quant=${s.quantScore.toFixed(2)}` : '';
+    const q     = s.quantScore != null ? ` quant=${s.quantScore.toFixed(2)}` : ' quant=n/a(new)';
     const ret   = s.ret1h != null ? ` ret1h=${(s.ret1h*100).toFixed(1)}%` : '';
     const vel   = attn.velocity > 0 ? ` vel=${attn.velocity.toFixed(1)}` : '';
     const att   = attn.attentionDelta > 0 ? ` att=${attn.attentionDelta.toFixed(1)}` : '';

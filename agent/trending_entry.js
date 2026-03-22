@@ -149,10 +149,12 @@ function scoreEntry(token, rank, ohlcv, priorRanks, priorSnap, transferStats) {
   });
 
   // Map raw quant score to 0–1 range (quant returns ~-0.1 to +0.3 for good tokens)
-  // Scale: 0 → 0.30, 0.05 → 0.55, 0.10 → 0.70, 0.20+ → 1.0
-  const normalizedQuant = Math.max(0, Math.min(1, (quantScore + 0.05) / 0.20));
+  // null = no signal (insufficient history) → treat as neutral 0.4 not zero
+  const normalizedQuant = quantScore == null
+    ? 0.40  // no signal = neutral, not penalised
+    : Math.max(0, Math.min(1, (quantScore + 0.05) / 0.20));
 
-  // Blend: 70% quant brain, 30% move-timing (where-in-the-move — not in daily model)
+  // Blend: 70% quant brain, 30% move-timing (where-in-the-move)
   const moveScore = moveFrac < 0.25 ? 1.0
                   : moveFrac < 0.40 ? 0.75
                   : moveFrac < 0.60 ? 0.45
@@ -161,7 +163,7 @@ function scoreEntry(token, rank, ohlcv, priorRanks, priorSnap, transferStats) {
 
   const reason = [
     `rank=${rank}(${priorRanks.length ? priorRanks.join('→') : '?'}→${rank})`,
-    `quant=${quantScore.toFixed(4)}`,
+    `quant=${quantScore != null ? quantScore.toFixed(4) : 'n/a(new)'}`,
     `ret1h=${(ret1h*100).toFixed(1)}%`,
     `ret6h=${(ret6h*100).toFixed(1)}%`,
     `ret24h=${(ret24h*100).toFixed(1)}%`,

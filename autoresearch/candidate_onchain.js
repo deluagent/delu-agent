@@ -1,6 +1,6 @@
 function scoreToken(data) {
   const { prices, volumes, highs, lows, btcPrices, transferStats } = data;
-  if (!prices || prices.length < 20) return 0;
+  if (!prices || prices.length < 20) return null; // insufficient history
 
   const rsi8 = rsi(prices, 8);
   const rsi14 = rsi(prices, 14);
