@@ -128,26 +128,12 @@ async function reconcilePositions(bankrBalanceResponse, currentPrices = {}) {
       const isContractToken = !!pos.contractAddress;
       const isHeld = heldSymbols.has(sym.toUpperCase());
 
-      if (isContractToken && pos.contractAddress) {
-        // Check actual on-chain balance
-        const onchainBal = await getOnchainTokenBalance(pos.contractAddress);
-        if (onchainBal !== null && onchainBal === 0) {
-          // Zero balance on-chain — trade never executed or already sold
-          const pnlPct = currentPrice
-            ? ((currentPrice - pos.entryPrice) / pos.entryPrice * 100)
-            : null;
-          pos.status      = 'closed';
-          pos.closeReason = 'zero_balance';
-          pos.closedAt    = new Date().toISOString();
-          pos.closePrice  = currentPrice || null;
-          pos.pnlPct      = pnlPct;
-          closed.push(pos);
-          console.log(`[journal] ${sym} onchain balance=0 → marked closed (zero_balance)`);
-          continue;
-        } else if (onchainBal !== null && onchainBal > 0) {
-          console.log(`[journal] ${sym} onchain balance=${onchainBal} (raw) ✓ confirmed held`);
-        }
-      } else if (!isContractToken && !isHeld && heldSymbols.size > 0) {
+      // Bankr is non-custodial — tokens land in our wallet directly.
+      // For contract address tokens: Bankr sends tokens to wallet, we verify via Alchemy at buy time.
+      // Reconciliation: if Bankr balance shows nothing for this sym AND no on-chain balance, it was stopped out.
+      // We do NOT do balanceOf checks here anymore — that's done at buy time (index.js).
+      // For majors (non-contract): if not in Bankr balance list, it was stopped out.
+      if (!isContractToken && !isHeld && heldSymbols.size > 0) {
         // Bankr gave us a real balance list and this non-contract token isn't in it — stopped out
         const pnlPct = currentPrice
           ? ((currentPrice - pos.entryPrice) / pos.entryPrice * 100)

@@ -1019,8 +1019,46 @@ What is your allocation decision?`;
       const result = await bankr.execute(kellyDecision, ACTIVE_TRANCHE_USD);
       console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
 
-      // Record entry + compute dynamic trailing stop
+      // Verify trade actually executed — wait 8s then check Alchemy balanceOf
+      // Only record position if tokens actually landed in wallet
+      let tradeConfirmed = false;
       if (decision.action === 'buy' || decision.action === 'long') {
+        const contractAddr = decision.contractAddress;
+        if (contractAddr) {
+          console.log('[bankr] Waiting 8s for on-chain confirmation...');
+          await new Promise(r => setTimeout(r, 8000));
+          const onchainBal = await (async () => {
+            const key = process.env.ALCHEMY_KEY;
+            if (!key) return null;
+            const data = '0x70a08231' + '0xed2ceca9de162c4f2337d7c1ab44ee9c427709da'.slice(2).padStart(64,'0');
+            const body = JSON.stringify({ jsonrpc:'2.0', id:1, method:'eth_call', params:[{to:contractAddr, data},'latest'] });
+            return new Promise(res => {
+              const req = require('https').request({ hostname:'base-mainnet.g.alchemy.com', path:`/v2/${key}`, method:'POST',
+                headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(body)} }, r2 => {
+                let d=''; r2.on('data',c=>d+=c); r2.on('end',()=>{ try{const h=JSON.parse(d).result; res(h&&h!=='0x'?parseInt(h,16):0);}catch{res(null);} });
+              });
+              req.on('error',()=>res(null)); req.setTimeout(8000,()=>{req.destroy();res(null);});
+              req.write(body); req.end();
+            });
+          })();
+          if (onchainBal !== null && onchainBal > 0) {
+            tradeConfirmed = true;
+            console.log(`[bankr] ✅ On-chain confirmed: ${decision.asset} balance=${onchainBal} (raw tokens)`);
+          } else if (onchainBal === 0) {
+            console.warn(`[bankr] ⚠️ Trade NOT confirmed on-chain — balance=0 for ${decision.asset}. Not recording position.`);
+          } else {
+            // null = Alchemy check failed — assume confirmed (don't block)
+            tradeConfirmed = true;
+            console.warn(`[bankr] ⚠️ Could not verify on-chain (Alchemy error) — assuming confirmed`);
+          }
+        } else {
+          // No contract address (majors like ETH, SOL) — trust Bankr response
+          tradeConfirmed = true;
+        }
+      }
+
+      // Record entry + compute dynamic trailing stop
+      if ((decision.action === 'buy' || decision.action === 'long') && tradeConfirmed) {
         const entryPrice = await bankr.getPrice(decision.asset).catch(() => 0);
         const stopConfig = { trailPct: 5, activateAt: 1, rationale: 'Bankr native 5% trailing stop' };
         console.log(`[stops] ${decision.asset} trail=${stopConfig.trailPct}% activate=${stopConfig.activateAt}% | ${stopConfig.rationale}`);
