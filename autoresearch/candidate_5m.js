@@ -94,8 +94,8 @@ function scoreToken(data) {
   else if (btcRet12 < -0.010) btcGate = 0.1;
   else if (btcRet12 > 0.020) btcGate = 0.5;
 
-  // ── Momentum magnitude filter: LOWER threshold to 0.40 to capture more edge ──────
-  if (Math.abs(momScore) < 0.40) return 0;
+  // ── Momentum magnitude filter: RAISE threshold to 0.50 to reduce false positives ──
+  if (Math.abs(momScore) < 0.50) return 0;
 
   const score = momScore + volSignal + relBTC + vwapSignal;
   return Math.max(-1, Math.min(1, score * btcGate));

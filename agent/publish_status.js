@@ -36,6 +36,8 @@ async function buildStatus(regimeData, balanceStr = null) {
   const positions   = readJSON(path.join(DATA_DIR, 'positions.json'), []);
   const arDaily     = readJSON(path.join(AUTORES_DIR, 'state.json'), {});
   const arHourly    = readJSON(path.join(AUTORES_DIR, 'state_hourly.json'), {});
+  const arOnchain   = readJSON(path.join(AUTORES_DIR, 'state_onchain.json'), {});
+  const ar5m        = readJSON(path.join(AUTORES_DIR, 'state_5m.json'), {});
   const feedback    = readJSON(path.join(AUTORES_DIR, 'live_feedback.json'), []);
   const costDaily   = readJSON(path.join(AUTORES_DIR, 'cost_track.json'), {});
   const costHourly  = readJSON(path.join(AUTORES_DIR, 'cost_track_hourly.json'), {});
@@ -53,7 +55,7 @@ async function buildStatus(regimeData, balanceStr = null) {
         try {
           const c = JSON.parse(l);
           const entries = c.trendingEntries || [];
-          const flagged = entries.filter((t: any) => (t.score || 0) >= 0.65).map((t: any) => t.symbol);
+          const flagged = entries.filter(t => (t.score || 0) >= 0.65).map(t => t.symbol);
           const traded  = (c.decision?.action === 'buy' || c.decision?.action === 'long') && c.decision?.asset
             ? [c.decision.asset] : [];
           return {
@@ -317,17 +319,30 @@ async function buildStatus(regimeData, balanceStr = null) {
         bestScore:     parseFloat((arHourly.bestScore || 0).toFixed(3)),
         spend:         parseFloat((costHourly.estimatedSpend || 0).toFixed(3)),
       },
+      onchain: {
+        expCount:      arOnchain.expCount || 0,
+        bestValSharpe: parseFloat((arOnchain.bestValSharpe || 0).toFixed(3)),
+        bestAudSharpe: parseFloat((arOnchain.bestAudSharpe || 0).toFixed(3)),
+        bestScore:     parseFloat((arOnchain.bestScore || 0).toFixed(3)),
+      },
+      fiveMin: {
+        expCount:      ar5m.expCount || 0,
+        bestValSharpe: parseFloat((ar5m.bestValSharpe || 0).toFixed(3)),
+        bestAudSharpe: parseFloat((ar5m.bestAudSharpe || 0).toFixed(3)),
+        bestScore:     parseFloat((ar5m.bestScore || 0).toFixed(3)),
+      },
     },
 
     stack: {
-      execution:    'Bankr API (Base)',
-      reasoning:    'Venice llama-3.3-70b (E2EE private inference)',
-      screening:    'Bankr LLM gemini-2.5-flash',
-      research:     'Bankr LLM claude-sonnet-4-5',
+      execution:    'Bankr API (Base mainnet)',
+      reasoning:    'Venice llama-3.3-70b (private inference)',
       socialData:   'Checkr (x402 micropayments)',
-      onchainData:  'GeckoTerminal DEX flows',
-      priceData:    'Binance OHLCV + funding rates',
-      stopMgmt:     'Bankr native trailing stops',
+      onchainData:  'Alchemy — Base token prices, transfer stats, wallet signals',
+      rugDetection: 'Alchemy transfers — liquidity, bot ratio, whale concentration, dev dumps',
+      priceData:    'Alchemy Prices API (1h bars, 30d history)',
+      research:     'Anthropic Haiku — 3 parallel self-improving loops (onchain/hourly/5m)',
+      stopMgmt:     'ATR-based trailing stops (2.5× ATR14) + hard SL -3%',
+      discovery:    'Bankr trending + Checkr social (1h/4h/8h/12h windows)',
     },
   };
 }
