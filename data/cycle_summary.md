@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-22 20:05 UTC — BUY MOLTEN (80% conf)
+**Regime:** BEAR | BTC $68322 | -4.5% from 200d MA
+**Venice:** "MOLTEN has a high onchain trend score of 1.00 and move is 0% done, indicating strong momentum and potential for further growth. The BEAR regime context does not gate this trade, as cross-sectional alp…"
+**Discovered:** TIBBIR(score=0.53 ret1h=0.0%) · DRB(score=0.57 ret1h=0.0%) · ROBOTMONEY(score=0.53 ret1h=0.0%) · TOSHI(score=0.40 ret1h=0.0%)
+**Positions:** DRB +0.0%, JUNO +0.0%, BLUEAGENT +4.5%, MOLTEN +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-22 19:13 UTC — BUY MOLTEN (80% conf)
 **Regime:** BEAR | BTC $68439 | -4.4% from 200d MA
 **Venice:** "MOLTEN has a high score of 1.00 and is currently trending onchain, indicating strong momentum and potential for further growth. The portfolio context and active tranche size support a $15 allocation."
