@@ -49,6 +49,10 @@ function scoreToken(data) {
   const bN = (btcPrices || []).length;
   if (n < 169 || bN < 169) return 0;
 
+  // ── Trend filter: 4h close above 20-SMA ──────────────────────
+  const sma20 = sma(prices, 20);
+  const trendFilter = prices[n-1] > sma20[n-1] ? 1 : 0.5;
+
   // ── Relative strength vs BTC (7d) ───────────────────────────
   const tokenRet7d = (prices[n-1] - prices[n-169]) / prices[n-169];
   const btcRet7d   = (btcPrices[bN-1] - btcPrices[bN-169]) / btcPrices[bN-169];
@@ -62,6 +66,7 @@ function scoreToken(data) {
   // ── Volume direction ─────────────────────────────────────────
   const vol4h  = volumes.slice(-4).reduce((s, v) => s + v, 0) / 4;
   const vol48h = volumes.slice(-48).reduce((s, v) => s + v, 0) / 48;
+  const vol24h = volumes.slice(-24).reduce((s, v) => s + v, 0) / 24;
   const volBurst = vol4h / (vol48h || 1);
   const dir4h    = tokenRet4h > 0 ? 1 : tokenRet4h < 0 ? -1 : 0;
   const volSignal = Math.tanh((volBurst - 1) * dir4h * 2);
@@ -76,17 +81,40 @@ function scoreToken(data) {
   const range48h = highs.slice(-48).reduce((m, h, i) => m + (h - lows[n-48+i]), 0) / 48;
   const rangeCoil = 1 - (range4h / (range48h || range4h || 1));
 
-  // ── Volatility regime filter (avoid chop) ────────────────────
+  // ── Volatility regime filter (avoid chop) ───���─────────────────
   const rv12h = realizedVol(prices.slice(-12));
   const rv48h = realizedVol(prices.slice(-48));
   const volRegime = rv12h > rv48h * 0.5 ? 1 : 0.7;
 
-  // ── OBV microstructure (hourly buy/sell pressure) ────────────
-  let obv = 0;
-  for (let i = Math.max(0, n - 4); i < n; i++) {
-    obv += volumes[i] * (prices[i] > opens[i] ? 1 : -1);
+  // ── 1h oversold bounce detection with fixed threshold ────
+  let oversoldBounce = 0;
+  if (n >= 24) {
+    const ret1h = (prices[n-1] - prices[n-2]) / prices[n-2];
+    const ret1hHist = [];
+    for (let i = n - 12; i < n; i++) {
+      ret1hHist.push((prices[i] - prices[i-1]) / prices[i-1]);
+    }
+    const avg1h = ret1hHist.reduce((s, r) => s + r, 0) / ret1hHist.length;
+    const std1h = Math.sqrt(ret1hHist.reduce((s, r) => s + Math.pow(r - avg1h, 2), 0) / ret1hHist.length);
+    const z1h = std1h > 0 ? (ret1h - avg1h) / std1h : 0;
+    const vol1h = volumes[n-1];
+    const vol1hAvg = volumes.slice(-24).reduce((s, v) => s + v, 0) / 24;
+    const adaptiveVolThreshold = 1.2 + (0.3 * Math.tanh(Math.abs(relStr4h) * 35 / 5));
+    const volSpike = vol1h > vol1hAvg * adaptiveVolThreshold ? 1 : 0;
+    const accelPositive = relAccel > 0 ? 1 : 0;
+    oversoldBounce = z1h < -1.2 && volSpike && relStr4h > 0 && accelPositive ? 0.22 : 0;
   }
-  const obvSignal = Math.tanh(obv / (vol4h * 100 || 1) * 0.5);
+
+  // ── 4h close pullback from recent 4h high (coil breakout) ────
+  let bounceSignal = 0;
+  if (n >= 24) {
+    const high4h = Math.max(...highs.slice(-4));
+    const pullbackRatio = (high4h - prices[n-1]) / (high4h || 1);
+    const volumeConfirm = vol4h > vol24h ? 1 : 0.5;
+    const coilBreakout = pullbackRatio > 0.01 && pullbackRatio < 0.05 && relStr4h > 0 ? 1 : 0;
+    const decayFilter = Math.exp(-0.1 * (n % 4));
+    bounceSignal = coilBreakout * decayFilter * volumeConfirm;
+  }
 
   // ── Combined score [-1, +1] ──────────────────────────────────
   const score = (Math.tanh(relStr7d * 5) * 0.33
@@ -94,7 +122,8 @@ function scoreToken(data) {
               + volSignal * 0.17
               + Math.tanh(relAccel * 50) * 0.10
               + Math.tanh(rangeCoil * 5) * 0.08
-              + obvSignal * 0.06) * volRegime;
+              + bounceSignal * 0.06
+              + oversoldBounce) * volRegime * trendFilter;
 
   return Math.max(-1, Math.min(1, score));
 }

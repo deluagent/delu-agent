@@ -84,13 +84,15 @@ function calculateObvSig(prices, volumes, window = 20) {
   }
   return totalVol > 0 ? obvDelta / totalVol : 0;
 }
+
 function scoreToken(data) {
   const { 
     prices, 
     volumes = [], 
-    btcPrices = [], 
+    btcPrices = [],
     flowSignal = 0,
-    highs = []
+    highs = [],
+    lows = []
   } = data;
   
   const n = prices.length;
@@ -99,82 +101,57 @@ function scoreToken(data) {
   const vol = realizedVol(prices, 14);
   const r7 = pctChange(prices, 7);
 
-  //  Regime detection: BTC 50d vs 200d MA 
-  let regimeMult = 1.0;
   let isBear = false;
   if (btcPrices.length >= 200) {
     const btc50  = sma(btcPrices, 50);
     const btc200 = sma(btcPrices, 200);
     if (btc50 < btc200) {
       isBear = true;
-      regimeMult = vol > 0.75? 0.05 : 0.20;
     }
   }
 
-  //  Falling knife protection 
+  if (vol > 0.80) return 0;
+
   if (r7 < -0.20) return 0;
 
-  //  Trend strength filter 
   const ema = emaGap(prices, 12, 26);
   if (Math.abs(ema) < 0.03) return 0;
 
-  //  Momentum (Adaptive Lookbacks) 
   const r3 = pctChange(prices, 3);
   const r20 = pctChange(prices, 20);
   const r60 = pctChange(prices, Math.min(60, n - 1));
 
-  if (vol > 0.75 && r3 < 0.10) return 0;
   const momentum = vol > 0.75
- ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
+    ? (0.60 * r3 + 0.40 * r7) / (1 + vol)
     : (0.30 * r7 + 0.40 * r20 + 0.30 * r60) / (1 + vol);
 
-  //  Trend 
   const trend = 0.20 * ema;
 
-  //  Mean reversion 
   const z = zScore(prices, 20);
-  const meanRev = z < -1.8? 0.10 : (z > 2.5? -0.08 : 0);
+  const meanRev = z < -1.8 ? 0.10 : (z > 2.5 ? -0.08 : 0);
 
-  //  Volatility penalty 
-  const volPenalty = -0.20 * Math.max(vol - 0.6, 0);
-
-  //  Funding rate signal 
   const fundingBoost = isBear
- ? (flowSignal > 0? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
+    ? (flowSignal > 0 ? 0.15 * flowSignal : -0.15 * Math.abs(flowSignal))
     : 0.10 * flowSignal;
 
-  //  OBV Signal (Volume Accumulation) with Volume Surge Multiplier 
-  const obvSig = calculateObvSig(prices, volumes, 15);
-  const relVol = volumes[n - 1] / (sma(volumes, 15) || 1);
-  const obvBoost = 0.06 * obvSig * Math.min(relVol, 2.0);
-
-  //  Price acceleration filter
   const r1 = pctChange(prices, 1);
-  // spike protect removed — let signal run
+  const high52 = Math.max(...prices.slice(Math.max(0, n - 252)));
+  const pctFromHigh = (high52 - prices[n - 1]) / (high52 || 1);
+  const highProximity = !isBear && pctFromHigh < 0.12 ? 0.01 : 0;
 
-  // Volume confirmation
-  const vol20avg = volumes.length >= 20? sma(volumes, 20) : 0;
-  const relVolume = vol20avg > 0? volumes[volumes.length-1] / vol20avg : 1;
-  const volConfirm = r1 > 0.03? (relVolume > 1.5? 0.05 : relVolume < 0.8? -0.04 : 0) : 0;
+  let volSurprise = 0;
+  if (volumes.length >= 20) {
+    const avgVol20 = volumes.slice(Math.max(0, n - 20)).reduce((a, b) => a + b, 0) / Math.min(20, n);
+    const recentVol = volumes[n - 1];
+    const volRatio = recentVol / (avgVol20 || 1);
+    if (r7 > 0.02 && volRatio > 1.40) {
+      volSurprise = 0.12;
+    }
+  }
+
+  const raw = momentum + trend + meanRev + fundingBoost + highProximity + volSurprise;
   
-  // 52w proximity: near ATH in BULL = momentum quality boost
-  const high52 = Math.max(...prices.slice(Math.max(0, n-252)));
-  const pctFromHigh = (high52 - prices[n-1]) / (high52||1);
-  const highProximity =!isBear && pctFromHigh < 0.12? 0.01 : 0;
-
-  //  OBV Divergence
-  const obv = calculateObvSig(prices, volumes, 20);
-  const priceChange = prices[n - 1] - prices[n - 20];
-  const obvDivergence = obv > 0 && priceChange < 0? -0.02 : obv < 0 && priceChange > 0? 0.02 : 0;
-
-  //  ATR penalty for high volatility
-  const atr = highs.length >= 14 ? realizedVol(highs, 14) : vol;
-  const atrPenalty = atr > 0.8 ? -0.03 : 0;
-
-  //  Combined 
-  const raw = momentum + trend + meanRev + volPenalty + fundingBoost + obvBoost + volConfirm + highProximity + obvDivergence + atrPenalty;
-  
-  return raw * regimeMult;
+  return Math.max(0, raw);
 }
 
 module.exports = { scoreToken };

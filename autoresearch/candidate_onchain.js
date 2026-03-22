@@ -1,5 +1,3 @@
-// Diagnostic: Add regime stability check and recover from failed momentum acceleration signal
-
 function scoreToken(data) {
   const { prices, volumes, highs, lows, btcPrices, transferStats } = data;
   if (!prices || prices.length < 20) return 0;
@@ -24,9 +22,10 @@ function scoreToken(data) {
   let smartWalletBoost = 0;
   if (transferStats) {
     const buyerScore = Math.min(transferStats.uniqueBuyers / 50, 1) * 0.3;
-    const repeatScore = transferStats.repeatBuyers > 3 ? 0.4 : 0;
-    const concentrationPenalty = transferStats.topBuyerConcentration > 0.4 ? -0.2 : 0;
-    smartWalletBoost = buyerScore + repeatScore + concentrationPenalty;
+    const repeatScore = transferStats.repeatBuyers > 3 ? 0.4 : transferStats.repeatBuyers > 1 ? 0.15 : 0;
+    const concentrationPenalty = transferStats.topBuyerConcentration > 0.5 ? -0.35 : transferStats.topBuyerConcentration > 0.3 ? -0.15 : 0;
+    const velocityBoost = transferStats.transferVelocity > 80 && transferStats.topBuyerConcentration < 0.25 ? 0.25 : 0;
+    smartWalletBoost = buyerScore + repeatScore + concentrationPenalty + velocityBoost;
   }
 
   const trend = sma8 > sma20 ? 1 : -1;
@@ -47,44 +46,22 @@ function scoreToken(data) {
   }
 
   const volatilityRegime = volatility > 0.012 ? "high" : volatility < 0.005 ? "low" : "normal";
-  const regimeStabilityPenalty = volatilityRegime === "low" ? -0.08 : 0;
+  const regimeStabilityPenalty = volatilityRegime === "low" ? -0.15 : 0;
+
+  const priceAboveSMA = prices[prices.length - 1] > sma20 ? 1 : -1;
+  const distanceFromSMA = Math.abs(prices[prices.length - 1] - sma20) / sma20;
+  const overextensionPenalty = distanceFromSMA > 0.08 && priceAboveSMA > 0 ? -0.20 : 0;
 
   let score;
   if (isMomentum && volatilityRegime !== "low") {
-    score = sRS * 0.42 + sRSI * 0.16 + sVol * 0.14 + sTrend * 0.10 + sMomentum * 0.12 + smartWalletBoost * 0.06;
+    score = sRS * 0.42 + sRSI * 0.16 + sVol * 0.14 + sTrend * 0.10 + sMomentum * 0.12 + smartWalletBoost * 0.08 + overextensionPenalty * 0.05;
+  } else if (isMeanReversion && volatilityRegime !== "low") {
+    score = sRS * 0.35 + sRSI * 0.20 + meanReversionBoost * 0.25 + smartWalletBoost * 0.10 + regimeStabilityPenalty * 0.10;
   } else {
-    score = sRS * 0.38 + sRSI * 0.24 + sVol * 0.12 + sTrend * 0.14 + smartWalletBoost * 0.10 + meanReversionBoost * 0.02;
+    score = sRS * 0.30 + sRSI * 0.15 + sTrend * 0.20 + smartWalletBoost * 0.15 + regimeStabilityPenalty * 0.20;
   }
-
-  score += regimeStabilityPenalty;
 
   return Math.max(-1, Math.min(1, score));
-}
-
-function rsi(prices, period) {
-  if (prices.length < period + 1) return 50;
-  let gains = 0, losses = 0;
-  for (let i = prices.length - period; i < prices.length; i++) {
-    const delta = prices[i] - prices[i - 1];
-    if (delta > 0) gains += delta;
-    else losses -= delta;
-  }
-  const avg_gain = gains / period;
-  const avg_loss = losses / period;
-  const rs = avg_loss === 0 ? 100 : avg_gain === 0 ? 0 : avg_gain / avg_loss;
-  return 100 - (100 / (1 + rs));
-}
-
-function sma(prices, period) {
-  if (prices.length < period) return prices[prices.length - 1];
-  return prices.slice(-period).reduce((s, p) => s + p, 0) / period;
-}
-
-function relStrength(prices, refPrices, period) {
-  if (prices.length < period || !refPrices || refPrices.length < period) return 1;
-  const priceRet = (prices[prices.length - 1] - prices[prices.length - 1 - period]) / prices[prices.length - 1 - period];
-  const refRet = (refPrices[refPrices.length - 1] - refPrices[refPrices.length - 1 - period]) / refPrices[refPrices.length - 1 - period];
-  return refRet !== 0 ? priceRet / refRet : 1;
 }
 
 module.exports = { scoreToken };
