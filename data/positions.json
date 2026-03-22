@@ -166,7 +166,7 @@
     "kellyFraction": 22,
     "atrStop": 0.164221,
     "atrValue": 0.00162461,
-    "lastChecked": "2026-03-22T13:17:14.627Z"
+    "lastChecked": "2026-03-22T13:47:14.683Z"
   },
   {
     "sym": "BNKR",
@@ -186,7 +186,7 @@
     "kellyFraction": 22,
     "atrStop": 0.00039867,
     "atrValue": 0.00000615,
-    "lastChecked": "2026-03-22T13:17:15.646Z"
+    "lastChecked": "2026-03-22T13:47:16.109Z"
   },
   {
     "sym": "MOLT",
@@ -206,7 +206,7 @@
     "kellyFraction": 22,
     "atrStop": 0.00002762,
     "atrValue": 0.0000011,
-    "lastChecked": "2026-03-22T13:17:16.687Z"
+    "lastChecked": "2026-03-22T13:47:17.117Z"
   },
   {
     "sym": "BLUEAGENT",
@@ -226,7 +226,7 @@
     "kellyFraction": 22,
     "atrStop": 0.00000113,
     "atrValue": 5e-8,
-    "lastChecked": "2026-03-22T13:17:17.836Z"
+    "lastChecked": "2026-03-22T13:47:18.110Z"
   },
   {
     "sym": "CLAWNCH",
@@ -246,7 +246,7 @@
     "kellyFraction": 22,
     "atrStop": 0.00003628,
     "atrValue": 3.5e-7,
-    "lastChecked": "2026-03-22T13:17:18.792Z"
+    "lastChecked": "2026-03-22T13:47:19.580Z"
   },
   {
     "sym": "MOLTEN",
@@ -265,7 +265,7 @@
     "kellyFraction": 22,
     "atrStop": 5.4902,
     "atrValue": 1.3e-7,
-    "lastChecked": "2026-03-22T13:17:19.768Z",
+    "lastChecked": "2026-03-22T13:47:20.605Z",
     "peakPrice": 5.66
   },
   {
@@ -286,6 +286,6 @@
     "kellyFraction": 22,
     "atrStop": 0.0000683,
     "atrValue": 7.4e-7,
-    "lastChecked": "2026-03-22T13:17:20.760Z"
+    "lastChecked": "2026-03-22T13:47:21.573Z"
   }
 ]
