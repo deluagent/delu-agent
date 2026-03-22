@@ -307,7 +307,7 @@ function scoreTemplateD(bars) {
 // Fast pre-filter before Venice. Cheap model, simple question:
 // "Given this regime and these signal scores, is anything worth analyzing?"
 // Returns: { skip: bool, interesting: string[], reason: string }
-async function bankrScreen(regime, ranked, checkrAttention = {}) {
+async function bankrScreen(regime, ranked, checkrAttention = {}, trendingEntries = []) {
   const state = regime.state;
 
   // In BEAR: only skip if nothing is oversold — otherwise look for bounce plays
@@ -322,66 +322,98 @@ async function bankrScreen(regime, ranked, checkrAttention = {}) {
     console.log('[bankr-screen] BEAR but oversold signals detected — checking with LLM');
   }
 
-  // Build a compact summary for the screen model
-  const scoreLines = ranked
-    .map(s => {
-      const attn = checkrAttention[s.sym];
-      const attnStr = attn ? ` vel=${attn.velocity?.toFixed(1)} div=${attn.divergence?1:0}${attn.isGainer?' ROT_IN':''}${attn.isLoser?' ROT_OUT':''}${attn.bankrSignal ? ' bankr='+attn.bankrSignal.toFixed(2) : ''}${attn.txnCount24h ? ' txns='+attn.txnCount24h : ''}` : '';
-      return `${s.sym}: combined=${s.combined.toFixed(3)} [A=${s.sA.toFixed(2)} B=${s.sB.toFixed(2)} AR=${s.sAR.toFixed(2)}${attnStr}]`;
-    })
-    .join('\n');
+    // Build a compact summary — use trendingEntries (onchain discovery) as primary signal source
+  // ranked may be empty since we no longer have a fixed universe
+  const allCandidates = trendingEntries && trendingEntries.length > 0
+    ? trendingEntries
+    : ranked;
+
+  const scoreLines = allCandidates.map(s => {
+    const sym  = s.symbol || s.sym;
+    const attn = checkrAttention[sym] || {};
+    const score = s.score ?? s.combined ?? 0;
+    const q     = s.quantScore != null ? ` quant=${s.quantScore.toFixed(2)}` : '';
+    const ret   = s.ret1h != null ? ` ret1h=${(s.ret1h*100).toFixed(1)}%` : '';
+    const vel   = attn.velocity > 0 ? ` vel=${attn.velocity.toFixed(1)}` : '';
+    const att   = attn.attentionDelta > 0 ? ` att=${attn.attentionDelta.toFixed(1)}` : '';
+    const mom   = attn.momentumWindows > 0 ? ` mom=${attn.momentumWindows}w` : '';
+    const rot   = attn.isGainer ? ' ROT_IN' : attn.isLoser ? ' ROT_OUT' : '';
+    const rug   = s.rugVerdict && s.rugVerdict !== 'SAFE' ? ` rug=${s.rugVerdict}` : '';
+    return `${sym}: score=${score.toFixed(3)}${q}${ret}${vel}${att}${mom}${rot}${rug}`;
+  }).join('\n') || 'No candidates this cycle';
 
   const prompt = `Market regime: ${state}
 BTC ${(regime.pctFrom200 * 100).toFixed(1)}% from 200d MA | breadth: ${regime.breadthFraction} | volRatio: ${regime.volRatio.toFixed(2)}
 
-Signal scores (combined 0-1, threshold 0.05):
+Onchain candidates (quant score + Checkr social attention + Alchemy 1h return):
 ${scoreLines}
 
 Are any tokens worth deeper analysis for a trade entry right now?
 Reply with JSON only — no markdown, no explanation outside the JSON:
-{"skip": false, "interesting": ["ETH", "AAVE"], "reason": "one sentence"}
+{"skip": false, "interesting": ["TOKEN1"], "reason": "one sentence"}
 or
 {"skip": true, "interesting": [], "reason": "one sentence"}`;
 
-  try {
-    const res = await fetch(BANKR_LLM_API, {
+  // Try Bankr LLM first, fall back to Anthropic Haiku on credits exhausted
+  const tryLLM = async (apiUrl, headers, modelName) => {
+    const res = await fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.BANKR_API_KEY}`,
-        'Content-Type':  'application/json'
-      },
+      headers: { 'Content-Type': 'application/json', ...headers },
       body: JSON.stringify({
-        model: BANKR_LLM_MODEL,
+        model: modelName,
         messages: [{ role: 'user', content: prompt }],
         max_tokens: 120,
         temperature: 0.1
       })
     });
-
     if (!res.ok) {
       const err = await res.text();
-      throw new Error(`Bankr LLM error ${res.status}: ${err}`);
+      throw new Error(`LLM error ${res.status}: ${err}`);
     }
+    return res.json();
+  };
 
-    const data = await res.json();
-    const content = data.choices[0].message.content.trim();
+  let data, usedLayer;
+  try {
+    data = await tryLLM(BANKR_LLM_API, { 'Authorization': `Bearer ${process.env.BANKR_API_KEY}` }, BANKR_LLM_MODEL);
+    usedLayer = 'bankr-llm';
+  } catch(e) {
+    const isCredits = e.message.includes('402') || e.message.includes('insufficient_credits') || e.message.includes('Insufficient');
+    if (isCredits) {
+      console.warn('[bankr-screen] Bankr LLM credits exhausted — falling back to Anthropic Haiku');
+      try {
+        const anthropicKey = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
+        data = await tryLLM(
+          'https://api.anthropic.com/v1/messages',
+          { 'x-api-key': anthropicKey, 'anthropic-version': '2023-06-01' },
+          'claude-haiku-4-5-20251001'
+        );
+        usedLayer = 'anthropic-fallback';
+      } catch(e2) {
+        console.warn(`[bankr-screen] Anthropic fallback also failed: ${e2.message?.slice(0,60)}`);
+        return { skip: false, interesting: [], reason: `screen failed: ${e.message}`, layer: 'fallback' };
+      }
+    } else {
+      console.warn(`[bankr-screen] Failed (${e.message}) — passing to Venice anyway`);
+      return { skip: false, interesting: [], reason: `screen failed: ${e.message}`, layer: 'fallback' };
+    }
+  }
 
-    // Strip markdown fences if model wraps in ```json
-    const clean = content.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+  try {
+    const content = data.choices?.[0]?.message?.content || data.content?.[0]?.text || '';
+    const clean = content.trim().replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
     const parsed = JSON.parse(clean);
-
     return {
       skip:        !!parsed.skip,
       interesting: Array.isArray(parsed.interesting) ? parsed.interesting : [],
       reason:      parsed.reason || '',
-      layer:       'bankr-llm',
-      model:       BANKR_LLM_MODEL,
+      layer:       usedLayer,
+      model:       usedLayer === 'bankr-llm' ? BANKR_LLM_MODEL : 'claude-haiku-4-5-20251001',
       usage:       data.usage,
     };
-  } catch (e) {
-    // Screen failure → don't block Venice, log and continue
-    console.warn(`[bankr-screen] Failed (${e.message}) — passing to Venice anyway`);
-    return { skip: false, interesting: [], reason: `screen failed: ${e.message}`, layer: 'fallback' };
+  } catch(e) {
+    console.warn(`[bankr-screen] JSON parse failed: ${e.message}`);
+    return { skip: false, interesting: [], reason: 'screen parse failed', layer: 'fallback' };
   }
 }
 
@@ -792,7 +824,7 @@ async function runCycle() {
 
   // 4. [Layer 1] Bankr LLM screen — fast pre-filter on checkrAttention signals
   console.log('\n[bankr-screen] Screening...');
-  const screen = await bankrScreen(regime, ranked, checkrAttention);
+  const screen = await bankrScreen(regime, ranked, checkrAttention, trendingEntries);
   console.log(`[bankr-screen] skip=${screen.skip} | interesting=[${screen.interesting.join(',')}] | "${screen.reason}" (${screen.layer})`);
 
   if (screen.skip) {
