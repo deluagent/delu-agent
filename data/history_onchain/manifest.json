@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-03-22T00:14:30.578Z",
+  "fetchedAt": "2026-03-22T12:02:08.660Z",
   "tokens": [
     "WETH",
     "cbBTC",
@@ -11,14 +11,15 @@
     "TOSHI",
     "HIGHER",
     "WELL",
-    "LUKSO",
     "MOLT",
     "ROBOTMONEY",
+    "LUKSO",
+    "USR",
     "BLUEAGENT",
+    "BNKR",
     "KTA",
-    "VVV",
-    "AMBERVIBE",
-    "BNKR"
+    "FAI",
+    "NOOK"
   ],
   "universe": [
     {
@@ -62,10 +63,6 @@
       "addr": "0xA88594D404727625A9437C3f886C7643872296AE"
     },
     {
-      "sym": "LUKSO",
-      "addr": "0x81040cfd2bb62062525d958ad01931988a590b07"
-    },
-    {
       "sym": "MOLT",
       "addr": "0xb695559b26bb2c9703ef1935c37aeae9526bab07"
     },
@@ -74,8 +71,20 @@
       "addr": "0x65021a79aeef22b17cdc1b768f5e79a8618beba3"
     },
     {
+      "sym": "LUKSO",
+      "addr": "0x81040cfd2bb62062525d958ad01931988a590b07"
+    },
+    {
+      "sym": "USR",
+      "addr": "0x35e5db674d8e93a03d814fa0ada70731efe8a4b9"
+    },
+    {
       "sym": "BLUEAGENT",
       "addr": "0xf895783b2931c919955e18b5e3343e7c7c456ba3"
+    },
+    {
+      "sym": "BNKR",
+      "addr": "0x22af33fe49fd1fa80c7149773dde5890d3c76f3b"
     },
     {
       "sym": "KTA",
@@ -86,20 +95,12 @@
       "addr": "0x0086cff0c1e5d17b19f5bcd4c8840a5b4251d959"
     },
     {
-      "sym": "AXOBOTL",
-      "addr": "0x810affc8aadad2824c65e0a2c5ef96ef1de42ba3"
+      "sym": "FAI",
+      "addr": "0xb33ff54b9f7242ef1593d2c9bcd8f9df46c77935"
     },
     {
-      "sym": "VVV",
-      "addr": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf"
-    },
-    {
-      "sym": "AMBERVIBE",
-      "addr": "0xb5b0f722d6d4a803d3df94c9ed12a191603eab07"
-    },
-    {
-      "sym": "BNKR",
-      "addr": "0x22af33fe49fd1fa80c7149773dde5890d3c76f3b"
+      "sym": "NOOK",
+      "addr": "0xb233bdffd437e60fa451f62c6c09d3804d285ba3"
     }
   ],
   "bars": 721,

@@ -939,13 +939,39 @@ What is your allocation decision?`;
       // Record entry + compute dynamic trailing stop
       if (decision.action === 'buy' || decision.action === 'long') {
         const entryPrice = await bankr.getPrice(decision.asset).catch(() => 0);
-        // Default trailing stop — Bankr sets 5% natively, use that
         const stopConfig = { trailPct: 5, activateAt: 1, rationale: 'Bankr native 5% trailing stop' };
         console.log(`[stops] ${decision.asset} trail=${stopConfig.trailPct}% activate=${stopConfig.activateAt}% | ${stopConfig.rationale}`);
+
+        // Resolve correct contract address: GeckoTerminal highest-liquidity pool
+        let resolvedContract = decision.contractAddress || null;
+        if (resolvedContract && resolvedContract !== 'undefined') {
+          try {
+            const poolsRes = await new Promise((res, rej) => {
+              const https2 = require('https');
+              https2.get(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${resolvedContract}/pools?page=1`,
+                { headers: { Accept: 'application/json' } }, r => {
+                  let d = ''; r.on('data', c => d += c);
+                  r.on('end', () => { try { res(JSON.parse(d)); } catch { res({}); } });
+                }).on('error', rej);
+            });
+            const pools = poolsRes?.data || [];
+            const best = pools
+              .filter(p => (p.attributes?.reserve_in_usd || 0) > 10000)
+              .sort((a, b) => (b.attributes?.reserve_in_usd || 0) - (a.attributes?.reserve_in_usd || 0))[0];
+            if (best?.relationships?.base_token?.data?.id) {
+              const confirmed = best.relationships.base_token.data.id.replace('base_', '');
+              if (confirmed && confirmed !== resolvedContract) {
+                console.log(`[contract] ${decision.asset}: corrected ${resolvedContract} → ${confirmed} (liq=$${Math.round(best.attributes.reserve_in_usd/1000)}K)`);
+              }
+              resolvedContract = confirmed;
+            }
+          } catch(e) { console.warn(`[contract] lookup failed for ${decision.asset}: ${e.message}`); }
+        }
+
         journal.recordEntry(decision.asset, entryPrice, finalSizeUsd, {
           regime:          regime.state,
           confidence:      decision.confidence,
-          contractAddress: decision.contractAddress || null,
+          contractAddress: resolvedContract,
           kellyFraction:   kelly.kellyFraction,
           trailPct:        stopConfig.trailPct,
           activateAt:      stopConfig.activateAt,

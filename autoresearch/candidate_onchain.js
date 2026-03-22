@@ -1,90 +1,90 @@
-/**
- * candidate_onchain.js — Onchain signal candidate (Base tokens, Alchemy data)
- *
- * Returns score in [-1, +1]
- * Data: Alchemy Base mainnet 1h price history (30 days, ~720 bars)
- * Universe: WETH, AERO, VIRTUAL, AIXBT, BRETT, DEGEN, TOSHI, KTA, MOLT, etc.
- *
- * Available signals:
- *   prices[]    — hourly close prices (real onchain from Alchemy)
- *   volumes[]   — relative activity proxy (price-change magnitude)
- *   highs[]     — hourly high (approx: max of open/close)
- *   lows[]      — hourly low  (approx: min of open/close)
- *   btcPrices[] — WETH prices (reference token on Base)
- *   transferStats — smart wallet signals (latest snapshot):
- *     .uniqueBuyers         — distinct wallets that bought (last 500 txs)
- *     .transferVelocity     — total transfer count (higher = more active)
- *     .repeatBuyers         — wallets that bought 3+ times (accumulation signal)
- *     .topBuyerConcentration — 0=distributed, 1=one whale dominates
- */
+// Diagnostic: Add regime stability check and recover from failed momentum acceleration signal
 
-'use strict';
+function scoreToken(data) {
+  const { prices, volumes, highs, lows, btcPrices, transferStats } = data;
+  if (!prices || prices.length < 20) return 0;
 
-function sma(prices, period) {
-  const n = Math.min(period, prices.length);
-  return prices.slice(-n).reduce((s, p) => s + p, 0) / n;
+  const rsi8 = rsi(prices, 8);
+  const rsi14 = rsi(prices, 14);
+  const sma8 = sma(prices, 8);
+  const sma20 = sma(prices, 20);
+  const rs = relStrength(prices, btcPrices, 8);
+
+  const volatility = Math.sqrt(
+    prices.slice(-8).reduce((sum, p, i, arr) => {
+      if (i === 0) return sum;
+      return sum + Math.pow((p - arr[i - 1]) / arr[i - 1], 2);
+    }, 0) / 8
+  );
+
+  const sRS = (rs - 1) * 0.5;
+  const sRSI = (rsi8 - 50) / 50 * 0.4;
+  const sVol = Math.min(volatility * 2, 0.5);
+
+  let smartWalletBoost = 0;
+  if (transferStats) {
+    const buyerScore = Math.min(transferStats.uniqueBuyers / 50, 1) * 0.3;
+    const repeatScore = transferStats.repeatBuyers > 3 ? 0.4 : 0;
+    const concentrationPenalty = transferStats.topBuyerConcentration > 0.4 ? -0.2 : 0;
+    smartWalletBoost = buyerScore + repeatScore + concentrationPenalty;
+  }
+
+  const trend = sma8 > sma20 ? 1 : -1;
+  const sTrend = trend * (Math.abs(sma8 - sma20) / sma20) * 0.25;
+
+  const isMomentum = rsi8 > 55 && rsi8 < 75 && volatility > 0.008;
+  const isMeanReversion = rsi8 < 40 || rsi8 > 70;
+
+  const momentum = (prices[prices.length - 1] - prices[prices.length - 5]) / prices[prices.length - 5];
+  const momentumAccel = Math.abs(momentum) > 0.015 ? Math.sign(momentum) : 0;
+  const sMomentum = momentumAccel * (isMomentum ? 0.20 : 0.06);
+
+  let meanReversionBoost = 0;
+  if (isMeanReversion && rsi8 < 32) {
+    meanReversionBoost = 0.35;
+  } else if (isMeanReversion && rsi8 > 68) {
+    meanReversionBoost = -0.30;
+  }
+
+  const volatilityRegime = volatility > 0.012 ? "high" : volatility < 0.005 ? "low" : "normal";
+  const regimeStabilityPenalty = volatilityRegime === "low" ? -0.08 : 0;
+
+  let score;
+  if (isMomentum && volatilityRegime !== "low") {
+    score = sRS * 0.42 + sRSI * 0.16 + sVol * 0.14 + sTrend * 0.10 + sMomentum * 0.12 + smartWalletBoost * 0.06;
+  } else {
+    score = sRS * 0.38 + sRSI * 0.24 + sVol * 0.12 + sTrend * 0.14 + smartWalletBoost * 0.10 + meanReversionBoost * 0.02;
+  }
+
+  score += regimeStabilityPenalty;
+
+  return Math.max(-1, Math.min(1, score));
 }
 
 function rsi(prices, period) {
   if (prices.length < period + 1) return 50;
-  let g = 0, l = 0;
+  let gains = 0, losses = 0;
   for (let i = prices.length - period; i < prices.length; i++) {
-    const d = prices[i] - prices[i - 1];
-    if (d > 0) g += d; else l -= d;
+    const delta = prices[i] - prices[i - 1];
+    if (delta > 0) gains += delta;
+    else losses -= delta;
   }
-  if (l === 0) return 100;
-  return 100 - 100 / (1 + (g / period) / (l / period));
+  const avg_gain = gains / period;
+  const avg_loss = losses / period;
+  const rs = avg_loss === 0 ? 100 : avg_gain === 0 ? 0 : avg_gain / avg_loss;
+  return 100 - (100 / (1 + rs));
 }
 
-function relStrength(prices, ref, period) {
-  if (prices.length < period || ref.length < period) return 0;
-  const n = prices.length, r = ref.length;
-  const tokenRet = prices[n-1] > 0 ? (prices[n-1] - prices[n-period]) / prices[n-period] : 0;
-  const refRet   = ref[r-1]   > 0 ? (ref[r-1]   - ref[r-period])   / ref[r-period]   : 0;
-  return tokenRet - refRet;
+function sma(prices, period) {
+  if (prices.length < period) return prices[prices.length - 1];
+  return prices.slice(-period).reduce((s, p) => s + p, 0) / period;
 }
 
-function scoreToken(data) {
-  const { prices, volumes, btcPrices, transferStats } = data;
-  if (!prices || prices.length < 48) return 0;
-
-  const weth = btcPrices || prices;
-
-  // RSI-8 (Nunchi #1 — proven on hourly intraday data)
-  const rsi8 = rsi(prices, 8);
-
-  // Relative strength vs WETH: 12h and 48h
-  const rs12 = relStrength(prices, weth, 12);
-  const rs48 = relStrength(prices, weth, 48);
-
-  // Volume (price-change proxy): recent vs baseline
-  const volNow  = volumes ? volumes.slice(-4).reduce((s, v) => s + v, 0) / 4 : 1;
-  const volBase = volumes ? volumes.slice(-48).reduce((s, v) => s + v, 0) / 48 : 1;
-  const volRatio = volBase > 0 ? volNow / volBase : 1;
-
-  // Trend
-  const sma12 = sma(prices, 12);
-  const sma48 = sma(prices, 48);
-  const trend = sma12 > sma48 ? 1 : -1;
-
-  // Smart wallet accumulation signal
-  // repeatBuyers > 2 = wallets accumulating (bullish)
-  // topBuyerConcentration > 0.3 = single whale dominating (can be pump-and-dump risk)
-  let smartWalletBoost = 0;
-  if (transferStats) {
-    const accumulationSignal = Math.min(1, (transferStats.repeatBuyers || 0) / 5);
-    const concentrationRisk  = transferStats.topBuyerConcentration > 0.3 ? -0.2 : 0;
-    smartWalletBoost = accumulationSignal * 0.3 + concentrationRisk;
-  }
-
-  // Score
-  const sRSI  = (50 - rsi8) / 50;
-  const sRS   = Math.max(-1, Math.min(1, (rs12 * 0.6 + rs48 * 0.4) * 15));
-  const sVol  = Math.min(1, Math.max(-0.5, (volRatio - 1) * 0.5));
-  const sTrend = trend * 0.3;
-
-  const score = sRS * 0.40 + sRSI * 0.25 + sVol * 0.10 + sTrend * 0.10 + smartWalletBoost * 0.15;
-  return Math.max(-1, Math.min(1, score));
+function relStrength(prices, refPrices, period) {
+  if (prices.length < period || !refPrices || refPrices.length < period) return 1;
+  const priceRet = (prices[prices.length - 1] - prices[prices.length - 1 - period]) / prices[prices.length - 1 - period];
+  const refRet = (refPrices[refPrices.length - 1] - refPrices[refPrices.length - 1 - period]) / refPrices[refPrices.length - 1 - period];
+  return refRet !== 0 ? priceRet / refRet : 1;
 }
 
 module.exports = { scoreToken };

@@ -51,44 +51,70 @@ function loadCostTrack() {
 }
 function saveCostTrack(c) { fs.writeFileSync(COST_TRACK, JSON.stringify(c)); }
 
-// ── LLM call (Bankr LLM) ────────────────────────────────────
+// ── LLM — Bankr first, Anthropic Haiku fallback ────────────
 async function callLLM(messages) {
-  const key = (process.env.BANKR_API_KEY || '').replace(/\s/g, '');
-  if (!key) throw new Error('No BANKR_API_KEY in env');
+  const bankrKey    = (process.env.BANKR_API_KEY     || "").replace(/\s/g, "");
+  const anthropicKey= (process.env.ANTHROPIC_API_KEY || "").replace(/\s/g, "");
 
-  const body = JSON.stringify({
-    model: 'claude-haiku-4-5-20251001',
-    max_tokens: 4000,
-    messages,
-  });
+  if (bankrKey) {
+    try {
+      const body = JSON.stringify({ model: "claude-haiku-4-5-20251001", max_tokens: 4000, messages });
+      const result = await new Promise((resolve, reject) => {
+        const req = https.request({
+          hostname: "llm.bankr.bot", port: 443, method: "POST",
+          path: "/v1/chat/completions",
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${bankrKey}`, "Content-Length": Buffer.byteLength(body) },
+        }, (res) => {
+          let d = ""; res.on("data", c => d += c);
+          res.on("end", () => {
+            try {
+              const j = JSON.parse(d);
+              if (j.error?.type === "insufficient_credits" || (j.error?.message || "").includes("Insufficient")) {
+                reject(new Error("bankr_credits"));
+              } else if (j.error) {
+                reject(new Error("Bankr: " + j.error.message));
+              } else {
+                resolve(j.choices?.[0]?.message?.content || "");
+              }
+            } catch(e) { reject(new Error("parse: " + d.slice(0,80))); }
+          });
+        });
+        req.on("error", reject);
+        req.setTimeout(90000, () => { req.destroy(); reject(new Error("timeout")); });
+        req.write(body); req.end();
+      });
+      return result;
+    } catch(e) {
+      if (e.message !== "bankr_credits") throw e;
+      console.log("   [llm] Bankr credits exhausted — Anthropic fallback");
+    }
+  }
 
+  if (!anthropicKey) throw new Error("No LLM available");
+  const body = JSON.stringify({ model: "claude-haiku-4-5-20251001", max_tokens: 4000,
+    messages: messages.map(m => ({ role: m.role === "assistant" ? "assistant" : "user", content: m.content })) });
   return new Promise((resolve, reject) => {
     const req = https.request({
-      hostname: 'llm.bankr.bot', port: 443,
-      path: '/v1/chat/completions',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`,
-        'Content-Length': Buffer.byteLength(body),
-      },
+      hostname: "api.anthropic.com", port: 443, method: "POST",
+      path: "/v1/messages",
+      headers: { "Content-Type": "application/json", "x-api-key": anthropicKey,
+        "anthropic-version": "2023-06-01", "Content-Length": Buffer.byteLength(body) },
     }, (res) => {
-      let data = '';
-      res.on('data', c => data += c);
-      res.on('end', () => {
+      let d = ""; res.on("data", c => d += c);
+      res.on("end", () => {
         try {
-          const j = JSON.parse(data);
-          if (j.error) throw new Error(`Bankr LLM error: ${JSON.stringify(j.error)}`);
-          resolve(j.choices?.[0]?.message?.content || '');
-        } catch(e) { reject(new Error(`LLM parse error: ${data.slice(0,200)}`)); }
+          const j = JSON.parse(d);
+          if (j.error) throw new Error("Anthropic: " + JSON.stringify(j.error));
+          resolve(j.content?.[0]?.text || "");
+        } catch(e) { reject(new Error("parse: " + d.slice(0,80))); }
       });
     });
-    req.on('error', reject);
-    req.setTimeout(120000, () => { req.destroy(); reject(new Error('LLM timeout')); });
-    req.write(body);
-    req.end();
+    req.on("error", reject);
+    req.setTimeout(90000, () => { req.destroy(); reject(new Error("timeout")); });
+    req.write(body); req.end();
   });
 }
+
 
 // ── Evaluate current candidate ────────────────────────────────
 function runEval() {
