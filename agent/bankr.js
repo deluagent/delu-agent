@@ -234,10 +234,19 @@ async function getYieldState() {
  * Withdraw yield position to fund a trade
  * withdrawAmount: how much USDC to pull (null = all)
  */
-async function withdrawYieldForTrade(withdrawAmount = null) {
-  const amtStr = withdrawAmount
-    ? `Withdraw $${withdrawAmount.toFixed(2)} USDC`
-    : 'Withdraw all my USDC';
+/**
+ * withdrawAmount: USD amount to withdraw
+ * withdrawPct: fraction of yield position (0–1), used if provided
+ */
+async function withdrawYieldForTrade(withdrawAmount = null, withdrawPct = null) {
+  let amtStr;
+  if (withdrawPct != null) {
+    amtStr = `Withdraw ${(withdrawPct * 100).toFixed(0)}% of my current yield position`;
+  } else if (withdrawAmount != null) {
+    amtStr = `Withdraw $${withdrawAmount.toFixed(2)} USDC`;
+  } else {
+    amtStr = 'Withdraw all my USDC';
+  }
   const job = await prompt(
     `${amtStr} from my current yield position on Base (Aave v3, Morpho, or Moonwell). ` +
     `I need the USDC liquid for a trade. Execute the withdrawal now.`

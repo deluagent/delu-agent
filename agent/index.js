@@ -1036,11 +1036,14 @@ What is your allocation decision?`;
         if (yieldState?.hasYield && yieldState.amountUSD >= 10) {
           // Decision: pull from yield if confidence >= 75 (high conviction trade)
           if (decision.confidence >= 75) {
-            const withdrawAmt = Math.min(yieldState.amountUSD, 20); // pull up to $20
-            console.log(`[yield] High conviction (${decision.confidence}%) — withdrawing $${withdrawAmt.toFixed(2)} from ${yieldState.protocol} (APY ${yieldState.apy}%) for trade`);
+            // Pull one trade's worth from yield (Kelly-sized % of yield balance, max 50%)
+            const tradeSizeUSD = Math.round(decision.size_pct / 100 * ACTIVE_TRANCHE_USD);
+            const withdrawPct  = Math.min(0.5, tradeSizeUSD / yieldState.amountUSD);
+            const withdrawAmt  = parseFloat((yieldState.amountUSD * withdrawPct).toFixed(2));
+            console.log(`[yield] High conviction (${decision.confidence}%) — withdrawing ${(withdrawPct*100).toFixed(0)}% ($${withdrawAmt.toFixed(2)}) of yield from ${yieldState.protocol} (APY ${yieldState.apy}%) for trade`);
             try {
-              await bankr.withdrawYieldForTrade(withdrawAmt);
-              console.log(`[yield] ✅ Withdrew $${withdrawAmt.toFixed(2)} — proceeding with trade`);
+              await bankr.withdrawYieldForTrade(withdrawAmt, withdrawPct);
+              console.log(`[yield] ✅ Withdrew ${(withdrawPct*100).toFixed(0)}% ($${withdrawAmt.toFixed(2)}) — proceeding with trade`);
             } catch(e) {
               console.warn(`[yield] Withdrawal failed: ${e.message} — skipping trade`);
               decision = { ...decision, action: 'hold', reasoning: `Yield withdrawal failed, no liquid USDC for trade` };
