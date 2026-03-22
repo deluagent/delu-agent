@@ -162,11 +162,12 @@ AVAILABLE SIGNALS (from data object passed to scoreToken):
   highs[]     — hourly high (approx)
   lows[]      — hourly low (approx)
   btcPrices[] — WETH prices (Base reference)
-  transferStats — smart wallet signals (from alchemy_getAssetTransfers, last 500 txs):
-    .uniqueBuyers         — distinct wallet addresses buying (high = distributed demand)
-    .transferVelocity     — total recent transfer count (high = hot token)
+  transferStats — onchain wallet signals (from alchemy_getAssetTransfers, last 500 txs):
+    .uniqueBuyers         — distinct wallet addresses buying (high = distributed demand, organic)
+    .transferVelocity     — total recent transfer count (high = active/hot token)
     .repeatBuyers         — wallets buying 3+ times (high = smart money accumulating)
-    .topBuyerConcentration — fraction of txs from single wallet (high = whale risk)
+    .topBuyerConcentration — fraction of txs from single wallet (> 0.3 = whale/bot risk)
+    .txnCount24h          — 24h trade count from Bankr (< 100 = low activity)
 
 Key insights for Base ecosystem:
 - repeatBuyers > 3 is a strong accumulation signal (smart wallets loading up)

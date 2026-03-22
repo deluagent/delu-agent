@@ -223,11 +223,17 @@ async function fetchOnchainData() {
       }
       const bars = buildBars(priceData);
 
-      // Fetch transfer stats (smart wallet signals) — non-blocking
+      // Fetch transfer stats (smart wallet + rug signals) — non-blocking
       let transferStats = null;
       try {
         transferStats = await fetchTransferStats(token.addr);
       } catch { /* optional */ }
+
+      // Enrich with Bankr liquidity/txn data if available
+      if (token.txns) {
+        transferStats = transferStats || {};
+        transferStats.txnCount24h = token.txns;
+      }
 
       // Save
       fs.writeFileSync(file, JSON.stringify({

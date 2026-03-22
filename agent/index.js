@@ -32,6 +32,7 @@ const { fetchAllFlows } = require('./flows');
 const { getBankrAttention } = require('./bankr_market');
 const { discover } = require('./discover');
 const { getTrendingEntries } = require('./trending_entry');
+const { rugCheck }           = require('./rug_check');
 
 const DRY_RUN  = process.argv.includes('--dry');
 const LOOP     = process.argv.includes('--loop');
@@ -658,6 +659,30 @@ async function runCycle() {
     console.log('\n[trending_entry] Scanning Base trending for early entries...');
     trendingEntries = await getTrendingEntries(process.env.BANKR_API_KEY);
     if (trendingEntries.length) {
+      // Run rug checks on all candidates (async, parallel)
+      const rugResults = {};
+      await Promise.all(trendingEntries.map(async t => {
+        if (!t.address) return;
+        try {
+          const r = await rugCheck(
+            { sym: t.symbol, address: t.address },
+            { liquidity: t.liquidity, txnCount24h: t.txns, marketCap: t.marketCap, poolCreatedAt: t.poolCreatedAt }
+          );
+          rugResults[t.symbol] = r;
+          t.rugScore   = r.score;
+          t.rugVerdict = r.verdict;
+          t.rugFlags   = r.flags;
+          t.rugPass    = r.pass;
+        } catch(e) {
+          console.warn(`[rug_check] ${t.symbol} failed: ${e.message?.slice(0,40)}`);
+        }
+      }));
+      // Filter out likely rugs before Venice sees them
+      const before = trendingEntries.length;
+      trendingEntries = trendingEntries.filter(t => !t.rugPass === false || t.rugScore === undefined || t.rugScore >= 40);
+      const removed = before - trendingEntries.length;
+      if (removed > 0) console.log(`[rug_check] Filtered ${removed} likely rug(s)`);
+
       for (const t of trendingEntries) {
         // Merge into checkrAttention so Venice sees them in context
         if (!checkrAttention[t.symbol]) checkrAttention[t.symbol] = { attentionDelta: 0, velocity: 0, divergence: false };
@@ -783,7 +808,7 @@ ${Object.keys(checkrAttention).length > 0
 These are Base tokens currently trending onchain. NOT in fixed universe. Execution via Bankr swap by contract address.
 ${trendingEntries.length
   ? trendingEntries.map(t =>
-      `${t.symbol} | score=${t.score.toFixed(2)} | rank=${t.rank}(${(t.priorRanks||[]).length?(t.priorRanks||[]).join('→')+'→':''}${t.rank}) | ret1h=${(t.ret1h*100).toFixed(1)}% ret6h=${(t.ret6h*100).toFixed(1)}% ret24h=${(t.priceChange24h||0).toFixed(1)}% | move=${(t.moveFrac*100).toFixed(0)}%done | liq=$${Math.round((t.liquidity||0)/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | addr=${t.address}`
+      `${t.symbol} | score=${t.score.toFixed(2)} | rank=${t.rank}(${(t.priorRanks||[]).length?(t.priorRanks||[]).join('→')+'→':''}${t.rank}) | ret1h=${(t.ret1h*100).toFixed(1)}% ret6h=${(t.ret6h*100).toFixed(1)}% ret24h=${(t.priceChange24h||0).toFixed(1)}% | move=${(t.moveFrac*100).toFixed(0)}%done | liq=$${Math.round((t.liquidity||0)/1000)}K | buyers=${t.transferStats?.uniqueBuyers||'?'} buyRatio=${t.transferStats?.buyRatio?.toFixed(2)||'?'} | rug=${t.rugVerdict||'?'}(${t.rugScore||'?'}/100)${t.rugFlags?.length?' flags='+t.rugFlags.map(f=>f.split(':')[0]).join('+'):''} | addr=${t.address}`
     ).join('\n')
   : 'No high-conviction trending entries this cycle'}
 If a trending token has score≥0.65 and move<50%done: consider BUY with $10–$15 size, set contractAddress to token address. Use Bankr to swap USDC→token.
