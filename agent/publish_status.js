@@ -134,25 +134,38 @@ async function buildStatus(regimeData, balanceStr = null) {
     }
   } catch(e) { console.warn('[publish] Balance fetch failed:', e.message?.slice(0,60)); }
 
+  // Pull latest positionAssessments from last cycle (has fresh Alchemy prices)
+  const lastAssessments = {};
+  if (lastCycle?.positionAssessments) {
+    for (const a of lastCycle.positionAssessments) {
+      if (a.sym) lastAssessments[a.sym.toUpperCase()] = a;
+    }
+  }
+
   const openPositions = positions
     .filter(p => p.status === 'open')
     .map(p => {
-      const live = liveBalanceMap[p.sym.toUpperCase()];
+      const live       = liveBalanceMap[p.sym.toUpperCase()];
+      const assessment = lastAssessments[p.sym.toUpperCase()];
       const entryUSD   = p.sizeUsd || p.sizeUSD || 0;
-      const currentUSD = live?.valueUSD || entryUSD;
-      const pnlUSD     = parseFloat((currentUSD - entryUSD).toFixed(2));
-      const pnlPct     = entryUSD > 0 ? parseFloat((pnlUSD / entryUSD * 100).toFixed(2)) : 0;
-      // Derive qty from entryPrice if not stored directly
+
+      // Price priority: Alchemy (via positionAssessment) > Bankr balance > null
+      const currentPrice = assessment?.currentPrice
+        || (live && entryUSD > 0 && p.entryPrice ? (live.valueUSD / entryUSD) * p.entryPrice : null);
+
+      // USD value priority: Bankr balance > derive from Alchemy price > entry
       const qty = p.qty || (p.entryPrice > 0 ? entryUSD / p.entryPrice : 0);
-      // Approximate current price from live value / qty
-      const currentPrice = (live && qty > 0) ? live.valueUSD / qty
-        : (live && entryUSD > 0 && p.entryPrice) ? (live.valueUSD / entryUSD) * p.entryPrice
-        : null;
+      const currentUSD = live?.valueUSD
+        || (currentPrice && qty > 0 ? currentPrice * qty : entryUSD);
+
+      const pnlUSD = parseFloat((currentUSD - entryUSD).toFixed(2));
+      const pnlPct = entryUSD > 0 ? parseFloat((pnlUSD / entryUSD * 100).toFixed(2)) : 0;
+
       return {
         sym:             p.sym,
         entryPrice:      p.entryPrice,
-        currentPrice:    currentPrice ? parseFloat(currentPrice.toFixed(6)) : null,
-        sizeUSD:         p.sizeUsd,
+        currentPrice:    currentPrice ? parseFloat(Number(currentPrice).toFixed(8)) : null,
+        sizeUSD:         entryUSD,
         currentUSD:      parseFloat(currentUSD.toFixed(2)),
         pnlUSD,
         pnlPct,
@@ -165,6 +178,12 @@ async function buildStatus(regimeData, balanceStr = null) {
         contractAddress: p.contractAddress || null,
         source:          p.source || 'universe',
         chain:           p.chain || 'base',
+        // Position intelligence from last assessment
+        volumeTrend:     assessment?.volumeTrend     || null,
+        recommendation:  assessment?.recommendation  || null,
+        quantScore:      assessment?.quantScore      != null ? parseFloat(assessment.quantScore.toFixed(4)) : null,
+        ret1h:           assessment?.ret1h           != null ? parseFloat((assessment.ret1h * 100).toFixed(2)) : null,
+        transferStats:   assessment?.transferStats   || null,
       };
     });
 

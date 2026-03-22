@@ -988,8 +988,47 @@ What is your allocation decision?`;
     regime: state,
     regime_detail: regime,
     scores: [], // no fixed universe — onchain discovery is the signal
-    trendingEntries: trendingEntries.map(t => ({ symbol: t.symbol, score: t.score, rank: t.rank, ret1h: t.ret1h, moveFrac: t.moveFrac, quantScore: t.quantScore })),
-    positionAssessments: positionAssessments.map(p => ({ sym: p.sym, pnlPct: p.pnlPct, quantScore: p.quantScore, volumeTrend: p.volumeTrend, recommendation: p.recommendation })),
+    trendingEntries: trendingEntries.map(t => {
+      const ca = checkrAttention[t.symbol] || {};
+      return {
+        symbol:           t.symbol,
+        score:            t.score,
+        rank:             t.rank,
+        source:           t.source || 'bankr',
+        ret1h:            t.ret1h,
+        moveFrac:         t.moveFrac,
+        quantScore:       t.quantScore,
+        rugVerdict:       t.rugVerdict || null,
+        rugScore:         t.rugScore   || null,
+        // Checkr signals
+        attentionDelta:   ca.attentionDelta   || 0,
+        velocity:         ca.velocity         || 0,
+        att_1h:           ca.att_1h           || 0,
+        att_4h:           ca.att_4h           || 0,
+        att_8h:           ca.att_8h           || 0,
+        att_12h:          ca.att_12h          || 0,
+        momentumWindows:  ca.momentumWindows  || 0,
+        sustainedMomentum: ca.sustainedMomentum || false,
+        rotatingFrom:     ca.rotating_from    || ca.rotatingFrom || [],
+      };
+    }),
+    positionAssessments: positionAssessments.map(p => ({
+      sym:           p.sym,
+      currentPrice:  p.currentPrice,
+      entryPrice:    p.entryPrice,
+      pnlPct:        p.pnlPct,
+      quantScore:    p.quantScore,
+      volumeTrend:   p.volumeTrend,
+      recommendation: p.recommendation,
+      ret1h:         p.ret1h,
+      ret6h:         p.ret6h,
+      transferStats: p.transferStats ? {
+        uniqueBuyers:          p.transferStats.uniqueBuyers,
+        repeatBuyers:          p.transferStats.repeatBuyers,
+        topBuyerConcentration: p.transferStats.topBuyerConcentration,
+        buyRatio:              p.transferStats.buyRatio,
+      } : null,
+    })),
     screen,
     decision,
     dry_run: DRY_RUN
