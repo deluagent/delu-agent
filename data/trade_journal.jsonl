@@ -13,3 +13,4 @@
 {"type":"open","sym":"MOLTEN","entryPrice":5.66,"sizeUsd":10,"openedAt":"2026-03-22T08:16:00.032Z","signals":null,"regime":"BEAR","confidence":70,"ts":"2026-03-22T08:16:00.032Z"}
 {"type":"open","sym":"DRB","entryPrice":0.00007041,"sizeUsd":10,"openedAt":"2026-03-22T08:46:54.112Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T08:46:54.112Z"}
 {"type":"open","sym":"JUNO","entryPrice":0.0249,"sizeUsd":10,"openedAt":"2026-03-22T14:18:26.927Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T14:18:26.928Z"}
+{"type":"open","sym":"JUNO","entryPrice":0.02528,"sizeUsd":10,"openedAt":"2026-03-22T15:14:12.558Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T15:14:12.558Z"}

@@ -159,14 +159,18 @@
     "peakPct": 0,
     "openedAt": "2026-03-21T20:15:17.265Z",
     "timeStopAt": "2026-03-24T20:15:17.265Z",
-    "status": "open",
+    "status": "closed",
     "regime": "RANGE_TIGHT",
     "confidence": 70,
     "contractAddress": "0xc0634090f2fe6c6d75e61be2b949464abb498973",
     "kellyFraction": 22,
     "atrStop": 0.164221,
     "atrValue": 0.00133725,
-    "lastChecked": "2026-03-22T14:17:15.064Z"
+    "lastChecked": "2026-03-22T14:34:55.810Z",
+    "closeReason": "atr_stop",
+    "closedAt": "2026-03-22T14:35:27.647Z",
+    "closePrice": 0.1619241295,
+    "pnlPct": -4.36
   },
   {
     "sym": "BNKR",
@@ -179,14 +183,18 @@
     "peakPct": 0,
     "openedAt": "2026-03-22T02:16:27.722Z",
     "timeStopAt": "2026-03-25T02:16:27.722Z",
-    "status": "open",
+    "status": "closed",
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0x22af33fe49fd1fa80c7149773dde5890d3c76f3b",
     "kellyFraction": 22,
     "atrStop": 0.00039867,
     "atrValue": 0.00000491,
-    "lastChecked": "2026-03-22T14:17:16.081Z"
+    "lastChecked": "2026-03-22T14:35:28.617Z",
+    "closeReason": "atr_stop",
+    "closedAt": "2026-03-22T14:36:06.033Z",
+    "closePrice": 0.000388529,
+    "pnlPct": -5.47
   },
   {
     "sym": "MOLT",
@@ -199,14 +207,18 @@
     "peakPct": 12.0221,
     "openedAt": "2026-03-22T02:47:16.740Z",
     "timeStopAt": "2026-03-25T02:47:16.740Z",
-    "status": "open",
+    "status": "closed",
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0xb695559b26bb2c9703ef1935c37aeae9526bab07",
     "kellyFraction": 22,
     "atrStop": 0.00002774,
     "atrValue": 0.00000105,
-    "lastChecked": "2026-03-22T14:17:17.072Z"
+    "lastChecked": "2026-03-22T14:36:07.027Z",
+    "closeReason": "atr_stop",
+    "closedAt": "2026-03-22T14:36:44.304Z",
+    "closePrice": 0.0000257526,
+    "pnlPct": -5.04
   },
   {
     "sym": "BLUEAGENT",
@@ -219,14 +231,18 @@
     "peakPct": 0.6379,
     "openedAt": "2026-03-22T05:46:30.619Z",
     "timeStopAt": "2026-03-25T05:46:30.619Z",
-    "status": "open",
+    "status": "closed",
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0xf895783b2931c919955e18b5e3343e7c7c456ba3",
     "kellyFraction": 22,
     "atrStop": 0.00000113,
     "atrValue": 5e-8,
-    "lastChecked": "2026-03-22T14:17:18.134Z"
+    "lastChecked": "2026-03-22T14:36:45.287Z",
+    "closeReason": "atr_stop",
+    "closedAt": "2026-03-22T14:37:22.529Z",
+    "closePrice": 9.088e-7,
+    "pnlPct": -21.66
   },
   {
     "sym": "CLAWNCH",
@@ -245,8 +261,8 @@
     "contractAddress": "0xa1f72459dfa10bad200ac160ecd78c6b77a747be",
     "kellyFraction": 22,
     "atrStop": 0.00003628,
-    "atrValue": 3.2e-7,
-    "lastChecked": "2026-03-22T14:17:19.153Z"
+    "atrValue": 2.6e-7,
+    "lastChecked": "2026-03-22T15:13:19.752Z"
   },
   {
     "sym": "MOLTEN",
@@ -255,7 +271,7 @@
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPct": 0,
+    "peakPct": 1.1847,
     "openedAt": "2026-03-22T08:16:00.032Z",
     "timeStopAt": "2026-03-25T08:16:00.032Z",
     "status": "open",
@@ -263,10 +279,10 @@
     "confidence": 70,
     "contractAddress": "0x59c0d5c34c301ac0600147924d6c9be22a2f0b07",
     "kellyFraction": 22,
-    "atrStop": null,
-    "atrValue": null,
-    "lastChecked": "2026-03-22T14:17:20.162Z",
-    "peakPrice": 0.0000085
+    "atrStop": 0.00000827,
+    "atrValue": 1.3e-7,
+    "lastChecked": "2026-03-22T15:13:20.888Z",
+    "peakPrice": 0.0000086007
   },
   {
     "sym": "DRB",
@@ -285,24 +301,24 @@
     "contractAddress": "0x3ec2156d4c0a9cbdab4a016633b7bcf6a8d68ea2",
     "kellyFraction": 22,
     "atrStop": 0.0000683,
-    "atrValue": 6.8e-7,
-    "lastChecked": "2026-03-22T14:17:21.121Z"
+    "atrValue": 6.7e-7,
+    "lastChecked": "2026-03-22T15:13:21.882Z"
   },
   {
     "sym": "JUNO",
-    "entryPrice": 0.0249,
+    "entryPrice": 0.02528,
     "sizeUsd": 10,
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPrice": 0.0249,
+    "peakPrice": 0.02528,
     "peakPct": 0,
-    "openedAt": "2026-03-22T14:18:26.927Z",
-    "timeStopAt": "2026-03-25T14:18:26.927Z",
+    "openedAt": "2026-03-22T15:14:12.558Z",
+    "timeStopAt": "2026-03-25T15:14:12.558Z",
     "status": "open",
     "regime": "BEAR",
     "confidence": 80,
-    "contractAddress": "0x...JUNO contract address",
+    "contractAddress": "0x...",
     "kellyFraction": 22
   }
 ]

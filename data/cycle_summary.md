@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-22 15:13 UTC — BUY JUNO (80% conf)
+**Regime:** BEAR | BTC $68886 | -3.8% from 200d MA
+**Venice:** "JUNO has a high score of 1.00 and a low move percentage, indicating a strong trend and potential for further growth. The token's velocity spike and rotation metrics also support a buy decision."
+**Discovered:** MOLTEN(score=0.91 ret1h=0.0%) · BNKR(score=0.27 ret1h=0.0%) · REPPO(score=0.32 ret1h=0.0%) · DRB(score=0.25 ret1h=0.0%)
+**Positions:** CLAWNCH +0.0%, MOLTEN +1.2%, DRB +0.0%, JUNO +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-22 14:17 UTC — BUY JUNO (80% conf)
 **Regime:** BEAR | BTC $68749 | -4.0% from 200d MA
 **Venice:** "JUNO has a high onchain trend score of 1.00 and a velocity spike, indicating strong momentum and potential for further growth. The move is 0% done, suggesting this is an early entry point."
