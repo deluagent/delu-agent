@@ -194,4 +194,56 @@ async function smartYieldRebalance() {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-module.exports = { prompt, waitForJob, execute, getPrice, getYieldPools, getBalances, smartYieldRebalance };
+/**
+ * Get current yield position state
+ * Returns { hasYield, protocol, amountUSD, apy } or null
+ */
+async function getYieldState() {
+  try {
+    const job = await prompt(
+      'What are my current stablecoin yield positions on Base? ' +
+      'Reply with: protocol name, amount in USD, current APY. If none, say "no yield positions".'
+    );
+    const result = await waitForJob(job.jobId);
+    const r = result.response.toLowerCase();
+
+    if (/no yield|no active|no stablecoin|none/i.test(r)) {
+      return { hasYield: false, protocol: null, amountUSD: 0, apy: 0 };
+    }
+
+    // Parse amount
+    const amtMatch = r.match(/\$?([\d,]+\.?\d*)\s*(?:usdc|usd)/);
+    const amountUSD = amtMatch ? parseFloat(amtMatch[1].replace(/,/g,'')) : 0;
+
+    // Parse APY
+    const apyMatch = r.match(/([\d.]+)\s*%\s*(?:apy|apr)/);
+    const apy = apyMatch ? parseFloat(apyMatch[1]) : 0;
+
+    // Parse protocol
+    const protocol = /aave/i.test(r) ? 'Aave v3'
+      : /morpho/i.test(r) ? 'Morpho'
+      : /moonwell/i.test(r) ? 'Moonwell'
+      : /steak/i.test(r) ? 'Beefy steakUSDC'
+      : 'unknown';
+
+    return { hasYield: amountUSD > 0, protocol, amountUSD, apy, raw: result.response };
+  } catch { return null; }
+}
+
+/**
+ * Withdraw yield position to fund a trade
+ * withdrawAmount: how much USDC to pull (null = all)
+ */
+async function withdrawYieldForTrade(withdrawAmount = null) {
+  const amtStr = withdrawAmount
+    ? `Withdraw $${withdrawAmount.toFixed(2)} USDC`
+    : 'Withdraw all my USDC';
+  const job = await prompt(
+    `${amtStr} from my current yield position on Base (Aave v3, Morpho, or Moonwell). ` +
+    `I need the USDC liquid for a trade. Execute the withdrawal now.`
+  );
+  const result = await waitForJob(job.jobId);
+  return result.response;
+}
+
+module.exports = { prompt, waitForJob, execute, getPrice, getYieldPools, getBalances, smartYieldRebalance, getYieldState, withdrawYieldForTrade };

@@ -1014,6 +1014,48 @@ What is your allocation decision?`;
   } else if (DRY_RUN) {
     console.log(`\n[delu] DRY RUN — would: ${decision.action} ${decision.asset} (${decision.size_pct}% = $${Math.round(decision.size_pct/100*ACTIVE_TRANCHE_USD)})`);
   } else {
+    // ── Pre-trade yield check ─────────────────────────────────
+    // If we have a strong buy signal but not enough liquid USDC,
+    // check yield position and decide whether to pull funds
+    if (decision.action === 'buy' || decision.action === 'long') {
+      const liveBal = await bankr.getBalances().catch(() => null);
+      const liveLiquid = (() => {
+        if (!liveBal) return 0;
+        for (const line of liveBal.split('\n')) {
+          const t = line.trim().replace(/^[•·\-]\s*/,'');
+          if (/usd.?coin|usdc/i.test(t)) { const m = t.match(/\$\(?([0-9]+\.?[0-9]*)\)?/); if (m) return parseFloat(m[1]); }
+        }
+        return 0;
+      })();
+
+      if (liveLiquid < 10) {
+        // Not enough for minimum $10 trade — check yield
+        console.log(`\n[yield] Only $${liveLiquid.toFixed(2)} liquid USDC — checking yield position...`);
+        const yieldState = await bankr.getYieldState().catch(() => null);
+
+        if (yieldState?.hasYield && yieldState.amountUSD >= 10) {
+          // Decision: pull from yield if confidence >= 75 (high conviction trade)
+          if (decision.confidence >= 75) {
+            const withdrawAmt = Math.min(yieldState.amountUSD, 20); // pull up to $20
+            console.log(`[yield] High conviction (${decision.confidence}%) — withdrawing $${withdrawAmt.toFixed(2)} from ${yieldState.protocol} (APY ${yieldState.apy}%) for trade`);
+            try {
+              await bankr.withdrawYieldForTrade(withdrawAmt);
+              console.log(`[yield] ✅ Withdrew $${withdrawAmt.toFixed(2)} — proceeding with trade`);
+            } catch(e) {
+              console.warn(`[yield] Withdrawal failed: ${e.message} — skipping trade`);
+              decision = { ...decision, action: 'hold', reasoning: `Yield withdrawal failed, no liquid USDC for trade` };
+            }
+          } else {
+            console.log(`[yield] Confidence ${decision.confidence}% < 75% — not worth pulling from yield (${yieldState.protocol} ${yieldState.apy}% APY). Holding.`);
+            decision = { ...decision, action: 'hold', reasoning: `Insufficient liquid USDC ($${liveLiquid.toFixed(2)}) and confidence (${decision.confidence}%) too low to pull from yield` };
+          }
+        } else {
+          console.log(`[yield] No yield position or insufficient yield balance — skipping trade`);
+          decision = { ...decision, action: 'hold', reasoning: `Insufficient liquid USDC ($${liveLiquid.toFixed(2)}) and no yield to pull from` };
+        }
+      }
+    }
+
     console.log('\n[bankr] Executing...');
     try {
       // Kelly position sizing — calibrate from live trade history
@@ -1210,6 +1252,29 @@ What is your allocation decision?`;
       console.log(`\n[stats] ${stats.totalTrades} closed trades | WR=${stats.wins}/${stats.totalTrades} | avgPnL=${stats.avgPnl.toFixed(2)}%`);
     }
   } catch(e) {}
+
+  // ── End-of-cycle yield rebalance check ───────────────────────
+  // Every cycle: check if current yield protocol is still best
+  // (this runs regardless of trade/skip — always optimise idle capital)
+  if (!DRY_RUN) {
+    try {
+      const liveBal2 = await bankr.getBalances().catch(() => null);
+      const liveLiquid2 = (() => {
+        if (!liveBal2) return 0;
+        for (const line of liveBal2.split('\n')) {
+          const t = line.trim().replace(/^[•·\-]\s*/,'');
+          if (/usd.?coin|usdc/i.test(t)) { const m = t.match(/\$\(?([0-9]+\.?[0-9]*)\)?/); if (m) return parseFloat(m[1]); }
+        }
+        return 0;
+      })();
+      const surplus = liveLiquid2 - ACTIVE_TRANCHE_USD;
+      if (surplus >= 5) {
+        console.log(`\n[yield] $${surplus.toFixed(2)} USDC surplus — running yield rebalance check...`);
+        const yResult = await bankr.smartYieldRebalance();
+        console.log(`[yield] ${yResult.slice(0, 120)}`);
+      }
+    } catch(e) { console.warn(`[yield] Rebalance check failed: ${e.message?.slice(0,50)}`); }
+  }
 
   // Publish live status to delu-site repo (Vercel reads this)
   try {
