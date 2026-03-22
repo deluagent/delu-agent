@@ -31,6 +31,7 @@ const { dynamicTrailStop } = require('./stops');
 const { fetchAllFlows } = require('./flows');
 const { getBankrAttention } = require('./bankr_market');
 const { discover } = require('./discover');
+const { discoverAlchemy } = require('./discover_alchemy');
 const { getTrendingEntries } = require('./trending_entry');
 const { rugCheck }           = require('./rug_check');
 
@@ -732,17 +733,28 @@ async function runCycle() {
       .map(([sym, d]) => ({ symbol: sym, velocity: d.velocity }));
     // Pass empty fixed list — discover() will use Checkr spikes + Bankr trending as the universe
     discoveredTokens = await discover([], checkrSpikeList);
+
+    // ── Alchemy-native discovery: scan raw Base ERC20 transfer activity ─────
+    console.log('\n[discover] Alchemy onchain scan...');
+    const knownSyms = [...Object.keys(checkrAttention), ...discoveredTokens.map(d => d.symbol)];
+    const alchemyFound = await discoverAlchemy(knownSyms);
+    for (const a of alchemyFound) {
+      if (!discoveredTokens.find(d => d.symbol === a.symbol)) {
+        discoveredTokens.push(a);
+      }
+    }
+
     if (discoveredTokens.length) {
       console.log(`[discover] ${discoveredTokens.length} discovery candidate(s) passed vetting:`);
       for (const d of discoveredTokens) {
-        console.log(`  🔍 ${d.symbol} (${d.source}) score=${d.score.toFixed(3)} liq=$${Math.round(d.liq/1000)}K age=${d.ageDays.toFixed(1)}d`);
+        console.log(`  🔍 ${d.symbol} (${d.source}) score=${d.score.toFixed(3)} liq=$${Math.round((d.liq||0)/1000)}K age=${d.ageDays?.toFixed(1) || '?'}d`);
         // Merge into checkrAttention so Venice sees it in context
         if (!checkrAttention[d.symbol]) checkrAttention[d.symbol] = { attentionDelta: 0, velocity: 0, divergence: false };
         checkrAttention[d.symbol].discovered     = true;
         checkrAttention[d.symbol].discoveryScore = d.score;
         checkrAttention[d.symbol].discoveryLiq   = d.liq;
         checkrAttention[d.symbol].discoverySource = d.source;
-        checkrAttention[d.symbol].attentionDelta += d.score * 2; // strong boost for vetted discoveries
+        checkrAttention[d.symbol].attentionDelta += d.score * 2;
         checkrAttention[d.symbol].velocity        = Math.max(checkrAttention[d.symbol].velocity, d.score * 5);
       }
     } else {
