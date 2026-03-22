@@ -348,11 +348,16 @@ BTC ${(regime.pctFrom200 * 100).toFixed(1)}% from 200d MA | breadth: ${regime.br
 Onchain candidates (quant score + Checkr social attention + Alchemy 1h return):
 ${scoreLines}
 
-Are any tokens worth deeper analysis for a trade entry right now?
+IMPORTANT: BEAR regime is CONTEXT, not a veto. Do NOT skip just because regime is BEAR.
+Skip only if: no tokens have meaningful signals (quant > 0.3, velocity > 3, or sustained momentum).
+BEAR regime means: prefer tokens showing genuine strength AGAINST the trend (high velocity, sustained attention, positive 1h return).
+Sector rotation, social spikes, and onchain momentum can all fire in BEAR — that IS the opportunity.
+
+Are any tokens worth passing to Venice for deeper reasoning?
 Reply with JSON only — no markdown, no explanation outside the JSON:
 {"skip": false, "interesting": ["TOKEN1"], "reason": "one sentence"}
 or
-{"skip": true, "interesting": [], "reason": "one sentence"}`;
+{"skip": true, "interesting": [], "reason": "one sentence — must explain why ALL signals are weak, not just cite regime"}`;
 
   // Try Bankr LLM first, fall back to Anthropic Haiku on credits exhausted
   const tryLLM = async (apiUrl, headers, modelName) => {
