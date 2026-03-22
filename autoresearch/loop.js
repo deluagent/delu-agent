@@ -103,13 +103,37 @@ async function callLLM(messages) {
     req.write(body); req.end();
   });
   console.log(`   [bankr-llm] ${((Date.now()-_t0)/1000).toFixed(1)}s | tokens=${data.usage?.completion_tokens}`);
-  if (data.error) throw new Error(`Bankr LLM error: ${JSON.stringify(data.error).slice(0,100)}`);
+  if (data.error) {
+    const msg = JSON.stringify(data.error);
+    if (msg.includes('Insufficient') || msg.includes('credits') || msg.includes('402') || msg.includes('rate_limit') || msg.includes('Too many')) {
+      console.log('   [bankr-llm] Credits exhausted — Anthropic fallback');
+      return callAnthropic(messages);
+    }
+    throw new Error(`Bankr LLM error: ${msg.slice(0,100)}`);
+  }
 
   track.totalCalls++;
   track.estimatedSpend += COST_PER_CALL_EST;
   saveCostTrack(track);
 
   return data.choices?.[0]?.message?.content || '';
+}
+
+async function callAnthropic(messages) {
+  const key = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
+  if (!key) throw new Error('No ANTHROPIC_API_KEY');
+  const body = JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 4000, messages });
+  const data = await new Promise((resolve, reject) => {
+    const req = require('https').request({
+      hostname: 'api.anthropic.com', port: 443, method: 'POST',
+      path: '/v1/messages',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'Content-Length': Buffer.byteLength(body) },
+    }, res => { let r=''; res.on('data',d=>r+=d); res.on('end',()=>{ try{resolve(JSON.parse(r))}catch(e){reject(new Error(r.slice(0,100)))} }); });
+    req.on('error', reject);
+    req.write(body); req.end();
+  });
+  if (data.error) throw new Error(`Anthropic error: ${JSON.stringify(data.error).slice(0,80)}`);
+  return data.content?.[0]?.text || '';
 }
 
 // ── Run evaluator ────────────────────────────────────────────

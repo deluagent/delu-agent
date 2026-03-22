@@ -185,7 +185,9 @@ ${scoreSection}
 ## Task
 Return ONLY the new scoreToken function + module.exports.
 ONE small change targeting the biggest weakness shown in recent experiments.
-Start with: function scoreToken(data) {
+
+First line MUST be: DESCRIPTION: <one sentence describing your change>
+Then: function scoreToken(data) {
 End with: }
 
 module.exports = { scoreToken };
@@ -238,11 +240,15 @@ async function main() {
 
     console.log(`\n🧪 [exp ${expN}] Best: val=${state.bestValSharpe.toFixed(3)} combined=${(state.bestScore||0).toFixed(3)}`);
 
-    let newCode;
+    let newCode, description = `exp ${expN}`;
     try { newCode = await proposeChange(state, experiments); }
     catch(e) { console.error('   [llm] Error:', e.message); await new Promise(r=>setTimeout(r,15000)); continue; }
 
     if (!newCode) { await new Promise(r=>setTimeout(r,INTERVAL_S*1000)); continue; }
+
+    // Extract DESCRIPTION line
+    const descMatch = newCode.match(/^DESCRIPTION:\s*(.+)/m);
+    if (descMatch) { description = descMatch[1].trim().slice(0,100); newCode = newCode.replace(/^DESCRIPTION:.*\n?/m,'').trim(); }
 
     const prevCode = fs.readFileSync(CANDIDATE, 'utf8');
     fs.writeFileSync(CANDIDATE, newCode);
@@ -277,7 +283,7 @@ async function main() {
     }
 
     const exps = loadExps();
-    exps.push({ n: expN, ts: new Date().toISOString(), valSharpe, audSharpe, isSharpe, score, accepted });
+    exps.push({ n: expN, ts: new Date().toISOString(), valSharpe, audSharpe, isSharpe, score, accepted, description });
     saveExps(exps);
 
     state.expCount = expN;
