@@ -117,20 +117,24 @@ async function buildStatus(regimeData, balanceStr = null) {
       const NAME_MAP = {
         'USD COIN': 'USDC', 'ETHEREUM': 'ETH', 'SOLANA': 'SOL',
         'COINBASE WRAPPED BTC': 'CBBTC', 'BITCOIN': 'BTC',
-        'THE FORGE': 'FORGE', 'MINIDEV': 'MINI',
+        'THE FORGE': 'FORGE', 'MINIDEV': 'MINI', 'BLUE AGENT': 'BLUEAGENT',
       };
       for (const line of rawBalanceStr.split('\n')) {
-        if (!line.trim()) continue;
-        // Match: "name_or_sym - qty [OPTIONAL_SYM] $val"
-        const m = line.match(/^(.+?)\s*[-–]\s*([\d.]+)\s*(?:([A-Za-z]+)\s*)?\$([\d.]+)/);
+        const trimmed = line.trim().replace(/^[•·\-]\s*/, ''); // strip bullet
+        if (!trimmed) continue;
+
+        // Format 1: "ETH - 0.0250 ETH ($51.79)"  (new format with parens)
+        // Format 2: "ETH - 0.025 ETH $51.79"      (old format no parens)
+        // Format 3: "USD Coin - 34.94 USDC $34.94" (name + inline sym)
+        // Also handles commas in qty: "8,875,129.0462"
+        const m = trimmed.match(/^(.+?)\s*[-–]\s*([\d,]+\.?\d*)\s*(?:([A-Za-z][A-Za-z0-9]*)\s*)?\(?\$([0-9.]+)\)?/);
         if (!m) continue;
-        const namePart = m[1].trim().toUpperCase();
-        const qty      = parseFloat(m[2]);
-        const inlineSym = m[3]?.toUpperCase(); // e.g. "USDC" from "USD Coin - 34.94 USDC $34.94"
-        const val      = parseFloat(m[4]);
-        // Resolve symbol: inline sym > name map > treat name itself as symbol
+        const namePart  = m[1].trim().toUpperCase();
+        const qty       = parseFloat(m[2].replace(/,/g, ''));
+        const inlineSym = m[3]?.toUpperCase();
+        const val       = parseFloat(m[4]);
         const sym = inlineSym || NAME_MAP[namePart] || namePart.replace(/\s+/g, '');
-        if (sym && qty >= 0) liveBalanceMap[sym] = { qty, valueUSD: val };
+        if (sym && qty >= 0 && val >= 0) liveBalanceMap[sym] = { qty, valueUSD: val };
       }
     }
   } catch(e) { console.warn('[publish] Balance fetch failed:', e.message?.slice(0,60)); }
