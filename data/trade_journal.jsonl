@@ -21,3 +21,8 @@
 {"type":"open","sym":"VVV","entryPrice":0.00010536,"sizeUsd":10,"openedAt":"2026-03-22T20:37:26.831Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T20:37:26.831Z"}
 {"type":"open","sym":"ROBOTMONEY","entryPrice":0.0000133,"sizeUsd":10,"openedAt":"2026-03-22T21:08:16.164Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T21:08:16.165Z"}
 {"type":"open","sym":"ROBOTMONEY","entryPrice":0.00001312,"sizeUsd":10,"openedAt":"2026-03-22T21:15:16.453Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-22T21:15:16.454Z"}
+{"type":"close","sym":"DRB","entryPrice":0.00007041,"closePrice":null,"pnlPct":null,"reason":"zero_balance","openedAt":"2026-03-22T08:46:54.112Z","closedAt":"2026-03-22T21:30:09.339Z","sizeUsd":10,"ts":"2026-03-22T21:30:09.544Z"}
+{"type":"close","sym":"JUNO","entryPrice":0.02528,"closePrice":null,"pnlPct":null,"reason":"zero_balance","openedAt":"2026-03-22T15:14:12.558Z","closedAt":"2026-03-22T21:30:09.385Z","sizeUsd":10,"ts":"2026-03-22T21:30:09.544Z"}
+{"type":"close","sym":"MOLTEN","entryPrice":5.66,"closePrice":null,"pnlPct":null,"reason":"zero_balance","openedAt":"2026-03-22T20:07:17.943Z","closedAt":"2026-03-22T21:30:09.434Z","sizeUsd":10,"ts":"2026-03-22T21:30:09.544Z"}
+{"type":"close","sym":"VVV","entryPrice":0.00010536,"closePrice":null,"pnlPct":null,"reason":"zero_balance","openedAt":"2026-03-22T20:37:26.831Z","closedAt":"2026-03-22T21:30:09.460Z","sizeUsd":10,"ts":"2026-03-22T21:30:09.545Z"}
+{"type":"close","sym":"ROBOTMONEY","entryPrice":0.00001312,"closePrice":null,"pnlPct":null,"reason":"zero_balance","openedAt":"2026-03-22T21:15:16.453Z","closedAt":"2026-03-22T21:30:09.544Z","sizeUsd":10,"ts":"2026-03-22T21:30:09.545Z"}
