@@ -851,7 +851,14 @@ async function runCycle() {
     // Smart yield rebalance only if surplus above 25% reserve exists
     if (!DRY_RUN) {
       const balances = await bankr.getBalances().catch(() => null);
-      const usdcLiquid = balances?.usdc || 0;
+      const usdcLiquid = (() => {
+        if (!balances) return 0;
+        for (const line of balances.split('\n')) {
+          const t = line.trim().replace(/^[•·\-]\s*/,'');
+          if (/usd.?coin|usdc/i.test(t)) { const m = t.match(/\$\(?([0-9]+\.?[0-9]*)\)?/); if (m) return parseFloat(m[1]); }
+        }
+        return 0;
+      })();
       const reserve = ACTIVE_TRANCHE_USD * 0.25;
       if (usdcLiquid > reserve) {
         console.log(`\n[bankr] $${usdcLiquid.toFixed(2)} USDC idle (reserve=$${reserve.toFixed(2)}) — checking Smart Yield...`);
@@ -988,7 +995,14 @@ What is your allocation decision?`;
   const RESERVE_USD = ACTIVE_TRANCHE_USD * 0.25;
   if (decision.action === 'yield') {
     const balances = await bankr.getBalances().catch(() => null);
-    const usdcLiquid = balances?.usdc || 0;
+    const usdcLiquid = (() => {
+      if (!balances) return 0;
+      for (const line of balances.split('\n')) {
+        const t = line.trim().replace(/^[•·\-]\s*/,'');
+        if (/usd.?coin|usdc/i.test(t)) { const m = t.match(/\$\(?([0-9]+\.?[0-9]*)\)?/); if (m) return parseFloat(m[1]); }
+      }
+      return 0;
+    })();
     if (usdcLiquid <= RESERVE_USD) {
       console.log(`\n[delu] YIELD skipped — only $${usdcLiquid.toFixed(2)} liquid USDC (reserve=$${RESERVE_USD.toFixed(2)} = 25% of $${ACTIVE_TRANCHE_USD} tranche)`);
       decision = { ...decision, action: 'hold', reasoning: `Liquid USDC ($${usdcLiquid.toFixed(2)}) at or below 25% reserve — keeping capital available for trades` };
