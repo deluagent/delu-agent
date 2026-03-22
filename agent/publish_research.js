@@ -70,9 +70,10 @@ async function publishResearch() {
 
   const summary = {
     generatedAt: new Date().toISOString(),
-    daily:  buildLoopSummary(path.join(AR, 'experiments.json'),         path.join(AR, 'state.json'),         'Daily (1d bars)'),
-    hourly: buildLoopSummary(path.join(AR, 'experiments_hourly.json'),  path.join(AR, 'state_hourly.json'),  'Hourly (1h bars)'),
-    fivem:  buildLoopSummary(path.join(AR, 'experiments_5m.json'),      path.join(AR, 'state_5m.json'),      '5-Minute (5m bars)'),
+    daily:   buildLoopSummary(path.join(AR, 'experiments.json'),         path.join(AR, 'state.json'),         'Daily (1d bars)'),
+    hourly:  buildLoopSummary(path.join(AR, 'experiments_hourly.json'),  path.join(AR, 'state_hourly.json'),  'Hourly (1h bars)'),
+    onchain: buildLoopSummary(path.join(AR, 'experiments_onchain.json'), path.join(AR, 'state_onchain.json'), 'Onchain (Base tokens)'),
+    fivem:   buildLoopSummary(path.join(AR, 'experiments_5m.json'),      path.join(AR, 'state_5m.json'),      '5-Minute (5m bars)'),
   };
 
   fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });

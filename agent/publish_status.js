@@ -75,6 +75,7 @@ async function buildStatus(regimeData, balanceStr = null) {
               ? `${entries[0].symbol} score=${entries[0].score?.toFixed(2)} ret1h=${((entries[0].ret1h||0)*100).toFixed(1)}%`
               : null,
             layers:           c.decision?.layers_used || [],
+            screenLayer:      c.screen?.layer || null,
           };
         } catch { return null; }
       }).filter(Boolean);
