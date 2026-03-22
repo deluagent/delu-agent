@@ -84,16 +84,27 @@ async function rugCheck(token, bankrData = null) {
   const details = { sym, addr };
   let score = 100; // start at 100, deduct for red flags
 
+  // ── 0. Age check first (needed for liquidity threshold) ───
+  if (bankrData?.poolCreatedAt || token.poolCreatedAt) {
+    const created  = new Date(bankrData?.poolCreatedAt || token.poolCreatedAt);
+    const ageHours = (Date.now() - created.getTime()) / 3600000;
+    details.ageHours = parseFloat(ageHours.toFixed(1));
+  }
+
   // ── 1. Liquidity check (from Bankr data) ──────────────────
   const liquidity = bankrData?.liquidity || token.liquidity || 0;
   const txns24h   = bankrData?.txnCount24h || token.txns24h || 0;
   details.liquidity = liquidity;
   details.txns24h   = txns24h;
 
-  if (liquidity < MIN_LIQUIDITY_USD) {
-    const pct = liquidity / MIN_LIQUIDITY_USD;
+  // Liquidity gate: strict $200k only for tokens < 24h old
+  // Older tokens: softer floor of $50k (established market exists)
+  const isNew = details.ageHours !== undefined ? details.ageHours < 24 : false;
+  const liqFloor = isNew ? MIN_LIQUIDITY_USD : 50_000;
+  if (liquidity < liqFloor) {
+    const pct = liquidity / liqFloor;
     score -= Math.round((1 - pct) * 40); // up to -40 points
-    flags.push(`LOW_LIQ: $${Math.round(liquidity/1000)}k < $${MIN_LIQUIDITY_USD/1000}k min`);
+    flags.push(`LOW_LIQ: $${Math.round(liquidity/1000)}k < $${Math.round(liqFloor/1000)}k min${isNew ? ' (new token)' : ''}`);
   }
 
   if (txns24h < MIN_TRADES_24H) {
@@ -161,11 +172,9 @@ async function rugCheck(token, bankrData = null) {
     }
   }
 
-  // ── 5. Token age check ────────────────────────────────────
-  if (bankrData?.poolCreatedAt || token.poolCreatedAt) {
-    const created = new Date(bankrData?.poolCreatedAt || token.poolCreatedAt);
-    const ageHours = (Date.now() - created.getTime()) / 3600000;
-    details.ageHours = parseFloat(ageHours.toFixed(1));
+  // ── 5. Token age penalties ────────────────────────────────
+  if (details.ageHours !== undefined) {
+    const ageHours = details.ageHours;
     if (ageHours < MIN_POOL_AGE_HOURS) {
       score -= 30;
       flags.push(`TOO_NEW: pool only ${ageHours.toFixed(1)}h old (min ${MIN_POOL_AGE_HOURS}h)`);

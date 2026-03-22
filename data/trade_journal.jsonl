@@ -3,3 +3,6 @@
 {"type":"close","sym":"cbBTC","entryPrice":69698,"closePrice":null,"pnlPct":null,"reason":"bankr_stop","openedAt":"2026-03-20T18:30:00.000Z","closedAt":"2026-03-21T19:10:50.126Z","sizeUsd":7.2,"ts":"2026-03-21T19:10:50.127Z"}
 {"type":"close","sym":"SOL","entryPrice":88.38,"closePrice":null,"pnlPct":null,"reason":"bankr_stop","openedAt":"2026-03-20T18:30:00.000Z","closedAt":"2026-03-21T19:44:44.059Z","sizeUsd":14.2,"ts":"2026-03-21T19:44:44.060Z"}
 {"type":"open","sym":"KTA","entryPrice":0.1693,"sizeUsd":10,"openedAt":"2026-03-21T20:15:17.265Z","signals":null,"regime":"RANGE_TIGHT","confidence":70,"ts":"2026-03-21T20:15:17.265Z"}
+{"type":"close","sym":"ETH","entryPrice":2124,"closePrice":null,"pnlPct":null,"reason":"bankr_stop","openedAt":"2026-03-20T18:30:00.000Z","closedAt":"2026-03-22T00:19:19.518Z","sizeUsd":21.6,"ts":"2026-03-22T00:19:19.519Z"}
+{"type":"close","sym":"cbBTC","entryPrice":69698,"closePrice":null,"pnlPct":null,"reason":"bankr_stop","openedAt":"2026-03-20T18:30:00.000Z","closedAt":"2026-03-22T00:19:19.518Z","sizeUsd":7.2,"ts":"2026-03-22T00:19:19.519Z"}
+{"type":"close","sym":"SOL","entryPrice":88.38,"closePrice":null,"pnlPct":null,"reason":"bankr_stop","openedAt":"2026-03-20T18:30:00.000Z","closedAt":"2026-03-22T00:19:19.518Z","sizeUsd":14.2,"ts":"2026-03-22T00:19:19.519Z"}
