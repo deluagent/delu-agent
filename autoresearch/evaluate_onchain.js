@@ -38,8 +38,13 @@ function loadData() {
     if (!file.endsWith('_alchemy_1h.json')) continue;
     try {
       const d = JSON.parse(fs.readFileSync(path.join(HISTORY_DIR, file), 'utf8'));
-      if (d.bars?.length >= 200 && d.sym !== 'USDC') {
-        tokens.push({ sym: d.sym, addr: d.addr, bars: d.bars });
+      if (d.bars?.length >= 100 && !['USDC','USDT','DAI'].includes(d.sym)) {
+        tokens.push({
+          sym:           d.sym,
+          addr:          d.addr,
+          bars:          d.bars,
+          transferStats: d.transferStats || null, // smart wallet signals
+        });
       }
     } catch { /* skip */ }
   }
@@ -52,14 +57,16 @@ function evalPeriod(allData, start, end) {
   // Get WETH as "BTC proxy" for relative strength signals
   const wethData = allData.find(d => d.sym === 'WETH');
 
+  // Load scoreToken once per period (not inside inner loop)
+  delete require.cache[require.resolve(CANDIDATE)];
+  const { scoreToken } = require(CANDIDATE);
+
   const rets = [];
   for (let bar = start + MIN_BARS_WARMUP; bar < end - REBAL; bar += REBAL) {
-    const scores = allData.map(({ sym, bars }) => {
+    const scores = allData.map(({ sym, bars, transferStats }) => {
       const slice = bars.slice(0, bar);
       if (slice.length < MIN_BARS_WARMUP) return { sym, score: 0 };
       try {
-        delete require.cache[require.resolve(CANDIDATE)];
-        const { scoreToken } = require(CANDIDATE);
         const score = scoreToken({
           prices:    slice.map(b => b.close),
           volumes:   slice.map(b => b.volume),
@@ -67,6 +74,8 @@ function evalPeriod(allData, start, end) {
           lows:      slice.map(b => b.low),
           // Use WETH as the "btcPrices" reference for relative strength
           btcPrices: (wethData?.bars?.slice(0, bar) || slice).map(b => b.close),
+          // Smart wallet signals: static per token (latest snapshot from Alchemy transfers)
+          transferStats: transferStats || null,
         });
         return { sym, score: Math.max(-1, Math.min(1, score || 0)) };
       } catch { return { sym, score: 0 }; }

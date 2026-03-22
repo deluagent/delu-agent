@@ -62,28 +62,73 @@ function runEval() {
   }
 }
 
-// ── LLM — Bankr gateway ───────────────────────────────────────
-function callLLM(messages) {
-  const key = (process.env.BANKR_API_KEY || '').replace(/\s/g, '');
-  if (!key) return Promise.reject(new Error('No BANKR_API_KEY'));
-  const body = JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 4000, messages });
+// ── LLM — Bankr gateway with Anthropic fallback ───────────────
+async function callLLM(messages) {
+  const bankrKey = (process.env.BANKR_API_KEY || '').replace(/\s/g, '');
+  const anthropicKey = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
+
+  // Try Bankr LLM first
+  if (bankrKey) {
+    try {
+      const body = JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 4000, messages });
+      const result = await new Promise((resolve, reject) => {
+        const req = https.request({
+          hostname: 'llm.bankr.bot', port: 443, method: 'POST',
+          path: '/v1/chat/completions',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${bankrKey}`, 'Content-Length': Buffer.byteLength(body) },
+        }, (res) => {
+          let d = ''; res.on('data', c => d += c);
+          res.on('end', () => {
+            try {
+              const j = JSON.parse(d);
+              if (j.error?.type === 'insufficient_credits' || j.error?.type === 'rate_limit') {
+                reject(new Error('bankr_credits'));
+              } else if (j.error) {
+                reject(new Error('Bankr: ' + j.error.message));
+              } else {
+                resolve(j.choices?.[0]?.message?.content || '');
+              }
+            } catch(e) { reject(new Error('parse: ' + d.slice(0, 60))); }
+          });
+        });
+        req.on('error', reject);
+        req.setTimeout(60000, () => { req.destroy(); reject(new Error('timeout')); });
+        req.write(body); req.end();
+      });
+      return result;
+    } catch(e) {
+      if (e.message !== 'bankr_credits') throw e;
+      // Credits exhausted — fall through to Anthropic
+      console.log('   [llm] Bankr credits exhausted — using Anthropic Haiku');
+    }
+  }
+
+  // Fallback: Anthropic Haiku direct
+  if (!anthropicKey) throw new Error('No LLM available (no Bankr credits, no Anthropic key)');
+  const body = JSON.stringify({
+    model: 'claude-haiku-4-5-20251001', max_tokens: 4000,
+    messages: messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+  });
   return new Promise((resolve, reject) => {
     const req = https.request({
-      hostname: 'llm.bankr.bot', port: 443, method: 'POST',
-      path: '/v1/chat/completions',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}`, 'Content-Length': Buffer.byteLength(body) },
+      hostname: 'api.anthropic.com', port: 443, method: 'POST',
+      path: '/v1/messages',
+      headers: {
+        'Content-Type': 'application/json', 'x-api-key': anthropicKey,
+        'anthropic-version': '2023-06-01', 'Content-Length': Buffer.byteLength(body),
+      },
     }, (res) => {
       let d = ''; res.on('data', c => d += c);
       res.on('end', () => {
         try {
           const j = JSON.parse(d);
-          if (j.error) throw new Error('Bankr LLM: ' + JSON.stringify(j.error));
-          resolve(j.choices?.[0]?.message?.content || '');
-        } catch(e) { reject(new Error('LLM parse: ' + d.slice(0, 100))); }
+          if (j.error) throw new Error('Anthropic: ' + JSON.stringify(j.error));
+          resolve(j.content?.[0]?.text || '');
+        } catch(e) { reject(new Error('parse: ' + d.slice(0, 60))); }
       });
     });
     req.on('error', reject);
-    req.setTimeout(90000, () => { req.destroy(); reject(new Error('LLM timeout')); });
+    req.setTimeout(60000, () => { req.destroy(); reject(new Error('timeout')); });
     req.write(body); req.end();
   });
 }
@@ -103,20 +148,32 @@ async function propose(state, exps) {
   const prompt = `You are improving a crypto trading strategy on REAL Base chain tokens (Alchemy onchain data).
 
 IMPORTANT CONTEXT:
-- Universe: WETH, AERO, VIRTUAL, AIXBT, BRETT, DEGEN, TOSHI, MOLT, KTA, SOL_B, BLUE, LUKSO, etc.
-- Data: 30 days × 1h bars (720 bars) from Alchemy Prices API — REAL onchain prices
-- NO Binance. NO synthetic volume. Volume proxy = relative price-change magnitude
-- btcPrices = WETH (reference token on Base, not BTC)
+- Universe: WETH, AERO, VIRTUAL, AIXBT, BRETT, DEGEN, TOSHI, MOLT, KTA, LUKSO, trending tokens, etc.
+- Data: 30 days × 1h bars from Alchemy Prices API — REAL onchain prices, no Binance
+- Volume proxy = relative price-change magnitude (no raw DEX volume available)
+- btcPrices = WETH prices (reference on Base, not BTC)
 - Rebalance: every 4 bars (4h cadence)
 - Metric: 0.5 × val_sharpe + 0.5 × aud_sharpe
 - Current best: combined=${state.bestScore.toFixed(3)} val=${state.bestValSharpe.toFixed(3)}
 
+AVAILABLE SIGNALS (from data object passed to scoreToken):
+  prices[]    — hourly close prices (real Alchemy onchain)
+  volumes[]   — relative activity proxy (price-change magnitude, 1=avg)
+  highs[]     — hourly high (approx)
+  lows[]      — hourly low (approx)
+  btcPrices[] — WETH prices (Base reference)
+  transferStats — smart wallet signals (from alchemy_getAssetTransfers, last 500 txs):
+    .uniqueBuyers         — distinct wallet addresses buying (high = distributed demand)
+    .transferVelocity     — total recent transfer count (high = hot token)
+    .repeatBuyers         — wallets buying 3+ times (high = smart money accumulating)
+    .topBuyerConcentration — fraction of txs from single wallet (high = whale risk)
+
 Key insights for Base ecosystem:
-- Meme/AI tokens (VIRTUAL, AIXBT, BRETT, DEGEN) are highly correlated → relative strength vs WETH is key
-- Volume proxy is noisy (price-change based) → weight it less
-- RSI-8 outperforms RSI-14 on intraday (proven across studies)
-- Regime detection: is token outperforming WETH? (sector rotation signal)
-- Short lookbacks (12h, 24h) outperform long on volatile Base tokens
+- repeatBuyers > 3 is a strong accumulation signal (smart wallets loading up)
+- High transferVelocity + low topBuyerConcentration = organic demand
+- VIRTUAL/AIXBT/BRETT/DEGEN are meme/AI tokens: momentum + social velocity matters
+- Relative strength vs WETH is the #1 signal (sector rotation on Base)
+- RSI-8 outperforms RSI-14 on intraday data
 
 ## Recent experiments
 ${recentExps}

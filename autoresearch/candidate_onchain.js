@@ -1,14 +1,21 @@
 /**
- * candidate_onchain.js — Onchain signal candidate (Base tokens, Alchemy 1h data)
+ * candidate_onchain.js — Onchain signal candidate (Base tokens, Alchemy data)
  *
  * Returns score in [-1, +1]
- * Data: Alchemy Base mainnet 1h price history (30 days, 720 bars)
+ * Data: Alchemy Base mainnet 1h price history (30 days, ~720 bars)
  * Universe: WETH, AERO, VIRTUAL, AIXBT, BRETT, DEGEN, TOSHI, KTA, MOLT, etc.
- * 
- * Key difference from daily candidate:
- *   - Volume proxy = relative price change (Alchemy has no raw volume)
- *   - btcPrices = WETH prices (reference token on Base)
- *   - Shorter lookbacks (48h instead of 30d)
+ *
+ * Available signals:
+ *   prices[]    — hourly close prices (real onchain from Alchemy)
+ *   volumes[]   — relative activity proxy (price-change magnitude)
+ *   highs[]     — hourly high (approx: max of open/close)
+ *   lows[]      — hourly low  (approx: min of open/close)
+ *   btcPrices[] — WETH prices (reference token on Base)
+ *   transferStats — smart wallet signals (latest snapshot):
+ *     .uniqueBuyers         — distinct wallets that bought (last 500 txs)
+ *     .transferVelocity     — total transfer count (higher = more active)
+ *     .repeatBuyers         — wallets that bought 3+ times (accumulation signal)
+ *     .topBuyerConcentration — 0=distributed, 1=one whale dominates
  */
 
 'use strict';
@@ -38,35 +45,45 @@ function relStrength(prices, ref, period) {
 }
 
 function scoreToken(data) {
-  const { prices, volumes, btcPrices } = data;
+  const { prices, volumes, btcPrices, transferStats } = data;
   if (!prices || prices.length < 48) return 0;
 
-  const weth = btcPrices || prices; // WETH as reference on Base
+  const weth = btcPrices || prices;
 
-  // RSI-8 (Nunchi #1 hypothesis — proven on hourly data)
+  // RSI-8 (Nunchi #1 — proven on hourly intraday data)
   const rsi8 = rsi(prices, 8);
 
-  // Relative strength vs WETH: 12h and 48h windows
+  // Relative strength vs WETH: 12h and 48h
   const rs12 = relStrength(prices, weth, 12);
   const rs48 = relStrength(prices, weth, 48);
 
-  // Volume (price-change proxy from Alchemy): recent vs baseline
+  // Volume (price-change proxy): recent vs baseline
   const volNow  = volumes ? volumes.slice(-4).reduce((s, v) => s + v, 0) / 4 : 1;
   const volBase = volumes ? volumes.slice(-48).reduce((s, v) => s + v, 0) / 48 : 1;
   const volRatio = volBase > 0 ? volNow / volBase : 1;
 
-  // Trend: 12h vs 48h SMA
+  // Trend
   const sma12 = sma(prices, 12);
   const sma48 = sma(prices, 48);
   const trend = sma12 > sma48 ? 1 : -1;
 
-  // Score components
-  const sRSI  = (50 - rsi8) / 50;                                         // [-1, +1]
-  const sRS   = Math.max(-1, Math.min(1, (rs12 * 0.6 + rs48 * 0.4) * 15)); // [-1, +1]
+  // Smart wallet accumulation signal
+  // repeatBuyers > 2 = wallets accumulating (bullish)
+  // topBuyerConcentration > 0.3 = single whale dominating (can be pump-and-dump risk)
+  let smartWalletBoost = 0;
+  if (transferStats) {
+    const accumulationSignal = Math.min(1, (transferStats.repeatBuyers || 0) / 5);
+    const concentrationRisk  = transferStats.topBuyerConcentration > 0.3 ? -0.2 : 0;
+    smartWalletBoost = accumulationSignal * 0.3 + concentrationRisk;
+  }
+
+  // Score
+  const sRSI  = (50 - rsi8) / 50;
+  const sRS   = Math.max(-1, Math.min(1, (rs12 * 0.6 + rs48 * 0.4) * 15));
   const sVol  = Math.min(1, Math.max(-0.5, (volRatio - 1) * 0.5));
   const sTrend = trend * 0.3;
 
-  const score = sRS * 0.45 + sRSI * 0.25 + sVol * 0.15 + sTrend * 0.15;
+  const score = sRS * 0.40 + sRSI * 0.25 + sVol * 0.10 + sTrend * 0.10 + smartWalletBoost * 0.15;
   return Math.max(-1, Math.min(1, score));
 }
 

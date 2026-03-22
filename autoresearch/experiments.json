@@ -18728,5 +18728,3301 @@
     "accepted": false,
     "description": "Remove obvDivergence and atrPenalty; replace with volume surprise boost using soft exponential scali",
     "ts": 1774135807561
+  },
+  {
+    "n": 1223,
+    "valSharpe": 4.1136,
+    "isSharpe": 1.1537,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.8 using soft exponent",
+    "ts": 1774135821124
+  },
+  {
+    "n": 1224,
+    "valSharpe": 4.1136,
+    "isSharpe": 1.1537,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.8 using soft exponent",
+    "ts": 1774135834631
+  },
+  {
+    "n": 1225,
+    "valSharpe": 3.2081,
+    "isSharpe": 1.0235,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.8 using soft exponent",
+    "ts": 1774135847901
+  },
+  {
+    "n": 1226,
+    "valSharpe": 3.2081,
+    "isSharpe": 1.0049,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.75 with soft exponent",
+    "ts": 1774135861059
+  },
+  {
+    "n": 1227,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add OBV divergence as negative signal only when price rises but",
+    "ts": 1774135874478
+  },
+  {
+    "n": 1228,
+    "valSharpe": 2.6917,
+    "isSharpe": 1.0982,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.12 and relVol cap f",
+    "ts": 1774135887126
+  },
+  {
+    "n": 1229,
+    "valSharpe": 3.3766,
+    "isSharpe": 1.089,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.10 and cap relVol a",
+    "ts": 1774135899799
+  },
+  {
+    "n": 1230,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add ATR-based volatility filter to reject tokens when ATR excee",
+    "ts": 1774135912958
+  },
+  {
+    "n": 1231,
+    "valSharpe": 3.5117,
+    "isSharpe": 0.7845,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.8 with soft exponent ",
+    "ts": 1774135926395
+  },
+  {
+    "n": 1232,
+    "valSharpe": 3.4782,
+    "isSharpe": 0.8231,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.75 with soft exponent",
+    "ts": 1774135939795
+  },
+  {
+    "n": 1233,
+    "valSharpe": 3.2644,
+    "isSharpe": 0.9145,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; add volume surprise boost when relVol > 1.8 with soft exponent ",
+    "ts": 1774135953041
+  },
+  {
+    "n": 1234,
+    "valSharpe": 3.5103,
+    "isSharpe": 1.2041,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.08 and cap relVol a",
+    "ts": 1774135966065
+  },
+  {
+    "n": 1235,
+    "valSharpe": 2.8799,
+    "isSharpe": 0.8244,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost from 0.06 to 0.12 and add volume surprise boo",
+    "ts": 1774135979415
+  },
+  {
+    "n": 1236,
+    "valSharpe": 2.8582,
+    "isSharpe": 1.0137,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.10 and add soft vol",
+    "ts": 1774135992583
+  },
+  {
+    "n": 1237,
+    "valSharpe": 3.5543,
+    "isSharpe": 0.9864,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.09 and cap relVol a",
+    "ts": 1774136005114
+  },
+  {
+    "n": 1238,
+    "valSharpe": 3.5052,
+    "isSharpe": 1.3708,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.07 and cap relVol a",
+    "ts": 1774136017928
+  },
+  {
+    "n": 1239,
+    "valSharpe": 2.798,
+    "isSharpe": 1.1008,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.08 and add soft vol",
+    "ts": 1774136030913
+  },
+  {
+    "n": 1240,
+    "valSharpe": 2.8223,
+    "isSharpe": 1.029,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.11 and cap relVol a",
+    "ts": 1774136043500
+  },
+  {
+    "n": 1241,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with OBV divergence detection using momentum-price divergence s",
+    "ts": 1774136057603
+  },
+  {
+    "n": 1242,
+    "valSharpe": 3.024,
+    "isSharpe": 0.912,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volume surprise detection (relVol spike vs 20d baseline) t",
+    "ts": 1774136071895
+  },
+  {
+    "n": 1243,
+    "valSharpe": 3.3766,
+    "isSharpe": 1.089,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.10 and cap relVol a",
+    "ts": 1774136085054
+  },
+  {
+    "n": 1244,
+    "valSharpe": 3.3857,
+    "isSharpe": 1.116,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.09 and cap relVol a",
+    "ts": 1774136097645
+  },
+  {
+    "n": 1245,
+    "valSharpe": 3.2363,
+    "isSharpe": 1.0008,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.12 and cap relVol a",
+    "ts": 1774136110618
+  },
+  {
+    "n": 1246,
+    "valSharpe": 3.5103,
+    "isSharpe": 1.2041,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.08 and cap relVol a",
+    "ts": 1774136123323
+  },
+  {
+    "n": 1247,
+    "valSharpe": 3.667,
+    "isSharpe": 1.3606,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.07 and cap relVol a",
+    "ts": 1774136136301
+  },
+  {
+    "n": 1248,
+    "valSharpe": 3.5785,
+    "isSharpe": 1.2864,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.075 and cap relVol ",
+    "ts": 1774136148930
+  },
+  {
+    "n": 1249,
+    "valSharpe": 4.0741,
+    "isSharpe": 1.3401,
+    "accepted": false,
+    "description": "Try ATR penalty using highs/lows range instead of realized vol, scale it inversely to capture volati",
+    "ts": 1774136163021
+  },
+  {
+    "n": 1250,
+    "valSharpe": 3.2818,
+    "isSharpe": 1.285,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volume surprise metric that boosts score when volume surge",
+    "ts": 1774136176518
+  },
+  {
+    "n": 1251,
+    "valSharpe": 3.2797,
+    "isSharpe": 1.3103,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with volume surprise metric that boosts score when volume surge",
+    "ts": 1774136189804
+  },
+  {
+    "n": 1252,
+    "valSharpe": 3.2368,
+    "isSharpe": 1.0901,
+    "accepted": false,
+    "description": "Replace obvDivergence and atrPenalty with OBV divergence detection that boosts score when volume acc",
+    "ts": 1774136202969
+  },
+  {
+    "n": 1253,
+    "valSharpe": 3.5103,
+    "isSharpe": 1.2041,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost from 0.06 to 0.08 and cap relVol at 1.8 to re",
+    "ts": 1774136216334
+  },
+  {
+    "n": 1254,
+    "valSharpe": 3.5655,
+    "isSharpe": 1.0163,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.085 and cap relVol ",
+    "ts": 1774136229248
+  },
+  {
+    "n": 1255,
+    "valSharpe": 3.3883,
+    "isSharpe": 1.0456,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.095 and tighten rel",
+    "ts": 1774136241938
+  },
+  {
+    "n": 1256,
+    "valSharpe": 3.5673,
+    "isSharpe": 1.3403,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.075 and cap relVol ",
+    "ts": 1774136254482
+  },
+  {
+    "n": 1257,
+    "valSharpe": 3.3766,
+    "isSharpe": 1.089,
+    "accepted": false,
+    "description": "Remove obvDivergence and atrPenalty; increase obvBoost multiplier from 0.06 to 0.10 and cap relVol a",
+    "ts": 1774136267032
+  },
+  {
+    "n": 1258,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136272653
+  },
+  {
+    "n": 1259,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136278115
+  },
+  {
+    "n": 1260,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136283581
+  },
+  {
+    "n": 1261,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136289044
+  },
+  {
+    "n": 1262,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136294500
+  },
+  {
+    "n": 1263,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136299960
+  },
+  {
+    "n": 1264,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136305416
+  },
+  {
+    "n": 1265,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136310877
+  },
+  {
+    "n": 1266,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136316490
+  },
+  {
+    "n": 1267,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136321947
+  },
+  {
+    "n": 1268,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136327413
+  },
+  {
+    "n": 1269,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136332890
+  },
+  {
+    "n": 1270,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136338353
+  },
+  {
+    "n": 1271,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136343859
+  },
+  {
+    "n": 1272,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136349320
+  },
+  {
+    "n": 1273,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136354783
+  },
+  {
+    "n": 1274,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136360243
+  },
+  {
+    "n": 1275,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136365834
+  },
+  {
+    "n": 1276,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136371279
+  },
+  {
+    "n": 1277,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136376727
+  },
+  {
+    "n": 1278,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136382172
+  },
+  {
+    "n": 1279,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136387615
+  },
+  {
+    "n": 1280,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136393065
+  },
+  {
+    "n": 1281,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136398505
+  },
+  {
+    "n": 1282,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136403945
+  },
+  {
+    "n": 1283,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136409386
+  },
+  {
+    "n": 1284,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136415006
+  },
+  {
+    "n": 1285,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136420472
+  },
+  {
+    "n": 1286,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136425945
+  },
+  {
+    "n": 1287,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136431415
+  },
+  {
+    "n": 1288,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136436874
+  },
+  {
+    "n": 1289,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136442333
+  },
+  {
+    "n": 1290,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136447794
+  },
+  {
+    "n": 1291,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136453266
+  },
+  {
+    "n": 1292,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136458726
+  },
+  {
+    "n": 1293,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136464338
+  },
+  {
+    "n": 1294,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136469811
+  },
+  {
+    "n": 1295,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136475280
+  },
+  {
+    "n": 1296,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136480740
+  },
+  {
+    "n": 1297,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136486199
+  },
+  {
+    "n": 1298,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136491657
+  },
+  {
+    "n": 1299,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136497113
+  },
+  {
+    "n": 1300,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136502575
+  },
+  {
+    "n": 1301,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136508038
+  },
+  {
+    "n": 1302,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136513638
+  },
+  {
+    "n": 1303,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136519084
+  },
+  {
+    "n": 1304,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136524530
+  },
+  {
+    "n": 1305,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136529975
+  },
+  {
+    "n": 1306,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136535422
+  },
+  {
+    "n": 1307,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136540866
+  },
+  {
+    "n": 1308,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136546313
+  },
+  {
+    "n": 1309,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136551754
+  },
+  {
+    "n": 1310,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136557193
+  },
+  {
+    "n": 1311,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136562811
+  },
+  {
+    "n": 1312,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136568279
+  },
+  {
+    "n": 1313,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136573755
+  },
+  {
+    "n": 1314,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136579226
+  },
+  {
+    "n": 1315,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136584699
+  },
+  {
+    "n": 1316,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136590168
+  },
+  {
+    "n": 1317,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136595640
+  },
+  {
+    "n": 1318,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136601103
+  },
+  {
+    "n": 1319,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136606563
+  },
+  {
+    "n": 1320,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136612153
+  },
+  {
+    "n": 1321,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136617600
+  },
+  {
+    "n": 1322,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136623043
+  },
+  {
+    "n": 1323,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136628485
+  },
+  {
+    "n": 1324,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136633937
+  },
+  {
+    "n": 1325,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136639376
+  },
+  {
+    "n": 1326,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136644816
+  },
+  {
+    "n": 1327,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136650259
+  },
+  {
+    "n": 1328,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136655701
+  },
+  {
+    "n": 1329,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136661319
+  },
+  {
+    "n": 1330,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136666790
+  },
+  {
+    "n": 1331,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136672250
+  },
+  {
+    "n": 1332,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136677708
+  },
+  {
+    "n": 1333,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136683173
+  },
+  {
+    "n": 1334,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136688633
+  },
+  {
+    "n": 1335,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136694108
+  },
+  {
+    "n": 1336,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136699571
+  },
+  {
+    "n": 1337,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136705029
+  },
+  {
+    "n": 1338,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136710645
+  },
+  {
+    "n": 1339,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136716114
+  },
+  {
+    "n": 1340,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136721584
+  },
+  {
+    "n": 1341,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136727053
+  },
+  {
+    "n": 1342,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136732517
+  },
+  {
+    "n": 1343,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136737980
+  },
+  {
+    "n": 1344,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136743440
+  },
+  {
+    "n": 1345,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136748904
+  },
+  {
+    "n": 1346,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136754378
+  },
+  {
+    "n": 1347,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136759991
+  },
+  {
+    "n": 1348,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136765457
+  },
+  {
+    "n": 1349,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136770919
+  },
+  {
+    "n": 1350,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136776389
+  },
+  {
+    "n": 1351,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136781858
+  },
+  {
+    "n": 1352,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136787323
+  },
+  {
+    "n": 1353,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136792780
+  },
+  {
+    "n": 1354,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136798247
+  },
+  {
+    "n": 1355,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136803708
+  },
+  {
+    "n": 1356,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136809319
+  },
+  {
+    "n": 1357,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136814786
+  },
+  {
+    "n": 1358,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136820280
+  },
+  {
+    "n": 1359,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136825746
+  },
+  {
+    "n": 1360,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136831215
+  },
+  {
+    "n": 1361,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136836679
+  },
+  {
+    "n": 1362,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136842148
+  },
+  {
+    "n": 1363,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136847609
+  },
+  {
+    "n": 1364,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136853068
+  },
+  {
+    "n": 1365,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136858680
+  },
+  {
+    "n": 1366,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136864150
+  },
+  {
+    "n": 1367,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136869613
+  },
+  {
+    "n": 1368,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136875082
+  },
+  {
+    "n": 1369,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136880554
+  },
+  {
+    "n": 1370,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136886018
+  },
+  {
+    "n": 1371,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136891484
+  },
+  {
+    "n": 1372,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136896953
+  },
+  {
+    "n": 1373,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136902417
+  },
+  {
+    "n": 1374,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136907882
+  },
+  {
+    "n": 1375,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136913346
+  },
+  {
+    "n": 1376,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136918812
+  },
+  {
+    "n": 1377,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136924270
+  },
+  {
+    "n": 1378,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136929734
+  },
+  {
+    "n": 1379,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136935202
+  },
+  {
+    "n": 1380,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136940672
+  },
+  {
+    "n": 1381,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136946130
+  },
+  {
+    "n": 1382,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136951591
+  },
+  {
+    "n": 1383,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136957050
+  },
+  {
+    "n": 1384,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136962509
+  },
+  {
+    "n": 1385,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136967972
+  },
+  {
+    "n": 1386,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136973429
+  },
+  {
+    "n": 1387,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136978890
+  },
+  {
+    "n": 1388,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136984349
+  },
+  {
+    "n": 1389,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774136989824
+  },
+  {
+    "n": 1390,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774136995298
+  },
+  {
+    "n": 1391,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137000764
+  },
+  {
+    "n": 1392,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137006355
+  },
+  {
+    "n": 1393,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137011803
+  },
+  {
+    "n": 1394,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137017253
+  },
+  {
+    "n": 1395,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137022702
+  },
+  {
+    "n": 1396,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137028153
+  },
+  {
+    "n": 1397,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137033595
+  },
+  {
+    "n": 1398,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137039032
+  },
+  {
+    "n": 1399,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137044470
+  },
+  {
+    "n": 1400,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137049908
+  },
+  {
+    "n": 1401,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137055526
+  },
+  {
+    "n": 1402,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137060992
+  },
+  {
+    "n": 1403,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137066455
+  },
+  {
+    "n": 1404,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137071919
+  },
+  {
+    "n": 1405,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137077382
+  },
+  {
+    "n": 1406,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137082848
+  },
+  {
+    "n": 1407,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137088310
+  },
+  {
+    "n": 1408,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137093771
+  },
+  {
+    "n": 1409,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137099230
+  },
+  {
+    "n": 1410,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137104842
+  },
+  {
+    "n": 1411,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137110302
+  },
+  {
+    "n": 1412,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137115776
+  },
+  {
+    "n": 1413,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137121256
+  },
+  {
+    "n": 1414,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137126725
+  },
+  {
+    "n": 1415,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137132193
+  },
+  {
+    "n": 1416,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137137655
+  },
+  {
+    "n": 1417,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137143118
+  },
+  {
+    "n": 1418,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137148585
+  },
+  {
+    "n": 1419,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137154046
+  },
+  {
+    "n": 1420,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137159505
+  },
+  {
+    "n": 1421,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137164969
+  },
+  {
+    "n": 1422,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137170432
+  },
+  {
+    "n": 1423,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137175895
+  },
+  {
+    "n": 1424,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137181392
+  },
+  {
+    "n": 1425,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137186857
+  },
+  {
+    "n": 1426,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137192326
+  },
+  {
+    "n": 1427,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137197790
+  },
+  {
+    "n": 1428,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137203408
+  },
+  {
+    "n": 1429,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137208876
+  },
+  {
+    "n": 1430,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137214345
+  },
+  {
+    "n": 1431,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137219816
+  },
+  {
+    "n": 1432,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137225280
+  },
+  {
+    "n": 1433,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137230738
+  },
+  {
+    "n": 1434,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137236206
+  },
+  {
+    "n": 1435,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137241688
+  },
+  {
+    "n": 1436,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137247156
+  },
+  {
+    "n": 1437,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137252749
+  },
+  {
+    "n": 1438,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137258196
+  },
+  {
+    "n": 1439,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137263643
+  },
+  {
+    "n": 1440,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137269093
+  },
+  {
+    "n": 1441,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137274533
+  },
+  {
+    "n": 1442,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137279974
+  },
+  {
+    "n": 1443,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137285413
+  },
+  {
+    "n": 1444,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137290857
+  },
+  {
+    "n": 1445,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137296312
+  },
+  {
+    "n": 1446,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137302001
+  },
+  {
+    "n": 1447,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137307459
+  },
+  {
+    "n": 1448,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137312923
+  },
+  {
+    "n": 1449,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137318379
+  },
+  {
+    "n": 1450,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137323841
+  },
+  {
+    "n": 1451,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137329299
+  },
+  {
+    "n": 1452,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137334769
+  },
+  {
+    "n": 1453,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137340232
+  },
+  {
+    "n": 1454,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137345688
+  },
+  {
+    "n": 1455,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137351307
+  },
+  {
+    "n": 1456,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137356776
+  },
+  {
+    "n": 1457,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137362316
+  },
+  {
+    "n": 1458,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137367782
+  },
+  {
+    "n": 1459,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137373249
+  },
+  {
+    "n": 1460,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137378714
+  },
+  {
+    "n": 1461,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137384180
+  },
+  {
+    "n": 1462,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137389644
+  },
+  {
+    "n": 1463,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137395099
+  },
+  {
+    "n": 1464,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137400714
+  },
+  {
+    "n": 1465,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137406175
+  },
+  {
+    "n": 1466,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137411633
+  },
+  {
+    "n": 1467,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137417100
+  },
+  {
+    "n": 1468,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137422569
+  },
+  {
+    "n": 1469,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137428030
+  },
+  {
+    "n": 1470,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137433500
+  },
+  {
+    "n": 1471,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137438963
+  },
+  {
+    "n": 1472,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137444430
+  },
+  {
+    "n": 1473,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137449895
+  },
+  {
+    "n": 1474,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137455357
+  },
+  {
+    "n": 1475,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137460814
+  },
+  {
+    "n": 1476,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137466270
+  },
+  {
+    "n": 1477,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137471732
+  },
+  {
+    "n": 1478,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137477208
+  },
+  {
+    "n": 1479,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137482675
+  },
+  {
+    "n": 1480,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137488137
+  },
+  {
+    "n": 1481,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137493598
+  },
+  {
+    "n": 1482,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137499220
+  },
+  {
+    "n": 1483,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137504684
+  },
+  {
+    "n": 1484,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137510147
+  },
+  {
+    "n": 1485,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137515609
+  },
+  {
+    "n": 1486,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137521065
+  },
+  {
+    "n": 1487,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137526522
+  },
+  {
+    "n": 1488,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137531979
+  },
+  {
+    "n": 1489,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137537449
+  },
+  {
+    "n": 1490,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137542914
+  },
+  {
+    "n": 1491,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137548503
+  },
+  {
+    "n": 1492,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137553952
+  },
+  {
+    "n": 1493,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137559394
+  },
+  {
+    "n": 1494,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137564834
+  },
+  {
+    "n": 1495,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137570275
+  },
+  {
+    "n": 1496,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137575720
+  },
+  {
+    "n": 1497,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137581165
+  },
+  {
+    "n": 1498,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137586605
+  },
+  {
+    "n": 1499,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137592046
+  },
+  {
+    "n": 1500,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137597494
+  },
+  {
+    "n": 1501,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137602957
+  },
+  {
+    "n": 1502,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137608404
+  },
+  {
+    "n": 1503,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137613865
+  },
+  {
+    "n": 1504,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137619329
+  },
+  {
+    "n": 1505,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137624863
+  },
+  {
+    "n": 1506,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137630302
+  },
+  {
+    "n": 1507,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137635744
+  },
+  {
+    "n": 1508,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137641184
+  },
+  {
+    "n": 1509,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137646798
+  },
+  {
+    "n": 1510,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137652261
+  },
+  {
+    "n": 1511,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137657730
+  },
+  {
+    "n": 1512,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137663219
+  },
+  {
+    "n": 1513,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137668683
+  },
+  {
+    "n": 1514,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137674144
+  },
+  {
+    "n": 1515,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137679602
+  },
+  {
+    "n": 1516,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137685063
+  },
+  {
+    "n": 1517,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137690525
+  },
+  {
+    "n": 1518,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137695987
+  },
+  {
+    "n": 1519,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137701453
+  },
+  {
+    "n": 1520,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137706910
+  },
+  {
+    "n": 1521,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137712372
+  },
+  {
+    "n": 1522,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137717835
+  },
+  {
+    "n": 1523,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137723299
+  },
+  {
+    "n": 1524,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137728764
+  },
+  {
+    "n": 1525,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137734228
+  },
+  {
+    "n": 1526,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137739692
+  },
+  {
+    "n": 1527,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137745308
+  },
+  {
+    "n": 1528,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137750785
+  },
+  {
+    "n": 1529,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137756247
+  },
+  {
+    "n": 1530,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137761708
+  },
+  {
+    "n": 1531,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137767176
+  },
+  {
+    "n": 1532,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137772639
+  },
+  {
+    "n": 1533,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137778104
+  },
+  {
+    "n": 1534,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137783564
+  },
+  {
+    "n": 1535,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137789030
+  },
+  {
+    "n": 1536,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137794494
+  },
+  {
+    "n": 1537,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137799954
+  },
+  {
+    "n": 1538,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137805417
+  },
+  {
+    "n": 1539,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137810881
+  },
+  {
+    "n": 1540,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137816350
+  },
+  {
+    "n": 1541,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137821809
+  },
+  {
+    "n": 1542,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137827267
+  },
+  {
+    "n": 1543,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137832729
+  },
+  {
+    "n": 1544,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137838196
+  },
+  {
+    "n": 1545,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137843657
+  },
+  {
+    "n": 1546,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137849119
+  },
+  {
+    "n": 1547,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137854582
+  },
+  {
+    "n": 1548,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137860042
+  },
+  {
+    "n": 1549,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137865511
+  },
+  {
+    "n": 1550,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137870977
+  },
+  {
+    "n": 1551,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137876444
+  },
+  {
+    "n": 1552,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137881905
+  },
+  {
+    "n": 1553,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137887363
+  },
+  {
+    "n": 1554,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137892977
+  },
+  {
+    "n": 1555,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137898451
+  },
+  {
+    "n": 1556,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137903915
+  },
+  {
+    "n": 1557,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137909375
+  },
+  {
+    "n": 1558,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137914851
+  },
+  {
+    "n": 1559,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137920315
+  },
+  {
+    "n": 1560,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137925778
+  },
+  {
+    "n": 1561,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137931249
+  },
+  {
+    "n": 1562,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137936706
+  },
+  {
+    "n": 1563,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137942311
+  },
+  {
+    "n": 1564,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137947777
+  },
+  {
+    "n": 1565,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137953240
+  },
+  {
+    "n": 1566,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137958714
+  },
+  {
+    "n": 1567,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137964179
+  },
+  {
+    "n": 1568,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137969646
+  },
+  {
+    "n": 1569,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137975106
+  },
+  {
+    "n": 1570,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137980570
+  },
+  {
+    "n": 1571,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137986036
+  },
+  {
+    "n": 1572,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774137991644
+  },
+  {
+    "n": 1573,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774137997102
+  },
+  {
+    "n": 1574,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138002564
+  },
+  {
+    "n": 1575,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138008029
+  },
+  {
+    "n": 1576,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138013494
+  },
+  {
+    "n": 1577,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138018965
+  },
+  {
+    "n": 1578,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138024427
+  },
+  {
+    "n": 1579,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138029891
+  },
+  {
+    "n": 1580,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138035732
+  },
+  {
+    "n": 1581,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138041199
+  },
+  {
+    "n": 1582,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138046660
+  },
+  {
+    "n": 1583,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138052132
+  },
+  {
+    "n": 1584,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138057590
+  },
+  {
+    "n": 1585,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138063050
+  },
+  {
+    "n": 1586,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138068517
+  },
+  {
+    "n": 1587,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138073973
+  },
+  {
+    "n": 1588,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138079444
+  },
+  {
+    "n": 1589,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138084913
+  },
+  {
+    "n": 1590,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138090497
+  },
+  {
+    "n": 1591,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138095943
+  },
+  {
+    "n": 1592,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138101384
+  },
+  {
+    "n": 1593,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138106826
+  },
+  {
+    "n": 1594,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138112272
+  },
+  {
+    "n": 1595,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138117710
+  },
+  {
+    "n": 1596,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138123148
+  },
+  {
+    "n": 1597,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138128588
+  },
+  {
+    "n": 1598,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138134030
+  },
+  {
+    "n": 1599,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138139653
+  },
+  {
+    "n": 1600,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138145122
+  },
+  {
+    "n": 1601,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138150591
+  },
+  {
+    "n": 1602,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138156052
+  },
+  {
+    "n": 1603,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138161515
+  },
+  {
+    "n": 1604,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138166977
+  },
+  {
+    "n": 1605,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138172437
+  },
+  {
+    "n": 1606,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138177908
+  },
+  {
+    "n": 1607,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138183368
+  },
+  {
+    "n": 1608,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138188957
+  },
+  {
+    "n": 1609,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138194403
+  },
+  {
+    "n": 1610,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138199854
+  },
+  {
+    "n": 1611,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138205298
+  },
+  {
+    "n": 1612,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138210740
+  },
+  {
+    "n": 1613,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138216178
+  },
+  {
+    "n": 1614,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138221619
+  },
+  {
+    "n": 1615,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138227060
+  },
+  {
+    "n": 1616,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138232505
+  },
+  {
+    "n": 1617,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138238116
+  },
+  {
+    "n": 1618,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138243574
+  },
+  {
+    "n": 1619,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138249042
+  },
+  {
+    "n": 1620,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138254505
+  },
+  {
+    "n": 1621,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138259973
+  },
+  {
+    "n": 1622,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138265436
+  },
+  {
+    "n": 1623,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138270896
+  },
+  {
+    "n": 1624,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138276361
+  },
+  {
+    "n": 1625,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138281826
+  },
+  {
+    "n": 1626,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138287290
+  },
+  {
+    "n": 1627,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138292749
+  },
+  {
+    "n": 1628,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138298215
+  },
+  {
+    "n": 1629,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138303675
+  },
+  {
+    "n": 1630,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138309137
+  },
+  {
+    "n": 1631,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774138314596
+  },
+  {
+    "n": 1632,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138320073
+  },
+  {
+    "n": 1633,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138325536
+  },
+  {
+    "n": 1634,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774138330999
   }
 ]

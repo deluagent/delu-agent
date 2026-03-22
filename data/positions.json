@@ -35,9 +35,9 @@
     "timeStopAt": "2026-03-23T18:30:00.000Z",
     "status": "open",
     "note": "bankr_stop fired but tokens still in wallet — now managed by ATR stop",
-    "lastChecked": "2026-03-21T23:27:18.350Z",
-    "atrStop": 2141.18571429,
-    "atrValue": 7.20571429
+    "lastChecked": "2026-03-21T23:57:18.522Z",
+    "atrStop": 2129.07678571,
+    "atrValue": 12.04928571
   },
   {
     "sym": "cbBTC",
@@ -52,9 +52,9 @@
     "timeStopAt": "2026-03-23T18:30:00.000Z",
     "status": "open",
     "note": "bankr_stop fired but tokens still in wallet — now managed by ATR stop",
-    "lastChecked": "2026-03-21T23:27:19.301Z",
-    "atrStop": 70303.59857143,
-    "atrValue": 211.36857143
+    "lastChecked": "2026-03-21T23:57:19.475Z",
+    "atrStop": 70070.45035714,
+    "atrValue": 304.62785714
   },
   {
     "sym": "SOL",
@@ -69,9 +69,9 @@
     "timeStopAt": "2026-03-23T18:30:00.000Z",
     "status": "open",
     "note": "bankr_stop fired but tokens still in wallet — now managed by ATR stop",
-    "lastChecked": "2026-03-21T23:27:20.257Z",
-    "atrStop": 89.32392857,
-    "atrValue": 0.36642857
+    "lastChecked": "2026-03-21T23:57:20.425Z",
+    "atrStop": 88.90607143,
+    "atrValue": 0.53357143
   },
   {
     "sym": "KTA",
@@ -91,6 +91,6 @@
     "kellyFraction": 22,
     "atrStop": 0.164221,
     "atrValue": 0.00202582,
-    "lastChecked": "2026-03-21T23:27:21.248Z"
+    "lastChecked": "2026-03-21T23:57:21.461Z"
   }
 ]
