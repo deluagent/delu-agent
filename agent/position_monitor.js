@@ -23,7 +23,7 @@ const BINANCE_KLINES_URL = (sym, interval, limit) =>
 
 // ATR trailing stop params — auto-evolved by autoresearch/loop_stops.js
 // DO NOT edit manually — will be overwritten when loop finds improvement
-const ATR_MULT        = 2.8;   // ATR multiplier for trail (from peak)
+const ATR_MULT        = 2.7;   // ATR multiplier for trail (from peak)
 const ATR_BARS        = 14;    // ATR period
 const HARD_SL_ATR_MULT = 3;  // ATR multiplier for pre-trail hard SL
 const HARD_SL_MIN_PCT  = 10;    // minimum hard SL % for micro-caps

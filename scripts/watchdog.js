@@ -20,6 +20,7 @@ const PROCESSES = [
   { name: 'Hourly',  match: 'loop_hourly.js',              cmd: 'node -r dotenv/config autoresearch/loop_hourly.js', log: '/tmp/autoresearch_hourly.log'  },
   { name: '5m',      match: 'loop_5m.js',                  cmd: 'node -r dotenv/config autoresearch/loop_5m.js',     log: '/tmp/autoresearch_5m.log'      },
   { name: 'Onchain', match: 'loop_onchain.js',             cmd: 'node -r dotenv/config autoresearch/loop_onchain.js',log: '/tmp/autoresearch_onchain.log' },
+  { name: 'Stops',   match: 'loop_stops.js',               cmd: 'node -r dotenv/config autoresearch/loop_stops.js',  log: '/tmp/autoresearch_stops.log'   },
 ];
 
 const EXP_FILES = [
@@ -27,6 +28,7 @@ const EXP_FILES = [
   { name: 'Hourly',  file: 'autoresearch/experiments_hourly.json',  metric: 'score',     alertAt: 12  },
   { name: '5m',      file: 'autoresearch/experiments_5m.json',      metric: 'score',     alertAt: 35  },
   { name: 'Onchain', file: 'autoresearch/experiments_onchain.json', metric: 'score',     alertAt: 25  },
+  { name: 'Stops',   file: 'autoresearch/experiments_stops.json',  metric: 'score',     alertAt: 8   },
 ];
 
 function log(msg) {

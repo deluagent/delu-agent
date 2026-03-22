@@ -1,13 +1,13 @@
 {
-  "expCount": 3,
-  "bestScore": 6.1254171698040425,
+  "expCount": 5,
+  "bestScore": 6.1813040509715265,
   "bestParams": {
-    "atrMult": 2.8,
+    "atrMult": 2.7,
     "hardSlAtrMult": 3,
     "hardSlMinPct": 10,
     "hardSlMaxPct": 15,
     "activateAt": 0.5
   },
-  "bestWinRate": 0.5422594142259414,
-  "bestAvgPnl": 0.44638563388675406
+  "bestWinRate": 0.5481171548117155,
+  "bestAvgPnl": 0.4447829650554984
 }

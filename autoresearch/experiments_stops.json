@@ -61,5 +61,257 @@
       "value": 2.8,
       "reasoning": "Micro-cap volatility spikes require slightly wider trailing to reduce whipsaws while maintaining profit capture, moving from 2.5 toward the 3.0+ range where trailing becomes more stable."
     }
+  },
+  {
+    "expN": 4,
+    "params": {
+      "atrMult": 2.9,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.079323620412883,
+    "sharpe": 0.9637005270987898,
+    "winRate": 0.5372384937238494,
+    "avgPnl": 0.4501768392499886,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "atrMult",
+      "value": 2.9,
+      "reasoning": "Current best (2.8) has high avgPnl (0.45%) but winRate slightly lower than 2.5 variant; incremental increase to 2.9 should widen trail just enough to reduce noise stops while preserving the 54-55% winRate sweet spot on volatile micro-caps."
+    }
+  },
+  {
+    "expN": 5,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.1813040509715265,
+    "sharpe": 0.9554820406532437,
+    "winRate": 0.5481171548117155,
+    "avgPnl": 0.4447829650554984,
+    "trades": 1195,
+    "improved": true,
+    "proposal": {
+      "param": "atrMult",
+      "value": 2.7,
+      "reasoning": "Current best (2.8) shows diminishing returns vs 2.9; testing 2.7 balances tighter trailing to capture volatility swings on micro-caps without over-stopping on noise."
+    }
+  },
+  {
+    "expN": 6,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 9,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.124018524421984,
+    "sharpe": 0.9237550712823681,
+    "winRate": 0.5447698744769874,
+    "avgPnl": 0.42888448802185036,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "hardSlMinPct",
+      "value": 9,
+      "reasoning": "Current best uses 10% floor but micro-cap volatility suggests slightly tighter 9% minimum could improve Sharpe ratio without sacrificing win rate, as recent 2.8-2.9 atrMult tests show diminishing returns."
+    }
+  },
+  {
+    "expN": 7,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 11,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.14455599476669,
+    "sharpe": 0.904633429520684,
+    "winRate": 0.5481171548117155,
+    "avgPnl": 0.42213546377838523,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "hardSlMinPct",
+      "value": 11,
+      "reasoning": "Current best (6.18) uses 10%; micro-cap volatility suggests a slightly higher floor (11%) may reduce whipsaw stops while maintaining downside protection, bridging the gap between tested 10% and 9% configurations."
+    }
+  },
+  {
+    "expN": 8,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.4
+    },
+    "score": 6.043307147269943,
+    "sharpe": 0.950294464261524,
+    "winRate": 0.5347280334728034,
+    "avgPnl": 0.4417591608222943,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "activateAt",
+      "value": 0.4,
+      "reasoning": "Lower activation threshold allows trailing stop to engage sooner on micro-cap volatility, capturing more upside before stops trigger on noise while maintaining the sharp 6.18 score foundation."
+    }
+  },
+  {
+    "expN": 9,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 16,
+      "activateAt": 0.5
+    },
+    "score": 6.1658625878863855,
+    "sharpe": 0.9341244899630081,
+    "winRate": 0.5481171548117155,
+    "avgPnl": 0.4352575895754526,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "hardSlMaxPct",
+      "value": 16,
+      "reasoning": "Current best allows 15% max loss; increasing to 16% gives micro-cap volatility slightly more room while maintaining hard SL discipline, addressing the noise-sensitivity issue without abandoning stops like wider atrMult would."
+    }
+  },
+  {
+    "expN": 10,
+    "params": {
+      "atrMult": 2.6,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.103110852104552,
+    "sharpe": 0.8420756150918248,
+    "winRate": 0.5489539748953974,
+    "avgPnl": 0.3850665912093316,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "atrMult",
+      "value": 2.6,
+      "reasoning": "Current 2.7 is optimal but slightly tighter at 2.6 may reduce noise-driven stops on micro-caps while maintaining the 55% win rate that drives the 6.18 score."
+    }
+  },
+  {
+    "expN": 11,
+    "params": {
+      "atrMult": 2.8,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.5
+    },
+    "score": 6.1254171698040425,
+    "sharpe": 0.9592604212025049,
+    "winRate": 0.5422594142259414,
+    "avgPnl": 0.44638563388675406,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "atrMult",
+      "value": 2.8,
+      "reasoning": "Current best params show atrMult=2.7 is slightly tight for micro-cap volatility; incrementally wider trail to 2.8 should reduce whipsaw stops while maintaining profitability based on the 55% win rate stability across recent tests."
+    }
+  },
+  {
+    "expN": 12,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 17,
+      "activateAt": 0.5
+    },
+    "score": 6.159565960309318,
+    "sharpe": 0.9253970024660291,
+    "winRate": 0.5481171548117155,
+    "avgPnl": 0.4313918219182964,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "hardSlMaxPct",
+      "value": 17,
+      "reasoning": "Recent test with hardSlMaxPct=16 scored 6.17 (near-best), suggesting the ceiling can absorb larger swings on micro-caps; incrementally increasing to 17 may capture more volatile moves while maintaining Sharpe discipline."
+    }
+  },
+  {
+    "expN": 13,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 16,
+      "activateAt": 0.5
+    },
+    "score": 6.1658625878863855,
+    "sharpe": 0.9341244899630081,
+    "winRate": 0.5481171548117155,
+    "avgPnl": 0.4352575895754526,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "hardSlMaxPct",
+      "value": 16,
+      "reasoning": "Recent tests show hardSlMaxPct=16 scored 6.17 (nearly matching best), suggesting the optimal loss cap sits between 15-16; testing 16 as middle ground balances catastrophic loss prevention with trailing flexibility."
+    }
+  },
+  {
+    "expN": 14,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 16,
+      "activateAt": 0.5
+    },
+    "score": 6.1658625878863855,
+    "sharpe": 0.9341244899630081,
+    "winRate": 0.5481171548117155,
+    "avgPnl": 0.4352575895754526,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "hardSlMaxPct",
+      "value": 16,
+      "reasoning": "Recent tests show hardSlMaxPct=16 consistently matches best score (6.17) with stable 55% win rate, suggesting this is the optimal hard stop cap for micro-cap volatility."
+    }
+  },
+  {
+    "expN": 15,
+    "params": {
+      "atrMult": 2.7,
+      "hardSlAtrMult": 3,
+      "hardSlMinPct": 10,
+      "hardSlMaxPct": 15,
+      "activateAt": 0.4
+    },
+    "score": 6.043307147269943,
+    "sharpe": 0.950294464261524,
+    "winRate": 0.5347280334728034,
+    "avgPnl": 0.4417591608222943,
+    "trades": 1195,
+    "improved": false,
+    "proposal": {
+      "param": "activateAt",
+      "value": 0.4,
+      "reasoning": "Lower activation threshold captures more of the early momentum phase where micro-caps tend to have sharper moves, potentially improving win rate and average PnL without exposing to excessive noise."
+    }
   }
 ]
