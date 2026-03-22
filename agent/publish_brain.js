@@ -56,24 +56,50 @@ function summariseBrain(candidateFile) {
     const src = fs.readFileSync(path.join(AGENT_DIR, 'autoresearch', candidateFile), 'utf8');
     const signals = [];
 
-    if (src.includes('rsi')) {
+    // ── Relative strength signals ──────────────────────────────
+    if (src.includes('relStr7d') || src.includes('tokenRet7d')) signals.push('Relative strength vs BTC (7d)');
+    else if (src.includes('relStr4h') || src.includes('relStr') || src.includes('rs =')) signals.push('Relative strength vs BTC (4h)');
+
+    // ── RSI signals ───────────────────────────────────────────
+    if (src.includes('oversoldBounce')) {
+      signals.push('RSI oversold bounce + volume confirmation');
+    } else if (src.includes('rsi')) {
       const rsiMatch = src.match(/rsi\(prices,\s*(\d+)\)/);
       const period = rsiMatch ? rsiMatch[1] : '14';
       if (src.match(/rsi\w*\s*[>]\s*5[5-9]|rsi\w*\s*[>]\s*6\d/)) signals.push(`RSI(${period}) momentum zone`);
-      if (src.match(/rsi\w*\s*[<]\s*[34]\d/)) signals.push(`RSI oversold bounce`);
+      if (src.match(/rsi\w*\s*[<]\s*[34]\d/)) signals.push(`RSI(${period}) oversold bounce`);
     }
-    if (src.includes('relStrength') || src.includes('relativeStrength') || src.includes('rs =')) signals.push('Relative strength vs BTC');
-    if (src.includes('smartWallet') || src.includes('uniqueBuyers') || src.includes('transferStats')) signals.push('Smart wallet accumulation (Alchemy)');
-    if (src.includes('topBuyerConcentration')) signals.push('Whale concentration penalty');
-    if (src.includes('volumeBurst') || src.includes('volBurst') || src.includes('vol_burst')) signals.push('Volume burst detection');
-    if (src.includes('isMomentum') || src.includes('momentumAccel')) signals.push('Momentum regime detection');
-    if (src.includes('isMeanReversion') || src.includes('mean.reversion') || src.includes('meanRev')) signals.push('Mean-reversion filter');
-    if (src.includes('volatility') || src.includes('realizedVol')) signals.push('Volatility filter');
-    if (src.includes('ema(') || src.includes('sma(')) signals.push('Trend (EMA/SMA crossover)');
-    if (src.includes('btcPrices') || src.includes('btcRet')) signals.push('BTC correlation context');
-    if (src.includes('dual.regime') || src.includes('dualRegime') || src.includes('adaptiveWeight')) signals.push('Dual-regime adaptive weights');
 
-    return signals.slice(0, 6);
+    // ── Onchain / wallet signals ──────────────────────────────
+    if (src.includes('uniqueBuyers') && src.includes('repeatBuyers')) signals.push('Smart wallet accumulation (unique + repeat buyers)');
+    else if (src.includes('transferStats') || src.includes('uniqueBuyers')) signals.push('Onchain transfer stats (Alchemy)');
+    if (src.includes('topBuyerConcentration')) signals.push('Whale concentration penalty (>50% = red flag)');
+    if (src.includes('transferVelocity')) signals.push('Transfer velocity burst detection');
+
+    // ── Volatility / regime signals ───────────────────────────
+    if (src.includes('rangeCoil') || src.includes('coilBreakout')) signals.push('Range coil + breakout detection');
+    if (src.includes('realizedVol')) signals.push('Realized volatility regime filter');
+    if (src.includes('adaptiveVolThreshold')) signals.push('Adaptive volume threshold (momentum-scaled)');
+    else if (src.includes('volBurst') || src.includes('volSignal')) signals.push('Volume burst (directional-filtered)');
+
+    // ── Momentum signals ─────────────────────────────────────
+    if (src.includes('relAccel') || src.includes('momentumAccel')) signals.push('Momentum acceleration vs BTC');
+    if (src.includes('isMomentum') && src.includes('isMeanReversion')) signals.push('Dual-regime: momentum / mean-reversion');
+    else if (src.includes('isMomentum')) signals.push('Momentum regime detection');
+    if (src.includes('meanRev') || src.includes('meanReversionBoost')) signals.push('Mean-reversion Z-score filter');
+
+    // ── Trend / MA signals ────────────────────────────────────
+    if (src.includes('sma8') && src.includes('sma20')) signals.push('SMA(8/20) trend crossover');
+    else if (src.includes('ema(') || src.includes('sma(')) signals.push('EMA/SMA trend filter');
+
+    // ── BTC gate / correlation ────────────────────────────────
+    if (src.includes('btcGate')) signals.push('BTC gate (blocks entry on BTC breakdown)');
+    else if (src.includes('btcPrices') || src.includes('btcRet')) signals.push('BTC correlation context');
+
+    // ── Bounce / pullback ─────────────────────────────────────
+    if (src.includes('bounceSignal') || src.includes('coilBreakout')) signals.push('Coil breakout + pullback entry');
+
+    return signals.slice(0, 7);
   } catch { return []; }
 }
 
