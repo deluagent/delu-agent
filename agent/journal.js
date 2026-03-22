@@ -10,13 +10,55 @@
 
 'use strict';
 
-const fs   = require('fs');
-const path = require('path');
+const fs    = require('fs');
+const path  = require('path');
+const https = require('https');
 
 const POSITIONS_FILE  = path.join(__dirname, '../data/positions.json');
 const JOURNAL_FILE    = path.join(__dirname, '../data/trade_journal.jsonl');
 const SUMMARY_FILE    = path.join(__dirname, '../data/cycle_summary.md');
 const FEEDBACK_FILE   = path.join(__dirname, '../autoresearch/live_feedback.json');
+
+const WALLET = '0xed2ceca9de162c4f2337d7c1ab44ee9c427709da';
+
+/**
+ * Check actual on-chain token balance via Alchemy eth_call (balanceOf)
+ * Returns token balance as a number (in token units), or null on error
+ */
+async function getOnchainTokenBalance(contractAddress) {
+  const key = process.env.ALCHEMY_KEY;
+  if (!key || !contractAddress) return null;
+
+  // balanceOf(address) = 0x70a08231 + padded wallet address
+  const data = '0x70a08231' + WALLET.slice(2).padStart(64, '0');
+
+  return new Promise((resolve) => {
+    const body = JSON.stringify({
+      jsonrpc: '2.0', id: 1, method: 'eth_call',
+      params: [{ to: contractAddress, data }, 'latest'],
+    });
+    const req = https.request({
+      hostname: `base-mainnet.g.alchemy.com`,
+      path: `/v2/${key}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) },
+    }, res => {
+      let d = ''; res.on('data', c => d += c);
+      res.on('end', () => {
+        try {
+          const r = JSON.parse(d);
+          const hex = r.result;
+          if (!hex || hex === '0x') return resolve(0);
+          const bal = parseInt(hex, 16);
+          resolve(isNaN(bal) ? null : bal);
+        } catch { resolve(null); }
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.setTimeout(8000, () => { req.destroy(); resolve(null); });
+    req.write(body); req.end();
+  });
+}
 
 // ── Load / save positions ────────────────────────────────────
 function loadPositions() {
@@ -82,13 +124,31 @@ async function reconcilePositions(bankrBalanceResponse, currentPrices = {}) {
       }
 
       // For non-contract tokens (majors): if sym not in held list, position is closed
-      // For contract address tokens (MOLT etc): check if contract addr appears in balance,
-      // or if qty explicitly 0; if neither, assume stopped by Bankr since we can't verify
+      // For contract address tokens: verify via Alchemy balanceOf on-chain
       const isContractToken = !!pos.contractAddress;
       const isHeld = heldSymbols.has(sym.toUpperCase());
 
-      if (!isContractToken && !isHeld && heldSymbols.size > 0) {
-        // Bankr gave us a real balance list and this token isn't in it — stopped out
+      if (isContractToken && pos.contractAddress) {
+        // Check actual on-chain balance
+        const onchainBal = await getOnchainTokenBalance(pos.contractAddress);
+        if (onchainBal !== null && onchainBal === 0) {
+          // Zero balance on-chain — trade never executed or already sold
+          const pnlPct = currentPrice
+            ? ((currentPrice - pos.entryPrice) / pos.entryPrice * 100)
+            : null;
+          pos.status      = 'closed';
+          pos.closeReason = 'zero_balance';
+          pos.closedAt    = new Date().toISOString();
+          pos.closePrice  = currentPrice || null;
+          pos.pnlPct      = pnlPct;
+          closed.push(pos);
+          console.log(`[journal] ${sym} onchain balance=0 → marked closed (zero_balance)`);
+          continue;
+        } else if (onchainBal !== null && onchainBal > 0) {
+          console.log(`[journal] ${sym} onchain balance=${onchainBal} (raw) ✓ confirmed held`);
+        }
+      } else if (!isContractToken && !isHeld && heldSymbols.size > 0) {
+        // Bankr gave us a real balance list and this non-contract token isn't in it — stopped out
         const pnlPct = currentPrice
           ? ((currentPrice - pos.entryPrice) / pos.entryPrice * 100)
           : null;
