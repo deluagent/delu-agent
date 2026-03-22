@@ -730,7 +730,8 @@ async function runCycle() {
     const checkrSpikeList = Object.entries(checkrAttention)
       .filter(([, d]) => (d.velocity || 0) >= 3.0)
       .map(([sym, d]) => ({ symbol: sym, velocity: d.velocity }));
-    discoveredTokens = await discover(SYMBOLS, checkrSpikeList);
+    // Pass empty fixed list — discover() will use Checkr spikes + Bankr trending as the universe
+    discoveredTokens = await discover([], checkrSpikeList);
     if (discoveredTokens.length) {
       console.log(`[discover] ${discoveredTokens.length} discovery candidate(s) passed vetting:`);
       for (const d of discoveredTokens) {
