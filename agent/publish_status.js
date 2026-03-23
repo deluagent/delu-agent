@@ -160,28 +160,47 @@ async function buildStatus(regimeData, balanceStr = null) {
     }
   }
 
-  const openPositions = positions
+  const openPositions = await Promise.all(positions
     .filter(p => p.status === 'open')
-    .map(p => {
+    .map(async p => {
       const live       = liveBalanceMap[p.sym.toUpperCase()];
       const assessment = lastAssessments[p.sym.toUpperCase()];
       const entryUSD   = p.sizeUsd || p.sizeUSD || 0;
 
-      // Price priority: Alchemy (via positionAssessment) > Bankr balance > null
+      // Price priority: Alchemy (via positionAssessment) > GeckoTerminal > Bankr balance > null
       // Sanity check: if assessment price is >1000× entry price, it's stale/wrong — ignore it
       const rawAssessmentPrice = assessment?.currentPrice;
       const priceIsSane = rawAssessmentPrice && p.entryPrice > 0 &&
         rawAssessmentPrice < p.entryPrice * 1000 && rawAssessmentPrice > p.entryPrice * 0.001;
+
+      // GeckoTerminal fallback for microcaps not tracked by Alchemy
+      let geckoPrice = null;
+      if (!priceIsSane && p.contractAddress) {
+        try {
+          geckoPrice = await new Promise((res) => {
+            const https2 = require('https');
+            https2.get(`https://api.geckoterminal.com/api/v2/networks/base/tokens/${p.contractAddress}`,
+              { headers: { Accept: 'application/json' } }, r => {
+                let d = ''; r.on('data', c => d += c);
+                r.on('end', () => {
+                  try { const price = parseFloat(JSON.parse(d)?.data?.attributes?.price_usd); res(price > 0 ? price : null); }
+                  catch { res(null); }
+                });
+              }).on('error', () => res(null));
+          });
+        } catch { geckoPrice = null; }
+      }
+
       const currentPrice = (priceIsSane ? rawAssessmentPrice : null)
+        || geckoPrice
         || (live && entryUSD > 0 && p.entryPrice ? (live.valueUSD / entryUSD) * p.entryPrice : null);
 
-      // USD value: Bankr live balance is most accurate (real wallet value)
-      // Fall back to qty × price only if Bankr doesn't have the token
+      // USD value: price × qty is most reliable for microcaps
       const qty = p.qty || (p.entryPrice > 0 ? entryUSD / p.entryPrice : 0);
-      const currentUSD = live?.valueUSD
-        ? parseFloat(live.valueUSD.toFixed(2))
-        : (currentPrice && qty > 0)
-          ? parseFloat((currentPrice * qty).toFixed(2))
+      const currentUSD = (currentPrice && qty > 0)
+        ? parseFloat((currentPrice * qty).toFixed(2))
+        : live?.valueUSD
+          ? parseFloat(live.valueUSD.toFixed(2))
           : entryUSD;
 
       const pnlUSD = parseFloat((currentUSD - entryUSD).toFixed(2));
@@ -211,7 +230,7 @@ async function buildStatus(regimeData, balanceStr = null) {
         ret1h:           assessment?.ret1h           != null ? parseFloat((assessment.ret1h * 100).toFixed(2)) : null,
         transferStats:   assessment?.transferStats   || null,
       };
-    });
+    }));
 
   // Liquid USDC from live Bankr balance
   const liquidUSDC = liveBalanceMap['USDC']?.valueUSD ?? 0;
