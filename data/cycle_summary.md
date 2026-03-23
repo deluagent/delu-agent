@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-23 01:27 UTC — BUY SAIRI (80% conf)
+**Regime:** BEAR | BTC $68102 | -4.7% from 200d MA
+**Venice:** "SAIRI has a high onchain trend score of 1.00, indicating strong momentum and a high rank, with a significant velocity spike and sustained social attention, making it a compelling buy candidate in the …"
+**Discovered:** TIBBIR(score=0.30 ret1h=0.0%) · TOSHI(score=0.23 ret1h=0.0%) · ROBOTMONEY(score=0.64 ret1h=0.0%) · DRB(score=0.43 ret1h=0.0%)
+**Positions:** none
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-23 01:18 UTC — BUY SAIRI (80% conf)
 **Regime:** BEAR | BTC $67874 | -5.0% from 200d MA
 **Venice:** "SAIRI has a high onchain trend score of 1.00, indicating strong conviction and multi-timeframe signal alignment, making it a promising buy opportunity in the current BEAR regime."
