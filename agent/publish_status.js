@@ -298,16 +298,22 @@ async function buildStatus(regimeData, balanceStr = null) {
   const closedTrades = feedback
     .filter(f => f.pnlPct != null)
     .slice(-10)
-    .map(t => ({
-      sym:       t.sym,
-      pnlPct:    parseFloat((t.pnlPct || 0).toFixed(2)),
-      won:       t.won,
-      regime:    t.regime,
-      entryTx:   t.entryTx || null,
-      exitTx:    t.exitTx || null,
-      openedAt:  t.openedAt,
-      closedAt:  t.closedAt,
-    }));
+    .map(t => {
+      const sizeUsd = t.sizeUsd || 10; // all trades ~$10
+      const pnlUSD  = parseFloat(((t.pnlPct || 0) / 100 * sizeUsd).toFixed(2));
+      return {
+        sym:       t.sym,
+        pnlPct:    parseFloat((t.pnlPct || 0).toFixed(2)),
+        pnlUSD,
+        sizeUsd,
+        won:       t.won,
+        regime:    t.regime,
+        entryTx:   t.entryTx || null,
+        exitTx:    t.exitTx || null,
+        openedAt:  t.openedAt,
+        closedAt:  t.closedAt,
+      };
+    });
 
   const winCount = closedTrades.filter(t => t.won).length;
 
