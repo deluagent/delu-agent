@@ -35,7 +35,7 @@ function extractBreakthroughs(exps, metric) {
   const out = [];
   exps.forEach(e => {
     const score = e[metric] ?? e.score ?? -999;
-    if (e.accepted && score > best && score > 0) {
+    if ((e.accepted || e.improved) && score > best && score > 0) {
       best = score;
       const desc = e.description &&
         !e.description.startsWith('exp ') &&
@@ -118,7 +118,7 @@ function run() {
 
   LOOPS.forEach(({ file, name, metric, candidate, color, stateFile }) => {
     const exps = readJSON(path.join(AGENT_DIR, 'autoresearch', file), []);
-    const accepted = exps.filter(e => e.accepted && (e[metric] ?? e.score ?? -999) > 0);
+    const accepted = exps.filter(e => (e.accepted || e.improved) && (e[metric] ?? e.score ?? -999) > 0);
     const bts = extractBreakthroughs(exps, metric);
     const bestScore = bts.length ? bts[bts.length - 1].score : 0;
     const signals = summariseBrain(candidate);
