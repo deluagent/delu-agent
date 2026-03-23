@@ -332,5 +332,23 @@
     "confidence": 80,
     "contractAddress": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
     "kellyFraction": 22
+  },
+  {
+    "sym": "SAIRI",
+    "entryPrice": 0.00000993,
+    "sizeUsd": 80,
+    "trailPct": 5,
+    "activateAt": 1,
+    "hardSlPct": 3,
+    "peakPrice": 0.00000993,
+    "peakPct": 0,
+    "openedAt": "2026-03-23T00:52:00.000Z",
+    "timeStopAt": "2026-03-26T00:52:00.000Z",
+    "status": "open",
+    "regime": "BEAR",
+    "confidence": 80,
+    "contractAddress": "0xde61878b0b21ce395266c44d4d548d1c72a3eb07",
+    "qty": 1988842,
+    "note": "Position reconstructed — bought across 8 cycles before confirmation fix"
   }
 ]
