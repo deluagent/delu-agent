@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-23 00:57 UTC — BUY SAIRI (80% conf)
+**Regime:** BEAR | BTC $67678 | -5.3% from 200d MA
+**Venice:** "SAIRI has a high score of 1.00, indicating strong onchain trending activity, and its move is likely not fully done, suggesting potential for further growth."
+**Discovered:** TIBBIR(score=0.25 ret1h=0.0%) · ROBOTMONEY(score=0.32 ret1h=0.0%) · REPPO(score=0.32 ret1h=0.0%) · DRB(score=0.53 ret1h=0.0%)
+**Positions:** none
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-23 00:52 UTC — BUY SAIRI (80% conf)
 **Regime:** BEAR | BTC $67796 | -5.2% from 200d MA
 **Venice:** "SAIRI has a high onchain trend score of 1.00, indicating strong momentum and a high likelihood of continued growth. The token's velocity spike and sustained social attention also support a buy decisio…"
