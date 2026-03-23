@@ -384,5 +384,22 @@
     "closedAt": "2026-03-23T04:17:22.899Z",
     "closePrice": 9.509e-7,
     "pnlPct": -60.94
+  },
+  {
+    "sym": "CASHCLAW",
+    "entryPrice": 0.0000039803,
+    "sizeUsd": 10,
+    "trailPct": 5,
+    "activateAt": 1,
+    "hardSlPct": 3,
+    "peakPrice": 0.0000039803,
+    "peakPct": 0,
+    "openedAt": "2026-03-23T04:19:23.254Z",
+    "timeStopAt": "2026-03-26T04:19:23.254Z",
+    "status": "open",
+    "regime": "BEAR",
+    "confidence": 80,
+    "contractAddress": "0x45b9a03a05f86088cd1a00874a05dda2c6915ba3",
+    "kellyFraction": 22
   }
 ]

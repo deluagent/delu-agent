@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-23 04:16 UTC — BUY CASHCLAW (80% conf)
+**Regime:** BEAR | BTC $68168 | -4.6% from 200d MA
+**Venice:** "CASHCLAW has a high onchain trend score of 0.58, strong buyer ratio of 0.61, and a significant 1-hour return of 7.7%, indicating a strong conviction to buy."
+**Discovered:** CASHCLAW(score=0.58 ret1h=7.7%) · TIBBIR(score=0.21 ret1h=0.0%) · TOSHI(score=0.32 ret1h=0.0%) · SAIRI(score=0.80 ret1h=0.0%)
+**Positions:** VVV +0.5%, SAIRI +-1.8%, CASHCLAW +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-23 04:05 UTC — BUY CASHCLAW (72% conf)
 **Regime:** BEAR | BTC $68125 | -4.6% from 200d MA
 **Venice:** "CASHCLAW has a score of 0.58 and a high buy ratio of 0.66, indicating strong onchain momentum and buyer interest. The token's 1-hour return of 7.7% also suggests a positive trend."

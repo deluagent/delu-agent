@@ -30,3 +30,4 @@
 {"type":"open","sym":"SAIRI","entryPrice":0.00000968,"sizeUsd":10,"openedAt":"2026-03-23T03:10:24.419Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-23T03:10:24.419Z"}
 {"type":"open","sym":"CASHCLAW","entryPrice":0.000003946,"sizeUsd":10,"openedAt":"2026-03-23T03:37:14.039Z","signals":null,"regime":"BEAR","confidence":70,"ts":"2026-03-23T03:37:14.039Z"}
 {"type":"open","sym":"CASHCLAW","entryPrice":9.23362e-7,"sizeUsd":10,"openedAt":"2026-03-23T04:07:50.571Z","signals":null,"regime":"BEAR","confidence":72,"ts":"2026-03-23T04:07:50.572Z"}
+{"type":"open","sym":"CASHCLAW","entryPrice":0.0000039803,"sizeUsd":10,"openedAt":"2026-03-23T04:19:23.254Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-23T04:19:23.255Z"}
