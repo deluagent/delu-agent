@@ -990,7 +990,7 @@ What is your allocation decision?`;
     console.log(`[venice] Privacy: ${decision.tee_quote === 'e2ee-encrypted' ? '✓ E2EE (inference encrypted)' : '✗ no privacy layer'}`);
   } catch (e) {
     console.error('[venice] Failed:', e.message);
-    decision = { action: 'hold', asset: 'USDC', size_pct: 0, confidence: 0, reasoning: `Venice unavailable: ${e.message}`, tee_quote: null, layers_used: ['bankr-screen', 'venice-failed'], screen };
+    decision = { action: 'hold', asset: 'USDC', size_pct: 0, confidence: 0, reasoning: `Private inference temporarily unavailable — holding this cycle`, tee_quote: null, layers_used: ['bankr-screen', 'venice-failed'], screen };
   }
 
   // 7. Execute
