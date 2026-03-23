@@ -171,10 +171,11 @@ async function buildStatus(regimeData, balanceStr = null) {
       const currentPrice = assessment?.currentPrice
         || (live && entryUSD > 0 && p.entryPrice ? (live.valueUSD / entryUSD) * p.entryPrice : null);
 
-      // USD value priority: Bankr balance > derive from Alchemy price > entry
+      // USD value: use position qty × current price (not wallet balance which may include duplicate buys)
       const qty = p.qty || (p.entryPrice > 0 ? entryUSD / p.entryPrice : 0);
-      const currentUSD = live?.valueUSD
-        || (currentPrice && qty > 0 ? currentPrice * qty : entryUSD);
+      const currentUSD = (currentPrice && qty > 0)
+        ? parseFloat((currentPrice * qty).toFixed(2))
+        : (live?.valueUSD || entryUSD);
 
       const pnlUSD = parseFloat((currentUSD - entryUSD).toFixed(2));
       const pnlPct = entryUSD > 0 ? parseFloat((pnlUSD / entryUSD * 100).toFixed(2)) : 0;
