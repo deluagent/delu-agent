@@ -207,8 +207,8 @@ async function buildStatus(regimeData, balanceStr = null) {
   // Liquid USDC from live Bankr balance
   const liquidUSDC = liveBalanceMap['USDC']?.valueUSD ?? 0;
 
-  // Yield position — show actual liquid USDC (ready to deploy)
-  const yieldPosition = {
+  // Yield position — fetch live from Bankr
+  let yieldPosition = {
     protocol:  'Bankr Wallet',
     vault:     'Liquid USDC',
     chain:     'Base',
@@ -216,6 +216,20 @@ async function buildStatus(regimeData, balanceStr = null) {
     apy:       0,
     note:      'Liquid USDC available for next trade entry',
   };
+  try {
+    const bankr = require('./bankr');
+    const ys = await bankr.getYieldState();
+    if (ys?.hasYield) {
+      yieldPosition = {
+        protocol:  ys.protocol || 'Bankr Yield',
+        vault:     ys.vault    || ys.protocol || 'Yield Vault',
+        chain:     'Base',
+        amountUSD: parseFloat((ys.amountUSD || 0).toFixed(2)),
+        apy:       parseFloat((ys.apy || 0).toFixed(2)),
+        note:      `Active yield position — ${(ys.apy||0).toFixed(2)}% APY`,
+      };
+    }
+  } catch(e) { /* fallback to liquid USDC */ }
 
   // Last cycle summary
     const decision = lastCycle?.decision || {};
