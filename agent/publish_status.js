@@ -175,11 +175,14 @@ async function buildStatus(regimeData, balanceStr = null) {
       const currentPrice = (priceIsSane ? rawAssessmentPrice : null)
         || (live && entryUSD > 0 && p.entryPrice ? (live.valueUSD / entryUSD) * p.entryPrice : null);
 
-      // USD value: use position qty × current price (not wallet balance which may include duplicate buys)
+      // USD value: Bankr live balance is most accurate (real wallet value)
+      // Fall back to qty × price only if Bankr doesn't have the token
       const qty = p.qty || (p.entryPrice > 0 ? entryUSD / p.entryPrice : 0);
-      const currentUSD = (currentPrice && qty > 0)
-        ? parseFloat((currentPrice * qty).toFixed(2))
-        : (live?.valueUSD || entryUSD);
+      const currentUSD = live?.valueUSD
+        ? parseFloat(live.valueUSD.toFixed(2))
+        : (currentPrice && qty > 0)
+          ? parseFloat((currentPrice * qty).toFixed(2))
+          : entryUSD;
 
       const pnlUSD = parseFloat((currentUSD - entryUSD).toFixed(2));
       const pnlPct = entryUSD > 0 ? parseFloat((pnlUSD / entryUSD * 100).toFixed(2)) : 0;
