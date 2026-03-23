@@ -123,6 +123,7 @@ function scoreEntry(token, rank, ohlcv, priorRanks, priorSnap, transferStats) {
   const prices  = ohlcv.map(b => b[4]);  // close
   const volumes = ohlcv.map(b => b[5]);  // volume
   const highs   = ohlcv.map(b => b[2]);  // high
+  const lows    = ohlcv.map(b => b[3]);  // low
 
   // Simple price stats for context display
   const now  = prices[n - 1];
@@ -140,6 +141,7 @@ function scoreEntry(token, rank, ohlcv, priorRanks, priorSnap, transferStats) {
     prices,
     volumes,
     highs,
+    lows,
     flowSignal: 0, // no perp funding for Base microcaps — neutral
     uniqueBuyers:  transferStats?.uniqueBuyers  ?? null,
     uniqueSellers: transferStats?.uniqueSellers ?? null,
