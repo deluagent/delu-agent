@@ -29,15 +29,18 @@ Every 30 minutes:
 Bankr LLM → market regime (BTC/ETH trend + breadth) + Base trending tokens
       ↓
 Parallel enrichment:
-  Checkr (x402)   → 4-window social attention score (1h/4h/8h/12h)
+  Checkr (x402)   → 4-window social attention (1h/4h/8h/12h) + spikes + rotation graph
   Alchemy         → hourly prices, transfer stats, whale/bot detection
   GeckoTerminal   → DEX liquidity, buy/sell flows
       ↓
 Rug filter        → drop low-liquidity, bot-washed, dev-dumped tokens
       ↓
-Quant scoring     → evolved model (9,000+ experiments, 33 breakthroughs)
+Bankr LLM         → pre-screen shortlist (regime-aware, with social/onchain context)
       ↓
-Venice AI         → private E2EE reasoning over all signals (llama-3.3-70b)
+Quant scoring     → evolved model (9,000+ experiments, 33 breakthroughs)
+Multi-TF fusion   → 5m + 1h + 4h + onchain signal blend
+      ↓
+Venice AI         → private E2EE reasoning over full signal stack (llama-3.3-70b)
       ↓
 Bankr             → execute swap + set ATR trailing stop
 ```
@@ -69,9 +72,9 @@ All final trade decisions go through [Venice AI](https://venice.ai) — private,
 
 ### ATR trailing stops
 Stops are dynamic, not fixed:
-- Stop = peak − 2.5 × ATR(14) from 1h bars
+- Trail = peak − 2.7 × ATR(14) from 1h bars
 - Activates at +0.69% gain
-- Hard floor at entry − 10% (min) to entry − 15% (max)
+- Hard stop-loss = entry − 2.4 × ATR, floored at entry − 10% (min), entry − 14.98% (max)
 - Falls back to 5% fixed trail if ATR unavailable
 - 72h time stop — no bag holding
 
@@ -86,7 +89,7 @@ Stops are dynamic, not fixed:
 | Fusion | Blends all three loops | 1,800+ |
 | Stops | ATR/trail parameter search | 1,300+ |
 
-Each experiment: LLM proposes a code change → backtest on holdout data → accept if validation Sharpe improves → promote to live agent.  
+Each experiment: LLM proposes a code change → backtest on holdout data → accept if combined score improves (`0.7 × val_Sharpe + 0.3 × audit_Sharpe`) → promote to live agent.  
 All LLM calls use **Bankr LLM Gateway** (claude-haiku-4-5).
 
 ### Self-funding compute
@@ -125,8 +128,10 @@ agent/
   multi_tf_score.js   — multi-timeframe signal fusion
   position_monitor.js — ATR trailing stop management + exit execution
   trending_entry.js   — onchain momentum signal for Base trending tokens
-  discover.js         — token discovery pipeline
-  kelly.js            — Kelly criterion position sizing
+  discover.js         — Bankr + GeckoTerminal token discovery pipeline
+  discover_alchemy.js — Alchemy-based token discovery (transfer velocity, holder growth)
+  multi_tf_score.js   — multi-timeframe signal fusion (5m + 1h + 4h + onchain)
+  kelly.js            — Half-Kelly position sizing (calibrates to live win rate)
   journal.js          — position tracking + trade journal
   publish_status.js   — pushes live data to dashboard after each cycle
   publish_brain.js    — pushes autoresearch state to dashboard
@@ -137,11 +142,9 @@ autoresearch/
   loop_5m.js          — self-improving loop on 5m data
   loop_fusion.js      — meta-loop: evolves weights across all signal types
   loop_stops.js       — optimises ATR stop parameters
-  candidate_onchain.js   — current best onchain scoring function
-  candidate_hourly.js    — current best hourly scoring function
-  candidate_5m.js        — current best 5m scoring function
   evaluate.js            — backtester (Binance data)
   evaluate_onchain.js    — backtester (Base/Alchemy data)
+  # scoring functions and experiment logs kept private
 
 scripts/
   watchdog.js         — monitors all loops, restarts if dead
