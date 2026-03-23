@@ -61,25 +61,5 @@
     "openedAt": "2026-03-22T19:04:50.123Z",
     "closedAt": "2026-03-22T20:32:00.000Z",
     "note": "Real winner: bought ~$20, sold ~$44. Onchain trend + social spike combination confirmed. +121% in 90 min"
-  },
-  {
-    "sym": "CASHCLAW",
-    "pnlPct": -75.9,
-    "won": false,
-    "regime": "BEAR",
-    "signals": {},
-    "openedAt": "2026-03-23T03:37:14.039Z",
-    "closedAt": "2026-03-23T04:05:48.245Z",
-    "reason": "atr_stop"
-  },
-  {
-    "sym": "CASHCLAW",
-    "pnlPct": -60.94,
-    "won": false,
-    "regime": "BEAR",
-    "signals": {},
-    "openedAt": "2026-03-23T03:37:14.039Z",
-    "closedAt": "2026-03-23T04:17:22.899Z",
-    "reason": "atr_stop"
   }
 ]

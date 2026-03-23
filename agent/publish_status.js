@@ -302,12 +302,11 @@ async function buildStatus(regimeData, balanceStr = null) {
     })),
   };
 
-  // Closed trades from feedback
-  const closedTrades = feedback
+  // Closed trades from feedback — dedupe same symbol, keep most recent per sym
+  const rawClosed = feedback
     .filter(f => f.pnlPct != null)
-    .slice(-10)
     .map(t => {
-      const sizeUsd = t.sizeUsd || 10; // all trades ~$10
+      const sizeUsd = t.sizeUsd || 10;
       const pnlUSD  = parseFloat(((t.pnlPct || 0) / 100 * sizeUsd).toFixed(2));
       return {
         sym:       t.sym,
@@ -322,6 +321,15 @@ async function buildStatus(regimeData, balanceStr = null) {
         closedAt:  t.closedAt,
       };
     });
+  // Dedupe: for same symbol keep only the entry with best (highest) pnlPct
+  const symBest = new Map();
+  for (const t of rawClosed) {
+    const existing = symBest.get(t.sym);
+    if (!existing || t.pnlPct > existing.pnlPct) symBest.set(t.sym, t);
+  }
+  const closedTrades = [...symBest.values()]
+    .sort((a, b) => new Date(b.closedAt ?? 0).getTime() - new Date(a.closedAt ?? 0).getTime())
+    .slice(0, 10);
 
   const winCount = closedTrades.filter(t => t.won).length;
 
