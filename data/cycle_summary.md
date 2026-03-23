@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-23 04:35 UTC — BUY SAIRI (80% conf)
+**Regime:** BEAR | BTC $68279 | -4.4% from 200d MA
+**Venice:** "SAIRI has a high onchain trend score of 0.80, indicating strong momentum and a high rank among trending tokens, with a significant number of buyers and a high buy ratio, suggesting a potential for fur…"
+**Discovered:** TIBBIR(score=0.26 ret1h=0.0%) · TOSHI(score=0.43 ret1h=0.0%) · DRB(score=0.40 ret1h=0.0%) · KELLYCLAUDE(score=0.53 ret1h=0.0%)
+**Positions:** VVV +0.5%, SAIRI +-1.8%, CASHCLAW +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-23 04:16 UTC — BUY CASHCLAW (80% conf)
 **Regime:** BEAR | BTC $68168 | -4.6% from 200d MA
 **Venice:** "CASHCLAW has a high onchain trend score of 0.58, strong buyer ratio of 0.61, and a significant 1-hour return of 7.7%, indicating a strong conviction to buy."
