@@ -76,8 +76,8 @@ function scoreToken(data) {
   const relAccel   = (tokenRet4h - btcRet4h) - (tokenRet8h - btcRet8h);
 
   // ── Range compression detection ──────────────────────────────
-  const range4h = highs.slice(-4).reduce((m, h, i) => m + (h - (lows[n-4+i] ?? h)), 0) / 4;
-  const range48h = highs.slice(-48).reduce((m, h, i) => m + (h - (lows[Math.max(0,n-48+i)] ?? h)), 0) / 48;
+  const range4h = highs.slice(-4).reduce((m, h, i) => { const idx = n-4+i; return m + (h - (idx >= 0 ? (lows[idx] ?? h) : h)); }, 0) / 4;
+  const range48h = highs.slice(-48).reduce((m, h, i) => { const idx = n-48+i; return m + (h - (idx >= 0 ? (lows[idx] ?? h) : h)); }, 0) / 48;
   const rangeCoil = 1 - (range4h / (range48h || range4h || 1));
 
   // ── Volatility regime filter (avoid chop) ─────────────────────
