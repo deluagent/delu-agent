@@ -22024,5 +22024,5589 @@
     "accepted": false,
     "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
     "ts": 1774138330999
+  },
+  {
+    "n": 1635,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197304841
+  },
+  {
+    "n": 1636,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197310311
+  },
+  {
+    "n": 1637,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197315786
+  },
+  {
+    "n": 1638,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197321255
+  },
+  {
+    "n": 1639,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197326756
+  },
+  {
+    "n": 1640,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197332221
+  },
+  {
+    "n": 1641,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197337685
+  },
+  {
+    "n": 1642,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197343151
+  },
+  {
+    "n": 1643,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Insufficient LLM Gate",
+    "ts": 1774197348778
+  },
+  {
+    "n": 1644,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.4342,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array (unreliable signal) and strengthen volume surprise detection by pe",
+    "ts": 1774197361367
+  },
+  {
+    "n": 1645,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Bankr LLM error: {\"message\":\"Too many requests for",
+    "ts": 1774197366841
+  },
+  {
+    "n": 1646,
+    "valSharpe": 2.6221,
+    "isSharpe": 0.6354,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and strengthen volume surprise detection by increasing ",
+    "ts": 1774197380760
+  },
+  {
+    "n": 1647,
+    "valSharpe": 4.1346,
+    "isSharpe": 1.3115,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and strengthen volume surprise detection by penalizing ",
+    "ts": 1774197394847
+  },
+  {
+    "n": 1648,
+    "valSharpe": 3.7159,
+    "isSharpe": 1.4119,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and strengthen volume surprise detection by penalizing ",
+    "ts": 1774197415822
+  },
+  {
+    "n": 1649,
+    "valSharpe": 3.8647,
+    "isSharpe": 1.4268,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array (unreliable with sparse data) and replace with volume surprise det",
+    "ts": 1774197429917
+  },
+  {
+    "n": 1650,
+    "valSharpe": 3.8199,
+    "isSharpe": 1.5196,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection penalizing l",
+    "ts": 1774197446549
+  },
+  {
+    "n": 1651,
+    "valSharpe": 4.0803,
+    "isSharpe": 1.2805,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace volume surge detection with OBV divergence ",
+    "ts": 1774197460098
+  },
+  {
+    "n": 1652,
+    "valSharpe": 3.7605,
+    "isSharpe": 1.3966,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection penalizing l",
+    "ts": 1774197474174
+  },
+  {
+    "n": 1653,
+    "valSharpe": 3.9407,
+    "isSharpe": 1.6354,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection penalizing l",
+    "ts": 1774197488000
+  },
+  {
+    "n": 1654,
+    "valSharpe": 3.8939,
+    "isSharpe": 1.4267,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and strengthen volume surprise detection by penalizing ",
+    "ts": 1774197501441
+  },
+  {
+    "n": 1655,
+    "valSharpe": 3.8744,
+    "isSharpe": 1.3664,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surge detection penalizing low-",
+    "ts": 1774197515489
+  },
+  {
+    "n": 1656,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array and replace with volume trend detection penalizing declining volum",
+    "ts": 1774197529285
+  },
+  {
+    "n": 1657,
+    "valSharpe": 3.4583,
+    "isSharpe": 1.5721,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array and replace with volume trend detection penalizing declining volum",
+    "ts": 1774197542971
+  },
+  {
+    "n": 1658,
+    "valSharpe": 3.5265,
+    "isSharpe": 1.5884,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume trend detection penalizing declining volum",
+    "ts": 1774197556693
+  },
+  {
+    "n": 1659,
+    "valSharpe": 3.8199,
+    "isSharpe": 1.5189,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise detection that penalizes abnormal",
+    "ts": 1774197571005
+  },
+  {
+    "n": 1660,
+    "valSharpe": 3.2805,
+    "isSharpe": 1.4013,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise detection that penalizes abnormal",
+    "ts": 1774197586393
+  },
+  {
+    "n": 1661,
+    "valSharpe": 3.8608,
+    "isSharpe": 1.3615,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume trend detection that penalizes declining v",
+    "ts": 1774197600265
+  },
+  {
+    "n": 1662,
+    "valSharpe": 3.6062,
+    "isSharpe": 1.2625,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume trend detection penalizing decl",
+    "ts": 1774197617165
+  },
+  {
+    "n": 1663,
+    "valSharpe": 3.2034,
+    "isSharpe": 0.9817,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-weighted momentum confirmation that boosts",
+    "ts": 1774197631597
+  },
+  {
+    "n": 1664,
+    "valSharpe": 4.021,
+    "isSharpe": 1.1286,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty and replace with volume-price momentum confirmation that boosts score ",
+    "ts": 1774197645930
+  },
+  {
+    "n": 1665,
+    "valSharpe": 3.6062,
+    "isSharpe": 1.2625,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume trend detection that penalizes ",
+    "ts": 1774197659835
+  },
+  {
+    "n": 1666,
+    "valSharpe": 4.1443,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197673952
+  },
+  {
+    "n": 1667,
+    "valSharpe": 2.6724,
+    "isSharpe": 1.2057,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with OBV trend confirmation that boosts score only when volu",
+    "ts": 1774197687967
+  },
+  {
+    "n": 1668,
+    "valSharpe": 3.8199,
+    "isSharpe": 1.3686,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197702154
+  },
+  {
+    "n": 1669,
+    "valSharpe": 3.0936,
+    "isSharpe": 1.1741,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted price acceleration con",
+    "ts": 1774197716196
+  },
+  {
+    "n": 1670,
+    "valSharpe": 4.1505,
+    "isSharpe": 1.1862,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197730172
+  },
+  {
+    "n": 1671,
+    "valSharpe": 3.8776,
+    "isSharpe": 1.3099,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume trend confirmation that penaliz",
+    "ts": 1774197744308
+  },
+  {
+    "n": 1672,
+    "valSharpe": 3.0193,
+    "isSharpe": 0.9313,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted momentum acceleration ",
+    "ts": 1774197758600
+  },
+  {
+    "n": 1673,
+    "valSharpe": 2.8724,
+    "isSharpe": 1.0226,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume-weighted momentum confirmation that requires bot",
+    "ts": 1774197772720
+  },
+  {
+    "n": 1674,
+    "valSharpe": 3.8199,
+    "isSharpe": 1.3686,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197786590
+  },
+  {
+    "n": 1675,
+    "valSharpe": 4.1393,
+    "isSharpe": 1.3122,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197801202
+  },
+  {
+    "n": 1676,
+    "valSharpe": 3.445,
+    "isSharpe": 1.4738,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197815014
+  },
+  {
+    "n": 1677,
+    "valSharpe": 3.9889,
+    "isSharpe": 1.5745,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume trend confirmation that penaliz",
+    "ts": 1774197829179
+  },
+  {
+    "n": 1678,
+    "valSharpe": 3.999,
+    "isSharpe": 1.3297,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with OBV divergence confirmation that boosts score when volu",
+    "ts": 1774197842589
+  },
+  {
+    "n": 1679,
+    "valSharpe": 4.0289,
+    "isSharpe": 1.137,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-trend confirmation that boosts ",
+    "ts": 1774197856703
+  },
+  {
+    "n": 1680,
+    "valSharpe": 2.4418,
+    "isSharpe": 1.3005,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume trend confirmation that boosts ",
+    "ts": 1774197870703
+  },
+  {
+    "n": 1681,
+    "valSharpe": 4.1105,
+    "isSharpe": 1.3013,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise detection that penaliz",
+    "ts": 1774197884571
+  },
+  {
+    "n": 1682,
+    "valSharpe": 3.8729,
+    "isSharpe": 1.314,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price divergence detection that penalizes ",
+    "ts": 1774197900536
+  },
+  {
+    "n": 1683,
+    "valSharpe": 3.8226,
+    "isSharpe": 1.4739,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence detection that",
+    "ts": 1774197914602
+  },
+  {
+    "n": 1684,
+    "valSharpe": 3.9614,
+    "isSharpe": 1.3716,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence detection that",
+    "ts": 1774197929281
+  },
+  {
+    "n": 1685,
+    "valSharpe": 4.0606,
+    "isSharpe": 1.4517,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise detection that penalizes unexpect",
+    "ts": 1774197943985
+  },
+  {
+    "n": 1686,
+    "valSharpe": 3.9043,
+    "isSharpe": 1.4283,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise detection that penalizes unexpect",
+    "ts": 1774197958402
+  },
+  {
+    "n": 1687,
+    "valSharpe": 4.1269,
+    "isSharpe": 1.3456,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with OBV divergence strength metric that rewards volum",
+    "ts": 1774197972038
+  },
+  {
+    "n": 1688,
+    "valSharpe": 4.162,
+    "isSharpe": 1.3505,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence detection that",
+    "ts": 1774197988680
+  },
+  {
+    "n": 1689,
+    "valSharpe": 3.5969,
+    "isSharpe": 1.1122,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array and replace with volume-price divergence strength that rewards acc",
+    "ts": 1774198004069
+  },
+  {
+    "n": 1690,
+    "valSharpe": 3.9603,
+    "isSharpe": 1.369,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence strength that ",
+    "ts": 1774198018466
+  },
+  {
+    "n": 1691,
+    "valSharpe": 3.767,
+    "isSharpe": 1.2167,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence strength that ",
+    "ts": 1774198032873
+  },
+  {
+    "n": 1692,
+    "valSharpe": 4.0847,
+    "isSharpe": 1.2813,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence strength that ",
+    "ts": 1774198048507
+  },
+  {
+    "n": 1693,
+    "valSharpe": 3.4865,
+    "isSharpe": 1.507,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes abnormally ",
+    "ts": 1774198062935
+  },
+  {
+    "n": 1694,
+    "valSharpe": 3.5041,
+    "isSharpe": 1.5376,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198076850
+  },
+  {
+    "n": 1695,
+    "valSharpe": 3.8199,
+    "isSharpe": 1.5189,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198090888
+  },
+  {
+    "n": 1696,
+    "valSharpe": 4.0606,
+    "isSharpe": 1.4441,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array (unreliable signal) and replace with volume surprise metric that p",
+    "ts": 1774198105531
+  },
+  {
+    "n": 1697,
+    "valSharpe": 2.5695,
+    "isSharpe": 1.0894,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price divergence strength that measures co",
+    "ts": 1774198120882
+  },
+  {
+    "n": 1698,
+    "valSharpe": 3.8199,
+    "isSharpe": 1.5189,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198135673
+  },
+  {
+    "n": 1699,
+    "valSharpe": 3.4865,
+    "isSharpe": 1.507,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198149896
+  },
+  {
+    "n": 1700,
+    "valSharpe": 3.8681,
+    "isSharpe": 1.5103,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198163624
+  },
+  {
+    "n": 1701,
+    "valSharpe": 3.2605,
+    "isSharpe": 1.1984,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198177882
+  },
+  {
+    "n": 1702,
+    "valSharpe": 3.5581,
+    "isSharpe": 1.4807,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198191813
+  },
+  {
+    "n": 1703,
+    "valSharpe": 3.8958,
+    "isSharpe": 1.5684,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198205873
+  },
+  {
+    "n": 1704,
+    "valSharpe": 3.6451,
+    "isSharpe": 1.3624,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198220065
+  },
+  {
+    "n": 1705,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "Remove ATR penalty on highs array and replace with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198239271
+  },
+  {
+    "n": 1706,
+    "valSharpe": 3.7331,
+    "isSharpe": 1.4059,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198253827
+  },
+  {
+    "n": 1707,
+    "valSharpe": 4.0925,
+    "isSharpe": 1.4306,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198267840
+  },
+  {
+    "n": 1708,
+    "valSharpe": 3.9597,
+    "isSharpe": 1.3663,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198282786
+  },
+  {
+    "n": 1709,
+    "valSharpe": 3.9613,
+    "isSharpe": 1.2172,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with OBV momentum confirmation that boosts score only ",
+    "ts": 1774198296836
+  },
+  {
+    "n": 1710,
+    "valSharpe": 3.9126,
+    "isSharpe": 1.4442,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198314337
+  },
+  {
+    "n": 1711,
+    "valSharpe": 4.076,
+    "isSharpe": 1.265,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198328737
+  },
+  {
+    "n": 1712,
+    "valSharpe": 3.6214,
+    "isSharpe": 1.2528,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198342985
+  },
+  {
+    "n": 1713,
+    "valSharpe": 3.3843,
+    "isSharpe": 1.479,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198358346
+  },
+  {
+    "n": 1714,
+    "valSharpe": 4.0104,
+    "isSharpe": 1.2908,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198375000
+  },
+  {
+    "n": 1715,
+    "valSharpe": 3.6264,
+    "isSharpe": 1.3729,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence filter that pe",
+    "ts": 1774198389319
+  },
+  {
+    "n": 1716,
+    "valSharpe": 3.5332,
+    "isSharpe": 1.4989,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198403495
+  },
+  {
+    "n": 1717,
+    "valSharpe": 4.1372,
+    "isSharpe": 1.2977,
+    "accepted": false,
+    "description": "Replace ATR penalty on highs array with volume surprise metric that penalizes low-volume moves relat",
+    "ts": 1774198418186
+  },
+  {
+    "n": 1718,
+    "valSharpe": 3.8958,
+    "isSharpe": 1.5684,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198432268
+  },
+  {
+    "n": 1719,
+    "valSharpe": 3.919,
+    "isSharpe": 1.3313,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198446823
+  },
+  {
+    "n": 1720,
+    "valSharpe": 3.8906,
+    "isSharpe": 1.6374,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198461186
+  },
+  {
+    "n": 1721,
+    "valSharpe": 4.1057,
+    "isSharpe": 1.2132,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price divergence filter that penalizes mov",
+    "ts": 1774198475424
+  },
+  {
+    "n": 1722,
+    "valSharpe": 3.937,
+    "isSharpe": 1.2485,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198489929
+  },
+  {
+    "n": 1723,
+    "valSharpe": 3.7939,
+    "isSharpe": 1.2016,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198503882
+  },
+  {
+    "n": 1724,
+    "valSharpe": 4.1225,
+    "isSharpe": 1.2846,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence filter that pe",
+    "ts": 1774198518887
+  },
+  {
+    "n": 1725,
+    "valSharpe": 4.2016,
+    "isSharpe": 1.2427,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-price divergence filter that pe",
+    "ts": 1774198534478
+  },
+  {
+    "n": 1726,
+    "valSharpe": 3.985,
+    "isSharpe": 1.32,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198548724
+  },
+  {
+    "n": 1727,
+    "valSharpe": 3.9223,
+    "isSharpe": 1.3965,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198563624
+  },
+  {
+    "n": 1728,
+    "valSharpe": 3.6964,
+    "isSharpe": 1.3503,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198577656
+  },
+  {
+    "n": 1729,
+    "valSharpe": 3.623,
+    "isSharpe": 1.275,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198592986
+  },
+  {
+    "n": 1730,
+    "valSharpe": 3.798,
+    "isSharpe": 1.5826,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price divergence penalty that penalizes wh",
+    "ts": 1774198607808
+  },
+  {
+    "n": 1731,
+    "valSharpe": 4.0435,
+    "isSharpe": 1.2783,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198622128
+  },
+  {
+    "n": 1732,
+    "valSharpe": 4.0754,
+    "isSharpe": 1.3364,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198636312
+  },
+  {
+    "n": 1733,
+    "valSharpe": 3.2225,
+    "isSharpe": 1.2379,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price momentum divergence that rewards acc",
+    "ts": 1774198651063
+  },
+  {
+    "n": 1734,
+    "valSharpe": 4.0754,
+    "isSharpe": 1.3124,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes unexpected ",
+    "ts": 1774198665286
+  },
+  {
+    "n": 1735,
+    "valSharpe": 2.801,
+    "isSharpe": 1.0079,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price momentum confirmation that rewards s",
+    "ts": 1774198679359
+  },
+  {
+    "n": 1736,
+    "valSharpe": 4.0425,
+    "isSharpe": 1.3771,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198693221
+  },
+  {
+    "n": 1737,
+    "valSharpe": 3.0716,
+    "isSharpe": 0.9419,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price momentum confirmation that rewards s",
+    "ts": 1774198708137
+  },
+  {
+    "n": 1738,
+    "valSharpe": 3.7893,
+    "isSharpe": 0.9934,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price momentum confirmation that rewards s",
+    "ts": 1774198722371
+  },
+  {
+    "n": 1739,
+    "valSharpe": 2.2991,
+    "isSharpe": 1.2456,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume-price momentum confirmation that rewards s",
+    "ts": 1774198736933
+  },
+  {
+    "n": 1740,
+    "valSharpe": 4.0688,
+    "isSharpe": 1.3013,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198752024
+  },
+  {
+    "n": 1741,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198766390
+  },
+  {
+    "n": 1742,
+    "valSharpe": 3.9157,
+    "isSharpe": 1.4408,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198780334
+  },
+  {
+    "n": 1743,
+    "valSharpe": 3.6509,
+    "isSharpe": 1.3149,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low volume ",
+    "ts": 1774198794509
+  },
+  {
+    "n": 1744,
+    "valSharpe": 3.8647,
+    "isSharpe": 1.4268,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198808561
+  },
+  {
+    "n": 1745,
+    "valSharpe": 4.0114,
+    "isSharpe": 1.2045,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198824759
+  },
+  {
+    "n": 1746,
+    "valSharpe": 3.5025,
+    "isSharpe": 1.6133,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198838996
+  },
+  {
+    "n": 1747,
+    "valSharpe": 3.3947,
+    "isSharpe": 1.3621,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198852112
+  },
+  {
+    "n": 1748,
+    "valSharpe": 3.919,
+    "isSharpe": 1.3313,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198865899
+  },
+  {
+    "n": 1749,
+    "valSharpe": 4.0754,
+    "isSharpe": 1.3057,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198879622
+  },
+  {
+    "n": 1750,
+    "valSharpe": 3.9622,
+    "isSharpe": 1.5157,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198893237
+  },
+  {
+    "n": 1751,
+    "valSharpe": 3.4553,
+    "isSharpe": 1.4418,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774198907310
+  },
+  {
+    "n": 1752,
+    "valSharpe": 2.2285,
+    "isSharpe": 1.4757,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty and volume surge multiplier cap; replace with strict volume confirmati",
+    "ts": 1774198921036
+  },
+  {
+    "n": 1753,
+    "valSharpe": 3.919,
+    "isSharpe": 1.3313,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198934925
+  },
+  {
+    "n": 1754,
+    "valSharpe": 3.3382,
+    "isSharpe": 1.2925,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty with volume surprise metric that penalizes trades on low volume relat",
+    "ts": 1774198948627
+  },
+  {
+    "n": 1755,
+    "valSharpe": 4.1269,
+    "isSharpe": 1.3456,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with OBV divergence strength weighting to avoid false ",
+    "ts": 1774198962313
+  },
+  {
+    "n": 1756,
+    "valSharpe": 2.9261,
+    "isSharpe": 0.9872,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with strict volume confirmation that only t",
+    "ts": 1774198975970
+  },
+  {
+    "n": 1757,
+    "valSharpe": 4.1346,
+    "isSharpe": 1.2873,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774198991140
+  },
+  {
+    "n": 1758,
+    "valSharpe": 3.5041,
+    "isSharpe": 1.5376,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume surprise metric that penalizes ",
+    "ts": 1774199005070
+  },
+  {
+    "n": 1759,
+    "valSharpe": 3.9495,
+    "isSharpe": 1.4338,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted momentum decay to avoi",
+    "ts": 1774199019143
+  },
+  {
+    "n": 1760,
+    "valSharpe": 4.0138,
+    "isSharpe": 1.3625,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume-weighted momentum decay that reduces score on lo",
+    "ts": 1774199033236
+  },
+  {
+    "n": 1761,
+    "valSharpe": 4.1222,
+    "isSharpe": 1.3189,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted momentum decay that re",
+    "ts": 1774199048489
+  },
+  {
+    "n": 1762,
+    "valSharpe": 4.0242,
+    "isSharpe": 1.4196,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume-weighted momentum decay that reduces score when ",
+    "ts": 1774199063096
+  },
+  {
+    "n": 1763,
+    "valSharpe": 3.8563,
+    "isSharpe": 1.4995,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume surprise metric that penalizes low relative volu",
+    "ts": 1774199071725
+  },
+  {
+    "n": 1764,
+    "valSharpe": 3.5713,
+    "isSharpe": 1.3734,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes tokens with",
+    "ts": 1774199085582
+  },
+  {
+    "n": 1765,
+    "valSharpe": 3.7625,
+    "isSharpe": 1.3647,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume-weighted momentum decay that reduces score when ",
+    "ts": 1774199099532
+  },
+  {
+    "n": 1766,
+    "valSharpe": 4.1006,
+    "isSharpe": 1.2038,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted momentum decay that re",
+    "ts": 1774199114412
+  },
+  {
+    "n": 1767,
+    "valSharpe": 3.8217,
+    "isSharpe": 1.2866,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume surprise metric that penalizes tokens with colla",
+    "ts": 1774199128891
+  },
+  {
+    "n": 1768,
+    "valSharpe": 4.0796,
+    "isSharpe": 1.3076,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume surprise metric that penalizes tokens with colla",
+    "ts": 1774199142794
+  },
+  {
+    "n": 1769,
+    "valSharpe": 4.0875,
+    "isSharpe": 1.3208,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs with volume surprise metric that penalizes tokens with colla",
+    "ts": 1774199158793
+  },
+  {
+    "n": 1770,
+    "valSharpe": 3.1904,
+    "isSharpe": 0.9588,
+    "accepted": false,
+    "description": "Replace unreliable ATR penalty on highs array with volume surprise metric that penalizes low-volume ",
+    "ts": 1774199173466
+  },
+  {
+    "n": 1771,
+    "valSharpe": 3.7354,
+    "isSharpe": 1.287,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted momentum decay that re",
+    "ts": 1774199187213
+  },
+  {
+    "n": 1772,
+    "valSharpe": 3.5265,
+    "isSharpe": 1.5884,
+    "accepted": false,
+    "description": "Remove unreliable ATR penalty on highs array and replace with volume-weighted momentum decay that re",
+    "ts": 1774199205562
+  },
+  {
+    "n": 1773,
+    "valSharpe": 3.8002,
+    "isSharpe": 1.2351,
+    "accepted": false,
+    "description": "Replace unreliable ATR spike regime filter with OBV divergence strength weighting that rewards volum",
+    "ts": 1774199220178
+  },
+  {
+    "n": 1774,
+    "valSharpe": 3.4657,
+    "isSharpe": 1.0806,
+    "accepted": false,
+    "description": "Replace OBV divergence with volume surprise metric that rewards unusual volume spikes aligned with p",
+    "ts": 1774199233929
+  },
+  {
+    "n": 1775,
+    "valSharpe": 4.1109,
+    "isSharpe": 1.1238,
+    "accepted": false,
+    "description": "Replace OBV divergence and obvBoost with volume surprise metric that rewards unusual volume spikes a",
+    "ts": 1774199247791
+  },
+  {
+    "n": 1776,
+    "valSharpe": 3.8135,
+    "isSharpe": 1.1888,
+    "accepted": false,
+    "description": "Replace OBV divergence and obvBoost with volume surprise metric that rewards unusual volume spikes a",
+    "ts": 1774199261941
+  },
+  {
+    "n": 1777,
+    "valSharpe": 4.0806,
+    "isSharpe": 1.2168,
+    "accepted": false,
+    "description": "Replace OBV divergence and obvBoost with volume surprise metric that detects unusual volume spikes a",
+    "ts": 1774199275256
+  },
+  {
+    "n": 1778,
+    "valSharpe": 4.4238,
+    "isSharpe": 1.3882,
+    "accepted": false,
+    "description": "Replace OBV divergence logic with volume surprise metric that detects unusual volume spikes aligned ",
+    "ts": 1774199288791
+  },
+  {
+    "n": 1779,
+    "valSharpe": 4.5324,
+    "isSharpe": 1.1017,
+    "accepted": false,
+    "description": "Add ATR-based penalty that increases during high volatility regimes to reduce losses in choppy marke",
+    "ts": 1774199303014
+  },
+  {
+    "n": 1780,
+    "valSharpe": 4.5226,
+    "isSharpe": 1.3504,
+    "accepted": false,
+    "description": "Replace OBV divergence logic with volume surprise metric that detects unusual volume spikes aligned ",
+    "ts": 1774199316232
+  },
+  {
+    "n": 1781,
+    "valSharpe": 3.9793,
+    "isSharpe": 1.2314,
+    "accepted": false,
+    "description": "Replace OBV divergence logic with volume surprise metric that detects unusual volume spikes aligned ",
+    "ts": 1774199329169
+  },
+  {
+    "n": 1782,
+    "valSharpe": 4.0679,
+    "isSharpe": 1.0821,
+    "accepted": false,
+    "description": "Replace OBV divergence logic with volume surprise metric that detects unusual volume spikes aligned ",
+    "ts": 1774199345007
+  },
+  {
+    "n": 1783,
+    "valSharpe": 3.8287,
+    "isSharpe": 1.2395,
+    "accepted": false,
+    "description": "Remove OBV divergence and obvBoost (unreliable volume signals), add volume surprise metric that dete",
+    "ts": 1774199358288
+  },
+  {
+    "n": 1784,
+    "valSharpe": 4.028,
+    "isSharpe": 1.1115,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence logic and reduce obvBoost weight to decrease false signals in chopp",
+    "ts": 1774199371227
+  },
+  {
+    "n": 1785,
+    "valSharpe": 3.6746,
+    "isSharpe": 0.9952,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence and obvBoost logic, reduce volume confirmation weight, add strict A",
+    "ts": 1774199384848
+  },
+  {
+    "n": 1786,
+    "valSharpe": 3.8425,
+    "isSharpe": 1.1252,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence and obvBoost logic, apply ATR-based penalty to filter high-volatili",
+    "ts": 1774199398520
+  },
+  {
+    "n": 1787,
+    "valSharpe": 3.765,
+    "isSharpe": 0.9761,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence and obvBoost logic, apply strict volume confirmation filter to redu",
+    "ts": 1774199411863
+  },
+  {
+    "n": 1788,
+    "valSharpe": 3.9121,
+    "isSharpe": 1.137,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence logic and reduce obvBoost weight to decrease false signals in chopp",
+    "ts": 1774199425136
+  },
+  {
+    "n": 1789,
+    "valSharpe": 4.0685,
+    "isSharpe": 1.16,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence logic and obvBoost, add strict volume surprise filter to catch genu",
+    "ts": 1774199438499
+  },
+  {
+    "n": 1790,
+    "valSharpe": 4.0422,
+    "isSharpe": 1.082,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight to 0.03 to eliminate false signals from unrel",
+    "ts": 1774199451470
+  },
+  {
+    "n": 1791,
+    "valSharpe": 3.6292,
+    "isSharpe": 1.1396,
+    "accepted": false,
+    "description": "Remove OBV divergence and obvBoost logic entirely, replace with strict volume surprise filter (relVo",
+    "ts": 1774199464623
+  },
+  {
+    "n": 1792,
+    "valSharpe": 4.028,
+    "isSharpe": 1.1115,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence logic and reduce obvBoost weight from 0.06 to 0.02 to eliminate fal",
+    "ts": 1774199477710
+  },
+  {
+    "n": 1793,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.04 to cut false signals while ",
+    "ts": 1774199490601
+  },
+  {
+    "n": 1794,
+    "valSharpe": 4.0281,
+    "isSharpe": 1.211,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence logic and reduce obvBoost weight from 0.06 to 0.01 to cut false sig",
+    "ts": 1774199503560
+  },
+  {
+    "n": 1795,
+    "valSharpe": 3.8425,
+    "isSharpe": 1.1252,
+    "accepted": false,
+    "description": "Remove OBV divergence and obvBoost logic entirely, replace with strict ATR-based penalty to filter f",
+    "ts": 1774199517283
+  },
+  {
+    "n": 1796,
+    "valSharpe": 4.4008,
+    "isSharpe": 1.2719,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.05 to cut false signals while ",
+    "ts": 1774199530416
+  },
+  {
+    "n": 1797,
+    "valSharpe": 4.0422,
+    "isSharpe": 1.082,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.03 to cut false signals while ",
+    "ts": 1774199543654
+  },
+  {
+    "n": 1798,
+    "valSharpe": 3.9794,
+    "isSharpe": 1.107,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.04, simplify volume confirmati",
+    "ts": 1774199558490
+  },
+  {
+    "n": 1799,
+    "valSharpe": 4.028,
+    "isSharpe": 1.1115,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.02 to cut false signals while ",
+    "ts": 1774199572688
+  },
+  {
+    "n": 1800,
+    "valSharpe": 4.3733,
+    "isSharpe": 1.0897,
+    "accepted": false,
+    "description": "Remove unreliable OBV divergence logic and reduce obvBoost weight from 0.06 to 0.05, simplify volume",
+    "ts": 1774199579596
+  },
+  {
+    "n": 1801,
+    "valSharpe": 3.4699,
+    "isSharpe": 1.2957,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.04 while keeping volume confir",
+    "ts": 1774199592154
+  },
+  {
+    "n": 1802,
+    "valSharpe": 4.4751,
+    "isSharpe": 1.3255,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.055 to minimize false signals w",
+    "ts": 1774199605726
+  },
+  {
+    "n": 1803,
+    "valSharpe": 4.3941,
+    "isSharpe": 1.2811,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.045 to minimize false signals ",
+    "ts": 1774199618091
+  },
+  {
+    "n": 1804,
+    "valSharpe": 4.0165,
+    "isSharpe": 1.2435,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.035 with ATR-based penalty on ",
+    "ts": 1774199632179
+  },
+  {
+    "n": 1805,
+    "valSharpe": 4.4751,
+    "isSharpe": 1.3955,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.058 to fine-tune volume signal ",
+    "ts": 1774199643461
+  },
+  {
+    "n": 1806,
+    "valSharpe": 4.4008,
+    "isSharpe": 1.2719,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.052 to fine-tune volume signal",
+    "ts": 1774199655231
+  },
+  {
+    "n": 1807,
+    "valSharpe": 4.4055,
+    "isSharpe": 1.2779,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.050 with volume surge cap at 1",
+    "ts": 1774199667898
+  },
+  {
+    "n": 1808,
+    "valSharpe": 4.4726,
+    "isSharpe": 1.3834,
+    "accepted": false,
+    "description": "Replace OBV divergence with ATR-based volatility penalty to reduce false signals in ranging markets.",
+    "ts": 1774199681120
+  },
+  {
+    "n": 1809,
+    "valSharpe": 4.4028,
+    "isSharpe": 1.3205,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.048 to fine-tune volume signal ",
+    "ts": 1774199693904
+  },
+  {
+    "n": 1810,
+    "valSharpe": 4.381,
+    "isSharpe": 1.3106,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.045 with volume surge cap at 1.",
+    "ts": 1774199707294
+  },
+  {
+    "n": 1811,
+    "valSharpe": 4.1455,
+    "isSharpe": 1.1496,
+    "accepted": false,
+    "description": "Replace OBV divergence with volume surprise metric to catch accumulation breaks before price moves.",
+    "ts": 1774199721137
+  },
+  {
+    "n": 1812,
+    "valSharpe": 3.649,
+    "isSharpe": 1.2366,
+    "accepted": false,
+    "description": "Replace OBV divergence with volume surprise metric (volume spike vs 20-day baseline) to catch accumu",
+    "ts": 1774199734759
+  },
+  {
+    "n": 1813,
+    "valSharpe": 4.4751,
+    "isSharpe": 1.3255,
+    "accepted": false,
+    "description": "Remove OBV divergence logic and reduce obvBoost weight from 0.06 to 0.055 to fine-tune volume signal",
+    "ts": 1774199746716
+  },
+  {
+    "n": 1814,
+    "valSharpe": 4.4008,
+    "isSharpe": 1.2719,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.052 to fine-tune volume signal ",
+    "ts": 1774199759767
+  },
+  {
+    "n": 1815,
+    "valSharpe": 4.4008,
+    "isSharpe": 1.2719,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.050 to fine-tune volume signal ",
+    "ts": 1774199772586
+  },
+  {
+    "n": 1816,
+    "valSharpe": 4.4028,
+    "isSharpe": 1.3205,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.048 to fine-tune volume signal ",
+    "ts": 1774199785388
+  },
+  {
+    "n": 1817,
+    "valSharpe": 4.3941,
+    "isSharpe": 1.2811,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.045 to further fine-tune volume",
+    "ts": 1774199798255
+  },
+  {
+    "n": 1818,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.040 to further fine-tune volume",
+    "ts": 1774199809999
+  },
+  {
+    "n": 1819,
+    "valSharpe": 4.4726,
+    "isSharpe": 1.3834,
+    "accepted": false,
+    "description": "Add ATR-based position sizing penalty to reduce losses in high-volatility regimes where stops are be",
+    "ts": 1774199824226
+  },
+  {
+    "n": 1820,
+    "valSharpe": 4.509,
+    "isSharpe": 1.2786,
+    "accepted": false,
+    "description": "Replace OBV divergence with volume surprise signal that boosts score when volume spikes above 2 of 2",
+    "ts": 1774199838601
+  },
+  {
+    "n": 1821,
+    "valSharpe": 4.0165,
+    "isSharpe": 1.2435,
+    "accepted": false,
+    "description": "Remove obvDivergence logic and reduce obvBoost weight from 0.06 to 0.035 to minimize false signals i",
+    "ts": 1774199846221
+  },
+  {
+    "n": 1822,
+    "valSharpe": 4.4055,
+    "isSharpe": 1.2779,
+    "accepted": false,
+    "description": "Reduce OBV boost weight from 0.055 to 0.050 and add volume surge multiplier cap at 1.8 to prevent ov",
+    "ts": 1774199858534
+  },
+  {
+    "n": 1823,
+    "valSharpe": 4.0165,
+    "isSharpe": 1.2814,
+    "accepted": false,
+    "description": "Add ATR-based stop loss penalty that reduces score in high-volatility regimes where ATR stops are fr",
+    "ts": 1774199871400
+  },
+  {
+    "n": 1824,
+    "valSharpe": 4.4008,
+    "isSharpe": 1.2719,
+    "accepted": false,
+    "description": "Replace OBV volume surge multiplier cap (2.0) with dynamic ATR-based volatility scaling to reduce sc",
+    "ts": 1774199885747
+  },
+  {
+    "n": 1825,
+    "valSharpe": 3.9569,
+    "isSharpe": 1.0673,
+    "accepted": false,
+    "description": "Remove OBV volume surge multiplier cap and replace with dynamic ATR-based volatility scaling to redu",
+    "ts": 1774199898559
+  },
+  {
+    "n": 1826,
+    "valSharpe": 3.4837,
+    "isSharpe": 1.2959,
+    "accepted": false,
+    "description": "Replace OBV boost with volume surprise signal that rewards volume spikes above 2 of 20-day average, ",
+    "ts": 1774199909966
+  },
+  {
+    "n": 1827,
+    "valSharpe": 3.9708,
+    "isSharpe": 1.1661,
+    "accepted": false,
+    "description": "Replace OBV boost with volume surprise signal that rewards volume spikes >1.5x of 20-day average on ",
+    "ts": 1774199920762
+  },
+  {
+    "n": 1828,
+    "valSharpe": 3.9858,
+    "isSharpe": 0.951,
+    "accepted": false,
+    "description": "Remove ATR stop loss penalty and OBV boost; add volume surprise signal that rewards volume spikes >1",
+    "ts": 1774199931433
+  },
+  {
+    "n": 1829,
+    "valSharpe": 3.172,
+    "isSharpe": 1.0317,
+    "accepted": false,
+    "description": "Remove OBV boost and ATR-based stop loss penalties; replace with OBV divergence signal that rewards ",
+    "ts": 1774199942632
+  },
+  {
+    "n": 1830,
+    "valSharpe": 4.222,
+    "isSharpe": 1.1222,
+    "accepted": false,
+    "description": "Replace OBV boost with volume surprise signal that rewards volume spikes >1.3x of 20-day average wit",
+    "ts": 1774199953357
+  },
+  {
+    "n": 1831,
+    "valSharpe": 4.0177,
+    "isSharpe": 1.0631,
+    "accepted": false,
+    "description": "Remove ATR stop loss penalty entirely and replace OBV boost with volume surprise signal that rewards",
+    "ts": 1774199963969
+  },
+  {
+    "n": 1832,
+    "valSharpe": 3.7831,
+    "isSharpe": 1.2891,
+    "accepted": false,
+    "description": "Remove ATR stop loss penalty entirely and replace OBV boost with volume surprise signal that rewards",
+    "ts": 1774199974814
+  },
+  {
+    "n": 1833,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.3758,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with dynamic volatility regime scaling that reduces score aggressively",
+    "ts": 1774199985635
+  },
+  {
+    "n": 1834,
+    "valSharpe": 3.7137,
+    "isSharpe": 1.0802,
+    "accepted": false,
+    "description": "Remove regimeMult bear penalty entirely and replace with ATR-based stop loss signal that penalizes t",
+    "ts": 1774199997273
+  },
+  {
+    "n": 1835,
+    "valSharpe": 4.1215,
+    "isSharpe": 1.2382,
+    "accepted": false,
+    "description": "Remove ATR-based stop loss penalty entirely and replace OBV boost with volume surprise signal that r",
+    "ts": 1774200008450
+  },
+  {
+    "n": 1836,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with dynamic volatility-scaled momentum that reduces scoring aggressiv",
+    "ts": 1774200018703
+  },
+  {
+    "n": 1837,
+    "valSharpe": 4.2281,
+    "isSharpe": 1.6113,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with volume surprise signal that boosts scores on unexpected volume sp",
+    "ts": 1774200029541
+  },
+  {
+    "n": 1838,
+    "valSharpe": 3.7291,
+    "isSharpe": 1.0942,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with OBV divergence signal that boosts scores when price momentum dive",
+    "ts": 1774200040754
+  },
+  {
+    "n": 1839,
+    "valSharpe": 3.5018,
+    "isSharpe": 1.3259,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with volume surprise signal that boosts scores on unexpected volume sp",
+    "ts": 1774200051663
+  },
+  {
+    "n": 1840,
+    "valSharpe": 3.833,
+    "isSharpe": 1.1689,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with volume surprise signal that boosts scores when volume spikes abov",
+    "ts": 1774200063609
+  },
+  {
+    "n": 1841,
+    "valSharpe": 3.9091,
+    "isSharpe": 1.1625,
+    "accepted": false,
+    "description": "Remove vol > 0.75 momentum dampening and ATR-based regimeMult to let high-volatility tokens score na",
+    "ts": 1774200074161
+  },
+  {
+    "n": 1842,
+    "valSharpe": 2.9982,
+    "isSharpe": 1.5847,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with dynamic volatility-adjusted momentum that scales down aggressive ",
+    "ts": 1774200084956
+  },
+  {
+    "n": 1843,
+    "valSharpe": 4.221,
+    "isSharpe": 1.1158,
+    "accepted": false,
+    "description": "Replace ATR stop loss penalty with dynamic volatility regime that penalizes scoring during high-vol ",
+    "ts": 1774200100439
+  },
+  {
+    "n": 1844,
+    "valSharpe": 4.2005,
+    "isSharpe": 1.1188,
+    "accepted": false,
+    "description": "Replace vol penalty with ATR-based stop loss penalty that only penalizes when price is near ATR-deri",
+    "ts": 1774200113638
+  },
+  {
+    "n": 1845,
+    "valSharpe": 4.141,
+    "isSharpe": 1.2044,
+    "accepted": false,
+    "description": "Remove ATR stop loss penalty and instead add dynamic volume-adjusted momentum boost that rewards une",
+    "ts": 1774200126565
+  },
+  {
+    "n": 1846,
+    "valSharpe": 4.0012,
+    "isSharpe": 0.917,
+    "accepted": false,
+    "description": "Replace volume penalty with ATR-derived stop loss penalty that only activates when price is within 1",
+    "ts": 1774200139015
+  },
+  {
+    "n": 1847,
+    "valSharpe": 4.2058,
+    "isSharpe": 1.4987,
+    "accepted": false,
+    "description": "Replace vol penalty with volume surprise metric that boosts score when volume exceeds 1.8x average d",
+    "ts": 1774200150625
+  },
+  {
+    "n": 1848,
+    "valSharpe": 4.1659,
+    "isSharpe": 1.0593,
+    "accepted": false,
+    "description": "Replace volPenalty with ATR-based stop loss penalty that only activates when price is near recent lo",
+    "ts": 1774200164025
+  },
+  {
+    "n": 1849,
+    "valSharpe": 3.2318,
+    "isSharpe": 0.593,
+    "accepted": false,
+    "description": "Remove ATR stop loss penalties and add OBV divergence detection to catch early reversals before larg",
+    "ts": 1774200180904
+  },
+  {
+    "n": 1850,
+    "valSharpe": 4.1777,
+    "isSharpe": 1.4076,
+    "accepted": false,
+    "description": "Replace volPenalty with volume surprise metric that boosts score when volume exceeds 2.0x average wh",
+    "ts": 1774200192185
+  },
+  {
+    "n": 1851,
+    "valSharpe": 4.0185,
+    "isSharpe": 1.0362,
+    "accepted": false,
+    "description": "Replace volPenalty with volume-adjusted ATR stop loss that only penalizes when price is near recent ",
+    "ts": 1774200207202
+  },
+  {
+    "n": 1852,
+    "valSharpe": 4.4269,
+    "isSharpe": 1.2813,
+    "accepted": false,
+    "description": "Replace volPenalty with volume surprise boost that rewards >1.5x average volume on positive days, pe",
+    "ts": 1774200218425
+  },
+  {
+    "n": 1853,
+    "valSharpe": 3.3727,
+    "isSharpe": 1.3286,
+    "accepted": false,
+    "description": "Remove volPenalty and add volume surprise boost that rewards >1.5x average volume on positive moment",
+    "ts": 1774200229352
+  },
+  {
+    "n": 1854,
+    "valSharpe": 4.1519,
+    "isSharpe": 1.3551,
+    "accepted": false,
+    "description": "Remove volPenalty entirely and replace with volume surprise boost that rewards >1.5x average volume ",
+    "ts": 1774200240732
+  },
+  {
+    "n": 1855,
+    "valSharpe": 4.2902,
+    "isSharpe": 1.2602,
+    "accepted": false,
+    "description": "Remove volPenalty and add volume surprise boost rewarding >1.5x average volume on positive momentum ",
+    "ts": 1774200251283
+  },
+  {
+    "n": 1856,
+    "valSharpe": 4.1659,
+    "isSharpe": 1.0521,
+    "accepted": false,
+    "description": "Replace volPenalty with ATR-based stop loss penalty that only penalizes when price is within 1.5x AT",
+    "ts": 1774200264116
+  },
+  {
+    "n": 1857,
+    "valSharpe": 4.2482,
+    "isSharpe": 1.2677,
+    "accepted": false,
+    "description": "Remove volPenalty entirely and add volume surprise boost that rewards >1.5x average volume on positi",
+    "ts": 1774200275473
+  },
+  {
+    "n": 1858,
+    "valSharpe": 4.2005,
+    "isSharpe": 1.1188,
+    "accepted": false,
+    "description": "Replace volPenalty with dynamic penalty based on ATR ratio to price, penalizing only when volatility",
+    "ts": 1774200287217
+  },
+  {
+    "n": 1859,
+    "valSharpe": 4.2005,
+    "isSharpe": 1.1188,
+    "accepted": false,
+    "description": "Replace volPenalty with dynamic penalty that only triggers in bear regime when volatility exceeds 0.",
+    "ts": 1774200297958
+  },
+  {
+    "n": 1860,
+    "valSharpe": 4.5224,
+    "isSharpe": 1.3627,
+    "accepted": false,
+    "description": "Replace volPenalty with volume surprise boost that rewards >1.5x average volume on positive momentum",
+    "ts": 1774200311338
+  },
+  {
+    "n": 1861,
+    "valSharpe": 4.2482,
+    "isSharpe": 1.2677,
+    "accepted": false,
+    "description": "Remove volPenalty and replace with volume surprise boost that rewards >1.5x average volume on positi",
+    "ts": 1774200322162
+  },
+  {
+    "n": 1862,
+    "valSharpe": 3.3568,
+    "isSharpe": 1.0926,
+    "accepted": false,
+    "description": "Replace volPenalty with OBV divergence detection that penalizes when price rises but OBV falls, indi",
+    "ts": 1774200333521
+  },
+  {
+    "n": 1863,
+    "valSharpe": 4.2005,
+    "isSharpe": 1.1188,
+    "accepted": false,
+    "description": "Replace volPenalty with dynamic ATR-based penalty that only penalizes when volatility exceeds price ",
+    "ts": 1774200345580
+  },
+  {
+    "n": 1864,
+    "valSharpe": 4.2005,
+    "isSharpe": 1.1188,
+    "accepted": false,
+    "description": "Replace volPenalty with dynamic penalty that scales with ATR ratio to recent price range, only penal",
+    "ts": 1774200358451
+  },
+  {
+    "n": 1865,
+    "valSharpe": 4.0969,
+    "isSharpe": 0.612,
+    "accepted": false,
+    "description": "Replace volPenalty with volume surge confirmation that boosts score when volume exceeds 1.3x average",
+    "ts": 1774200370481
+  },
+  {
+    "n": 1866,
+    "valSharpe": 4.2261,
+    "isSharpe": 1.2411,
+    "accepted": false,
+    "description": "Replace volPenalty with volume surprise boost that rewards >1.3x average volume on positive momentum",
+    "ts": 1774200382911
+  },
+  {
+    "n": 1867,
+    "valSharpe": 4.4784,
+    "isSharpe": 1.111,
+    "accepted": false,
+    "description": "Replace volPenalty with volume-confirmation boost that only rewards high volume on positive days and",
+    "ts": 1774200394013
+  },
+  {
+    "n": 1868,
+    "valSharpe": 2.55,
+    "isSharpe": 1.3128,
+    "accepted": false,
+    "description": "Replace volPenalty with dynamic ATR-based penalty that only penalizes when volatility significantly ",
+    "ts": 1774200407727
+  },
+  {
+    "n": 1869,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Add OBV divergence detection to boost score when price makes new low but OBV makes higher low, signa",
+    "ts": 1774200421376
+  },
+  {
+    "n": 1870,
+    "valSharpe": 4.2005,
+    "isSharpe": 1.1188,
+    "accepted": false,
+    "description": "Replace volPenalty with dynamic ATR-based penalty that only penalizes when volatility significantly ",
+    "ts": 1774200433935
+  },
+  {
+    "n": 1871,
+    "valSharpe": 4.278,
+    "isSharpe": 1.1637,
+    "accepted": false,
+    "description": "Replace volPenalty linear penalty with dynamic penalty that only activates when volatility exceeds 0",
+    "ts": 1774200445403
+  },
+  {
+    "n": 1872,
+    "valSharpe": 4.4046,
+    "isSharpe": 1.0085,
+    "accepted": false,
+    "description": "Replace volPenalty linear penalty with dynamic penalty that only activates when volatility exceeds 0",
+    "ts": 1774200456557
+  },
+  {
+    "n": 1873,
+    "valSharpe": 4.407,
+    "isSharpe": 1.3169,
+    "accepted": false,
+    "description": "Replace volPenalty linear penalty with dynamic threshold that only activates when volatility signifi",
+    "ts": 1774200464228
+  },
+  {
+    "n": 1874,
+    "valSharpe": 4.0797,
+    "isSharpe": 1.1425,
+    "accepted": false,
+    "description": "Remove volume confirmation penalty (volConfirm) that triggers on low relative volume, keeping only p",
+    "ts": 1774200475132
+  },
+  {
+    "n": 1875,
+    "valSharpe": 4.407,
+    "isSharpe": 1.3169,
+    "accepted": false,
+    "description": "Replace volPenalty linear penalty with dynamic threshold that only penalizes when volatility signifi",
+    "ts": 1774200486022
+  },
+  {
+    "n": 1876,
+    "valSharpe": 4.1331,
+    "isSharpe": 1.2704,
+    "accepted": false,
+    "description": "Add volume surprise metric that boosts score when current volume significantly exceeds 20-day averag",
+    "ts": 1774200497683
+  },
+  {
+    "n": 1877,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2199,
+    "accepted": false,
+    "description": "Add ATR-based penalty that reduces score when volatility spike occurs with unfavorable price action,",
+    "ts": 1774200508669
+  },
+  {
+    "n": 1878,
+    "valSharpe": 3.9315,
+    "isSharpe": 1.1386,
+    "accepted": false,
+    "description": "Add OBV divergence detection to boost scores when volume confirms price momentum in strong uptrends.",
+    "ts": 1774200520413
+  },
+  {
+    "n": 1879,
+    "valSharpe": 4.1812,
+    "isSharpe": 1.2334,
+    "accepted": false,
+    "description": "Add volume surprise metric that boosts score when current volume significantly exceeds 20-day averag",
+    "ts": 1774200534408
+  },
+  {
+    "n": 1880,
+    "valSharpe": 3.949,
+    "isSharpe": 0.9712,
+    "accepted": false,
+    "description": "Replace OBV divergence boost with volume surprise metric that rewards significant volume spikes abov",
+    "ts": 1774200545149
+  },
+  {
+    "n": 1881,
+    "valSharpe": 3.8302,
+    "isSharpe": 1.0888,
+    "accepted": false,
+    "description": "Replace OBV divergence boost with dynamic volume surge detector that rewards extreme volume spikes (",
+    "ts": 1774200556429
+  },
+  {
+    "n": 1882,
+    "valSharpe": 3.1689,
+    "isSharpe": 0.9598,
+    "accepted": false,
+    "description": "Remove OBV boost and volume confirm; add ATR-based volatility spike penalty that reduces score when ",
+    "ts": 1774200569330
+  },
+  {
+    "n": 1883,
+    "valSharpe": 3.5285,
+    "isSharpe": 0.9366,
+    "accepted": false,
+    "description": "Remove OBV and volume confirm boosts; add ATR-based volatility spike penalty that penalizes when ATR",
+    "ts": 1774200584268
+  },
+  {
+    "n": 1884,
+    "valSharpe": 3.6063,
+    "isSharpe": 0.8876,
+    "accepted": false,
+    "description": "Remove OBV and volume confirm boosts; add ATR-based volatility spike penalty that penalizes when ATR",
+    "ts": 1774200597081
+  },
+  {
+    "n": 1885,
+    "valSharpe": 3.5285,
+    "isSharpe": 0.9366,
+    "accepted": false,
+    "description": "Remove volume confirm and OBV boost; add ATR-based volatility spike penalty that penalizes when ATR ",
+    "ts": 1774200608617
+  },
+  {
+    "n": 1886,
+    "valSharpe": 3.1941,
+    "isSharpe": 0.9059,
+    "accepted": false,
+    "description": "Replace OBV boost and volume confirm with ATR-based volatility spike detector that penalizes extreme",
+    "ts": 1774200620410
+  },
+  {
+    "n": 1887,
+    "valSharpe": 3.8299,
+    "isSharpe": 0.9771,
+    "accepted": false,
+    "description": "Remove OBV and volume confirm boosts; add volume surprise detector that rewards unexpected volume sp",
+    "ts": 1774200631779
+  },
+  {
+    "n": 1888,
+    "valSharpe": 2.6261,
+    "isSharpe": 0.4406,
+    "accepted": false,
+    "description": "Remove OBV and volume confirm boosts; add ATR-based volatility spike penalty that penalizes when ATR",
+    "ts": 1774200644196
+  },
+  {
+    "n": 1889,
+    "valSharpe": 2.9648,
+    "isSharpe": 0.9114,
+    "accepted": false,
+    "description": "Remove OBV and volume confirm boosts; add ATR-based volatility spike penalty that penalizes when ATR",
+    "ts": 1774200656921
+  },
+  {
+    "n": 1890,
+    "valSharpe": 3.4185,
+    "isSharpe": 0.958,
+    "accepted": false,
+    "description": "Replace OBV and volume confirm boosts with OBV divergence detector that rewards when price makes new",
+    "ts": 1774200669904
+  },
+  {
+    "n": 1891,
+    "valSharpe": 2.7711,
+    "isSharpe": 0.8223,
+    "accepted": false,
+    "description": "Remove OBV and volume confirm boosts; add ATR-based volatility spike detector that penalizes when AT",
+    "ts": 1774200684617
+  },
+  {
+    "n": 1892,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200687473
+  },
+  {
+    "n": 1893,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200690213
+  },
+  {
+    "n": 1894,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200692624
+  },
+  {
+    "n": 1895,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200695909
+  },
+  {
+    "n": 1896,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200697775
+  },
+  {
+    "n": 1897,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200701502
+  },
+  {
+    "n": 1898,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200702926
+  },
+  {
+    "n": 1899,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200707088
+  },
+  {
+    "n": 1900,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200708108
+  },
+  {
+    "n": 1901,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200712676
+  },
+  {
+    "n": 1902,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200713258
+  },
+  {
+    "n": 1903,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200718256
+  },
+  {
+    "n": 1904,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200718403
+  },
+  {
+    "n": 1905,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200724024
+  },
+  {
+    "n": 1906,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200729433
+  },
+  {
+    "n": 1907,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200735037
+  },
+  {
+    "n": 1908,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200739666
+  },
+  {
+    "n": 1909,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200740630
+  },
+  {
+    "n": 1910,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200744817
+  },
+  {
+    "n": 1911,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200746225
+  },
+  {
+    "n": 1912,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200750100
+  },
+  {
+    "n": 1913,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200751993
+  },
+  {
+    "n": 1914,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200755341
+  },
+  {
+    "n": 1915,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200757657
+  },
+  {
+    "n": 1916,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200760497
+  },
+  {
+    "n": 1917,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200763271
+  },
+  {
+    "n": 1918,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200765656
+  },
+  {
+    "n": 1919,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200768871
+  },
+  {
+    "n": 1920,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200770803
+  },
+  {
+    "n": 1921,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200774487
+  },
+  {
+    "n": 1922,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200776553
+  },
+  {
+    "n": 1923,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200780094
+  },
+  {
+    "n": 1924,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200781704
+  },
+  {
+    "n": 1925,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200785716
+  },
+  {
+    "n": 1926,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200786857
+  },
+  {
+    "n": 1927,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200791324
+  },
+  {
+    "n": 1928,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200792009
+  },
+  {
+    "n": 1929,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200796999
+  },
+  {
+    "n": 1930,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200797162
+  },
+  {
+    "n": 1931,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200802784
+  },
+  {
+    "n": 1932,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200808371
+  },
+  {
+    "n": 1933,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200813061
+  },
+  {
+    "n": 1934,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200813968
+  },
+  {
+    "n": 1935,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200818211
+  },
+  {
+    "n": 1936,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200819567
+  },
+  {
+    "n": 1937,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200823371
+  },
+  {
+    "n": 1938,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200825161
+  },
+  {
+    "n": 1939,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200828528
+  },
+  {
+    "n": 1940,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200830748
+  },
+  {
+    "n": 1941,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774200833691
+  },
+  {
+    "n": 1942,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.3042,
+    "accepted": false,
+    "description": "Add ATR-based volatility penalty to reduce losses in high-volatility bear regimes where strategy is ",
+    "ts": 1774200844692
+  },
+  {
+    "n": 1943,
+    "valSharpe": 4.2603,
+    "isSharpe": 1.2987,
+    "accepted": false,
+    "description": "Add volume surprise spike detection to boost scores when volume exceeds 2.5x average during positive",
+    "ts": 1774200855810
+  },
+  {
+    "n": 1944,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.4605,
+    "accepted": false,
+    "description": "Reduce regimeMult penalty in bear markets from 0.05/0.20 to 0.30/0.50 to allow strategy to capture r",
+    "ts": 1774200869266
+  },
+  {
+    "n": 1945,
+    "valSharpe": 4.1397,
+    "isSharpe": 1.2017,
+    "accepted": false,
+    "description": "Add volume surprise detection to boost scores when volume spikes 2.5x+ average during positive momen",
+    "ts": 1774200880441
+  },
+  {
+    "n": 1946,
+    "valSharpe": 3.6695,
+    "isSharpe": 1.0657,
+    "accepted": false,
+    "description": "Add OBV divergence detection to identify accumulation/distribution mismatches with price momentum an",
+    "ts": 1774200892144
+  },
+  {
+    "n": 1947,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.3454,
+    "accepted": false,
+    "description": "Reduce bear regime penalty from 0.05/0.20 to 0.40/0.60 to allow strategy to participate in bear mark",
+    "ts": 1774200903515
+  },
+  {
+    "n": 1948,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Add ATR-based stop-loss alignment penalty to reduce scores when ATR is elevated in bear regimes wher",
+    "ts": 1774200915672
+  },
+  {
+    "n": 1949,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.3263,
+    "accepted": false,
+    "description": "Replace aggressive bear regime multiplier (0.05/0.20) with moderate penalty (0.70/0.85) to allow str",
+    "ts": 1774200926934
+  },
+  {
+    "n": 1950,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.3113,
+    "accepted": false,
+    "description": "Add ATR-based stop-loss alignment penalty to reduce scores when ATR is elevated in bear regimes, pre",
+    "ts": 1774200939967
+  },
+  {
+    "n": 1951,
+    "valSharpe": 3.9181,
+    "isSharpe": 1.3418,
+    "accepted": false,
+    "description": "Reduce bear regime penalty from 0.05/0.20 to 0.50/0.70 to allow more participation while keeping ATR",
+    "ts": 1774200951603
+  },
+  {
+    "n": 1952,
+    "valSharpe": 3.3394,
+    "isSharpe": 1.3336,
+    "accepted": false,
+    "description": "Add volume surprise penalty to reduce scores when relative volume is unusually low, protecting again",
+    "ts": 1774200962892
+  },
+  {
+    "n": 1953,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Add ATR-based penalty in bear regime to reduce scores when volatility is elevated and stop-loss risk",
+    "ts": 1774200975355
+  },
+  {
+    "n": 1954,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.4579,
+    "accepted": false,
+    "description": "Add ATR-based volatility penalty in bear regime to reduce scores when volatility spikes, protecting ",
+    "ts": 1774200987710
+  },
+  {
+    "n": 1955,
+    "valSharpe": 3.3072,
+    "isSharpe": 1.2399,
+    "accepted": false,
+    "description": "Add volume surprise penalty to reduce scores when relative volume drops below 0.7x average, protecti",
+    "ts": 1774200999196
+  },
+  {
+    "n": 1956,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2662,
+    "accepted": false,
+    "description": "Add ATR-based volatility penalty that scales with regime to protect against stops in high-vol bear m",
+    "ts": 1774201007949
+  },
+  {
+    "n": 1957,
+    "valSharpe": 3.3877,
+    "isSharpe": 1.0906,
+    "accepted": false,
+    "description": "Add OBV divergence detection to identify volume-price mismatches and reduce scores when OBV fails to",
+    "ts": 1774201020469
+  },
+  {
+    "n": 1958,
+    "valSharpe": 4.0502,
+    "isSharpe": 1.0984,
+    "accepted": false,
+    "description": "Add ATR-based stop-loss risk penalty that scales with regime to protect against whipsaw losses in be",
+    "ts": 1774201032950
+  },
+  {
+    "n": 1959,
+    "valSharpe": 3.3582,
+    "isSharpe": 1.3034,
+    "accepted": false,
+    "description": "Add volume surprise penalty to reduce scores when current volume drops below 0.7x of 20-day average,",
+    "ts": 1774201044235
+  },
+  {
+    "n": 1960,
+    "valSharpe": 1.6455,
+    "isSharpe": 0.9201,
+    "accepted": false,
+    "description": "Remove volume confirmation penalty during bear regimes and add strict volume surge requirement (>1.3",
+    "ts": 1774201058324
+  },
+  {
+    "n": 1961,
+    "valSharpe": 4.0629,
+    "isSharpe": 1.4128,
+    "accepted": false,
+    "description": "Remove bear regime multiplier suppression and add ATR-based stop-loss penalty scaled by recent drawd",
+    "ts": 1774201070070
+  },
+  {
+    "n": 1962,
+    "valSharpe": 2.9476,
+    "isSharpe": 1.1022,
+    "accepted": false,
+    "description": "Replace ATR-based penalties with volume surprise detection to avoid whipsaw losses during high-volat",
+    "ts": 1774201083694
+  },
+  {
+    "n": 1963,
+    "valSharpe": 3.87,
+    "isSharpe": 1.2089,
+    "accepted": false,
+    "description": "Remove ATR penalty in bear regimes and add strict volume surge requirement (>1.3x avg) to filter wea",
+    "ts": 1774201095533
+  },
+  {
+    "n": 1964,
+    "valSharpe": 3.8569,
+    "isSharpe": 1.1771,
+    "accepted": false,
+    "description": "Remove ATR-based penalties and volume surprise logic that caused 0/7 losses; add OBV divergence dete",
+    "ts": 1774201107146
+  },
+  {
+    "n": 1965,
+    "valSharpe": 3.1736,
+    "isSharpe": 1.006,
+    "accepted": false,
+    "description": "Remove all volume penalties and OBV boost that cause false negatives in bear regimes; add simple ATR",
+    "ts": 1774201117882
+  },
+  {
+    "n": 1966,
+    "valSharpe": 3.7303,
+    "isSharpe": 0.953,
+    "accepted": false,
+    "description": "Replace volume confirmation penalty with ATR-based stop-loss detection to avoid whipsaw trades in ti",
+    "ts": 1774201130101
+  },
+  {
+    "n": 1967,
+    "valSharpe": 3.4175,
+    "isSharpe": 0.9536,
+    "accepted": false,
+    "description": "Remove ATR-based stop-loss penalty logic and volume confirmation that caused 0/7 losses; add simple ",
+    "ts": 1774201141280
+  },
+  {
+    "n": 1968,
+    "valSharpe": 3.9722,
+    "isSharpe": 1.1723,
+    "accepted": false,
+    "description": "Remove all volume penalties and ATR logic; add simple mean-reversion boost when price drops >8% in 2",
+    "ts": 1774201152421
+  },
+  {
+    "n": 1969,
+    "valSharpe": 3.5187,
+    "isSharpe": 0.8694,
+    "accepted": false,
+    "description": "Remove all volume penalties and ATR logic that caused 0/7 losses; add simple price momentum boost in",
+    "ts": 1774201163676
+  },
+  {
+    "n": 1970,
+    "valSharpe": 3.0831,
+    "isSharpe": 0.9305,
+    "accepted": false,
+    "description": "Remove all volume penalties and ATR logic; add simple price momentum boost when price drops >8% in 2",
+    "ts": 1774201178480
+  },
+  {
+    "n": 1971,
+    "valSharpe": 3.0636,
+    "isSharpe": 0.9972,
+    "accepted": false,
+    "description": "Replace volume confirmation penalty with simple ATR-based volatility filter to avoid whipsaw trades ",
+    "ts": 1774201191444
+  },
+  {
+    "n": 1972,
+    "valSharpe": 4.2908,
+    "isSharpe": 0.7857,
+    "accepted": false,
+    "description": "Remove all volume penalties and ATR-based logic that caused 0/7 losses; add simple volume surprise b",
+    "ts": 1774201202487
+  },
+  {
+    "n": 1973,
+    "valSharpe": 4.0043,
+    "isSharpe": 0.995,
+    "accepted": false,
+    "description": "Replace OBV divergence logic with simple volume surprise boost when volume exceeds 1.8x MA and price",
+    "ts": 1774201213829
+  },
+  {
+    "n": 1974,
+    "valSharpe": 4.0645,
+    "isSharpe": 1.2982,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic that caused 0/7 losses; replace with simple ATR-based volatility filter t",
+    "ts": 1774201226552
+  },
+  {
+    "n": 1975,
+    "valSharpe": 3.6123,
+    "isSharpe": 0.9968,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic and all volume penalties that caused 0/7 losses; simplify to core momentu",
+    "ts": 1774201236624
+  },
+  {
+    "n": 1976,
+    "valSharpe": 2.7152,
+    "isSharpe": 1.0397,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and simplify to core momentum + trend + mean reversion without v",
+    "ts": 1774201247653
+  },
+  {
+    "n": 1977,
+    "valSharpe": 3.6493,
+    "isSharpe": 1.0884,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace OBV divergence with simple volume surprise boost whe",
+    "ts": 1774201259276
+  },
+  {
+    "n": 1978,
+    "valSharpe": 3.623,
+    "isSharpe": 1.0444,
+    "accepted": false,
+    "description": "Remove ATR-based stop loss logic and volume penalties that caused 0/7 losses; replace with simple pr",
+    "ts": 1774201269923
+  },
+  {
+    "n": 1979,
+    "valSharpe": 3.9615,
+    "isSharpe": 1.2134,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace OBV divergence with volume surprise boost when volum",
+    "ts": 1774201281677
+  },
+  {
+    "n": 1980,
+    "valSharpe": 4.0005,
+    "isSharpe": 1.1668,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace OBV divergence with volume surprise boost when volum",
+    "ts": 1774201293441
+  },
+  {
+    "n": 1981,
+    "valSharpe": 3.8056,
+    "isSharpe": 0.9186,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic and volume penalties; add OBV divergence detection to boost scores when p",
+    "ts": 1774201306943
+  },
+  {
+    "n": 1982,
+    "valSharpe": 3.9669,
+    "isSharpe": 1.0289,
+    "accepted": false,
+    "description": "Replace OBV divergence with volume surprise boost that fires on strong positive moves with above-ave",
+    "ts": 1774201319902
+  },
+  {
+    "n": 1983,
+    "valSharpe": 3.9329,
+    "isSharpe": 0.9638,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic and simplify to pure price momentum scoring without volatility penalties ",
+    "ts": 1774201331315
+  },
+  {
+    "n": 1984,
+    "valSharpe": 4.1657,
+    "isSharpe": 0.9116,
+    "accepted": false,
+    "description": "Remove all volume penalties and OBV boost; add simple volume surprise trigger on strong positive day",
+    "ts": 1774201343042
+  },
+  {
+    "n": 1985,
+    "valSharpe": 3.4048,
+    "isSharpe": 0.7344,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic that caused 0/7 live losses; replace with volatility-adjusted momentum th",
+    "ts": 1774201354595
+  },
+  {
+    "n": 1986,
+    "valSharpe": 4.2136,
+    "isSharpe": 0.9243,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic and OBV divergence; replace with simple momentum-only scoring that avoids",
+    "ts": 1774201365009
+  },
+  {
+    "n": 1987,
+    "valSharpe": 2.6972,
+    "isSharpe": 0.9577,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace volume penalties with pure momentum-only scoring tha",
+    "ts": 1774201375987
+  },
+  {
+    "n": 1988,
+    "valSharpe": 3.9495,
+    "isSharpe": 0.7638,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace volume penalties with pure momentum-only scoring tha",
+    "ts": 1774201387297
+  },
+  {
+    "n": 1989,
+    "valSharpe": 3.5864,
+    "isSharpe": 1.1524,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace volume penalties with OBV divergence detection to av",
+    "ts": 1774201399923
+  },
+  {
+    "n": 1990,
+    "valSharpe": 4.0599,
+    "isSharpe": 0.9263,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic and volume penalties; add volume surprise trigger on strong positive days",
+    "ts": 1774201410979
+  },
+  {
+    "n": 1991,
+    "valSharpe": 3.7969,
+    "isSharpe": 1.0535,
+    "accepted": false,
+    "description": "Replace volume penalties and OBV boost with ATR-based volatility stop-loss penalty to avoid whipsaws",
+    "ts": 1774201425518
+  },
+  {
+    "n": 1992,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Remove ATR stop loss logic entirely and replace all volume penalties with pure momentum-only scoring",
+    "ts": 1774201431498
+  },
+  {
+    "n": 1993,
+    "valSharpe": 4.1938,
+    "isSharpe": 0.8764,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise trigger that boosts score on strong positive day",
+    "ts": 1774201441588
+  },
+  {
+    "n": 1994,
+    "valSharpe": 4.0109,
+    "isSharpe": 0.6316,
+    "accepted": false,
+    "description": "Remove OBV divergence penalty and add volume surge boost on strong positive days to capture breakout",
+    "ts": 1774201451715
+  },
+  {
+    "n": 1995,
+    "valSharpe": 4.0704,
+    "isSharpe": 0.7594,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge boost that amplifies score on high-volume positive ",
+    "ts": 1774201462345
+  },
+  {
+    "n": 1996,
+    "valSharpe": 4.1563,
+    "isSharpe": 0.8296,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise boost that amplifies score 15% on high-volume po",
+    "ts": 1774201472408
+  },
+  {
+    "n": 1997,
+    "valSharpe": 4.064,
+    "isSharpe": 0.6962,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume-weighted momentum boost that amplifies score 12% on high-",
+    "ts": 1774201484185
+  },
+  {
+    "n": 1998,
+    "valSharpe": 4.1311,
+    "isSharpe": 0.6827,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise boost that amplifies score 10% on high-volume po",
+    "ts": 1774201496140
+  },
+  {
+    "n": 1999,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility penalty that reduces score in high-volatili",
+    "ts": 1774201508587
+  },
+  {
+    "n": 2000,
+    "valSharpe": 4.0905,
+    "isSharpe": 0.7626,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge boost that amplifies score 8% on high-volume positi",
+    "ts": 1774201521786
+  },
+  {
+    "n": 2001,
+    "valSharpe": 3.3495,
+    "isSharpe": 0.6777,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge boost that amplifies score 5% when recent volume ex",
+    "ts": 1774201533502
+  },
+  {
+    "n": 2002,
+    "valSharpe": 2.6188,
+    "isSharpe": 0.5694,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise boost that amplifies score 20% when recent volum",
+    "ts": 1774201545632
+  },
+  {
+    "n": 2003,
+    "valSharpe": 3.6437,
+    "isSharpe": 0.973,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume-weighted momentum boost that amplifies score 15% when rec",
+    "ts": 1774201551575
+  },
+  {
+    "n": 2004,
+    "valSharpe": 3.5349,
+    "isSharpe": 0.9065,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but volume falls.",
+    "ts": 1774201561528
+  },
+  {
+    "n": 2005,
+    "valSharpe": 3.1066,
+    "isSharpe": 1.1178,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but volume falls o",
+    "ts": 1774201574277
+  },
+  {
+    "n": 2006,
+    "valSharpe": 3.1066,
+    "isSharpe": 1.1178,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes score when price rises but volume f",
+    "ts": 1774201584359
+  },
+  {
+    "n": 2007,
+    "valSharpe": 3.0307,
+    "isSharpe": 0.899,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume divergence detection that penalizes when price rises but volume fall",
+    "ts": 1774201594780
+  },
+  {
+    "n": 2008,
+    "valSharpe": 3.0157,
+    "isSharpe": 0.8871,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume divergence detection that penalizes when price rises but volume fall",
+    "ts": 1774201605240
+  },
+  {
+    "n": 2009,
+    "valSharpe": 3.7771,
+    "isSharpe": 1.068,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection that penalizes when recent volume drops below 60-",
+    "ts": 1774201615625
+  },
+  {
+    "n": 2010,
+    "valSharpe": 3.4697,
+    "isSharpe": 0.7164,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-price divergence: penalize when price rises but volume trend is weak",
+    "ts": 1774201626523
+  },
+  {
+    "n": 2011,
+    "valSharpe": 3.6485,
+    "isSharpe": 0.81,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume trend strength check that penalizes when recent volume is declining ",
+    "ts": 1774201637106
+  },
+  {
+    "n": 2012,
+    "valSharpe": 3.3905,
+    "isSharpe": 0.9667,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-price divergence detection that penalizes when price rises but volum",
+    "ts": 1774201647434
+  },
+  {
+    "n": 2013,
+    "valSharpe": 2.8309,
+    "isSharpe": 0.9175,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but OBV fails to c",
+    "ts": 1774201658725
+  },
+  {
+    "n": 2014,
+    "valSharpe": 3.4009,
+    "isSharpe": 0.8193,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-price divergence check that penalizes when price rises but volume tr",
+    "ts": 1774201670682
+  },
+  {
+    "n": 2015,
+    "valSharpe": 3.3209,
+    "isSharpe": 1.2087,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection that penalizes when recent volume drops below 60-",
+    "ts": 1774201682477
+  },
+  {
+    "n": 2016,
+    "valSharpe": 2.1715,
+    "isSharpe": 0.7758,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but OBV fails to c",
+    "ts": 1774201694637
+  },
+  {
+    "n": 2017,
+    "valSharpe": 3.5835,
+    "isSharpe": 0.7778,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation check that penalizes when price rises but volume trend ",
+    "ts": 1774201705483
+  },
+  {
+    "n": 2018,
+    "valSharpe": 3.581,
+    "isSharpe": 0.9502,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-weighted price strength check that penalizes when price rises signif",
+    "ts": 1774201717782
+  },
+  {
+    "n": 2019,
+    "valSharpe": 3.1468,
+    "isSharpe": 0.906,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation that penalizes when price rises but volume trend weaken",
+    "ts": 1774201728913
+  },
+  {
+    "n": 2020,
+    "valSharpe": 2.9794,
+    "isSharpe": 0.8159,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-weighted momentum confirmation that penalizes when price rises but v",
+    "ts": 1774201739810
+  },
+  {
+    "n": 2021,
+    "valSharpe": 3.6205,
+    "isSharpe": 0.9042,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation check that penalizes when price rises but volume fails ",
+    "ts": 1774201752852
+  },
+  {
+    "n": 2022,
+    "valSharpe": 3.1654,
+    "isSharpe": 1.0605,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection that penalizes when price rises but recent volume",
+    "ts": 1774201763907
+  },
+  {
+    "n": 2023,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but OBV fails to c",
+    "ts": 1774201775155
+  },
+  {
+    "n": 2024,
+    "valSharpe": 3.5272,
+    "isSharpe": 0.8351,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-price divergence check that penalizes when price rises but volume tr",
+    "ts": 1774201787576
+  },
+  {
+    "n": 2025,
+    "valSharpe": 2.5578,
+    "isSharpe": 0.8475,
+    "accepted": false,
+    "description": "Replace ATR penalty with momentum confirmation that penalizes when 3-day momentum is positive but vo",
+    "ts": 1774201793123
+  },
+  {
+    "n": 2026,
+    "valSharpe": 2.5494,
+    "isSharpe": 0.9174,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-weighted momentum confirmation that only rewards upside when volume ",
+    "ts": 1774201803450
+  },
+  {
+    "n": 2027,
+    "valSharpe": 2.0466,
+    "isSharpe": 0.6829,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation that rewards when price rises with above-average volume",
+    "ts": 1774201813961
+  },
+  {
+    "n": 2028,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-price divergence check that penalizes when price rises but volume tr",
+    "ts": 1774201824820
+  },
+  {
+    "n": 2029,
+    "valSharpe": 3.8991,
+    "isSharpe": 0.5742,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection that rewards when volume spike accompanies price ",
+    "ts": 1774201835202
+  },
+  {
+    "n": 2030,
+    "valSharpe": 3.22,
+    "isSharpe": 0.6935,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but OBV falls, ind",
+    "ts": 1774201845838
+  },
+  {
+    "n": 2031,
+    "valSharpe": 2.9923,
+    "isSharpe": 0.7891,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-weighted momentum confirmation that only rewards upside momentum whe",
+    "ts": 1774201856665
+  },
+  {
+    "n": 2032,
+    "valSharpe": 3.0196,
+    "isSharpe": 0.8168,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-weighted momentum that rewards upside moves only when volume exceeds",
+    "ts": 1774201867799
+  },
+  {
+    "n": 2033,
+    "valSharpe": 3.0375,
+    "isSharpe": 0.8178,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-weighted price confirmation that rewards upside momentum only when v",
+    "ts": 1774201878471
+  },
+  {
+    "n": 2034,
+    "valSharpe": 2.7993,
+    "isSharpe": 0.7709,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation that rewards upside momentum only when volume exceeds 2",
+    "ts": 1774201889656
+  },
+  {
+    "n": 2035,
+    "valSharpe": 3.9543,
+    "isSharpe": 0.585,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surge detection that rewards momentum only when volume exceeds 1.5x ",
+    "ts": 1774201900443
+  },
+  {
+    "n": 2036,
+    "valSharpe": 3.2711,
+    "isSharpe": 0.9326,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but OBV falls over",
+    "ts": 1774201912550
+  },
+  {
+    "n": 2037,
+    "valSharpe": 3.7049,
+    "isSharpe": 0.7498,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surge confirmation that rewards momentum only when volume exceeds 1.",
+    "ts": 1774201923711
+  },
+  {
+    "n": 2038,
+    "valSharpe": 3.5747,
+    "isSharpe": 0.6861,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surprise detection that rewards momentum only when volume exceeds 20",
+    "ts": 1774201935052
+  },
+  {
+    "n": 2039,
+    "valSharpe": 3.5747,
+    "isSharpe": 0.6861,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surge confirmation that rewards momentum only when volume exceeds 1.",
+    "ts": 1774201946990
+  },
+  {
+    "n": 2040,
+    "valSharpe": 3.7096,
+    "isSharpe": 0.7144,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation that rewards momentum only when volume exceeds baseline",
+    "ts": 1774201958123
+  },
+  {
+    "n": 2041,
+    "valSharpe": 3.7049,
+    "isSharpe": 0.7498,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume baseline confirmation that only rewards momentum when current volume",
+    "ts": 1774201969320
+  },
+  {
+    "n": 2042,
+    "valSharpe": 2.6228,
+    "isSharpe": 0.5559,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price rises but OBV falls over",
+    "ts": 1774201980476
+  },
+  {
+    "n": 2043,
+    "valSharpe": 3.9561,
+    "isSharpe": 0.6796,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surge confirmation that only rewards momentum when volume spike exce",
+    "ts": 1774201992135
+  },
+  {
+    "n": 2044,
+    "valSharpe": 3.7096,
+    "isSharpe": 0.7144,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume surge confirmation that only rewards momentum when volume exceeds 20",
+    "ts": 1774201997690
+  },
+  {
+    "n": 2045,
+    "valSharpe": 3.0524,
+    "isSharpe": 0.6994,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detection that penalizes when price momentum is positive but",
+    "ts": 1774202008352
+  },
+  {
+    "n": 2046,
+    "valSharpe": 2.9309,
+    "isSharpe": 0.668,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume confirmation that rewards momentum only when volume exceeds 20-day b",
+    "ts": 1774202020986
+  },
+  {
+    "n": 2047,
+    "valSharpe": 3.7466,
+    "isSharpe": 0.5411,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-adjusted momentum that only rewards when volume exceeds 15-day basel",
+    "ts": 1774202032025
+  },
+  {
+    "n": 2048,
+    "valSharpe": 4.0517,
+    "isSharpe": 1.1147,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume-weighted momentum that requires volume surge (>1.5x 20-da",
+    "ts": 1774202042436
+  },
+  {
+    "n": 2049,
+    "valSharpe": 3.9035,
+    "isSharpe": 0.9496,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge confirmation that only rewards momentum when volume",
+    "ts": 1774202052534
+  },
+  {
+    "n": 2050,
+    "valSharpe": 3.1374,
+    "isSharpe": 0.766,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge confirmation that rewards momentum only when 7-day ",
+    "ts": 1774202062566
+  },
+  {
+    "n": 2051,
+    "valSharpe": 3.4815,
+    "isSharpe": 0.8781,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge confirmation that rewards momentum only when 7-day ",
+    "ts": 1774202072655
+  },
+  {
+    "n": 2052,
+    "valSharpe": 3.5877,
+    "isSharpe": 1.1777,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge confirmation that rewards momentum only when 7-day ",
+    "ts": 1774202086722
+  },
+  {
+    "n": 2053,
+    "valSharpe": 3.7212,
+    "isSharpe": 0.9186,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility penalty that reduces score when ATR exceeds",
+    "ts": 1774202097459
+  },
+  {
+    "n": 2054,
+    "valSharpe": 3.1359,
+    "isSharpe": 0.7901,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge confirmation that rewards momentum only when 7-day ",
+    "ts": 1774202107641
+  },
+  {
+    "n": 2055,
+    "valSharpe": 3.5205,
+    "isSharpe": 0.9051,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge confirmation that rewards momentum only when 7-day ",
+    "ts": 1774202118271
+  },
+  {
+    "n": 2056,
+    "valSharpe": 3.7407,
+    "isSharpe": 0.9689,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume-weighted momentum confirmation that boosts score when rec",
+    "ts": 1774202129262
+  },
+  {
+    "n": 2057,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility surge filter that only allows high scores w",
+    "ts": 1774202141965
+  },
+  {
+    "n": 2058,
+    "valSharpe": 3.8991,
+    "isSharpe": 0.5742,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise filter that boosts score when recent volume exce",
+    "ts": 1774202154110
+  },
+  {
+    "n": 2059,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility surge filter that penalizes when ATR exceed",
+    "ts": 1774202165124
+  },
+  {
+    "n": 2060,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility confirmation that only rewards high momentu",
+    "ts": 1774202176457
+  },
+  {
+    "n": 2061,
+    "valSharpe": 3.5209,
+    "isSharpe": 1.1512,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume-weighted momentum boost that rewards when 7-day volume ex",
+    "ts": 1774202188746
+  },
+  {
+    "n": 2062,
+    "valSharpe": 3.5163,
+    "isSharpe": 0.8742,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility confirmation that only rewards high momentu",
+    "ts": 1774202202366
+  },
+  {
+    "n": 2063,
+    "valSharpe": 3.1359,
+    "isSharpe": 0.7901,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume-weighted momentum that boosts score when recent volume ex",
+    "ts": 1774202212837
+  },
+  {
+    "n": 2064,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility surge filter that boosts score when recent ",
+    "ts": 1774202224226
+  },
+  {
+    "n": 2065,
+    "valSharpe": 3.7748,
+    "isSharpe": 0.9108,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise filter that penalizes when 7-day volume is unexp",
+    "ts": 1774202234902
+  },
+  {
+    "n": 2066,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based stop-loss penalty that reduces score when recent ATR s",
+    "ts": 1774202246931
+  },
+  {
+    "n": 2067,
+    "valSharpe": 3.4923,
+    "isSharpe": 0.9161,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge filter that boosts score when 7-day volume signific",
+    "ts": 1774202257663
+  },
+  {
+    "n": 2068,
+    "valSharpe": 3.3084,
+    "isSharpe": 0.8571,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume mean reversion boost that rewards when recent volume drop",
+    "ts": 1774202268362
+  },
+  {
+    "n": 2069,
+    "valSharpe": 2.2984,
+    "isSharpe": 1.2521,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility regime filter that boosts score in low-vola",
+    "ts": 1774202280450
+  },
+  {
+    "n": 2070,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility surge filter that boosts score when recent ",
+    "ts": 1774202291424
+  },
+  {
+    "n": 2071,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based stop-loss penalty that reduces score when recent ATR s",
+    "ts": 1774202304150
+  },
+  {
+    "n": 2072,
+    "valSharpe": 3.1359,
+    "isSharpe": 0.7901,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise boost that rewards when 7-day volume significant",
+    "ts": 1774202314720
+  },
+  {
+    "n": 2073,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility filter that penalizes when recent ATR excee",
+    "ts": 1774202325757
+  },
+  {
+    "n": 2074,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility surge filter that boosts score when recent ",
+    "ts": 1774202337185
+  },
+  {
+    "n": 2075,
+    "valSharpe": 2.9579,
+    "isSharpe": 1.0325,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surge boost that rewards when 7-day volume exceeds 20-day",
+    "ts": 1774202348939
+  },
+  {
+    "n": 2076,
+    "valSharpe": 3.0841,
+    "isSharpe": 0.8883,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume surprise boost that rewards tokens when recent 7-day volu",
+    "ts": 1774202359743
+  },
+  {
+    "n": 2077,
+    "valSharpe": 2.8212,
+    "isSharpe": 1.1211,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with volume trend boost that rewards when 7-day average volume exceed",
+    "ts": 1774202370552
+  },
+  {
+    "n": 2078,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility filter that penalizes excessive recent vola",
+    "ts": 1774202381780
+  },
+  {
+    "n": 2079,
+    "valSharpe": 2.3549,
+    "isSharpe": 1.0308,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based recent volatility surge filter that penalizes when 7-d",
+    "ts": 1774202393814
+  },
+  {
+    "n": 2080,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace OBV divergence penalty with ATR-based volatility surge filter that penalizes when 7-day aver",
+    "ts": 1774202405205
+  },
+  {
+    "n": 2081,
+    "valSharpe": 3.1891,
+    "isSharpe": 0.7978,
+    "accepted": false,
+    "description": "Replace ATR volatility surge penalty with OBV divergence detector that penalizes when price rises bu",
+    "ts": 1774202415856
+  },
+  {
+    "n": 2082,
+    "valSharpe": 3.4009,
+    "isSharpe": 0.8193,
+    "accepted": false,
+    "description": "Replace ATR volatility surge penalty with OBV divergence detector that penalizes when price rises bu",
+    "ts": 1774202421967
+  },
+  {
+    "n": 2083,
+    "valSharpe": 3.5782,
+    "isSharpe": 0.7506,
+    "accepted": false,
+    "description": "Replace ATR penalty with OBV divergence detector that penalizes when price rises but volume declines",
+    "ts": 1774202432755
+  },
+  {
+    "n": 2084,
+    "valSharpe": 1.5073,
+    "isSharpe": 1.41,
+    "accepted": false,
+    "description": "Add OBV divergence detector that penalizes when price rises but volume declines over 20 days.",
+    "ts": 1774202443845
+  },
+  {
+    "n": 2085,
+    "valSharpe": 2.9443,
+    "isSharpe": 1.2447,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detector that penalizes when price rises but volume declines",
+    "ts": 1774202454234
+  },
+  {
+    "n": 2086,
+    "valSharpe": 3.1302,
+    "isSharpe": 0.8592,
+    "accepted": false,
+    "description": "Replace volSurprise with volume divergence penalty that reduces score when price rises but volume is",
+    "ts": 1774202464496
+  },
+  {
+    "n": 2087,
+    "valSharpe": 3.4363,
+    "isSharpe": 0.9283,
+    "accepted": false,
+    "description": "Replace volSurprise with volume surge penalty that reduces score when recent volume spikes without p",
+    "ts": 1774202474837
+  },
+  {
+    "n": 2088,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility surge penalty that reduces score when recent volatilit",
+    "ts": 1774202485651
+  },
+  {
+    "n": 2089,
+    "valSharpe": 3.6349,
+    "isSharpe": 1.0277,
+    "accepted": false,
+    "description": "Replace volSurprise with volume trend penalty that reduces score when volume is declining over 20 da",
+    "ts": 1774202496383
+  },
+  {
+    "n": 2090,
+    "valSharpe": 3.1721,
+    "isSharpe": 0.5677,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum factor that rewards sustained volume increases and penalize",
+    "ts": 1774202507521
+  },
+  {
+    "n": 2091,
+    "valSharpe": 4.0291,
+    "isSharpe": 0.8917,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detector that penalizes when price rises but volume declines",
+    "ts": 1774202517828
+  },
+  {
+    "n": 2092,
+    "valSharpe": 3.1597,
+    "isSharpe": 1.0236,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detector that penalizes when price rises but volume declines",
+    "ts": 1774202529505
+  },
+  {
+    "n": 2093,
+    "valSharpe": 2.9714,
+    "isSharpe": 0.9963,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum decay that rewards sustained volume increases over 20 days ",
+    "ts": 1774202540853
+  },
+  {
+    "n": 2094,
+    "valSharpe": 3.5212,
+    "isSharpe": 0.984,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence penalty that reduces score when price rises but vol",
+    "ts": 1774202551725
+  },
+  {
+    "n": 2095,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility penalty that reduces score when recent ATR is signific",
+    "ts": 1774202563144
+  },
+  {
+    "n": 2096,
+    "valSharpe": 3.2265,
+    "isSharpe": 1.0925,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum that rewards sustained volume increases aligned with price gai",
+    "ts": 1774202574431
+  },
+  {
+    "n": 2097,
+    "valSharpe": 3.5304,
+    "isSharpe": 1.0039,
+    "accepted": false,
+    "description": "Replace volSurprise with volume decay penalty that reduces score when recent volume trend is declini",
+    "ts": 1774202584929
+  },
+  {
+    "n": 2098,
+    "valSharpe": 3.0849,
+    "isSharpe": 0.7721,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence detector that penalizes when price rises but volume",
+    "ts": 1774202595615
+  },
+  {
+    "n": 2099,
+    "valSharpe": 3.4559,
+    "isSharpe": 1.1743,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detector that penalizes when price rises but OBV momentum st",
+    "ts": 1774202607189
+  },
+  {
+    "n": 2100,
+    "valSharpe": 3.1884,
+    "isSharpe": 0.8702,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence penalty that reduces score when price rises but vol",
+    "ts": 1774202618510
+  },
+  {
+    "n": 2101,
+    "valSharpe": 3.909,
+    "isSharpe": 1.3793,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum decay that rewards sustained volume above average but penal",
+    "ts": 1774202629412
+  },
+  {
+    "n": 2102,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility penalty that reduces score when recent ATR spike sugge",
+    "ts": 1774202640763
+  },
+  {
+    "n": 2103,
+    "valSharpe": 3.1792,
+    "isSharpe": 0.5932,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence penalty that penalizes when price rises but volume ",
+    "ts": 1774202652281
+  },
+  {
+    "n": 2104,
+    "valSharpe": 2.8688,
+    "isSharpe": 0.9777,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price confirmation that rewards volume expansion on positive momentu",
+    "ts": 1774202658407
+  },
+  {
+    "n": 2105,
+    "valSharpe": 3.2422,
+    "isSharpe": 0.7331,
+    "accepted": false,
+    "description": "Replace ATR penalty with volume-price confirmation that boosts score only when volume expansion conf",
+    "ts": 1774202669405
+  },
+  {
+    "n": 2106,
+    "valSharpe": 3.205,
+    "isSharpe": 0.6066,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that penalizes when price rises but OBV falls, rewarding str",
+    "ts": 1774202680621
+  },
+  {
+    "n": 2107,
+    "valSharpe": 3.6942,
+    "isSharpe": 0.7182,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price confirmation that rewards volume expansion on positive momentu",
+    "ts": 1774202691234
+  },
+  {
+    "n": 2108,
+    "valSharpe": 3.6027,
+    "isSharpe": 0.9463,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price confirmation that boosts score only when volume expansion conf",
+    "ts": 1774202701892
+  },
+  {
+    "n": 2109,
+    "valSharpe": 3.1928,
+    "isSharpe": 1.0978,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility penalty that reduces score when recent ATR spike indic",
+    "ts": 1774202713013
+  },
+  {
+    "n": 2110,
+    "valSharpe": 3.6647,
+    "isSharpe": 0.8872,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price confirmation that penalizes volume expansion on negative momen",
+    "ts": 1774202723327
+  },
+  {
+    "n": 2111,
+    "valSharpe": 3.6094,
+    "isSharpe": 0.7811,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that penalizes price rises without volume confirmation and r",
+    "ts": 1774202734853
+  },
+  {
+    "n": 2112,
+    "valSharpe": 3.3561,
+    "isSharpe": 1.254,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774202745765
+  },
+  {
+    "n": 2113,
+    "valSharpe": 3.2989,
+    "isSharpe": 0.6419,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted price confirmation that requires both positive momentum AND",
+    "ts": 1774202756552
+  },
+  {
+    "n": 2114,
+    "valSharpe": 3.8172,
+    "isSharpe": 0.9531,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that requires sustained volume above ",
+    "ts": 1774202769026
+  },
+  {
+    "n": 2115,
+    "valSharpe": 3.8752,
+    "isSharpe": 0.9852,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR is",
+    "ts": 1774202779897
+  },
+  {
+    "n": 2116,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes entries when recent ATR exceeds ",
+    "ts": 1774202790780
+  },
+  {
+    "n": 2117,
+    "valSharpe": 3.559,
+    "isSharpe": 0.7646,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted price confirmation that boosts only when price rises AND vo",
+    "ts": 1774202801794
+  },
+  {
+    "n": 2118,
+    "valSharpe": 3.0616,
+    "isSharpe": 1.1337,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774202812332
+  },
+  {
+    "n": 2119,
+    "valSharpe": 3.5921,
+    "isSharpe": 1.2672,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774202824710
+  },
+  {
+    "n": 2120,
+    "valSharpe": 2.7298,
+    "isSharpe": 0.7329,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based confirmation that requires both momentum AND sustained elevated v",
+    "ts": 1774202836387
+  },
+  {
+    "n": 2121,
+    "valSharpe": 3.3943,
+    "isSharpe": 0.9128,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based divergence penalty that reduces score when price rises but volume",
+    "ts": 1774202847186
+  },
+  {
+    "n": 2122,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that only rewards momentum when ATR is mo",
+    "ts": 1774202854245
+  },
+  {
+    "n": 2123,
+    "valSharpe": 3.5914,
+    "isSharpe": 0.9127,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that requires sustained volume above ",
+    "ts": 1774202864920
+  },
+  {
+    "n": 2124,
+    "valSharpe": 3.0844,
+    "isSharpe": 1.0912,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence penalty that reduces momentum when price rises but ",
+    "ts": 1774202875441
+  },
+  {
+    "n": 2125,
+    "valSharpe": 3.1965,
+    "isSharpe": 1.1632,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774202885967
+  },
+  {
+    "n": 2126,
+    "valSharpe": 2.8825,
+    "isSharpe": 0.691,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility floor that only rewards momentum when ATR exceeds 20-d",
+    "ts": 1774202897212
+  },
+  {
+    "n": 2127,
+    "valSharpe": 3.4405,
+    "isSharpe": 0.8115,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum that requires both strong price action AND sustain",
+    "ts": 1774202907686
+  },
+  {
+    "n": 2128,
+    "valSharpe": 3.4976,
+    "isSharpe": 0.9109,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that only rewards momentum when recent AT",
+    "ts": 1774202919422
+  },
+  {
+    "n": 2129,
+    "valSharpe": 3.1948,
+    "isSharpe": 0.9147,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum that requires sustained volume AND positive moment",
+    "ts": 1774202931010
+  },
+  {
+    "n": 2130,
+    "valSharpe": 2.8825,
+    "isSharpe": 0.691,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that only rewards momentum when ATR excee",
+    "ts": 1774202942315
+  },
+  {
+    "n": 2131,
+    "valSharpe": 3.0616,
+    "isSharpe": 1.1337,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774202952401
+  },
+  {
+    "n": 2132,
+    "valSharpe": 3.0844,
+    "isSharpe": 1.0912,
+    "accepted": false,
+    "description": "Replace volSurprise with volume divergence penalty that reduces momentum when price rises but volume",
+    "ts": 1774202962546
+  },
+  {
+    "n": 2133,
+    "valSharpe": 3.3535,
+    "isSharpe": 1.309,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774202972552
+  },
+  {
+    "n": 2134,
+    "valSharpe": 3.7823,
+    "isSharpe": 1.0833,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based volume confirmation that penalizes momentum when price rises but ",
+    "ts": 1774202983152
+  },
+  {
+    "n": 2135,
+    "valSharpe": 3.7155,
+    "isSharpe": 0.8362,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that only rewards momentum when volume surpri",
+    "ts": 1774202994307
+  },
+  {
+    "n": 2136,
+    "valSharpe": 3.1707,
+    "isSharpe": 1.0732,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence penalty that reduces score when price rises but volume falls",
+    "ts": 1774203005408
+  },
+  {
+    "n": 2137,
+    "valSharpe": 3.4932,
+    "isSharpe": 0.9339,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires both price momentum AND above-average vol",
+    "ts": 1774203016290
+  },
+  {
+    "n": 2138,
+    "valSharpe": 3.4084,
+    "isSharpe": 0.9816,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes momentum when price rises but ",
+    "ts": 1774203027460
+  },
+  {
+    "n": 2139,
+    "valSharpe": 3.4622,
+    "isSharpe": 0.6843,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires price momentum AND volume above 1.2x aver",
+    "ts": 1774203037664
+  },
+  {
+    "n": 2140,
+    "valSharpe": 3.3243,
+    "isSharpe": 0.6085,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based volume confirmation that rewards momentum only when OBV trend ali",
+    "ts": 1774203047791
+  },
+  {
+    "n": 2141,
+    "valSharpe": 3.1358,
+    "isSharpe": 0.9794,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based volume confirmation that penalizes momentum when price rises but ",
+    "ts": 1774203059098
+  },
+  {
+    "n": 2142,
+    "valSharpe": 3.949,
+    "isSharpe": 1.0484,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires price momentum AND volume above 1.5x aver",
+    "ts": 1774203069222
+  },
+  {
+    "n": 2143,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based volume confirmation that rewards momentum only when OBV is above ",
+    "ts": 1774203080978
+  },
+  {
+    "n": 2144,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that rewards momentum only when recent OBV is abov",
+    "ts": 1774203091679
+  },
+  {
+    "n": 2145,
+    "valSharpe": 3.7009,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility penalty that reduces score when recent ATR exceeds 0.1",
+    "ts": 1774203102731
+  },
+  {
+    "n": 2146,
+    "valSharpe": 2.3194,
+    "isSharpe": 0.9589,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR is",
+    "ts": 1774203114113
+  },
+  {
+    "n": 2147,
+    "valSharpe": 2.912,
+    "isSharpe": 0.6917,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR is",
+    "ts": 1774203126190
+  },
+  {
+    "n": 2148,
+    "valSharpe": 3.8582,
+    "isSharpe": 0.9439,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires sustained volume above 1.3x average AND p",
+    "ts": 1774203136647
+  },
+  {
+    "n": 2149,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR is",
+    "ts": 1774203147299
+  },
+  {
+    "n": 2150,
+    "valSharpe": 2.9238,
+    "isSharpe": 0.9048,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires sustained volume above 1.3x average AND p",
+    "ts": 1774203157815
+  },
+  {
+    "n": 2151,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that boosts score when price rises but OBV momentum weakens,",
+    "ts": 1774203168572
+  },
+  {
+    "n": 2152,
+    "valSharpe": 3.127,
+    "isSharpe": 1.2459,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes when recent ATR drops belo",
+    "ts": 1774203180295
+  },
+  {
+    "n": 2153,
+    "valSharpe": 3.6646,
+    "isSharpe": 0.5335,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires recent ATR > 20-period aver",
+    "ts": 1774203191930
+  },
+  {
+    "n": 2154,
+    "valSharpe": 2.3551,
+    "isSharpe": 0.8293,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR ex",
+    "ts": 1774203204508
+  },
+  {
+    "n": 2155,
+    "valSharpe": 3.1732,
+    "isSharpe": 0.5289,
+    "accepted": false,
+    "description": "Replace volSurprise with volume divergence that boosts score when price rises but volume momentum we",
+    "ts": 1774203214880
+  },
+  {
+    "n": 2156,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score when recent ATR is elev",
+    "ts": 1774203225978
+  },
+  {
+    "n": 2157,
+    "valSharpe": 3.7078,
+    "isSharpe": 0.7161,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum divergence that boosts score when price rises but volume mo",
+    "ts": 1774203236058
+  },
+  {
+    "n": 2158,
+    "valSharpe": 2.8204,
+    "isSharpe": 0.5868,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that boosts score when price rises but OBV momentum lags, si",
+    "ts": 1774203246740
+  },
+  {
+    "n": 2159,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes when recent ATR falls belo",
+    "ts": 1774203257658
+  },
+  {
+    "n": 2160,
+    "valSharpe": 1.6871,
+    "isSharpe": 0.936,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score when recent ATR exceeds",
+    "ts": 1774203269481
+  },
+  {
+    "n": 2161,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes score when recent ATR is b",
+    "ts": 1774203282340
+  },
+  {
+    "n": 2162,
+    "valSharpe": 3.501,
+    "isSharpe": 0.9689,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum divergence that boosts score when price rises but volume mo",
+    "ts": 1774203292358
+  },
+  {
+    "n": 2163,
+    "valSharpe": 3.4789,
+    "isSharpe": 0.5427,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR ex",
+    "ts": 1774203303638
+  },
+  {
+    "n": 2164,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV momentum",
+    "ts": 1774203314384
+  },
+  {
+    "n": 2165,
+    "valSharpe": 3.0924,
+    "isSharpe": 0.6503,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV momentum",
+    "ts": 1774203325212
+  },
+  {
+    "n": 2166,
+    "valSharpe": 3.702,
+    "isSharpe": 0.5433,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score when recent ATR exceeds",
+    "ts": 1774203336426
+  },
+  {
+    "n": 2167,
+    "valSharpe": 3.3243,
+    "isSharpe": 0.6085,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum confirmation that boosts score when price rises with increasin",
+    "ts": 1774203346976
+  },
+  {
+    "n": 2168,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based penalty that reduces score when recent ATR is abnormally low (low",
+    "ts": 1774203360165
+  },
+  {
+    "n": 2169,
+    "valSharpe": 3.678,
+    "isSharpe": 0.9821,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that boosts score when price rises wi",
+    "ts": 1774203370378
+  },
+  {
+    "n": 2170,
+    "valSharpe": 1.1108,
+    "isSharpe": 0.4738,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score when recent ATR exceeds",
+    "ts": 1774203381342
+  },
+  {
+    "n": 2171,
+    "valSharpe": 3.2131,
+    "isSharpe": 0.8342,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV momentum",
+    "ts": 1774203391830
+  },
+  {
+    "n": 2172,
+    "valSharpe": 3.7394,
+    "isSharpe": 0.9011,
+    "accepted": false,
+    "description": "Replace volSurprise with volume divergence penalty that reduces score when volume is declining despi",
+    "ts": 1774203401892
+  },
+  {
+    "n": 2173,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score when recent ATR is elev",
+    "ts": 1774203412851
+  },
+  {
+    "n": 2174,
+    "valSharpe": 2.9938,
+    "isSharpe": 0.7296,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum confirmation that requires sustained volume above average w",
+    "ts": 1774203423521
+  },
+  {
+    "n": 2175,
+    "valSharpe": 3.168,
+    "isSharpe": 1.3635,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes scores when recent ATR is ",
+    "ts": 1774203434792
+  },
+  {
+    "n": 2176,
+    "valSharpe": 3.3988,
+    "isSharpe": 0.832,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV momentum",
+    "ts": 1774203448061
+  },
+  {
+    "n": 2177,
+    "valSharpe": 3.4789,
+    "isSharpe": 0.5427,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR ex",
+    "ts": 1774203460141
+  },
+  {
+    "n": 2178,
+    "valSharpe": 3.2118,
+    "isSharpe": 0.8723,
+    "accepted": false,
+    "description": "Replace volSurprise with volume momentum divergence that penalizes scores when volume is declining d",
+    "ts": 1774203470456
+  },
+  {
+    "n": 2179,
+    "valSharpe": 3.4929,
+    "isSharpe": 0.703,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV momentum",
+    "ts": 1774203482606
+  },
+  {
+    "n": 2180,
+    "valSharpe": 3.5829,
+    "isSharpe": 0.9272,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises with increasing ",
+    "ts": 1774203493709
+  },
+  {
+    "n": 2181,
+    "valSharpe": 3.9644,
+    "isSharpe": 0.7157,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV falls (w",
+    "ts": 1774203504222
+  },
+  {
+    "n": 2182,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when ATR is modera",
+    "ts": 1774203515887
+  },
+  {
+    "n": 2183,
+    "valSharpe": 1.1557,
+    "isSharpe": 0.354,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR is",
+    "ts": 1774203526699
+  },
+  {
+    "n": 2184,
+    "valSharpe": 4.1594,
+    "isSharpe": 0.8161,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires both price momentum and elevate",
+    "ts": 1774203537839
+  },
+  {
+    "n": 2185,
+    "valSharpe": 3.5448,
+    "isSharpe": 0.8172,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-to-momentum confirmation that penalizes trades when volume fails to ",
+    "ts": 1774203548248
+  },
+  {
+    "n": 2186,
+    "valSharpe": 3.0788,
+    "isSharpe": 1.3463,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR ex",
+    "ts": 1774203559690
+  },
+  {
+    "n": 2187,
+    "valSharpe": 3.3932,
+    "isSharpe": 0.9835,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but OBV falls (c",
+    "ts": 1774203570611
+  },
+  {
+    "n": 2188,
+    "valSharpe": 4.0369,
+    "isSharpe": 1.0524,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that requires sustained volume above ",
+    "ts": 1774203581149
+  },
+  {
+    "n": 2189,
+    "valSharpe": 3.4677,
+    "isSharpe": 0.9825,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires price momentum AND elevated",
+    "ts": 1774203591968
+  },
+  {
+    "n": 2190,
+    "valSharpe": 3.6198,
+    "isSharpe": 0.7135,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum that requires volume confirmation AND penalizes be",
+    "ts": 1774203602575
+  },
+  {
+    "n": 2191,
+    "valSharpe": 3.3432,
+    "isSharpe": 0.9358,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based divergence that boosts score when price momentum is positive but ",
+    "ts": 1774203613319
+  },
+  {
+    "n": 2192,
+    "valSharpe": 3.3688,
+    "isSharpe": 0.898,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV momentum divergence that boosts score when price rises but volume falls",
+    "ts": 1774203624459
+  },
+  {
+    "n": 2193,
+    "valSharpe": 3.4321,
+    "isSharpe": 0.7935,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires both positive momentum AND ",
+    "ts": 1774203635931
+  },
+  {
+    "n": 2194,
+    "valSharpe": 3.7212,
+    "isSharpe": 0.9044,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes trades when ATR is too hig",
+    "ts": 1774203646758
+  },
+  {
+    "n": 2195,
+    "valSharpe": 3.7101,
+    "isSharpe": 0.7135,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-to-ATR ratio that confirms momentum only when volume exceeds average",
+    "ts": 1774203658439
+  },
+  {
+    "n": 2196,
+    "valSharpe": 3.8149,
+    "isSharpe": 0.9113,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-trend confirmation that requires sustained volume lift over 5 days A",
+    "ts": 1774203668935
+  },
+  {
+    "n": 2197,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when momentum is p",
+    "ts": 1774203680367
+  },
+  {
+    "n": 2198,
+    "valSharpe": 3.6977,
+    "isSharpe": 0.9168,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes score when ATR exceeds 0.0",
+    "ts": 1774203691174
+  },
+  {
+    "n": 2199,
+    "valSharpe": 3.7431,
+    "isSharpe": 1.0625,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards momentum when price rises but OBV lags, indicat",
+    "ts": 1774203702282
+  },
+  {
+    "n": 2200,
+    "valSharpe": 2.6362,
+    "isSharpe": 0.9633,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that boosts score when price rises but volume momentum lags,",
+    "ts": 1774203714813
+  },
+  {
+    "n": 2201,
+    "valSharpe": 3.6852,
+    "isSharpe": 0.7554,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-ATR ratio that confirms momentum only when volume exceeds average AN",
+    "ts": 1774203725736
+  },
+  {
+    "n": 2202,
+    "valSharpe": 3.8227,
+    "isSharpe": 1.0225,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-trend confirmation requiring sustained 5-day average volume lift abo",
+    "ts": 1774203735850
+  },
+  {
+    "n": 2203,
+    "valSharpe": 3.3026,
+    "isSharpe": 0.6293,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that rewards momentum only when recent AT",
+    "ts": 1774203748086
+  },
+  {
+    "n": 2204,
+    "valSharpe": 3.1853,
+    "isSharpe": 0.6279,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards when price momentum is strong but volume growth",
+    "ts": 1774203758323
+  },
+  {
+    "n": 2205,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes scores when recent ATR is elevat",
+    "ts": 1774203769438
+  },
+  {
+    "n": 2206,
+    "valSharpe": 3.1215,
+    "isSharpe": 0.9566,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence that rewards when price momentum is strong but volu",
+    "ts": 1774203779504
+  },
+  {
+    "n": 2207,
+    "valSharpe": 3.6852,
+    "isSharpe": 0.7554,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires both volume surge AND price mom",
+    "ts": 1774203791227
+  },
+  {
+    "n": 2208,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that rewards volume surge only when ATR i",
+    "ts": 1774203802640
+  },
+  {
+    "n": 2209,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility floor that only rewards volume confirmation when ATR i",
+    "ts": 1774203814031
+  },
+  {
+    "n": 2210,
+    "valSharpe": 3.6067,
+    "isSharpe": 1.1601,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires sustained volume above average paired wit",
+    "ts": 1774203824248
+  },
+  {
+    "n": 2211,
+    "valSharpe": 3.1293,
+    "isSharpe": 0.6858,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards price momentum when OBV trend lags behind price",
+    "ts": 1774203835766
+  },
+  {
+    "n": 2212,
+    "valSharpe": 3.8942,
+    "isSharpe": 0.7458,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes when price momentum is strong ",
+    "ts": 1774203847328
+  },
+  {
+    "n": 2213,
+    "valSharpe": 3.8191,
+    "isSharpe": 0.9955,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-confirmed momentum that requires sustained elevated volume over 5 da",
+    "ts": 1774203857737
+  },
+  {
+    "n": 2214,
+    "valSharpe": 3.5572,
+    "isSharpe": 0.9754,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-confirmed momentum that requires both price strength and sustained v",
+    "ts": 1774203868315
+  },
+  {
+    "n": 2215,
+    "valSharpe": 3.4623,
+    "isSharpe": 0.6944,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards when price momentum is strong but recent volume",
+    "ts": 1774203878515
+  },
+  {
+    "n": 2216,
+    "valSharpe": 3.048,
+    "isSharpe": 0.6092,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards strong price momentum paired with lagging volum",
+    "ts": 1774203889292
+  },
+  {
+    "n": 2217,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that rewards momentum only when volume suppor",
+    "ts": 1774203900399
+  },
+  {
+    "n": 2218,
+    "valSharpe": 3.5008,
+    "isSharpe": 0.9758,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence that penalizes high momentum when volume confirmati",
+    "ts": 1774203911502
+  },
+  {
+    "n": 2219,
+    "valSharpe": 3.9179,
+    "isSharpe": 0.9551,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that only rewards momentum when volume exceed",
+    "ts": 1774203923649
+  },
+  {
+    "n": 2220,
+    "valSharpe": 3.3784,
+    "isSharpe": 1.0286,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price correlation check that penalizes momentum when volume fails to",
+    "ts": 1774203934056
+  },
+  {
+    "n": 2221,
+    "valSharpe": 3.4622,
+    "isSharpe": 0.6843,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that rewards momentum only when volume exceed",
+    "ts": 1774203945039
+  },
+  {
+    "n": 2222,
+    "valSharpe": 3.6819,
+    "isSharpe": 1.3258,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes momentum when volume fails to ",
+    "ts": 1774203956480
+  },
+  {
+    "n": 2223,
+    "valSharpe": 3.813,
+    "isSharpe": 0.9093,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that rewards momentum when price rises but OBV con",
+    "ts": 1774203968132
+  },
+  {
+    "n": 2224,
+    "valSharpe": 3.9282,
+    "isSharpe": 1.2225,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that requires both price strength AND",
+    "ts": 1774203978652
+  },
+  {
+    "n": 2225,
+    "valSharpe": 3.3313,
+    "isSharpe": 1.2583,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes momentum when volume fails to ",
+    "ts": 1774203990251
+  },
+  {
+    "n": 2226,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that penalizes momentum when price rises but OBV f",
+    "ts": 1774204001169
+  },
+  {
+    "n": 2227,
+    "valSharpe": 3.2579,
+    "isSharpe": 1.382,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that penalizes momentum when price rises but OBV f",
+    "ts": 1774204012087
+  },
+  {
+    "n": 2228,
+    "valSharpe": 3.8615,
+    "isSharpe": 1.1704,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum that requires price strength AND elevated volume t",
+    "ts": 1774204022554
+  },
+  {
+    "n": 2229,
+    "valSharpe": 3.2028,
+    "isSharpe": 1.2504,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based divergence that penalizes momentum when price rises but OBV fails",
+    "ts": 1774204034031
+  },
+  {
+    "n": 2230,
+    "valSharpe": 3.6368,
+    "isSharpe": 1.1557,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires volume spike AND price strength",
+    "ts": 1774204045666
+  },
+  {
+    "n": 2231,
+    "valSharpe": 3.5871,
+    "isSharpe": 0.8787,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum strength that requires both price momentum AND vol",
+    "ts": 1774204057037
+  },
+  {
+    "n": 2232,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires both price strength AND volume ",
+    "ts": 1774204068556
+  },
+  {
+    "n": 2233,
+    "valSharpe": 3.2776,
+    "isSharpe": 1.0654,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based momentum confirmation that requires volume trend alignment with p",
+    "ts": 1774204079915
+  },
+  {
+    "n": 2234,
+    "valSharpe": 3.2631,
+    "isSharpe": 0.3006,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based momentum confirmation that requires volume trend alignment with p",
+    "ts": 1774204093566
+  },
+  {
+    "n": 2235,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-to-ATR ratio that confirms momentum only when volume spike aligns wi",
+    "ts": 1774204105279
+  },
+  {
+    "n": 2236,
+    "valSharpe": 3.6888,
+    "isSharpe": 0.9517,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes trades when volume spike lacks",
+    "ts": 1774204116837
+  },
+  {
+    "n": 2237,
+    "valSharpe": 3.2493,
+    "isSharpe": 0.7753,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards when price momentum and volume trend align posi",
+    "ts": 1774204127034
+  },
+  {
+    "n": 2238,
+    "valSharpe": 3.7104,
+    "isSharpe": 0.8462,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based confirmation that requires volume spike AND positive momentum ali",
+    "ts": 1774204138454
+  },
+  {
+    "n": 2239,
+    "valSharpe": 3.5915,
+    "isSharpe": 0.7298,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires volume spike AND positive price",
+    "ts": 1774204149857
+  },
+  {
+    "n": 2240,
+    "valSharpe": 3.7919,
+    "isSharpe": 0.8782,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-to-ATR ratio that confirms momentum only when volume spike aligns wi",
+    "ts": 1774204161212
+  },
+  {
+    "n": 2241,
+    "valSharpe": 3.9603,
+    "isSharpe": 0.9691,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires volume spike to exceed 1.5x ave",
+    "ts": 1774204172781
+  },
+  {
+    "n": 2242,
+    "valSharpe": 2.3473,
+    "isSharpe": 0.7353,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards when price momentum and volume trend align posi",
+    "ts": 1774204183491
+  },
+  {
+    "n": 2243,
+    "valSharpe": 3.9051,
+    "isSharpe": 0.4604,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes trades when volume spike lacks",
+    "ts": 1774204195425
+  },
+  {
+    "n": 2244,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that requires volume spike AND positive 7-day",
+    "ts": 1774204209463
+  },
+  {
+    "n": 2245,
+    "valSharpe": 3.7181,
+    "isSharpe": 0.7555,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards when price momentum and volume trend align posi",
+    "ts": 1774204219864
+  },
+  {
+    "n": 2246,
+    "valSharpe": 3.7219,
+    "isSharpe": 0.7515,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that only rewards volume spikes when they ali",
+    "ts": 1774204234186
+  },
+  {
+    "n": 2247,
+    "valSharpe": 4.0596,
+    "isSharpe": 0.9785,
+    "accepted": false,
+    "description": "Replace volSurprise with volume trend confirmation that requires sustained above-average volume over",
+    "ts": 1774204244578
+  },
+  {
+    "n": 2248,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that rewards volume spikes only when ATR is e",
+    "ts": 1774204257074
+  },
+  {
+    "n": 2249,
+    "valSharpe": 3.7594,
+    "isSharpe": 0.601,
+    "accepted": false,
+    "description": "Replace volSurprise with volume trend confirmation that rewards sustained above-average volume only ",
+    "ts": 1774204269121
+  },
+  {
+    "n": 2250,
+    "valSharpe": 3.683,
+    "isSharpe": 0.8235,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes volume spikes during high vola",
+    "ts": 1774204280256
+  },
+  {
+    "n": 2251,
+    "valSharpe": 3.2532,
+    "isSharpe": 0.9377,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence detector that penalizes when price rises but volume",
+    "ts": 1774204290671
+  },
+  {
+    "n": 2252,
+    "valSharpe": 3.2507,
+    "isSharpe": 0.3378,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detector that rewards price increases on rising OBV and pena",
+    "ts": 1774204304396
+  },
+  {
+    "n": 2253,
+    "valSharpe": 4.1586,
+    "isSharpe": 0.969,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price correlation check that rewards volume spikes only when price m",
+    "ts": 1774204316900
+  },
+  {
+    "n": 2254,
+    "valSharpe": 0,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that rewards volume spikes only when price mo",
+    "ts": 1774204328223
+  },
+  {
+    "n": 2255,
+    "valSharpe": 3.6373,
+    "isSharpe": 0.6621,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted price momentum that rewards price gains only when accompani",
+    "ts": 1774204338459
+  },
+  {
+    "n": 2256,
+    "valSharpe": 4.1223,
+    "isSharpe": 0.5577,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that only rewards volume spikes when price mo",
+    "ts": 1774204350060
+  },
+  {
+    "n": 2257,
+    "valSharpe": 4.0211,
+    "isSharpe": 0.9971,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-based confirmation that requires volume spike AND positive momentum ",
+    "ts": 1774204360335
+  },
+  {
+    "n": 2258,
+    "valSharpe": 3.9144,
+    "isSharpe": 0.8766,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes volume spikes during bear regi",
+    "ts": 1774204371517
+  },
+  {
+    "n": 2259,
+    "valSharpe": 3.2236,
+    "isSharpe": 0.4343,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards volume accumulation during uptrends and penaliz",
+    "ts": 1774204382173
+  },
+  {
+    "n": 2260,
+    "valSharpe": 3.6852,
+    "isSharpe": 0.7166,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that penalizes volume spikes during bear regi",
+    "ts": 1774204392799
+  },
+  {
+    "n": 2261,
+    "valSharpe": 3.771,
+    "isSharpe": 0.39,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards volume accumulation during uptrends and penaliz",
+    "ts": 1774204403954
+  },
+  {
+    "n": 2262,
+    "valSharpe": 4.0086,
+    "isSharpe": 0.8139,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that rewards volume spikes during uptrends wh",
+    "ts": 1774204415214
+  },
+  {
+    "n": 2263,
+    "valSharpe": 3.7977,
+    "isSharpe": 0.6547,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that requires sustained volume AND positive momentum, p",
+    "ts": 1774204425817
+  },
+  {
+    "n": 2264,
+    "valSharpe": 3.7457,
+    "isSharpe": 1.1673,
+    "accepted": false,
+    "description": "Replace volSurprise with volume confirmation that rewards sustained high volume during uptrends and ",
+    "ts": 1774204436900
+  },
+  {
+    "n": 2265,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204442063
+  },
+  {
+    "n": 2266,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204447220
+  },
+  {
+    "n": 2267,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204452634
+  },
+  {
+    "n": 2268,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204457787
+  },
+  {
+    "n": 2269,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204462984
+  },
+  {
+    "n": 2270,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204468135
+  },
+  {
+    "n": 2271,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204473286
+  },
+  {
+    "n": 2272,
+    "valSharpe": -999,
+    "isSharpe": 0,
+    "accepted": false,
+    "description": "error: Anthropic error: {\"type\":\"authentication_error\",\"m",
+    "ts": 1774204478444
+  },
+  {
+    "n": 2273,
+    "valSharpe": 3.6118,
+    "isSharpe": 0.7616,
+    "accepted": false,
+    "description": "Add ATR-based volatility penalty to reduce losses in high-volatility regimes where stop-losses trigg",
+    "ts": 1774204489896
+  },
+  {
+    "n": 2274,
+    "valSharpe": 3.5534,
+    "isSharpe": 0.6551,
+    "accepted": false,
+    "description": "Add ATR-based volatility penalty to reduce losses in high-volatility regimes where stop-losses trigg",
+    "ts": 1774204501204
+  },
+  {
+    "n": 2275,
+    "valSharpe": 3.6852,
+    "isSharpe": 0.9347,
+    "accepted": false,
+    "description": "Add OBV divergence detection to identify accumulation in downtrends and boost score when volume conf",
+    "ts": 1774204512014
+  },
+  {
+    "n": 2276,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volume surprise with ATR-based volatility penalty to avoid holding tokens during high-volati",
+    "ts": 1774204523045
+  },
+  {
+    "n": 2277,
+    "valSharpe": 3.5808,
+    "isSharpe": 0.9011,
+    "accepted": false,
+    "description": "Replace volume surprise with ATR-based volatility penalty to avoid holding tokens during high-volati",
+    "ts": 1774204534634
+  },
+  {
+    "n": 2278,
+    "valSharpe": 3.6771,
+    "isSharpe": 1.0589,
+    "accepted": false,
+    "description": "Replace volume surprise with OBV divergence detection to identify accumulation in downtrends and boo",
+    "ts": 1774204545052
+  },
+  {
+    "n": 2279,
+    "valSharpe": 3.4985,
+    "isSharpe": 0.9011,
+    "accepted": false,
+    "description": "Remove volSurprise entirely and add ATR-based volatility penalty that aggressively reduces score whe",
+    "ts": 1774204557339
+  },
+  {
+    "n": 2280,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9401,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection to identify accumulation during downtrends and boo",
+    "ts": 1774204568220
+  },
+  {
+    "n": 2281,
+    "valSharpe": 2.813,
+    "isSharpe": 0.5944,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility penalty that reduces score when recent ATR exceeds 20-",
+    "ts": 1774204579264
+  },
+  {
+    "n": 2282,
+    "valSharpe": 3.2029,
+    "isSharpe": 0.5595,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that boosts score when price falls but volume accu",
+    "ts": 1774204589705
+  },
+  {
+    "n": 2283,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility ceiling that caps score to 0 when recent ATR exceeds 2",
+    "ts": 1774204600442
+  },
+  {
+    "n": 2284,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes high recent volatility and preve",
+    "ts": 1774204611629
+  },
+  {
+    "n": 2285,
+    "valSharpe": 3.7897,
+    "isSharpe": 1.2032,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based accumulation signal that boosts score when volume accumulates dur",
+    "ts": 1774204622334
+  },
+  {
+    "n": 2286,
+    "valSharpe": 3.4652,
+    "isSharpe": 0.8624,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes scores when recent ATR exceeds 2",
+    "ts": 1774204634103
+  },
+  {
+    "n": 2287,
+    "valSharpe": 3.4563,
+    "isSharpe": 0.53,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that boosts score when price declines but volume accumulates",
+    "ts": 1774204644815
+  },
+  {
+    "n": 2288,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes extreme recent volatility spikes",
+    "ts": 1774204655725
+  },
+  {
+    "n": 2289,
+    "valSharpe": 3.666,
+    "isSharpe": 1.1227,
+    "accepted": false,
+    "description": "Replace volSurprise with volume rate-of-change momentum that boosts score when volume accelerates ab",
+    "ts": 1774204665908
+  },
+  {
+    "n": 2290,
+    "valSharpe": 2.6845,
+    "isSharpe": 0.5232,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that boosts score when recent ATR is lower than",
+    "ts": 1774204677350
+  },
+  {
+    "n": 2291,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when recent ATR is",
+    "ts": 1774204691110
+  },
+  {
+    "n": 2292,
+    "valSharpe": 2.8837,
+    "isSharpe": 1.0544,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that boosts score when recent ATR is lower than",
+    "ts": 1774204701861
+  },
+  {
+    "n": 2293,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that only boosts score when recent ATR is",
+    "ts": 1774204712563
+  },
+  {
+    "n": 2294,
+    "valSharpe": 3.3548,
+    "isSharpe": 1.0296,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that boosts score when price rises but OBV confirm",
+    "ts": 1774204726360
+  },
+  {
+    "n": 2295,
+    "valSharpe": 3.264,
+    "isSharpe": 0.809,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based penalty that reduces score when recent ATR exceeds 2-week average",
+    "ts": 1774204737505
+  },
+  {
+    "n": 2296,
+    "valSharpe": 3.5937,
+    "isSharpe": 0.8953,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-price divergence detection that boosts score when price rises on bel",
+    "ts": 1774204749914
+  },
+  {
+    "n": 2297,
+    "valSharpe": 3.7948,
+    "isSharpe": 0.7225,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted price confirmation that boosts score when price rises on ab",
+    "ts": 1774204761706
+  },
+  {
+    "n": 2298,
+    "valSharpe": 2.74,
+    "isSharpe": 0.8965,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that boosts score when price rises but OBV stagnat",
+    "ts": 1774204774496
+  },
+  {
+    "n": 2299,
+    "valSharpe": 3.8667,
+    "isSharpe": 1.0398,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum that requires both price strength AND above-averag",
+    "ts": 1774204784870
+  },
+  {
+    "n": 2300,
+    "valSharpe": 3.5538,
+    "isSharpe": 0.6809,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when price rises o",
+    "ts": 1774204796900
+  },
+  {
+    "n": 2301,
+    "valSharpe": 3.4826,
+    "isSharpe": 0.6031,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence detection that boosts score when price rises but OBV stagnat",
+    "ts": 1774204808032
+  },
+  {
+    "n": 2302,
+    "valSharpe": 3.2648,
+    "isSharpe": 1.0107,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes scores when recent ATR is abnorm",
+    "ts": 1774204819003
+  },
+  {
+    "n": 2303,
+    "valSharpe": 3.7107,
+    "isSharpe": 0.9944,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that boosts score when price rises but OBV momentum weakens,",
+    "ts": 1774204830365
+  },
+  {
+    "n": 2304,
+    "valSharpe": 3.802,
+    "isSharpe": 0.9888,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that requires both price strength AND",
+    "ts": 1774204840507
+  },
+  {
+    "n": 2305,
+    "valSharpe": 3.2618,
+    "isSharpe": 0.3711,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based momentum confirmation that boosts score only when price rises AND",
+    "ts": 1774204851008
+  },
+  {
+    "n": 2306,
+    "valSharpe": 3.9776,
+    "isSharpe": 0.8724,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires both price strength AND con",
+    "ts": 1774204862434
+  },
+  {
+    "n": 2307,
+    "valSharpe": 3.008,
+    "isSharpe": 0.748,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that boosts score when price rises but OBV momentum weakens,",
+    "ts": 1774204873031
+  },
+  {
+    "n": 2308,
+    "valSharpe": 3.046,
+    "isSharpe": 0.4675,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based divergence that boosts score when price rises but OBV momentum we",
+    "ts": 1774204883784
+  },
+  {
+    "n": 2309,
+    "valSharpe": 3.7542,
+    "isSharpe": 0.868,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted price strength confirmation that requires sustained momentu",
+    "ts": 1774204893791
+  },
+  {
+    "n": 2310,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility filter that penalizes scores when recent ATR exceeds h",
+    "ts": 1774204904481
+  },
+  {
+    "n": 2311,
+    "valSharpe": 3.8798,
+    "isSharpe": 0.9525,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score only when price strengt",
+    "ts": 1774204915290
+  },
+  {
+    "n": 2312,
+    "valSharpe": 3.5829,
+    "isSharpe": 1.1206,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires price strength AND low rece",
+    "ts": 1774204926598
+  },
+  {
+    "n": 2313,
+    "valSharpe": 3.8979,
+    "isSharpe": 1.1519,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum confirmation that requires both price strength AND",
+    "ts": 1774204936802
+  },
+  {
+    "n": 2314,
+    "valSharpe": 3.7718,
+    "isSharpe": 0.6188,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that boosts score when price strength is ",
+    "ts": 1774204948068
+  },
+  {
+    "n": 2315,
+    "valSharpe": 3.6835,
+    "isSharpe": 1.0292,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that detects accumulation during consolidation phases to cat",
+    "ts": 1774204958591
+  },
+  {
+    "n": 2316,
+    "valSharpe": 3.856,
+    "isSharpe": 0.9706,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-weighted momentum that requires sustained volume above 1.3x MA AND p",
+    "ts": 1774204968803
+  },
+  {
+    "n": 2317,
+    "valSharpe": 3.757,
+    "isSharpe": 0.7731,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes trades when ATR is expandi",
+    "ts": 1774204980988
+  },
+  {
+    "n": 2318,
+    "valSharpe": 3.6554,
+    "isSharpe": 0.4391,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based accumulation signal that detects volume strength during consolida",
+    "ts": 1774204993185
+  },
+  {
+    "n": 2319,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that detects accumulation when price is consolidating but vo",
+    "ts": 1774205004072
+  },
+  {
+    "n": 2320,
+    "valSharpe": 3.0946,
+    "isSharpe": 1.2042,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires price strength above 1.3x A",
+    "ts": 1774205014869
+  },
+  {
+    "n": 2321,
+    "valSharpe": 3.4764,
+    "isSharpe": 0.7108,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that requires price strength AND volume c",
+    "ts": 1774205026045
+  },
+  {
+    "n": 2322,
+    "valSharpe": 3.6771,
+    "isSharpe": 0.9222,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that only rewards volume surprise when AT",
+    "ts": 1774205037967
+  },
+  {
+    "n": 2323,
+    "valSharpe": 3.5037,
+    "isSharpe": 0.6559,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV-based accumulation signal that rewards volume strength when price is ri",
+    "ts": 1774205048838
+  },
+  {
+    "n": 2324,
+    "valSharpe": 0.9639,
+    "isSharpe": 1.4735,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volatility confirmation that penalizes entries when ATR is contra",
+    "ts": 1774205060339
+  },
+  {
+    "n": 2325,
+    "valSharpe": 4.0009,
+    "isSharpe": 0.9721,
+    "accepted": false,
+    "description": "Replace volSurprise with volume-based accumulation signal that rewards sustained volume strength dur",
+    "ts": 1774205070890
+  },
+  {
+    "n": 2326,
+    "valSharpe": 3.4258,
+    "isSharpe": 0.9732,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards volume accumulation when price is near 52-week ",
+    "ts": 1774205082678
+  },
+  {
+    "n": 2327,
+    "valSharpe": 3.6021,
+    "isSharpe": 0.6284,
+    "accepted": false,
+    "description": "Replace volSurprise with volume accumulation check that rewards OBV strength during uptrends without",
+    "ts": 1774205095737
+  },
+  {
+    "n": 2328,
+    "valSharpe": 4.0686,
+    "isSharpe": 1.0029,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based confirmation that only rewards volume spike when price momentum a",
+    "ts": 1774205106468
+  },
+  {
+    "n": 2329,
+    "valSharpe": 2.9202,
+    "isSharpe": 0.8159,
+    "accepted": false,
+    "description": "Replace volSurprise with volume ratio penalty that reduces score when recent volume is weak relative",
+    "ts": 1774205116736
+  },
+  {
+    "n": 2330,
+    "valSharpe": 3.4948,
+    "isSharpe": 0.8899,
+    "accepted": false,
+    "description": "Replace volSurprise with OBV divergence that rewards volume accumulation on pullbacks in uptrends.",
+    "ts": 1774205127202
+  },
+  {
+    "n": 2331,
+    "valSharpe": 3.6742,
+    "isSharpe": 0.6179,
+    "accepted": false,
+    "description": "Replace volSurprise with ATR-based volume confirmation that only rewards volume spikes when price mo",
+    "ts": 1774205138079
+  },
+  {
+    "n": 2332,
+    "valSharpe": 3.4868,
+    "isSharpe": 0.7928,
+    "accepted": false,
+    "description": "Replace volSurprise with volume acceleration check that rewards increasing volume trend over last 5 ",
+    "ts": 1774205147952
   }
 ]

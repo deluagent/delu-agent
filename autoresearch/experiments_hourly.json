@@ -2618,5 +2618,3945 @@
     "score": 8.03025,
     "accepted": false,
     "description": "exp 262"
+  },
+  {
+    "n": 263,
+    "ts": "2026-03-22T17:03:24.043Z",
+    "valSharpe": 6.4012,
+    "audSharpe": 9.5387,
+    "isSharpe": 5.2273,
+    "score": 7.969950000000001,
+    "accepted": false,
+    "description": "Add mean reversion filter using 1h oversold detection to avoid catching falling knives in bear regim"
+  },
+  {
+    "n": 264,
+    "ts": "2026-03-22T17:03:44.573Z",
+    "valSharpe": 5.6338,
+    "audSharpe": 8.9166,
+    "isSharpe": 4.2465,
+    "score": 7.2752,
+    "accepted": false,
+    "description": "Add mean reversion filter using 1h oversold detection (z-score on 4h close) to avoid catching fallin"
+  },
+  {
+    "n": 265,
+    "ts": "2026-03-22T17:04:05.996Z",
+    "valSharpe": 6.1137,
+    "audSharpe": 9.7839,
+    "isSharpe": 4.7673,
+    "score": 7.948799999999999,
+    "accepted": false,
+    "description": "Add 1h oversold filter (RSI < 30) to avoid mean-reversion traps in bear regime by requiring positive"
+  },
+  {
+    "n": 266,
+    "ts": "2026-03-22T17:04:27.898Z",
+    "valSharpe": 4.7661,
+    "audSharpe": 10.1013,
+    "isSharpe": 5.6164,
+    "score": 7.4337,
+    "accepted": false,
+    "description": "Add 4h RSI oversold filter (RSI < 35) to avoid mean-reversion traps and improve win rate in bear reg"
+  },
+  {
+    "n": 267,
+    "ts": "2026-03-22T17:04:48.933Z",
+    "valSharpe": 5.675,
+    "audSharpe": 10.5458,
+    "isSharpe": 2.7344,
+    "score": 8.1104,
+    "accepted": false,
+    "description": "Add 4h momentum persistence filter (require positive 4h returns for 2+ consecutive bars) to avoid me"
+  },
+  {
+    "n": 268,
+    "ts": "2026-03-22T17:05:09.695Z",
+    "valSharpe": -1.1517,
+    "audSharpe": 6.6133,
+    "isSharpe": 6.5571,
+    "score": 2.7308,
+    "accepted": false,
+    "description": "Reduce 7d relative strength weight (0.33→0.20) and boost 4h momentum acceleration (0.10→0.25) to pri"
+  },
+  {
+    "n": 269,
+    "ts": "2026-03-22T17:05:29.438Z",
+    "valSharpe": 6.635,
+    "audSharpe": 11.9763,
+    "isSharpe": 4.3009,
+    "score": 9.30565,
+    "accepted": true,
+    "description": "Add 4h close above 20-SMA filter to avoid mean-reversion traps and prioritize uptrend alignment in b"
+  },
+  {
+    "n": 270,
+    "ts": "2026-03-22T17:05:49.491Z",
+    "valSharpe": 4.9508,
+    "audSharpe": 8.3743,
+    "isSharpe": 4.1241,
+    "score": 6.6625499999999995,
+    "accepted": false,
+    "description": "Add 4h volume surge requirement (volBurst > 1.2) to filter out weak momentum candidates and improve "
+  },
+  {
+    "n": 271,
+    "ts": "2026-03-22T17:06:10.087Z",
+    "valSharpe": 6.7878,
+    "audSharpe": 8.4752,
+    "isSharpe": 4.1799,
+    "score": 7.631499999999999,
+    "accepted": false,
+    "description": "Add 4h momentum persistence filter (require close above open for last 2+ bars) to avoid mean-reversi"
+  },
+  {
+    "n": 272,
+    "ts": "2026-03-22T17:06:30.313Z",
+    "valSharpe": 0.4975,
+    "audSharpe": 6.6909,
+    "isSharpe": 4.5072,
+    "score": 3.5942,
+    "accepted": false,
+    "description": "Add 4h close > open filter to enforce intraday bullish structure and reduce mean-reversion false sig"
+  },
+  {
+    "n": 273,
+    "ts": "2026-03-22T17:06:51.085Z",
+    "valSharpe": 3.48,
+    "audSharpe": 12.2368,
+    "isSharpe": 4.0983,
+    "score": 7.8584000000000005,
+    "accepted": false,
+    "description": "Add 4h close > open filter to momentum acceleration and range coiling components to enforce intraday"
+  },
+  {
+    "n": 274,
+    "ts": "2026-03-22T17:07:11.948Z",
+    "valSharpe": 2.5694,
+    "audSharpe": 9.3601,
+    "isSharpe": 4.8673,
+    "score": 5.9647499999999996,
+    "accepted": false,
+    "description": "Add 4h close > open filter to momentum acceleration component to enforce intraday bullish structure "
+  },
+  {
+    "n": 275,
+    "ts": "2026-03-22T17:07:31.839Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace trend filter penalty with strict uptrend requirement (close > SMA20 AND price > SMA50) to el"
+  },
+  {
+    "n": 276,
+    "ts": "2026-03-22T17:07:54.768Z",
+    "valSharpe": -3.8478,
+    "audSharpe": 10.7154,
+    "isSharpe": 5.6311,
+    "score": 3.4338000000000006,
+    "accepted": false,
+    "description": "Replace trend filter penalty with dynamic BTC correlation strength—reward tokens diverging from BTC "
+  },
+  {
+    "n": 277,
+    "ts": "2026-03-22T17:08:15.063Z",
+    "valSharpe": 2.5694,
+    "audSharpe": 9.3601,
+    "isSharpe": 4.8673,
+    "score": 5.9647499999999996,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration to enforce intraday bullish structure before"
+  },
+  {
+    "n": 278,
+    "ts": "2026-03-22T17:08:35.642Z",
+    "valSharpe": 0.395,
+    "audSharpe": 8.0541,
+    "isSharpe": 4.1928,
+    "score": 4.22455,
+    "accepted": false,
+    "description": "Replace trend filter penalty (0.5x) with hard rejection below SMA20, and reduce relStr7d weight from"
+  },
+  {
+    "n": 279,
+    "ts": "2026-03-22T17:08:58.777Z",
+    "valSharpe": 2.295,
+    "audSharpe": 7.4701,
+    "isSharpe": 6.209,
+    "score": 4.88255,
+    "accepted": false,
+    "description": "Replace trend filter penalty with dynamic BTC beta—penalize tokens moving in lockstep with BTC, rewa"
+  },
+  {
+    "n": 280,
+    "ts": "2026-03-22T17:09:28.331Z",
+    "valSharpe": 2.1871,
+    "audSharpe": 9.0103,
+    "isSharpe": 4.8126,
+    "score": 5.598700000000001,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration component to enforce intraday bullish struct"
+  },
+  {
+    "n": 281,
+    "ts": "2026-03-22T17:09:48.765Z",
+    "valSharpe": 3.0047,
+    "audSharpe": 9.6163,
+    "isSharpe": 3.6163,
+    "score": 6.3105,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration and range coiling to enforce intraday bullis"
+  },
+  {
+    "n": 282,
+    "ts": "2026-03-22T17:10:09.067Z",
+    "valSharpe": 2.6169,
+    "audSharpe": 7.1704,
+    "isSharpe": 4.0725,
+    "score": 4.89365,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration to reject bearish candles and enforce intrad"
+  },
+  {
+    "n": 283,
+    "ts": "2026-03-22T17:10:30.989Z",
+    "valSharpe": 2.3982,
+    "audSharpe": 8.9106,
+    "isSharpe": 5.166,
+    "score": 5.654400000000001,
+    "accepted": false,
+    "description": "Replace trend filter penalty (0.5x) with hard rejection below SMA20, and add hourly close > open fil"
+  },
+  {
+    "n": 284,
+    "ts": "2026-03-22T17:10:51.035Z",
+    "valSharpe": 3.0047,
+    "audSharpe": 9.6163,
+    "isSharpe": 3.6163,
+    "score": 6.3105,
+    "accepted": false,
+    "description": "Add hourly close > open filter to reject bearish candles in momentum acceleration and range coiling "
+  },
+  {
+    "n": 285,
+    "ts": "2026-03-22T17:11:11.923Z",
+    "valSharpe": 3.5719,
+    "audSharpe": 12.3093,
+    "isSharpe": 3.5788,
+    "score": 7.9406,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration and range coiling components to reject beari"
+  },
+  {
+    "n": 286,
+    "ts": "2026-03-22T17:11:37.845Z",
+    "valSharpe": 2.6845,
+    "audSharpe": 11.5328,
+    "isSharpe": 3.8762,
+    "score": 7.10865,
+    "accepted": false,
+    "description": "Replace trend filter penalty with hard rejection below SMA20, and add intraday bullish structure fil"
+  },
+  {
+    "n": 287,
+    "ts": "2026-03-22T17:11:58.551Z",
+    "valSharpe": 3.0047,
+    "audSharpe": 9.6163,
+    "isSharpe": 3.6163,
+    "score": 6.3105,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration and range coiling to reject bearish candles "
+  },
+  {
+    "n": 288,
+    "ts": "2026-03-22T17:12:18.838Z",
+    "valSharpe": 2.6169,
+    "audSharpe": 7.1704,
+    "isSharpe": 4.0725,
+    "score": 4.89365,
+    "accepted": false,
+    "description": "Add hourly close > open filter to momentum acceleration to enforce bullish intraday structure and re"
+  },
+  {
+    "n": 289,
+    "ts": "2026-03-22T17:12:38.260Z",
+    "valSharpe": -2.2814,
+    "audSharpe": 4.8508,
+    "isSharpe": 6.2921,
+    "score": 1.2846999999999997,
+    "accepted": false,
+    "description": "Add hard rejection filter when hourly close <= open (bearish candle) to enforce bullish intraday str"
+  },
+  {
+    "n": 290,
+    "ts": "2026-03-22T17:12:58.236Z",
+    "valSharpe": 6.2441,
+    "audSharpe": 12.3061,
+    "isSharpe": 4.3283,
+    "score": 9.2751,
+    "accepted": false,
+    "description": "Replace OBV microstructure with 1h mean reversion (oversold bounce detection using zScore of 4h retu"
+  },
+  {
+    "n": 291,
+    "ts": "2026-03-22T17:13:18.902Z",
+    "valSharpe": 6.127,
+    "audSharpe": 9.6445,
+    "isSharpe": 3.5581,
+    "score": 7.88575,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close > open bullish structure filter to enforce intraday mom"
+  },
+  {
+    "n": 292,
+    "ts": "2026-03-22T17:13:38.359Z",
+    "valSharpe": 4.4443,
+    "audSharpe": 7.8609,
+    "isSharpe": 5.469,
+    "score": 6.1526,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close > open bullish candle filter to enforce intraday moment"
+  },
+  {
+    "n": 293,
+    "ts": "2026-03-22T17:13:58.731Z",
+    "valSharpe": 5.8749,
+    "audSharpe": 9.8737,
+    "isSharpe": 5.0739,
+    "score": 7.8743,
+    "accepted": false,
+    "description": "Replace OBV microstructure with 4h oversold bounce detection using zScore of 4h returns to catch mea"
+  },
+  {
+    "n": 294,
+    "ts": "2026-03-22T17:14:17.910Z",
+    "valSharpe": 2.7396,
+    "audSharpe": 9.1687,
+    "isSharpe": 5.6763,
+    "score": 5.954149999999999,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-open delta normalized by range to detect intraday momen"
+  },
+  {
+    "n": 295,
+    "ts": "2026-03-22T17:14:37.145Z",
+    "valSharpe": 3.4387,
+    "audSharpe": 8.4695,
+    "isSharpe": 4.0099,
+    "score": 5.9541,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) to detect sustained intraday"
+  },
+  {
+    "n": 296,
+    "ts": "2026-03-22T17:14:56.513Z",
+    "valSharpe": 4.8337,
+    "audSharpe": 9.2412,
+    "isSharpe": 3.5471,
+    "score": 7.03745,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio filtered by 4h momentum sign to enforc"
+  },
+  {
+    "n": 297,
+    "ts": "2026-03-22T17:15:16.538Z",
+    "valSharpe": 5.418,
+    "audSharpe": 5.966,
+    "isSharpe": 5.2073,
+    "score": 5.692,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open count ratio (last 4h) weighted by volume bur"
+  },
+  {
+    "n": 298,
+    "ts": "2026-03-22T17:15:35.712Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly volatility compression (4h realized vol vs 20h baseline) to d"
+  },
+  {
+    "n": 299,
+    "ts": "2026-03-22T17:15:55.197Z",
+    "valSharpe": 5.9849,
+    "audSharpe": 9.471,
+    "isSharpe": 4.2622,
+    "score": 7.72795,
+    "accepted": false,
+    "description": "Replace OBV microstructure with 4h close-above-open ratio filtered by volume burst to detect sustain"
+  },
+  {
+    "n": 300,
+    "ts": "2026-03-22T17:16:15.460Z",
+    "valSharpe": 4.5657,
+    "audSharpe": 11.8515,
+    "isSharpe": 4.4792,
+    "score": 8.2086,
+    "accepted": false,
+    "description": "Replace OBV microstructure with 4h close-above-open count weighted by volume burst and momentum sign"
+  },
+  {
+    "n": 301,
+    "ts": "2026-03-22T17:16:38.270Z",
+    "valSharpe": 5.6262,
+    "audSharpe": 9.4231,
+    "isSharpe": 3.659,
+    "score": 7.524649999999999,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by momentum directi"
+  },
+  {
+    "n": 302,
+    "ts": "2026-03-22T17:16:58.790Z",
+    "valSharpe": 4.9806,
+    "audSharpe": 9.4204,
+    "isSharpe": 3.4217,
+    "score": 7.2005,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open count ratio (last 4h) to detect sustained in"
+  },
+  {
+    "n": 303,
+    "ts": "2026-03-22T17:17:18.416Z",
+    "valSharpe": 4.8417,
+    "audSharpe": 9.1487,
+    "isSharpe": 4.5671,
+    "score": 6.9952000000000005,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by volume burst to "
+  },
+  {
+    "n": 304,
+    "ts": "2026-03-22T17:17:37.758Z",
+    "valSharpe": 6.3262,
+    "audSharpe": 10.3175,
+    "isSharpe": 5.6706,
+    "score": 8.321850000000001,
+    "accepted": false,
+    "description": "Replace OBV microstructure with 4h close-above-open ratio weighted by relative momentum acceleration"
+  },
+  {
+    "n": 305,
+    "ts": "2026-03-22T17:17:57.770Z",
+    "valSharpe": 5.5405,
+    "audSharpe": 5.4162,
+    "isSharpe": 4.6779,
+    "score": 5.47835,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) as direct sustain signal, we"
+  },
+  {
+    "n": 306,
+    "ts": "2026-03-22T17:18:17.959Z",
+    "valSharpe": 5.418,
+    "audSharpe": 5.966,
+    "isSharpe": 5.2073,
+    "score": 5.692,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by volume burst mag"
+  },
+  {
+    "n": 307,
+    "ts": "2026-03-22T17:18:39.955Z",
+    "valSharpe": 6.069,
+    "audSharpe": 10.1339,
+    "isSharpe": 3.7208,
+    "score": 8.10145,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by momentum acceler"
+  },
+  {
+    "n": 308,
+    "ts": "2026-03-22T17:18:59.544Z",
+    "valSharpe": 5.5405,
+    "audSharpe": 5.4162,
+    "isSharpe": 4.6779,
+    "score": 5.47835,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by volume burst mag"
+  },
+  {
+    "n": 309,
+    "ts": "2026-03-22T17:19:18.768Z",
+    "valSharpe": 3.4387,
+    "audSharpe": 8.4695,
+    "isSharpe": 4.0099,
+    "score": 5.9541,
+    "accepted": false,
+    "description": "Replace OBV microstructure with 4h close-above-open ratio sustained over last 4 bars to capture intr"
+  },
+  {
+    "n": 310,
+    "ts": "2026-03-22T17:19:38.385Z",
+    "valSharpe": 4.8417,
+    "audSharpe": 9.1487,
+    "isSharpe": 4.5671,
+    "score": 6.9952000000000005,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open sustained ratio (4h bars) weighted by volume"
+  },
+  {
+    "n": 311,
+    "ts": "2026-03-22T17:19:58.320Z",
+    "valSharpe": 4.479,
+    "audSharpe": 10.0378,
+    "isSharpe": 5.0666,
+    "score": 7.2584,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open sustained ratio over last 4 bars weighted by"
+  },
+  {
+    "n": 312,
+    "ts": "2026-03-22T17:20:19.036Z",
+    "valSharpe": 3.4387,
+    "audSharpe": 8.4695,
+    "isSharpe": 4.0099,
+    "score": 5.9541,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) to capture intraday bullish "
+  },
+  {
+    "n": 313,
+    "ts": "2026-03-22T17:20:41.770Z",
+    "valSharpe": 5.0891,
+    "audSharpe": 8.9868,
+    "isSharpe": 4.9005,
+    "score": 7.03795,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by relative strengt"
+  },
+  {
+    "n": 314,
+    "ts": "2026-03-22T17:21:02.247Z",
+    "valSharpe": 4.8417,
+    "audSharpe": 9.1487,
+    "isSharpe": 4.5671,
+    "score": 6.9952000000000005,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio sustained over last 4 bars, weighted b"
+  },
+  {
+    "n": 315,
+    "ts": "2026-03-22T17:21:25.833Z",
+    "valSharpe": 5.3701,
+    "audSharpe": 8.2226,
+    "isSharpe": 4.8582,
+    "score": 6.79635,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio sustained over last 4 bars, weighted b"
+  },
+  {
+    "n": 316,
+    "ts": "2026-03-22T17:21:45.914Z",
+    "valSharpe": 5.6987,
+    "audSharpe": 7.16,
+    "isSharpe": 4.4516,
+    "score": 6.4293499999999995,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio over last 4 bars, weighted by volume a"
+  },
+  {
+    "n": 317,
+    "ts": "2026-03-22T17:22:07.780Z",
+    "valSharpe": 3.2041,
+    "audSharpe": 11.0434,
+    "isSharpe": 4.59,
+    "score": 7.12375,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open sustained ratio over last 4 bars, weighted b"
+  },
+  {
+    "n": 318,
+    "ts": "2026-03-22T17:22:28.187Z",
+    "valSharpe": 5.1138,
+    "audSharpe": 9.3409,
+    "isSharpe": 4.8834,
+    "score": 7.2273499999999995,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open sustained ratio (last 4 bars) weighted by vo"
+  },
+  {
+    "n": 319,
+    "ts": "2026-03-22T17:22:48.570Z",
+    "valSharpe": 4.5001,
+    "audSharpe": 9.3375,
+    "isSharpe": 4.4164,
+    "score": 6.9188,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4h) weighted by volume and momen"
+  },
+  {
+    "n": 320,
+    "ts": "2026-03-22T17:23:08.604Z",
+    "valSharpe": 5.7958,
+    "audSharpe": 9.8051,
+    "isSharpe": 4.2752,
+    "score": 7.80045,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open sustained ratio (last 4 bars) weighted by vo"
+  },
+  {
+    "n": 321,
+    "ts": "2026-03-22T17:23:28.981Z",
+    "valSharpe": 6.9785,
+    "audSharpe": 10.3699,
+    "isSharpe": 4.1211,
+    "score": 8.674199999999999,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open sustained ratio (last 4 bars) weighted by vo"
+  },
+  {
+    "n": 322,
+    "ts": "2026-03-22T17:23:49.291Z",
+    "valSharpe": 4.395,
+    "audSharpe": 6.6064,
+    "isSharpe": 4.6512,
+    "score": 5.5007,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 323,
+    "ts": "2026-03-22T17:24:09.439Z",
+    "valSharpe": 6.0246,
+    "audSharpe": 10.7845,
+    "isSharpe": 4.2027,
+    "score": 8.40455,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 324,
+    "ts": "2026-03-22T17:24:29.606Z",
+    "valSharpe": 6.0706,
+    "audSharpe": 6.9486,
+    "isSharpe": 4.2261,
+    "score": 6.5096,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume and m"
+  },
+  {
+    "n": 325,
+    "ts": "2026-03-22T17:24:50.642Z",
+    "valSharpe": 6.9358,
+    "audSharpe": 10.1746,
+    "isSharpe": 5.0708,
+    "score": 8.5552,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 326,
+    "ts": "2026-03-22T17:25:10.342Z",
+    "valSharpe": 4.8051,
+    "audSharpe": 9.0934,
+    "isSharpe": 4.2431,
+    "score": 6.949250000000001,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 327,
+    "ts": "2026-03-22T17:25:30.651Z",
+    "valSharpe": 3.487,
+    "audSharpe": 10.3892,
+    "isSharpe": 3.2233,
+    "score": 6.9381,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 328,
+    "ts": "2026-03-22T17:25:51.480Z",
+    "valSharpe": 5.367,
+    "audSharpe": 9.7619,
+    "isSharpe": 4.3209,
+    "score": 7.564450000000001,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 329,
+    "ts": "2026-03-22T17:26:14.212Z",
+    "valSharpe": 5.074,
+    "audSharpe": 8.2118,
+    "isSharpe": 4.5162,
+    "score": 6.6429,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 330,
+    "ts": "2026-03-22T17:26:34.745Z",
+    "valSharpe": 4.0508,
+    "audSharpe": 9.2426,
+    "isSharpe": 4.1979,
+    "score": 6.646699999999999,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio weighted by volume momentum to capture"
+  },
+  {
+    "n": 331,
+    "ts": "2026-03-22T17:26:55.388Z",
+    "valSharpe": 4.0508,
+    "audSharpe": 9.2426,
+    "isSharpe": 4.1979,
+    "score": 6.646699999999999,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio weighted by volume momentum to capture"
+  },
+  {
+    "n": 332,
+    "ts": "2026-03-22T17:27:16.705Z",
+    "valSharpe": 4.9818,
+    "audSharpe": 9.8313,
+    "isSharpe": 4.4088,
+    "score": 7.40655,
+    "accepted": false,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 333,
+    "ts": "2026-03-22T17:27:36.722Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 11.9763,
+    "isSharpe": 4.3447,
+    "score": 9.3778,
+    "accepted": true,
+    "description": "Replace OBV microstructure with hourly close-above-open ratio (last 4 bars) weighted by volume momen"
+  },
+  {
+    "n": 334,
+    "ts": "2026-03-22T17:28:00.965Z",
+    "valSharpe": 6.7528,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.491249999999999,
+    "accepted": true,
+    "description": "Replace close-above-open ratio with hourly close-above-midpoint ratio (high+low)/2 to capture true d"
+  },
+  {
+    "n": 335,
+    "ts": "2026-03-22T17:28:22.610Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": true,
+    "description": "Add hourly close-above-open momentum (last 4 bars) as dedicated signal to capture intraday direction"
+  },
+  {
+    "n": 336,
+    "ts": "2026-03-22T17:28:45.878Z",
+    "valSharpe": 3.9682,
+    "audSharpe": 3.0181,
+    "isSharpe": 7.0584,
+    "score": 3.49315,
+    "accepted": false,
+    "description": "Replace volume burst ratio with volume acceleration (4h vs 8h) to capture momentum strengthening rat"
+  },
+  {
+    "n": 337,
+    "ts": "2026-03-22T17:29:07.690Z",
+    "valSharpe": 3.1536,
+    "audSharpe": 6.3647,
+    "isSharpe": 5.4167,
+    "score": 4.75915,
+    "accepted": false,
+    "description": "Replace volume burst ratio with volume acceleration (4h vs 12h) to capture sustained momentum streng"
+  },
+  {
+    "n": 338,
+    "ts": "2026-03-22T17:29:29.288Z",
+    "valSharpe": 6.9059,
+    "audSharpe": 11.7657,
+    "isSharpe": 4.2822,
+    "score": 9.3358,
+    "accepted": false,
+    "description": "Replace close-above-midpoint ratio with high-low range ratio to detect volatility expansion during m"
+  },
+  {
+    "n": 339,
+    "ts": "2026-03-22T17:29:49.872Z",
+    "valSharpe": 5.3709,
+    "audSharpe": 9.7474,
+    "isSharpe": 5.3575,
+    "score": 7.559150000000001,
+    "accepted": false,
+    "description": "Replace close-above-midpoint ratio with high-low range ratio normalized by 48h volatility to detect "
+  },
+  {
+    "n": 340,
+    "ts": "2026-03-22T17:30:12.120Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-to-close direction sequence to capture sustained"
+  },
+  {
+    "n": 341,
+    "ts": "2026-03-22T17:30:35.187Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Add hourly close-above-open momentum weighted by 4h volume burst ratio to amplify intraday direction"
+  },
+  {
+    "n": 342,
+    "ts": "2026-03-22T17:30:56.584Z",
+    "valSharpe": 6.1688,
+    "audSharpe": 9.6026,
+    "isSharpe": 4.0963,
+    "score": 7.8857,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-above-open direction sequence (count of closes >"
+  },
+  {
+    "n": 343,
+    "ts": "2026-03-22T17:31:17.878Z",
+    "valSharpe": 6.6878,
+    "audSharpe": 10.3097,
+    "isSharpe": 4.5747,
+    "score": 8.49875,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-above-open direction consistency (consecutive up"
+  },
+  {
+    "n": 344,
+    "ts": "2026-03-22T17:34:25.849Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Add hourly close-to-close momentum (last 4 bars up/down sequence consistency) weighted by volume to "
+  },
+  {
+    "n": 345,
+    "ts": "2026-03-22T17:34:47.240Z",
+    "valSharpe": 4.6126,
+    "audSharpe": 11.2912,
+    "isSharpe": 3.8313,
+    "score": 7.9519,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-to-close momentum sequence (count of consecutive"
+  },
+  {
+    "n": 346,
+    "ts": "2026-03-22T17:35:08.254Z",
+    "valSharpe": 6.1688,
+    "audSharpe": 9.6026,
+    "isSharpe": 4.0963,
+    "score": 7.8857,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-above-open direction count (consecutive bars) to"
+  },
+  {
+    "n": 347,
+    "ts": "2026-03-22T17:35:29.647Z",
+    "valSharpe": 6.2602,
+    "audSharpe": 10.3097,
+    "isSharpe": 4.1938,
+    "score": 8.28495,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-to-open ratio (price strength vs open) weighted "
+  },
+  {
+    "n": 348,
+    "ts": "2026-03-22T17:35:51.182Z",
+    "valSharpe": 6.0098,
+    "audSharpe": 11.2912,
+    "isSharpe": 3.7591,
+    "score": 8.650500000000001,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-to-close direction consistency (consecutive up c"
+  },
+  {
+    "n": 349,
+    "ts": "2026-03-22T17:36:14.002Z",
+    "valSharpe": 6.3979,
+    "audSharpe": 10.2922,
+    "isSharpe": 4.3528,
+    "score": 8.34505,
+    "accepted": false,
+    "description": "Add hourly close-above-open ratio (last 4 bars) as volume-weighted signal to capture intraday buy pr"
+  },
+  {
+    "n": 350,
+    "ts": "2026-03-22T17:36:34.996Z",
+    "valSharpe": 5.8893,
+    "audSharpe": 9.392,
+    "isSharpe": 5.0554,
+    "score": 7.64065,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-to-close volatility (4h stddev of returns) to de"
+  },
+  {
+    "n": 351,
+    "ts": "2026-03-22T17:36:55.476Z",
+    "valSharpe": 6.0579,
+    "audSharpe": 9.8119,
+    "isSharpe": 4.0816,
+    "score": 7.9349,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-to-close upside count (consecutive up closes) to"
+  },
+  {
+    "n": 352,
+    "ts": "2026-03-22T17:37:16.996Z",
+    "valSharpe": 6.7528,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.491249999999999,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly intrabar strength (close position within bar range) to"
+  },
+  {
+    "n": 353,
+    "ts": "2026-03-22T17:37:37.733Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly volatility crush detection (4h realized vol vs 48h bas"
+  },
+  {
+    "n": 354,
+    "ts": "2026-03-22T17:38:01.753Z",
+    "valSharpe": 5.9486,
+    "audSharpe": 10.7166,
+    "isSharpe": 3.9387,
+    "score": 8.3326,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly close-above-open consistency (count of up closes in la"
+  },
+  {
+    "n": 355,
+    "ts": "2026-03-22T17:38:22.974Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly OBV-based buy/sell pressure (cumulative volume directi"
+  },
+  {
+    "n": 356,
+    "ts": "2026-03-22T17:38:46.937Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly volatility mean-reversion signal (z-score of 4h realiz"
+  },
+  {
+    "n": 357,
+    "ts": "2026-03-22T17:39:08.557Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly uptail ratio (upper wick length vs total range) to det"
+  },
+  {
+    "n": 358,
+    "ts": "2026-03-22T17:39:30.880Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly uptail strength (upper wick ratio weighted by volume p"
+  },
+  {
+    "n": 359,
+    "ts": "2026-03-22T17:39:52.770Z",
+    "valSharpe": 5.7877,
+    "audSharpe": 9.9799,
+    "isSharpe": 4.5101,
+    "score": 7.883800000000001,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly volume-weighted price position (distance from 4h low a"
+  },
+  {
+    "n": 360,
+    "ts": "2026-03-22T17:40:20.275Z",
+    "valSharpe": 6.0512,
+    "audSharpe": 10.155,
+    "isSharpe": 5.1843,
+    "score": 8.1031,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly uptail ratio (upper wick as % of total range) to detec"
+  },
+  {
+    "n": 361,
+    "ts": "2026-03-22T17:40:42.236Z",
+    "valSharpe": 5.6166,
+    "audSharpe": 9.9159,
+    "isSharpe": 3.9613,
+    "score": 7.76625,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly uptail ratio (upper wick as % of total range) weighted"
+  },
+  {
+    "n": 362,
+    "ts": "2026-03-22T17:41:04.440Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly high-low spread ratio (intrabar range vs 4h average ra"
+  },
+  {
+    "n": 363,
+    "ts": "2026-03-22T17:41:27.089Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly OBV-based buy/sell pressure (volume accumulation direc"
+  },
+  {
+    "n": 364,
+    "ts": "2026-03-22T17:41:48.287Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace close-above-open momentum with hourly volatility spike detection (realized vol ratio last 4h"
+  },
+  {
+    "n": 365,
+    "ts": "2026-03-22T17:42:09.181Z",
+    "valSharpe": 5.714,
+    "audSharpe": 11.1688,
+    "isSharpe": 4.5022,
+    "score": 8.4414,
+    "accepted": false,
+    "description": "Add hourly close-above-open streak counter (consecutive bullish bars) to detect sustained intrabar m"
+  },
+  {
+    "n": 366,
+    "ts": "2026-03-22T17:42:30.806Z",
+    "valSharpe": 5.714,
+    "audSharpe": 11.1688,
+    "isSharpe": 4.5022,
+    "score": 8.4414,
+    "accepted": false,
+    "description": "Replace close-above-open weighted signal with hourly close-above-open streak counter to detect susta"
+  },
+  {
+    "n": 367,
+    "ts": "2026-03-22T17:42:53.017Z",
+    "valSharpe": 4.5645,
+    "audSharpe": 8.7789,
+    "isSharpe": 4.1916,
+    "score": 6.6716999999999995,
+    "accepted": false,
+    "description": "Replace close-above-midpoint signal with hourly close position within 4h range (normalized 0-1 scale"
+  },
+  {
+    "n": 368,
+    "ts": "2026-03-22T17:43:14.359Z",
+    "valSharpe": 5.6538,
+    "audSharpe": 8.7185,
+    "isSharpe": 4.1574,
+    "score": 7.1861500000000005,
+    "accepted": false,
+    "description": "Replace close-above-open weighted signal with hourly close position within 4h range (0-1 normalized)"
+  },
+  {
+    "n": 369,
+    "ts": "2026-03-22T17:43:35.479Z",
+    "valSharpe": 5.8813,
+    "audSharpe": 9.9603,
+    "isSharpe": 4.3056,
+    "score": 7.9208,
+    "accepted": false,
+    "description": "Replace close-above-open weighted signal with hourly close-above-open streak counter (consecutive bu"
+  },
+  {
+    "n": 370,
+    "ts": "2026-03-22T17:43:57.524Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace close-above-midpoint and close-above-open weighted signals with hourly close position within"
+  },
+  {
+    "n": 371,
+    "ts": "2026-03-22T17:44:18.812Z",
+    "valSharpe": 5.714,
+    "audSharpe": 11.1688,
+    "isSharpe": 4.5022,
+    "score": 8.4414,
+    "accepted": false,
+    "description": "Add hourly close-above-open streak counter (max 4) weighted by recency to detect sustained intrabar "
+  },
+  {
+    "n": 372,
+    "ts": "2026-03-22T17:44:40.408Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Add microstructure OBV signal (buy/sell pressure from volume-weighted close position) to detect intr"
+  },
+  {
+    "n": 373,
+    "ts": "2026-03-22T17:45:01.681Z",
+    "valSharpe": 4.6767,
+    "audSharpe": 11.5853,
+    "isSharpe": 4.0811,
+    "score": 8.131,
+    "accepted": false,
+    "description": "Add hourly close-above-open streak counter (max 4) weighted by recency to detect sustained buying pr"
+  },
+  {
+    "n": 374,
+    "ts": "2026-03-22T17:45:23.826Z",
+    "valSharpe": 5.916,
+    "audSharpe": 10.9825,
+    "isSharpe": 4.2165,
+    "score": 8.44925,
+    "accepted": false,
+    "description": "Add hourly close-above-open streak counter (max 4) with recency weighting to detect sustained intrab"
+  },
+  {
+    "n": 375,
+    "ts": "2026-03-22T17:45:44.795Z",
+    "valSharpe": 5.8423,
+    "audSharpe": 9.519,
+    "isSharpe": 4.7708,
+    "score": 7.68065,
+    "accepted": false,
+    "description": "Add hourly close position within range (0-1) as normalized intrabar strength signal to detect sustai"
+  },
+  {
+    "n": 376,
+    "ts": "2026-03-22T17:46:06.541Z",
+    "valSharpe": 6.0315,
+    "audSharpe": 10.3259,
+    "isSharpe": 4.4584,
+    "score": 8.178700000000001,
+    "accepted": false,
+    "description": "Replace volume-weighted close-above-open signal with hourly close position within range (0-1 normali"
+  },
+  {
+    "n": 377,
+    "ts": "2026-03-22T17:46:28.458Z",
+    "valSharpe": 5.2127,
+    "audSharpe": 10.3971,
+    "isSharpe": 4.4551,
+    "score": 7.8049,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open weighted signals with hourly volatility squeeze detection (ratio o"
+  },
+  {
+    "n": 378,
+    "ts": "2026-03-22T17:46:51.467Z",
+    "valSharpe": 6.8978,
+    "audSharpe": 10.1805,
+    "isSharpe": 4.2073,
+    "score": 8.53915,
+    "accepted": false,
+    "description": "Replace volume-weighted close-above-open signal with hourly close-above-open streak detection (max 3"
+  },
+  {
+    "n": 379,
+    "ts": "2026-03-22T17:47:13.051Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace close-above-open volume-weighted signal with hourly close position within high-low range (0-"
+  },
+  {
+    "n": 380,
+    "ts": "2026-03-22T17:47:33.793Z",
+    "valSharpe": 6.7528,
+    "audSharpe": 11.9763,
+    "isSharpe": 4.2347,
+    "score": 9.36455,
+    "accepted": false,
+    "description": "Add intrabar strength signal combining close position within range and close-above-open direction, w"
+  },
+  {
+    "n": 381,
+    "ts": "2026-03-22T17:47:54.487Z",
+    "valSharpe": 6.7156,
+    "audSharpe": 9.328,
+    "isSharpe": 5.3832,
+    "score": 8.021799999999999,
+    "accepted": false,
+    "description": "Replace volume burst ratio with intrabar strength (close position within high-low range) weighted by"
+  },
+  {
+    "n": 382,
+    "ts": "2026-03-22T17:48:15.347Z",
+    "valSharpe": 5.5525,
+    "audSharpe": 10.7804,
+    "isSharpe": 6.6982,
+    "score": 8.166450000000001,
+    "accepted": false,
+    "description": "Replace volume burst ratio with hourly close-position-in-range (0-1 normalized) weighted by volume t"
+  },
+  {
+    "n": 383,
+    "ts": "2026-03-22T17:48:36.300Z",
+    "valSharpe": 5.2435,
+    "audSharpe": 11.0247,
+    "isSharpe": 5.1682,
+    "score": 8.1341,
+    "accepted": false,
+    "description": "Replace close-above-midpoint and close-above-open signals with hourly close position within range (0"
+  },
+  {
+    "n": 384,
+    "ts": "2026-03-22T17:48:59.093Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace volume-weighted close-above-midpoint/open signals with hourly close position within range (0"
+  },
+  {
+    "n": 385,
+    "ts": "2026-03-22T17:49:22.026Z",
+    "valSharpe": 5.74,
+    "audSharpe": 9.0243,
+    "isSharpe": 5.0479,
+    "score": 7.38215,
+    "accepted": false,
+    "description": "Add hourly microstructure OBV signal (buy/sell pressure from close position in range) with higher we"
+  },
+  {
+    "n": 386,
+    "ts": "2026-03-22T17:49:43.879Z",
+    "valSharpe": 6.7793,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.5045,
+    "accepted": false,
+    "description": "Add hourly close-position-in-range (0-1) as a microstructure signal weighted by volume to detect int"
+  },
+  {
+    "n": 387,
+    "ts": "2026-03-22T17:50:05.078Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open signals with hourly close-position-in-range (0-1) weighted by volu"
+  },
+  {
+    "n": 388,
+    "ts": "2026-03-22T17:50:27.124Z",
+    "valSharpe": 6.7156,
+    "audSharpe": 9.328,
+    "isSharpe": 5.3832,
+    "score": 8.021799999999999,
+    "accepted": false,
+    "description": "Replace volume burst ratio with hourly close-position-in-range (0-1) weighted by volume to detect in"
+  },
+  {
+    "n": 389,
+    "ts": "2026-03-22T17:50:47.653Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open weighted signals with hourly close position in range (0-1) to dete"
+  },
+  {
+    "n": 390,
+    "ts": "2026-03-22T17:51:08.964Z",
+    "valSharpe": 3.655,
+    "audSharpe": 9.225,
+    "isSharpe": 5.0683,
+    "score": 6.4399999999999995,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open signals with hourly close-position-in-range (0-1) normalized by 4h"
+  },
+  {
+    "n": 391,
+    "ts": "2026-03-22T17:51:31.702Z",
+    "valSharpe": 7.4286,
+    "audSharpe": 11.545,
+    "isSharpe": 5.1741,
+    "score": 9.4868,
+    "accepted": false,
+    "description": "Replace close-above-midpoint and close-above-open signals with hourly oversold bounce detection usin"
+  },
+  {
+    "n": 392,
+    "ts": "2026-03-22T17:51:55.187Z",
+    "valSharpe": 4.6735,
+    "audSharpe": 8.2601,
+    "isSharpe": 5.3962,
+    "score": 6.466799999999999,
+    "accepted": false,
+    "description": "Add hourly oversold bounce detection using Z-score of 4h returns to catch mean-reversion signals in "
+  },
+  {
+    "n": 393,
+    "ts": "2026-03-22T17:52:18.605Z",
+    "valSharpe": 6.9963,
+    "audSharpe": 9.7242,
+    "isSharpe": 4.1956,
+    "score": 8.36025,
+    "accepted": false,
+    "description": "Add hourly microstructure signal using OBV momentum (4h OBV vs 48h OBV trend) to detect sustained bu"
+  },
+  {
+    "n": 394,
+    "ts": "2026-03-22T17:52:39.538Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.2466,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Add hourly close-position-in-range (0-1) signal to detect intrabar directional conviction without me"
+  },
+  {
+    "n": 395,
+    "ts": "2026-03-22T17:53:01.400Z",
+    "valSharpe": 4.7217,
+    "audSharpe": 9.4148,
+    "isSharpe": 4.6364,
+    "score": 7.06825,
+    "accepted": false,
+    "description": "Replace volume burst with sustained 4h volume above 20h MA to filter out spike noise; boost relStr4h"
+  },
+  {
+    "n": 396,
+    "ts": "2026-03-22T17:53:25.384Z",
+    "valSharpe": 4.4788,
+    "audSharpe": 7.1912,
+    "isSharpe": 5.4469,
+    "score": 5.835,
+    "accepted": false,
+    "description": "Replace volume burst with sustained volume above 20h MA filtered by price direction; add hourly clos"
+  },
+  {
+    "n": 397,
+    "ts": "2026-03-22T17:53:46.821Z",
+    "valSharpe": 6.1214,
+    "audSharpe": 6.534,
+    "isSharpe": 6.0061,
+    "score": 6.3277,
+    "accepted": false,
+    "description": "Replace close-above-midpoint and close-above-open signals with hourly oversold bounce detection usin"
+  },
+  {
+    "n": 398,
+    "ts": "2026-03-22T17:54:07.074Z",
+    "valSharpe": 3.3969,
+    "audSharpe": 10.496,
+    "isSharpe": 5.7606,
+    "score": 6.9464500000000005,
+    "accepted": false,
+    "description": "Replace volume burst with sustained volume above 20h MA filtered by close-above-open momentum; boost"
+  },
+  {
+    "n": 399,
+    "ts": "2026-03-22T17:54:28.857Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open signals with hourly oversold bounce detection using zScore of 4h m"
+  },
+  {
+    "n": 400,
+    "ts": "2026-03-22T17:54:50.031Z",
+    "valSharpe": 3.5835,
+    "audSharpe": 5.3078,
+    "isSharpe": 6.4142,
+    "score": 4.4456500000000005,
+    "accepted": false,
+    "description": "Replace volume burst with sustained volume above 20h MA filtered by price direction and momentum acc"
+  },
+  {
+    "n": 401,
+    "ts": "2026-03-22T17:55:10.762Z",
+    "valSharpe": 5.6501,
+    "audSharpe": 7.6836,
+    "isSharpe": 5.6738,
+    "score": 6.66685,
+    "accepted": false,
+    "description": "Replace volume burst metric with sustained volume above 20h MA filtered by positive price direction,"
+  },
+  {
+    "n": 402,
+    "ts": "2026-03-22T17:55:35.129Z",
+    "valSharpe": 6.4764,
+    "audSharpe": 11.886,
+    "isSharpe": 4.905,
+    "score": 9.1812,
+    "accepted": false,
+    "description": "Replace close-above-midpoint and close-above-open weighted signals with hourly oversold bounce detec"
+  },
+  {
+    "n": 403,
+    "ts": "2026-03-22T17:55:58.135Z",
+    "valSharpe": 6.6368,
+    "audSharpe": 10.0579,
+    "isSharpe": 4.8521,
+    "score": 8.34735,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open signals with hourly oversold zScore bounce detection on 4h momentu"
+  },
+  {
+    "n": 404,
+    "ts": "2026-03-22T17:56:20.429Z",
+    "valSharpe": 4.3882,
+    "audSharpe": 10.2488,
+    "isSharpe": 4.4431,
+    "score": 7.3185,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open signals with hourly oversold bounce detection using zScore of 4h m"
+  },
+  {
+    "n": 405,
+    "ts": "2026-03-22T17:56:41.408Z",
+    "valSharpe": 5.419,
+    "audSharpe": 10.3051,
+    "isSharpe": 3.4517,
+    "score": 7.86205,
+    "accepted": false,
+    "description": "Replace close-above-midpoint/open signals with hourly oversold bounce detection using zScore of 4h m"
+  },
+  {
+    "n": 406,
+    "ts": "2026-03-22T17:57:03.435Z",
+    "valSharpe": 5.3111,
+    "audSharpe": 9.2304,
+    "isSharpe": 5.6825,
+    "score": 7.27075,
+    "accepted": false,
+    "description": "Replace close-above-midpoint and close-above-open signals with hourly oversold bounce detection usin"
+  },
+  {
+    "n": 407,
+    "ts": "2026-03-22T17:57:28.358Z",
+    "valSharpe": 4.2838,
+    "audSharpe": 10.1724,
+    "isSharpe": 5.0976,
+    "score": 7.2280999999999995,
+    "accepted": false,
+    "description": "Replace volume burst with sustained volume above 20h MA AND positive price direction, apply stricter"
+  },
+  {
+    "n": 408,
+    "ts": "2026-03-22T17:57:50.193Z",
+    "valSharpe": 6.7454,
+    "audSharpe": 12.5909,
+    "isSharpe": 3.888,
+    "score": 9.66815,
+    "accepted": true,
+    "description": "Replace close-above-midpoint and close-above-open signals with hourly oversold zScore bounce on 4h m"
+  },
+  {
+    "n": 409,
+    "ts": "2026-03-22T17:58:11.529Z",
+    "valSharpe": 5.703,
+    "audSharpe": 10.8223,
+    "isSharpe": 4.2523,
+    "score": 8.26265,
+    "accepted": false,
+    "description": "Add intraday volume profile signal detecting sustained buying pressure (volume-weighted price moment"
+  },
+  {
+    "n": 410,
+    "ts": "2026-03-22T17:58:37.570Z",
+    "valSharpe": 6.7454,
+    "audSharpe": 12.5909,
+    "isSharpe": 3.888,
+    "score": 9.66815,
+    "accepted": false,
+    "description": "Add microstructure signal detecting sustained volume above 20h MA with positive close direction over"
+  },
+  {
+    "n": 411,
+    "ts": "2026-03-22T17:58:58.199Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with sustained volume above 20h MA combined with positive 4h m"
+  },
+  {
+    "n": 412,
+    "ts": "2026-03-22T17:59:18.085Z",
+    "valSharpe": 5.084,
+    "audSharpe": 11.5151,
+    "isSharpe": 4.7411,
+    "score": 8.29955,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h momentum acceleration combined with positive volume di"
+  },
+  {
+    "n": 413,
+    "ts": "2026-03-22T17:59:38.606Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Add 4h close above 20-SMA confirmation to hourly oversold bounce signal to reduce false signals in s"
+  },
+  {
+    "n": 414,
+    "ts": "2026-03-22T17:59:59.021Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h momentum acceleration confirmation when price closes a"
+  },
+  {
+    "n": 415,
+    "ts": "2026-03-22T18:00:19.857Z",
+    "valSharpe": 5.5157,
+    "audSharpe": 10.0447,
+    "isSharpe": 3.6796,
+    "score": 7.780200000000001,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h volume surge confirmation (vol4h > vol48h * 1.3) combi"
+  },
+  {
+    "n": 416,
+    "ts": "2026-03-22T18:00:40.305Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly oversold momentum zScore bounce with 4h close above 20-SMA confirmation combined with"
+  },
+  {
+    "n": 417,
+    "ts": "2026-03-22T18:01:06.614Z",
+    "valSharpe": 7.2299,
+    "audSharpe": 12.0129,
+    "isSharpe": 3.6218,
+    "score": 9.6214,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h RSI oversold (RSI < 35) combined with positive 4h rela"
+  },
+  {
+    "n": 418,
+    "ts": "2026-03-22T18:01:28.104Z",
+    "valSharpe": 7.047,
+    "audSharpe": 12.1968,
+    "isSharpe": 3.7999,
+    "score": 9.6219,
+    "accepted": false,
+    "description": "Replace hourly oversold momentum zScore bounce with 4h RSI oversold (RSI < 35) combined with positiv"
+  },
+  {
+    "n": 419,
+    "ts": "2026-03-22T18:01:50.232Z",
+    "valSharpe": 6.7223,
+    "audSharpe": 12.2301,
+    "isSharpe": 3.7421,
+    "score": 9.4762,
+    "accepted": false,
+    "description": "Replace hourly oversold momentum zScore with 4h RSI oversold (RSI < 30) combined with positive 4h re"
+  },
+  {
+    "n": 420,
+    "ts": "2026-03-22T18:02:10.987Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h close above 20-SMA AND positive 4h relative strength c"
+  },
+  {
+    "n": 421,
+    "ts": "2026-03-22T18:02:32.466Z",
+    "valSharpe": 6.3363,
+    "audSharpe": 11.2834,
+    "isSharpe": 3.762,
+    "score": 8.80985,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h RSI < 40 combined with positive 4h relative strength t"
+  },
+  {
+    "n": 422,
+    "ts": "2026-03-22T18:02:53.176Z",
+    "valSharpe": 6.999,
+    "audSharpe": 11.4566,
+    "isSharpe": 3.6343,
+    "score": 9.2278,
+    "accepted": false,
+    "description": "Replace hourly oversold momentum zScore bounce with 4h RSI < 35 for more stable oversold detection i"
+  },
+  {
+    "n": 423,
+    "ts": "2026-03-22T18:03:14.109Z",
+    "valSharpe": 6.8718,
+    "audSharpe": 8.9474,
+    "isSharpe": 4.7257,
+    "score": 7.9096,
+    "accepted": false,
+    "description": "Replace hourly momentum zScore bounce with volume-weighted price action confirmation using 4h close "
+  },
+  {
+    "n": 424,
+    "ts": "2026-03-22T18:03:35.013Z",
+    "valSharpe": 6.7849,
+    "audSharpe": 12.1844,
+    "isSharpe": 3.6624,
+    "score": 9.48465,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h RSI < 32 combined with positive 4h relative strength f"
+  },
+  {
+    "n": 425,
+    "ts": "2026-03-22T18:03:55.984Z",
+    "valSharpe": 6.7335,
+    "audSharpe": 12.1082,
+    "isSharpe": 4.1572,
+    "score": 9.42085,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h RSI < 28 for more reliable oversold detection in bear "
+  },
+  {
+    "n": 426,
+    "ts": "2026-03-22T18:04:16.634Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly momentum zScore bounce with 4h close above 20-SMA AND 4h volume > 48h average for cle"
+  },
+  {
+    "n": 427,
+    "ts": "2026-03-22T18:04:36.902Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly momentum zScore bounce with 4h close above 20-SMA AND 4h volume spike combined for cl"
+  },
+  {
+    "n": 428,
+    "ts": "2026-03-22T18:04:57.790Z",
+    "valSharpe": 6.5289,
+    "audSharpe": 12.9685,
+    "isSharpe": 3.892,
+    "score": 9.7487,
+    "accepted": true,
+    "description": "Add intraday volume-weighted momentum confirmation to oversold bounce signal, requiring both negativ"
+  },
+  {
+    "n": 429,
+    "ts": "2026-03-22T18:05:18.710Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h close above 20-SMA AND positive 4h relative strength f"
+  },
+  {
+    "n": 430,
+    "ts": "2026-03-22T18:05:39.643Z",
+    "valSharpe": 6.7777,
+    "audSharpe": 12.2395,
+    "isSharpe": 4.1381,
+    "score": 9.5086,
+    "accepted": false,
+    "description": "Replace hourly momentum zScore bounce with 4h RSI oversold (< 30) confirmation to detect mean revers"
+  },
+  {
+    "n": 431,
+    "ts": "2026-03-22T18:06:02.427Z",
+    "valSharpe": 6.6625,
+    "audSharpe": 12.0833,
+    "isSharpe": 4.1471,
+    "score": 9.3729,
+    "accepted": false,
+    "description": "Replace hourly momentum zScore bounce with 4h RSI < 28 detection combined with positive 4h relative "
+  },
+  {
+    "n": 432,
+    "ts": "2026-03-22T18:06:22.563Z",
+    "valSharpe": 6.7777,
+    "audSharpe": 12.1266,
+    "isSharpe": 4.1065,
+    "score": 9.45215,
+    "accepted": false,
+    "description": "Replace hourly oversold zScore bounce with 4h RSI < 32 confirmation to detect mean reversion more re"
+  },
+  {
+    "n": 433,
+    "ts": "2026-03-22T18:06:42.358Z",
+    "valSharpe": 6.227,
+    "audSharpe": 13.7031,
+    "isSharpe": 3.3608,
+    "score": 9.96505,
+    "accepted": true,
+    "description": "Replace hourly oversold zScore bounce with 4h close pullback from recent 4h high (range compression "
+  },
+  {
+    "n": 434,
+    "ts": "2026-03-22T18:07:03.350Z",
+    "valSharpe": 0,
+    "audSharpe": 0,
+    "isSharpe": 0,
+    "score": 0,
+    "accepted": false,
+    "description": "Replace range compression coil metric with intraday volatility spike detection (12h realized vol vs "
+  },
+  {
+    "n": 435,
+    "ts": "2026-03-22T18:07:24.122Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace coilBreakout fixed thresholds with dynamic pullback zone based on recent volatility, and add"
+  },
+  {
+    "n": 436,
+    "ts": "2026-03-22T18:07:45.619Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback thresholds (0.01–0.08) with dynamic zone scaled by 12h realized "
+  },
+  {
+    "n": 437,
+    "ts": "2026-03-22T18:08:08.209Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback thresholds (0.01–0.08) with dynamic zone scaled by 4h realized v"
+  },
+  {
+    "n": 438,
+    "ts": "2026-03-22T18:08:30.407Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback thresholds (0.01–0.08) with dynamic zone scaled by 4h realized v"
+  },
+  {
+    "n": 439,
+    "ts": "2026-03-22T18:08:50.798Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback thresholds with dynamic zone scaled by 4h realized volatility, c"
+  },
+  {
+    "n": 440,
+    "ts": "2026-03-22T18:09:13.388Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback thresholds (0.01–0.08) with dynamic zone scaled by 4h realized v"
+  },
+  {
+    "n": 441,
+    "ts": "2026-03-22T18:09:33.614Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 442,
+    "ts": "2026-03-22T18:09:53.071Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 443,
+    "ts": "2026-03-22T18:10:18.563Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 444,
+    "ts": "2026-03-22T18:10:38.931Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 445,
+    "ts": "2026-03-22T18:10:58.789Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 446,
+    "ts": "2026-03-22T18:11:18.855Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 447,
+    "ts": "2026-03-22T18:11:45.058Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds scaled by 4h realized volat"
+  },
+  {
+    "n": 448,
+    "ts": "2026-03-22T18:12:05.776Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds using 4h realized volatilit"
+  },
+  {
+    "n": 449,
+    "ts": "2026-03-22T18:12:26.782Z",
+    "valSharpe": 6.4146,
+    "audSharpe": 11.4547,
+    "isSharpe": 4.1306,
+    "score": 8.934650000000001,
+    "accepted": false,
+    "description": "Add microstructure OBV signal to detect hourly buy/sell pressure divergence from price momentum."
+  },
+  {
+    "n": 450,
+    "ts": "2026-03-22T18:12:48.174Z",
+    "valSharpe": 6.0657,
+    "audSharpe": 13.0322,
+    "isSharpe": 3.1689,
+    "score": 9.54895,
+    "accepted": false,
+    "description": "Add hourly oversold bounce detection using 4-bar RSI < 30 with volume confirmation to catch mean rev"
+  },
+  {
+    "n": 451,
+    "ts": "2026-03-22T18:13:08.439Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds using 4h realized volatilit"
+  },
+  {
+    "n": 452,
+    "ts": "2026-03-22T18:13:29.392Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback zone (0.01–0.08) with dynamic bounds using 4h realized volatilit"
+  },
+  {
+    "n": 453,
+    "ts": "2026-03-22T18:13:49.663Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed 0.01–0.08 pullback zone with dynamic bounds scaled by 4h realized volatility to adapt "
+  },
+  {
+    "n": 454,
+    "ts": "2026-03-22T18:14:09.816Z",
+    "valSharpe": 6.7822,
+    "audSharpe": 7.5196,
+    "isSharpe": 4.8016,
+    "score": 7.1509,
+    "accepted": false,
+    "description": "Add 4h volume acceleration detection (volume momentum) to catch breakouts with rising conviction, re"
+  },
+  {
+    "n": 455,
+    "ts": "2026-03-22T18:14:30.159Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed 0.01–0.08 pullback zone with dynamic bounds scaled by 4h realized volatility, and redu"
+  },
+  {
+    "n": 456,
+    "ts": "2026-03-22T18:14:49.117Z",
+    "valSharpe": 6.6408,
+    "audSharpe": 13.7031,
+    "isSharpe": 3.4913,
+    "score": 10.171949999999999,
+    "accepted": true,
+    "description": "Reduce coilBreakout pullback upper bound from 0.08 to 0.05 to filter out weak signals and require ti"
+  },
+  {
+    "n": 457,
+    "ts": "2026-03-22T18:15:09.737Z",
+    "valSharpe": 6.6408,
+    "audSharpe": 13.7031,
+    "isSharpe": 3.4913,
+    "score": 10.171949999999999,
+    "accepted": false,
+    "description": "Add intraday mean reversion signal detecting 1-4h oversold bounces using hourly price action against"
+  },
+  {
+    "n": 458,
+    "ts": "2026-03-22T18:15:30.168Z",
+    "valSharpe": 5.9328,
+    "audSharpe": 11.983,
+    "isSharpe": 3.9095,
+    "score": 8.9579,
+    "accepted": false,
+    "description": "Add hourly microstructure OBV signal to detect intraday buy/sell pressure accumulation over last 4h,"
+  },
+  {
+    "n": 459,
+    "ts": "2026-03-22T18:15:50.583Z",
+    "valSharpe": 8.7446,
+    "audSharpe": 9.8157,
+    "isSharpe": 3.9463,
+    "score": 9.280149999999999,
+    "accepted": false,
+    "description": "Add 1h close > 1h SMA(8) filter to catch intraday uptrend continuation and reduce false signals in c"
+  },
+  {
+    "n": 460,
+    "ts": "2026-03-22T18:16:10.617Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback bounds (0.01–0.05) with dynamic ATR-scaled thresholds to adapt b"
+  },
+  {
+    "n": 461,
+    "ts": "2026-03-22T18:16:33.964Z",
+    "valSharpe": 7.0753,
+    "audSharpe": 13.0826,
+    "isSharpe": 4.4761,
+    "score": 10.078949999999999,
+    "accepted": false,
+    "description": "Add 1h close > 1h SMA(8) intraday uptrend filter to bounceSignal to catch momentum continuation and "
+  },
+  {
+    "n": 462,
+    "ts": "2026-03-22T18:16:53.861Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Add 1h close > 1h SMA(8) intraday uptrend filter to bounceSignal to require active hourly momentum c"
+  },
+  {
+    "n": 463,
+    "ts": "2026-03-22T18:17:15.184Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed coilBreakout pullback bounds with dynamic ATR-scaled thresholds and add hourly close >"
+  },
+  {
+    "n": 464,
+    "ts": "2026-03-22T18:17:34.922Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Replace fixed 0.01–0.05 pullback bounds with dynamic ATR-scaled adaptive thresholds to match intrada"
+  },
+  {
+    "n": 465,
+    "ts": "2026-03-22T18:17:54.503Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Add intraday trend confirmation (1h close > 1h SMA(8)) to bounceSignal to filter out countertrend co"
+  },
+  {
+    "n": 466,
+    "ts": "2026-03-22T18:18:14.763Z",
+    "valSharpe": 6.769,
+    "audSharpe": 12.2297,
+    "isSharpe": 4.3096,
+    "score": 9.49935,
+    "accepted": false,
+    "description": "Add 4h close > 4h SMA(8) trend confirmation to coilBreakout to require active hourly momentum contin"
+  },
+  {
+    "n": 467,
+    "ts": "2026-03-22T18:18:34.882Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": true,
+    "description": "Add 4h volume confirmation (vol4h > vol24h) to coilBreakout signal to filter false breakouts in low-"
+  },
+  {
+    "n": 468,
+    "ts": "2026-03-22T18:18:56.485Z",
+    "valSharpe": 6.4683,
+    "audSharpe": 12.5727,
+    "isSharpe": 4.3178,
+    "score": 9.5205,
+    "accepted": false,
+    "description": "Add intraday mean reversion signal detecting 1h oversold bounces (z-score < -1.5 on 1h returns) with"
+  },
+  {
+    "n": 469,
+    "ts": "2026-03-22T18:19:17.019Z",
+    "valSharpe": 3.087,
+    "audSharpe": 11.2452,
+    "isSharpe": 3.4565,
+    "score": 7.1661,
+    "accepted": false,
+    "description": "Add hourly microstructure OBV signal to detect intraday buy/sell pressure momentum before 4h close, "
+  },
+  {
+    "n": 470,
+    "ts": "2026-03-22T18:19:38.672Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 3.9916,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add 1h oversold bounce detection (z-score < -1.5 on 1h returns) with volume confirmation to catch in"
+  },
+  {
+    "n": 471,
+    "ts": "2026-03-22T18:19:58.581Z",
+    "valSharpe": 1.1075,
+    "audSharpe": 13.4404,
+    "isSharpe": 3.6964,
+    "score": 7.27395,
+    "accepted": false,
+    "description": "Reduce 7d relative strength weight from 0.33 to 0.20 and increase 4h relative strength weight from 0"
+  },
+  {
+    "n": 472,
+    "ts": "2026-03-22T18:20:18.727Z",
+    "valSharpe": 1.1075,
+    "audSharpe": 13.4404,
+    "isSharpe": 3.6964,
+    "score": 7.27395,
+    "accepted": false,
+    "description": "Reduce 7d relative strength weight from 0.33 to 0.20, increase 4h relative strength weight from 0.26"
+  },
+  {
+    "n": 473,
+    "ts": "2026-03-22T18:20:39.897Z",
+    "valSharpe": 5.6212,
+    "audSharpe": 12.8904,
+    "isSharpe": 4.3494,
+    "score": 9.2558,
+    "accepted": false,
+    "description": "Add 1h momentum confirmation (price acceleration over last 4 bars) to filter weak signals and reduce"
+  },
+  {
+    "n": 474,
+    "ts": "2026-03-22T18:21:02.545Z",
+    "valSharpe": 7.1659,
+    "audSharpe": 13.8283,
+    "isSharpe": 4.0422,
+    "score": 10.4971,
+    "accepted": true,
+    "description": "Add 1h oversold bounce filter (z-score < -1.5 on last 1h return) with volume spike confirmation to c"
+  },
+  {
+    "n": 475,
+    "ts": "2026-03-22T18:21:24.260Z",
+    "valSharpe": 7.0768,
+    "audSharpe": 13.4187,
+    "isSharpe": 3.9571,
+    "score": 10.24775,
+    "accepted": false,
+    "description": "Replace 1h oversold bounce z-score threshold from -1.5 to -2.0 to reduce false signals in bear marke"
+  },
+  {
+    "n": 476,
+    "ts": "2026-03-22T18:21:45.637Z",
+    "valSharpe": 7.1201,
+    "audSharpe": 14.073,
+    "isSharpe": 3.6511,
+    "score": 10.59655,
+    "accepted": true,
+    "description": "Increase 1h oversold bounce z-score threshold from -1.5 to -1.2 to catch earlier mean reversion sign"
+  },
+  {
+    "n": 477,
+    "ts": "2026-03-22T18:22:07.290Z",
+    "valSharpe": 7.1334,
+    "audSharpe": 13.0691,
+    "isSharpe": 4.1985,
+    "score": 10.10125,
+    "accepted": false,
+    "description": "Replace 1h oversold bounce z-score threshold from -1.2 to -1.0 to increase sensitivity to mean rever"
+  },
+  {
+    "n": 478,
+    "ts": "2026-03-22T18:22:30.076Z",
+    "valSharpe": 7.2584,
+    "audSharpe": 12.188,
+    "isSharpe": 4.2203,
+    "score": 9.7232,
+    "accepted": false,
+    "description": "Replace fixed z-score threshold -1.2 with adaptive threshold based on 48h volatility regime to reduc"
+  },
+  {
+    "n": 479,
+    "ts": "2026-03-22T18:22:52.328Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic threshold scaled by 4h volatility regime to red"
+  },
+  {
+    "n": 480,
+    "ts": "2026-03-22T18:23:17.294Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with adaptive threshold scaled by recent 4h volatility to re"
+  },
+  {
+    "n": 481,
+    "ts": "2026-03-22T18:23:39.614Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic threshold that tightens in high volatility (red"
+  },
+  {
+    "n": 482,
+    "ts": "2026-03-22T18:24:00.661Z",
+    "valSharpe": 7.1659,
+    "audSharpe": 13.8283,
+    "isSharpe": 4.0422,
+    "score": 10.4971,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with -1.5 to reduce false oversold signals in bear market an"
+  },
+  {
+    "n": 483,
+    "ts": "2026-03-22T18:24:21.892Z",
+    "valSharpe": 7.2594,
+    "audSharpe": 12.8679,
+    "isSharpe": 4.2735,
+    "score": 10.06365,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with -0.8 to catch earlier oversold bounces before volume co"
+  },
+  {
+    "n": 484,
+    "ts": "2026-03-22T18:24:44.143Z",
+    "valSharpe": 7.1201,
+    "audSharpe": 14.073,
+    "isSharpe": 3.6511,
+    "score": 10.59655,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with adaptive threshold that loosens in bear market conditio"
+  },
+  {
+    "n": 485,
+    "ts": "2026-03-22T18:25:05.527Z",
+    "valSharpe": 6.8101,
+    "audSharpe": 12.8173,
+    "isSharpe": 4.0808,
+    "score": 9.8137,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with -1.0 to catch earlier oversold bounces with tighter vol"
+  },
+  {
+    "n": 486,
+    "ts": "2026-03-22T18:25:29.251Z",
+    "valSharpe": 7.1201,
+    "audSharpe": 14.073,
+    "isSharpe": 3.6511,
+    "score": 10.59655,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic threshold that widens in bear market (lower thr"
+  },
+  {
+    "n": 487,
+    "ts": "2026-03-22T18:25:53.174Z",
+    "valSharpe": 7.2584,
+    "audSharpe": 12.188,
+    "isSharpe": 4.2203,
+    "score": 9.7232,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with -0.9 to catch earlier oversold bounces while maintainin"
+  },
+  {
+    "n": 488,
+    "ts": "2026-03-22T18:26:15.039Z",
+    "valSharpe": 7.1334,
+    "audSharpe": 12.267,
+    "isSharpe": 4.2446,
+    "score": 9.700199999999999,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with -0.95 to catch earlier oversold bounces while maintaini"
+  },
+  {
+    "n": 489,
+    "ts": "2026-03-22T18:26:37.287Z",
+    "valSharpe": 7.2172,
+    "audSharpe": 13.7184,
+    "isSharpe": 3.697,
+    "score": 10.4678,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with adaptive -1.4 threshold to reduce false oversold signal"
+  },
+  {
+    "n": 490,
+    "ts": "2026-03-22T18:27:00.236Z",
+    "valSharpe": 7.0655,
+    "audSharpe": 14.073,
+    "isSharpe": 4.1304,
+    "score": 10.56925,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.1 to catch earlier oversold bounces in bear "
+  },
+  {
+    "n": 491,
+    "ts": "2026-03-22T18:27:23.225Z",
+    "valSharpe": 7.1201,
+    "audSharpe": 14.073,
+    "isSharpe": 3.7191,
+    "score": 10.59655,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.3 in bear market to reduce false oversold si"
+  },
+  {
+    "n": 492,
+    "ts": "2026-03-22T18:27:45.257Z",
+    "valSharpe": 7.1334,
+    "audSharpe": 13.0691,
+    "isSharpe": 4.1985,
+    "score": 10.10125,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with -1.0 to catch earlier oversold bounces while maintainin"
+  },
+  {
+    "n": 493,
+    "ts": "2026-03-22T18:28:08.385Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.0 + volatility-scaled adjustment to reduce f"
+  },
+  {
+    "n": 494,
+    "ts": "2026-03-22T18:28:32.083Z",
+    "valSharpe": 7.1334,
+    "audSharpe": 13.0691,
+    "isSharpe": 4.1985,
+    "score": 10.10125,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.0 + mean reversion strength scaled by 4h mom"
+  },
+  {
+    "n": 495,
+    "ts": "2026-03-22T18:28:55.055Z",
+    "valSharpe": 7.1201,
+    "audSharpe": 14.073,
+    "isSharpe": 3.6511,
+    "score": 10.59655,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.25 scaled by 4h momentum direction to reduce"
+  },
+  {
+    "n": 496,
+    "ts": "2026-03-22T18:29:18.888Z",
+    "valSharpe": 7.1659,
+    "audSharpe": 13.8283,
+    "isSharpe": 4.0422,
+    "score": 10.4971,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.5 scaled by 4h momentum to reduce false over"
+  },
+  {
+    "n": 497,
+    "ts": "2026-03-22T18:29:40.903Z",
+    "valSharpe": 7.1334,
+    "audSharpe": 13.0691,
+    "isSharpe": 4.1985,
+    "score": 10.10125,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic -1.0 scaled down by 4h momentum strength to red"
+  },
+  {
+    "n": 498,
+    "ts": "2026-03-22T18:30:03.067Z",
+    "valSharpe": 7.1201,
+    "audSharpe": 14.073,
+    "isSharpe": 3.6511,
+    "score": 10.59655,
+    "accepted": false,
+    "description": "Replace fixed 1h z-score threshold -1.2 with dynamic threshold scaled by 4h momentum strength to red"
+  },
+  {
+    "n": 499,
+    "ts": "2026-03-22T18:30:26.205Z",
+    "valSharpe": 7.2172,
+    "audSharpe": 14.1176,
+    "isSharpe": 3.7621,
+    "score": 10.6674,
+    "accepted": true,
+    "description": "Replace fixed 1h z-score threshold -1.2 with adaptive threshold scaled by 4h momentum strength and v"
+  },
+  {
+    "n": 500,
+    "ts": "2026-03-22T18:30:48.458Z",
+    "valSharpe": 6.8041,
+    "audSharpe": 13.7896,
+    "isSharpe": 4.0286,
+    "score": 10.29685,
+    "accepted": false,
+    "description": "Replace adaptive threshold with fixed -1.5 and reduce oversoldBounce weight to 0.08 to filter false "
+  },
+  {
+    "n": 501,
+    "ts": "2026-03-22T18:31:10.818Z",
+    "valSharpe": 7.1882,
+    "audSharpe": 14.2227,
+    "isSharpe": 4.0024,
+    "score": 10.705449999999999,
+    "accepted": true,
+    "description": "Replace adaptive threshold scaling with fixed -1.5 and boost oversoldBounce weight from 0.15 to 0.22"
+  },
+  {
+    "n": 502,
+    "ts": "2026-03-22T18:31:33.678Z",
+    "valSharpe": 7.1882,
+    "audSharpe": 14.2227,
+    "isSharpe": 4.0141,
+    "score": 10.705449999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.5 z-score threshold with dynamic threshold scaled by 4h momentum strength to reduce"
+  },
+  {
+    "n": 503,
+    "ts": "2026-03-22T18:31:55.898Z",
+    "valSharpe": 7.1882,
+    "audSharpe": 14.586,
+    "isSharpe": 3.4092,
+    "score": 10.8871,
+    "accepted": true,
+    "description": "Replace fixed -1.5 z-score threshold with dynamic threshold scaled by 4h momentum strength to reduce"
+  },
+  {
+    "n": 504,
+    "ts": "2026-03-22T18:32:18.360Z",
+    "valSharpe": 6.9504,
+    "audSharpe": 13.4516,
+    "isSharpe": 4.022,
+    "score": 10.201,
+    "accepted": false,
+    "description": "Replace dynamic threshold with momentum-weighted z-score that penalizes weak momentum conditions to "
+  },
+  {
+    "n": 505,
+    "ts": "2026-03-22T18:32:42.055Z",
+    "valSharpe": 6.8782,
+    "audSharpe": 12.6086,
+    "isSharpe": 3.8466,
+    "score": 9.7434,
+    "accepted": false,
+    "description": "Add hourly OBV microstructure signal to detect buy/sell pressure imbalance in last 4h vs 24h baselin"
+  },
+  {
+    "n": 506,
+    "ts": "2026-03-22T18:33:04.743Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add 1h close above 1h EMA(8) filter to oversoldBounce to confirm upside momentum before entry."
+  },
+  {
+    "n": 507,
+    "ts": "2026-03-22T18:33:26.669Z",
+    "valSharpe": 7.4322,
+    "audSharpe": 14.2864,
+    "isSharpe": 3.6255,
+    "score": 10.859300000000001,
+    "accepted": false,
+    "description": "Increase oversoldBounce weight from 0.22 to 0.28 and lower dynamic threshold floor from -1.5 to -1.8"
+  },
+  {
+    "n": 508,
+    "ts": "2026-03-22T18:33:49.036Z",
+    "valSharpe": 6.7617,
+    "audSharpe": 14.1938,
+    "isSharpe": 3.3613,
+    "score": 10.47775,
+    "accepted": false,
+    "description": "Replace fixed volume spike threshold (1.3x) with dynamic threshold scaled by momentum strength to fi"
+  },
+  {
+    "n": 509,
+    "ts": "2026-03-22T18:34:10.901Z",
+    "valSharpe": 7.1882,
+    "audSharpe": 14.586,
+    "isSharpe": 3.4092,
+    "score": 10.8871,
+    "accepted": false,
+    "description": "Replace dynamic threshold with momentum-strength floor to prevent threshold collapse in weak momentu"
+  },
+  {
+    "n": 510,
+    "ts": "2026-03-22T18:35:03.939Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add 4h close above 4h EMA(8) filter to oversoldBounce to confirm upside momentum before entry, match"
+  },
+  {
+    "n": 511,
+    "ts": "2026-03-22T18:35:27.049Z",
+    "valSharpe": 6.9159,
+    "audSharpe": 12.5131,
+    "isSharpe": 3.9957,
+    "score": 9.7145,
+    "accepted": false,
+    "description": "Add 4h close above 4h EMA(8) confirmation filter to bounceSignal to ensure upside momentum alignment"
+  },
+  {
+    "n": 512,
+    "ts": "2026-03-22T18:35:49.968Z",
+    "valSharpe": 7.1882,
+    "audSharpe": 14.8354,
+    "isSharpe": 3.3336,
+    "score": 11.011800000000001,
+    "accepted": true,
+    "description": "Replace fixed 1.3x volume spike threshold with momentum-adaptive scaling (1.2x + 0.3x * momentum str"
+  },
+  {
+    "n": 513,
+    "ts": "2026-03-22T18:36:13.686Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add 4h close above 4h EMA(8) confirmation to oversoldBounce to filter false signals in weak uptrends"
+  },
+  {
+    "n": 514,
+    "ts": "2026-03-22T18:36:37.828Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold collapse with fixed floor and add 4h EMA(8) upside confirmation to"
+  },
+  {
+    "n": 515,
+    "ts": "2026-03-22T18:37:02.228Z",
+    "valSharpe": 6.7889,
+    "audSharpe": 12.3633,
+    "isSharpe": 3.9964,
+    "score": 9.5761,
+    "accepted": false,
+    "description": "Add 4h EMA(8) upside confirmation filter to bounceSignal to prevent false breakout entries in weak m"
+  },
+  {
+    "n": 516,
+    "ts": "2026-03-22T18:37:25.261Z",
+    "valSharpe": 6.8097,
+    "audSharpe": 13.2057,
+    "isSharpe": 3.8146,
+    "score": 10.0077,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.2 floor and add volume confirmation requirement to o"
+  },
+  {
+    "n": 517,
+    "ts": "2026-03-22T18:37:47.808Z",
+    "valSharpe": 7.1625,
+    "audSharpe": 12.7542,
+    "isSharpe": 3.8388,
+    "score": 9.95835,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor to catch earlier oversold bounces and reduce"
+  },
+  {
+    "n": 518,
+    "ts": "2026-03-22T18:38:10.233Z",
+    "valSharpe": 7.1625,
+    "audSharpe": 12.7542,
+    "isSharpe": 3.8388,
+    "score": 9.95835,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor and add volume spike requirement to oversold"
+  },
+  {
+    "n": 519,
+    "ts": "2026-03-22T18:38:33.873Z",
+    "valSharpe": 6.7952,
+    "audSharpe": 13.9481,
+    "isSharpe": 3.7529,
+    "score": 10.37165,
+    "accepted": false,
+    "description": "Replace adaptive volume threshold with fixed 1.5x multiplier and lower dynamic z-score floor to -1.2"
+  },
+  {
+    "n": 520,
+    "ts": "2026-03-22T18:38:55.987Z",
+    "valSharpe": 6.7524,
+    "audSharpe": 12.9671,
+    "isSharpe": 3.9217,
+    "score": 9.85975,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor and require volume spike to confirm oversold"
+  },
+  {
+    "n": 521,
+    "ts": "2026-03-22T18:39:18.322Z",
+    "valSharpe": 6.9346,
+    "audSharpe": 12.4821,
+    "isSharpe": 4.2377,
+    "score": 9.70835,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -0.8 floor and require both volume spike AND positive 4"
+  },
+  {
+    "n": 522,
+    "ts": "2026-03-22T18:39:40.842Z",
+    "valSharpe": 4.7214,
+    "audSharpe": 9.8993,
+    "isSharpe": 4.5806,
+    "score": 7.31035,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor and require volume spike to confirm oversold"
+  },
+  {
+    "n": 523,
+    "ts": "2026-03-22T18:40:03.062Z",
+    "valSharpe": 7.7178,
+    "audSharpe": 12.7994,
+    "isSharpe": 3.9934,
+    "score": 10.258600000000001,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.2 floor and remove volume spike requirement to catch"
+  },
+  {
+    "n": 524,
+    "ts": "2026-03-22T18:40:25.191Z",
+    "valSharpe": 8.8241,
+    "audSharpe": 11.5856,
+    "isSharpe": 3.8161,
+    "score": 10.20485,
+    "accepted": false,
+    "description": "Remove dynamic z-score threshold and volume spike requirement; use fixed -1.0 z-score floor with min"
+  },
+  {
+    "n": 525,
+    "ts": "2026-03-22T18:40:47.539Z",
+    "valSharpe": 7.3487,
+    "audSharpe": 13.8267,
+    "isSharpe": 3.3912,
+    "score": 10.5877,
+    "accepted": false,
+    "description": "Add OBV-based buy pressure confirmation to oversold bounce detection and tighten dynamic z-score thr"
+  },
+  {
+    "n": 526,
+    "ts": "2026-03-22T18:41:09.351Z",
+    "valSharpe": 6.5096,
+    "audSharpe": 11.4544,
+    "isSharpe": 4.1224,
+    "score": 8.982,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -0.5 floor and require volume spike confirmation for ov"
+  },
+  {
+    "n": 527,
+    "ts": "2026-03-22T18:41:31.181Z",
+    "valSharpe": 7.1499,
+    "audSharpe": 13.1228,
+    "isSharpe": 3.9386,
+    "score": 10.13635,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor and require both volume spike AND positive 4"
+  },
+  {
+    "n": 528,
+    "ts": "2026-03-22T18:41:56.400Z",
+    "valSharpe": 7.683,
+    "audSharpe": 12.2524,
+    "isSharpe": 3.8795,
+    "score": 9.9677,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor and require volume spike confirmation only w"
+  },
+  {
+    "n": 529,
+    "ts": "2026-03-22T18:42:18.962Z",
+    "valSharpe": 7.1659,
+    "audSharpe": 13.8283,
+    "isSharpe": 4.0422,
+    "score": 10.4971,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.5 floor and require volume spike confirmation for ov"
+  },
+  {
+    "n": 530,
+    "ts": "2026-03-22T18:42:40.740Z",
+    "valSharpe": 7.1612,
+    "audSharpe": 12.702,
+    "isSharpe": 4.0261,
+    "score": 9.9316,
+    "accepted": false,
+    "description": "Replace fixed dynamic threshold with momentum-weighted z-score floor that adapts to 4h relative stre"
+  },
+  {
+    "n": 531,
+    "ts": "2026-03-22T18:43:02.683Z",
+    "valSharpe": 6.9346,
+    "audSharpe": 12.4821,
+    "isSharpe": 4.2377,
+    "score": 9.70835,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -0.8 floor and require volume spike only when relStr4h "
+  },
+  {
+    "n": 532,
+    "ts": "2026-03-22T18:43:27.113Z",
+    "valSharpe": 7.2041,
+    "audSharpe": 12.702,
+    "isSharpe": 3.9742,
+    "score": 9.953050000000001,
+    "accepted": false,
+    "description": "Reduce dynamic threshold floor from -1.5 to -1.2 and require volSpike AND positive relStr4h for over"
+  },
+  {
+    "n": 533,
+    "ts": "2026-03-22T18:43:49.052Z",
+    "valSharpe": 5.0637,
+    "audSharpe": 11.0144,
+    "isSharpe": 4.119,
+    "score": 8.03905,
+    "accepted": false,
+    "description": "Replace dynamic threshold with fixed -1.2 floor and require volSpike confirmation only, removing rel"
+  },
+  {
+    "n": 534,
+    "ts": "2026-03-22T18:44:10.666Z",
+    "valSharpe": 7.1625,
+    "audSharpe": 12.7542,
+    "isSharpe": 3.8388,
+    "score": 9.95835,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.0 floor and require volume spike confirmation only w"
+  },
+  {
+    "n": 535,
+    "ts": "2026-03-22T18:44:32.548Z",
+    "valSharpe": 7.3357,
+    "audSharpe": 14.6467,
+    "isSharpe": 3.4587,
+    "score": 10.9912,
+    "accepted": false,
+    "description": "Reduce oversoldBounce z-score threshold floor from -1.5 to -1.3 and require BOTH volSpike AND positi"
+  },
+  {
+    "n": 536,
+    "ts": "2026-03-22T18:44:55.147Z",
+    "valSharpe": 7.3201,
+    "audSharpe": 11.9804,
+    "isSharpe": 4.0377,
+    "score": 9.65025,
+    "accepted": false,
+    "description": "Replace dynamic threshold floor with fixed -0.9 and require volSpike confirmation only when relStr4h"
+  },
+  {
+    "n": 537,
+    "ts": "2026-03-22T18:45:16.801Z",
+    "valSharpe": 7.0639,
+    "audSharpe": 14.1527,
+    "isSharpe": 4.0617,
+    "score": 10.6083,
+    "accepted": false,
+    "description": "Replace dynamic z-score threshold with fixed -1.1 floor and require volSpike AND positive relStr4h f"
+  },
+  {
+    "n": 538,
+    "ts": "2026-03-22T18:45:38.989Z",
+    "valSharpe": 5.0729,
+    "audSharpe": 11.4713,
+    "isSharpe": 3.948,
+    "score": 8.2721,
+    "accepted": false,
+    "description": "Replace dynamic threshold with fixed -1.3 floor and require volSpike confirmation only, removing rel"
+  },
+  {
+    "n": 539,
+    "ts": "2026-03-23T00:24:57.334Z",
+    "valSharpe": 7.0849,
+    "audSharpe": 12.4429,
+    "isSharpe": 4.1113,
+    "score": 9.7639,
+    "accepted": false,
+    "description": "Increase oversoldBounce z-score threshold floor from -1.2 to -1.0 to catch earlier bounce signals in"
+  },
+  {
+    "n": 540,
+    "ts": "2026-03-23T00:25:20.786Z",
+    "valSharpe": 7.1146,
+    "audSharpe": 13.1599,
+    "isSharpe": 4.201,
+    "score": 10.13725,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score floor with dynamic -1.0 to -1.5 range based on relStr4h strength to catch"
+  },
+  {
+    "n": 541,
+    "ts": "2026-03-23T00:25:44.699Z",
+    "valSharpe": 7.2054,
+    "audSharpe": 12.4725,
+    "isSharpe": 3.8223,
+    "score": 9.83895,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -1.0 when relStr4h is s"
+  },
+  {
+    "n": 542,
+    "ts": "2026-03-23T00:26:07.762Z",
+    "valSharpe": 7.1146,
+    "audSharpe": 13.1599,
+    "isSharpe": 4.201,
+    "score": 10.13725,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score floor with dynamic threshold -1.0 to -1.5 scaled by relStr4h magnitude to"
+  },
+  {
+    "n": 543,
+    "ts": "2026-03-23T00:26:31.572Z",
+    "valSharpe": 7.0098,
+    "audSharpe": 12.5072,
+    "isSharpe": 4.2031,
+    "score": 9.7585,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score floor with dynamic -1.0 to -1.3 range inversely scaled by relStr4h streng"
+  },
+  {
+    "n": 544,
+    "ts": "2026-03-23T00:26:55.176Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.59,
+    "isSharpe": 3.8536,
+    "score": 10.46115,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.3 to -1.0 range scaled inversely by 4h momentum"
+  },
+  {
+    "n": 545,
+    "ts": "2026-03-23T00:27:20.907Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by 4h volatility regime to adapt "
+  },
+  {
+    "n": 546,
+    "ts": "2026-03-23T00:27:44.535Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by recent 4h volatility to tighte"
+  },
+  {
+    "n": 547,
+    "ts": "2026-03-23T00:28:07.726Z",
+    "valSharpe": 7.0991,
+    "audSharpe": 13.4159,
+    "isSharpe": 3.7104,
+    "score": 10.2575,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that loosens to -1.5 when volume spike f"
+  },
+  {
+    "n": 548,
+    "ts": "2026-03-23T00:28:31.014Z",
+    "valSharpe": 7.1076,
+    "audSharpe": 13.2017,
+    "isSharpe": 3.8304,
+    "score": 10.15465,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.0 to -1.4 range scaled by 4h momentum strength "
+  },
+  {
+    "n": 549,
+    "ts": "2026-03-23T00:28:55.111Z",
+    "valSharpe": 7.2133,
+    "audSharpe": 12.9518,
+    "isSharpe": 3.9425,
+    "score": 10.082550000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.3 to -1.0 range scaled inversely by 4h volume b"
+  },
+  {
+    "n": 550,
+    "ts": "2026-03-23T00:29:18.268Z",
+    "valSharpe": 7.251,
+    "audSharpe": 12.8253,
+    "isSharpe": 3.7577,
+    "score": 10.03815,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.4 to -0.9 range scaled by 4h momentum strength "
+  },
+  {
+    "n": 551,
+    "ts": "2026-03-23T00:29:41.913Z",
+    "valSharpe": 6.6039,
+    "audSharpe": 12.677,
+    "isSharpe": 4.2254,
+    "score": 9.64045,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.5 to -0.8 range scaled by 4h momentum strength "
+  },
+  {
+    "n": 552,
+    "ts": "2026-03-23T00:30:05.589Z",
+    "valSharpe": 7.2907,
+    "audSharpe": 13.7528,
+    "isSharpe": 3.7292,
+    "score": 10.52175,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.35 to -1.05 range scaled by 4h momentum strengt"
+  },
+  {
+    "n": 553,
+    "ts": "2026-03-23T00:30:28.006Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.6627,
+    "isSharpe": 3.5896,
+    "score": 10.497499999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.25 to -1.15 range scaled by volume spike streng"
+  },
+  {
+    "n": 554,
+    "ts": "2026-03-23T00:30:50.734Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.59,
+    "isSharpe": 3.7153,
+    "score": 10.46115,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.3 to -1.1 range scaled by positive momentum acc"
+  },
+  {
+    "n": 555,
+    "ts": "2026-03-23T00:31:13.600Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic range -1.25 to -1.15 scaled inversely by 4h volume"
+  },
+  {
+    "n": 556,
+    "ts": "2026-03-23T00:31:37.119Z",
+    "valSharpe": 7.2776,
+    "audSharpe": 13.9878,
+    "isSharpe": 3.551,
+    "score": 10.6327,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic range -1.28 to -1.12 scaled by positive momentum a"
+  },
+  {
+    "n": 557,
+    "ts": "2026-03-23T00:32:00.714Z",
+    "valSharpe": 7.2907,
+    "audSharpe": 13.3678,
+    "isSharpe": 3.8694,
+    "score": 10.32925,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.3 to -1.05 range scaled by positive momentum ac"
+  },
+  {
+    "n": 558,
+    "ts": "2026-03-23T00:32:23.283Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.3678,
+    "isSharpe": 3.5779,
+    "score": 10.35005,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.25 to -1.15 range scaled by positive momentum a"
+  },
+  {
+    "n": 559,
+    "ts": "2026-03-23T00:32:46.274Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.59,
+    "isSharpe": 3.5534,
+    "score": 10.46115,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic range -1.28 to -1.08 scaled by positive momentum a"
+  },
+  {
+    "n": 560,
+    "ts": "2026-03-23T00:33:08.656Z",
+    "valSharpe": 7.3454,
+    "audSharpe": 13.3678,
+    "isSharpe": 3.6999,
+    "score": 10.3566,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic range -1.27 to -1.13 scaled by positive momentum a"
+  },
+  {
+    "n": 561,
+    "ts": "2026-03-23T00:33:31.582Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.59,
+    "isSharpe": 3.5779,
+    "score": 10.46115,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.26 to -1.14 range scaled by positive momentum a"
+  },
+  {
+    "n": 562,
+    "ts": "2026-03-23T00:33:54.723Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.3678,
+    "isSharpe": 3.5779,
+    "score": 10.35005,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic -1.24 to -1.16 range scaled by positive momentum a"
+  },
+  {
+    "n": 563,
+    "ts": "2026-03-23T00:34:18.559Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.4144,
+    "isSharpe": 3.5003,
+    "score": 10.37335,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by volume spike strength to preve"
+  },
+  {
+    "n": 564,
+    "ts": "2026-03-23T00:34:41.560Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold scaled by recent volatility and positiv"
+  },
+  {
+    "n": 565,
+    "ts": "2026-03-23T00:35:05.232Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Add microstructure OBV signal to detect hourly buy/sell pressure accumulation before breakouts."
+  },
+  {
+    "n": 566,
+    "ts": "2026-03-23T00:35:27.806Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.5763,
+    "isSharpe": 3.7744,
+    "score": 9.8612,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong positive mom"
+  },
+  {
+    "n": 567,
+    "ts": "2026-03-23T00:36:07.485Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.5066,
+    "isSharpe": 3.8789,
+    "score": 10.419450000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by 4h momentum strength to avoid "
+  },
+  {
+    "n": 568,
+    "ts": "2026-03-23T00:36:31.728Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.6522,
+    "isSharpe": 3.7675,
+    "score": 10.4164,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by trend strength to avoid false "
+  },
+  {
+    "n": 569,
+    "ts": "2026-03-23T00:36:56.480Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by recent volatility to improve o"
+  },
+  {
+    "n": 570,
+    "ts": "2026-03-23T00:37:21.016Z",
+    "valSharpe": 7.1397,
+    "audSharpe": 13.1836,
+    "isSharpe": 4.3063,
+    "score": 10.16165,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by volatility regime and positive"
+  },
+  {
+    "n": 571,
+    "ts": "2026-03-23T00:37:44.757Z",
+    "valSharpe": 5.825,
+    "audSharpe": 12.0648,
+    "isSharpe": 3.6951,
+    "score": 8.9449,
+    "accepted": false,
+    "description": "Add hourly volume-weighted momentum confirmation to reject false breakouts when volume doesn't susta"
+  },
+  {
+    "n": 572,
+    "ts": "2026-03-23T00:38:09.402Z",
+    "valSharpe": 6.8138,
+    "audSharpe": 13.0193,
+    "isSharpe": 3.5811,
+    "score": 9.916549999999999,
+    "accepted": false,
+    "description": "Add microstructure OBV signal to confirm volume-weighted buying pressure on oversold bounces, reject"
+  },
+  {
+    "n": 573,
+    "ts": "2026-03-23T00:38:35.212Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold based on recent volatility regime to re"
+  },
+  {
+    "n": 574,
+    "ts": "2026-03-23T00:39:18.182Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.4019,
+    "isSharpe": 3.9972,
+    "score": 10.3671,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong uptrends to "
+  },
+  {
+    "n": 575,
+    "ts": "2026-03-23T00:39:42.470Z",
+    "valSharpe": 7.2913,
+    "audSharpe": 13.3933,
+    "isSharpe": 3.6169,
+    "score": 10.3423,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation to oversold bounce signal to filter false bottoms during choppy downtre"
+  },
+  {
+    "n": 576,
+    "ts": "2026-03-23T00:40:07.578Z",
+    "valSharpe": 6.7877,
+    "audSharpe": 12.3569,
+    "isSharpe": 3.6986,
+    "score": 9.5723,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales tighter during positive mome"
+  },
+  {
+    "n": 577,
+    "ts": "2026-03-23T00:40:32.178Z",
+    "valSharpe": 7.2232,
+    "audSharpe": 13.905,
+    "isSharpe": 3.7359,
+    "score": 10.5641,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation to oversold bounce to filter false bottoms in bear market chop."
+  },
+  {
+    "n": 578,
+    "ts": "2026-03-23T00:40:55.908Z",
+    "valSharpe": 7.1578,
+    "audSharpe": 12.5566,
+    "isSharpe": 3.7457,
+    "score": 9.857199999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales looser (higher) during posit"
+  },
+  {
+    "n": 579,
+    "ts": "2026-03-23T00:41:19.946Z",
+    "valSharpe": 6.7883,
+    "audSharpe": 14.0353,
+    "isSharpe": 3.6743,
+    "score": 10.4118,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation filter to oversold bounce to reduce false bottoms during bear market ch"
+  },
+  {
+    "n": 580,
+    "ts": "2026-03-23T00:41:43.654Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.5763,
+    "isSharpe": 3.7276,
+    "score": 9.8612,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold that loosens during bear market consoli"
+  },
+  {
+    "n": 581,
+    "ts": "2026-03-23T00:42:08.058Z",
+    "valSharpe": 7.2776,
+    "audSharpe": 13.5415,
+    "isSharpe": 3.8701,
+    "score": 10.40955,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during positive momentum a"
+  },
+  {
+    "n": 582,
+    "ts": "2026-03-23T00:42:33.092Z",
+    "valSharpe": 6.7883,
+    "audSharpe": 14.0353,
+    "isSharpe": 3.6743,
+    "score": 10.4118,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation filter to oversold bounce to reduce false bottoms during bear market ch"
+  },
+  {
+    "n": 583,
+    "ts": "2026-03-23T00:42:59.292Z",
+    "valSharpe": 7.1858,
+    "audSharpe": 13.3789,
+    "isSharpe": 3.9618,
+    "score": 10.282350000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong positive mom"
+  },
+  {
+    "n": 584,
+    "ts": "2026-03-23T00:43:22.575Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add 4h close confirmation filter to oversold bounce to reduce false signals during bear market conso"
+  },
+  {
+    "n": 585,
+    "ts": "2026-03-23T00:43:46.439Z",
+    "valSharpe": 6.7883,
+    "audSharpe": 14.0353,
+    "isSharpe": 3.7038,
+    "score": 10.4118,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation to oversold bounce and tighten volume spike threshold during negative m"
+  },
+  {
+    "n": 586,
+    "ts": "2026-03-23T00:44:10.233Z",
+    "valSharpe": 7.1395,
+    "audSharpe": 12.6449,
+    "isSharpe": 4.0946,
+    "score": 9.892199999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when relStr4h is strongly "
+  },
+  {
+    "n": 587,
+    "ts": "2026-03-23T00:44:33.629Z",
+    "valSharpe": 6.7883,
+    "audSharpe": 14.0353,
+    "isSharpe": 3.6743,
+    "score": 10.4118,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation to oversold bounce to reduce false bottoms and increase win rate in bea"
+  },
+  {
+    "n": 588,
+    "ts": "2026-03-23T00:44:57.666Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 14.0688,
+    "isSharpe": 3.3856,
+    "score": 10.70055,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts to 7d relative strength vola"
+  },
+  {
+    "n": 589,
+    "ts": "2026-03-23T00:45:20.447Z",
+    "valSharpe": 7.011,
+    "audSharpe": 12.3569,
+    "isSharpe": 3.9865,
+    "score": 9.68395,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that relaxes during positive momentum ac"
+  },
+  {
+    "n": 590,
+    "ts": "2026-03-23T00:45:43.724Z",
+    "valSharpe": 7.1578,
+    "audSharpe": 12.5763,
+    "isSharpe": 3.9172,
+    "score": 9.867049999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h momentum is strong"
+  },
+  {
+    "n": 591,
+    "ts": "2026-03-23T00:46:09.571Z",
+    "valSharpe": 7.1487,
+    "audSharpe": 12.3569,
+    "isSharpe": 3.7254,
+    "score": 9.7528,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h momentum accelerat"
+  },
+  {
+    "n": 592,
+    "ts": "2026-03-23T00:46:32.873Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.9287,
+    "isSharpe": 3.9518,
+    "score": 10.6305,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h relative strength "
+  },
+  {
+    "n": 593,
+    "ts": "2026-03-23T00:46:56.709Z",
+    "valSharpe": 6.7883,
+    "audSharpe": 14.0353,
+    "isSharpe": 3.6743,
+    "score": 10.4118,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation to oversold bounce by requiring positive 2h return alongside 1h z-score"
+  },
+  {
+    "n": 594,
+    "ts": "2026-03-23T00:47:20.122Z",
+    "valSharpe": 7.2221,
+    "audSharpe": 13.4273,
+    "isSharpe": 4.0119,
+    "score": 10.3247,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong uptrend acce"
+  },
+  {
+    "n": 595,
+    "ts": "2026-03-23T00:47:43.775Z",
+    "valSharpe": 6.7883,
+    "audSharpe": 14.0353,
+    "isSharpe": 3.6743,
+    "score": 10.4118,
+    "accepted": false,
+    "description": "Add 2h momentum confirmation to oversold bounce by requiring positive 2h return alongside 1h z-score"
+  },
+  {
+    "n": 596,
+    "ts": "2026-03-23T00:48:08.058Z",
+    "valSharpe": 7.0808,
+    "audSharpe": 12.187,
+    "isSharpe": 4.0927,
+    "score": 9.6339,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales down (tightens) when 4h rela"
+  },
+  {
+    "n": 597,
+    "ts": "2026-03-23T00:48:30.911Z",
+    "valSharpe": 7.1936,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.7158,
+    "score": 10.23245,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales tighter during positive mome"
+  },
+  {
+    "n": 598,
+    "ts": "2026-03-23T00:48:55.043Z",
+    "valSharpe": 7.2674,
+    "audSharpe": 12.6855,
+    "isSharpe": 4.3726,
+    "score": 9.97645,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold scaled by 4h relative strength magnitude"
+  },
+  {
+    "n": 599,
+    "ts": "2026-03-23T00:49:18.967Z",
+    "valSharpe": 6.8645,
+    "audSharpe": 12.7461,
+    "isSharpe": 3.6174,
+    "score": 9.805299999999999,
+    "accepted": false,
+    "description": "Add 4h momentum confirmation filter requiring positive 4h return alongside 1h oversold z-score to re"
+  },
+  {
+    "n": 600,
+    "ts": "2026-03-23T00:49:42.915Z",
+    "valSharpe": 7.011,
+    "audSharpe": 12.3569,
+    "isSharpe": 3.9484,
+    "score": 9.68395,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that relaxes (becomes less strict) durin"
+  },
+  {
+    "n": 601,
+    "ts": "2026-03-23T00:50:06.066Z",
+    "valSharpe": 6.8645,
+    "audSharpe": 12.7461,
+    "isSharpe": 3.6174,
+    "score": 9.805299999999999,
+    "accepted": false,
+    "description": "Add positive 4h momentum confirmation filter to oversold bounce to reduce false signals in choppy ma"
+  },
+  {
+    "n": 602,
+    "ts": "2026-03-23T00:50:29.886Z",
+    "valSharpe": 7.3323,
+    "audSharpe": 13.4019,
+    "isSharpe": 3.9972,
+    "score": 10.3671,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during positive 4h momentu"
+  },
+  {
+    "n": 603,
+    "ts": "2026-03-23T00:50:54.234Z",
+    "valSharpe": 7.1378,
+    "audSharpe": 13.8976,
+    "isSharpe": 4.0945,
+    "score": 10.517700000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during positive 4h momentu"
+  },
+  {
+    "n": 604,
+    "ts": "2026-03-23T00:51:18.617Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.4627,
+    "isSharpe": 3.7744,
+    "score": 9.8044,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales down (becomes less strict) w"
+  },
+  {
+    "n": 605,
+    "ts": "2026-03-23T00:51:41.766Z",
+    "valSharpe": 7.3336,
+    "audSharpe": 13.7207,
+    "isSharpe": 4.0715,
+    "score": 10.52715,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales based on 4h momentum strengt"
+  },
+  {
+    "n": 606,
+    "ts": "2026-03-23T00:52:06.416Z",
+    "valSharpe": 5.022,
+    "audSharpe": 10.8465,
+    "isSharpe": 4.7818,
+    "score": 7.9342500000000005,
+    "accepted": false,
+    "description": "Add 4h OBV microstructure signal to detect intraday buy/sell pressure clustering before momentum mov"
+  },
+  {
+    "n": 607,
+    "ts": "2026-03-23T00:52:29.850Z",
+    "valSharpe": 7.1196,
+    "audSharpe": 12.6395,
+    "isSharpe": 4.1437,
+    "score": 9.87955,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold that loosens during strong positive 4h "
+  },
+  {
+    "n": 608,
+    "ts": "2026-03-23T00:52:53.090Z",
+    "valSharpe": 7.1578,
+    "audSharpe": 12.5763,
+    "isSharpe": 3.9422,
+    "score": 9.867049999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold that scales inversely with 4h momentum "
+  },
+  {
+    "n": 609,
+    "ts": "2026-03-23T00:53:16.646Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that scales tighter during low 4h relati"
+  },
+  {
+    "n": 610,
+    "ts": "2026-03-23T00:53:41.024Z",
+    "valSharpe": 7.2007,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.8502,
+    "score": 10.236,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during weak 4h momentum to"
+  },
+  {
+    "n": 611,
+    "ts": "2026-03-23T00:54:04.958Z",
+    "valSharpe": 7.0881,
+    "audSharpe": 12.164,
+    "isSharpe": 4.104,
+    "score": 9.62605,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h momentum is weak t"
+  },
+  {
+    "n": 612,
+    "ts": "2026-03-23T00:54:29.334Z",
+    "valSharpe": 7.2007,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.8502,
+    "score": 10.236,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong positive 4h "
+  },
+  {
+    "n": 613,
+    "ts": "2026-03-23T00:54:52.632Z",
+    "valSharpe": 7.2125,
+    "audSharpe": 13.2593,
+    "isSharpe": 3.8789,
+    "score": 10.2359,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold that tightens during bear regime (low r"
+  },
+  {
+    "n": 614,
+    "ts": "2026-03-23T00:55:17.436Z",
+    "valSharpe": 6.5797,
+    "audSharpe": 11.4628,
+    "isSharpe": 4.3262,
+    "score": 9.02125,
+    "accepted": false,
+    "description": "Add microstructure OBV signal to detect sustained buy pressure over last 4h vs 24h average, weighted"
+  },
+  {
+    "n": 615,
+    "ts": "2026-03-23T00:55:42.381Z",
+    "valSharpe": 4.4623,
+    "audSharpe": 10.1514,
+    "isSharpe": 4.4202,
+    "score": 7.306850000000001,
+    "accepted": false,
+    "description": "Add intraday volume microstructure filter to detect sustained buy pressure (4h cumulative OBV vs 24h"
+  },
+  {
+    "n": 616,
+    "ts": "2026-03-23T00:56:05.372Z",
+    "valSharpe": 7.3485,
+    "audSharpe": 13.6174,
+    "isSharpe": 3.9062,
+    "score": 10.482949999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong 4h momentum "
+  },
+  {
+    "n": 617,
+    "ts": "2026-03-23T00:56:29.391Z",
+    "valSharpe": 7.2054,
+    "audSharpe": 12.5366,
+    "isSharpe": 3.8702,
+    "score": 9.871,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that loosens during strong relative stre"
+  },
+  {
+    "n": 618,
+    "ts": "2026-03-23T00:56:53.187Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add intraday volatility spike confirmation to oversold bounce signal, requiring current 1h realized "
+  },
+  {
+    "n": 619,
+    "ts": "2026-03-23T00:57:18.300Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add realized volatility spike confirmation to oversold bounce signal, requiring current 4h realized "
+  },
+  {
+    "n": 620,
+    "ts": "2026-03-23T00:57:41.469Z",
+    "valSharpe": 6.8015,
+    "audSharpe": 11.8064,
+    "isSharpe": 4.1862,
+    "score": 9.30395,
+    "accepted": false,
+    "description": "Add realized volatility spike confirmation to coil breakout signal, requiring 4h realized vol > 24h "
+  },
+  {
+    "n": 621,
+    "ts": "2026-03-23T00:58:04.286Z",
+    "valSharpe": 7.2007,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.8502,
+    "score": 10.236,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold that tightens during weak relative stre"
+  },
+  {
+    "n": 622,
+    "ts": "2026-03-23T00:58:27.562Z",
+    "valSharpe": 7.011,
+    "audSharpe": 12.4775,
+    "isSharpe": 4.0732,
+    "score": 9.74425,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts to 4h momentum strength, tig"
+  },
+  {
+    "n": 623,
+    "ts": "2026-03-23T00:58:52.262Z",
+    "valSharpe": 5.4785,
+    "audSharpe": 10.5912,
+    "isSharpe": 3.8943,
+    "score": 8.03485,
+    "accepted": false,
+    "description": "Add microstructure OBV signal to detect sustained intraday buy pressure before coil breakout."
+  },
+  {
+    "n": 624,
+    "ts": "2026-03-23T00:59:15.313Z",
+    "valSharpe": 6.9664,
+    "audSharpe": 13.7421,
+    "isSharpe": 4.0192,
+    "score": 10.35425,
+    "accepted": false,
+    "description": "Add 1h momentum confirmation to oversold bounce by requiring positive 1h returns in last 2 bars befo"
+  },
+  {
+    "n": 625,
+    "ts": "2026-03-23T00:59:39.172Z",
+    "valSharpe": 7.1578,
+    "audSharpe": 12.5763,
+    "isSharpe": 3.9172,
+    "score": 9.867049999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens during strong positive 4h "
+  },
+  {
+    "n": 626,
+    "ts": "2026-03-23T01:00:01.728Z",
+    "valSharpe": 6.7755,
+    "audSharpe": 13.3407,
+    "isSharpe": 3.9089,
+    "score": 10.0581,
+    "accepted": false,
+    "description": "Add volume confirmation to oversold bounce by requiring 4h volume > 24h average, reducing false sign"
+  },
+  {
+    "n": 627,
+    "ts": "2026-03-23T01:00:25.919Z",
+    "valSharpe": 7.2703,
+    "audSharpe": 13.2636,
+    "isSharpe": 3.6705,
+    "score": 10.26695,
+    "accepted": false,
+    "description": "Add 4h momentum strength filter to oversoldBounce to require sustained directional conviction before"
+  },
+  {
+    "n": 628,
+    "ts": "2026-03-23T01:00:48.849Z",
+    "valSharpe": 7.166,
+    "audSharpe": 12.5136,
+    "isSharpe": 4.3154,
+    "score": 9.8398,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold that loosens during strong 4h momentum "
+  },
+  {
+    "n": 629,
+    "ts": "2026-03-23T01:01:11.409Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.5763,
+    "isSharpe": 3.7744,
+    "score": 9.8612,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h momentum is weak ("
+  },
+  {
+    "n": 630,
+    "ts": "2026-03-23T01:01:34.448Z",
+    "valSharpe": 7.2976,
+    "audSharpe": 10.877,
+    "isSharpe": 4.0802,
+    "score": 9.0873,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.8 during strong 4h m"
+  },
+  {
+    "n": 631,
+    "ts": "2026-03-23T01:01:57.172Z",
+    "valSharpe": 7.1858,
+    "audSharpe": 13.3789,
+    "isSharpe": 3.9618,
+    "score": 10.282350000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts to 4h momentum strength and "
+  },
+  {
+    "n": 632,
+    "ts": "2026-03-23T01:02:20.316Z",
+    "valSharpe": 7.011,
+    "audSharpe": 12.4775,
+    "isSharpe": 4.0289,
+    "score": 9.74425,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.9 when 4h momentum a"
+  },
+  {
+    "n": 633,
+    "ts": "2026-03-23T01:02:44.698Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.95 when 4h momentum "
+  },
+  {
+    "n": 634,
+    "ts": "2026-03-23T01:03:07.507Z",
+    "valSharpe": 7.2776,
+    "audSharpe": 13.6089,
+    "isSharpe": 3.5592,
+    "score": 10.443249999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -1.0 when 4h momentum a"
+  },
+  {
+    "n": 635,
+    "ts": "2026-03-23T01:03:32.566Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Add intraday volatility spike detection to boost oversoldBounce signal when 1h realized vol exceeds "
+  },
+  {
+    "n": 636,
+    "ts": "2026-03-23T01:03:55.307Z",
+    "valSharpe": 7.011,
+    "audSharpe": 12.2307,
+    "isSharpe": 3.9982,
+    "score": 9.62085,
+    "accepted": false,
+    "description": "Replace fixed z-score threshold with dynamic threshold based on 4h momentum strength, tightening to "
+  },
+  {
+    "n": 637,
+    "ts": "2026-03-23T01:04:19.307Z",
+    "valSharpe": 7.1624,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.7216,
+    "score": 10.21685,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that relaxes to -0.8 when 4h momentum ac"
+  },
+  {
+    "n": 638,
+    "ts": "2026-03-23T01:04:42.514Z",
+    "valSharpe": 7.1487,
+    "audSharpe": 12.3569,
+    "isSharpe": 3.7254,
+    "score": 9.7528,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.7 when 4h momentum a"
+  },
+  {
+    "n": 639,
+    "ts": "2026-03-23T01:05:07.046Z",
+    "valSharpe": 6.8693,
+    "audSharpe": 13.7754,
+    "isSharpe": 3.8026,
+    "score": 10.32235,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that relaxes to -1.5 when 4h momentum ac"
+  },
+  {
+    "n": 640,
+    "ts": "2026-03-23T01:05:30.306Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.4627,
+    "isSharpe": 3.8263,
+    "score": 9.8044,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts to 4h momentum strength, tig"
+  },
+  {
+    "n": 641,
+    "ts": "2026-03-23T01:05:53.952Z",
+    "valSharpe": 7.1578,
+    "audSharpe": 12.5566,
+    "isSharpe": 3.9174,
+    "score": 9.857199999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.9 when 4h momentum a"
+  },
+  {
+    "n": 642,
+    "ts": "2026-03-23T01:06:17.397Z",
+    "valSharpe": 7.1513,
+    "audSharpe": 12.4775,
+    "isSharpe": 4.4193,
+    "score": 9.8144,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.6 when 4h momentum a"
+  },
+  {
+    "n": 643,
+    "ts": "2026-03-23T01:06:41.826Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.4627,
+    "isSharpe": 3.8294,
+    "score": 9.8044,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -1.0 when 4h momentum a"
+  },
+  {
+    "n": 644,
+    "ts": "2026-03-23T01:07:05.830Z",
+    "valSharpe": 7.2781,
+    "audSharpe": 12.8599,
+    "isSharpe": 3.7045,
+    "score": 10.068999999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts between -1.5 (weak momentum)"
+  },
+  {
+    "n": 645,
+    "ts": "2026-03-23T01:07:28.977Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Add 1h volume confirmation to oversoldBounce to reduce false signals in low-volume dumps."
+  },
+  {
+    "n": 646,
+    "ts": "2026-03-23T01:07:51.850Z",
+    "valSharpe": 7.1378,
+    "audSharpe": 13.5616,
+    "isSharpe": 3.963,
+    "score": 10.3497,
+    "accepted": false,
+    "description": "Add mean-reversion filter to oversoldBounce—require 1h return to be below -1.5σ AND within +0.5σ of "
+  },
+  {
+    "n": 647,
+    "ts": "2026-03-23T01:08:15.696Z",
+    "valSharpe": 7.1578,
+    "audSharpe": 12.5763,
+    "isSharpe": 4.0135,
+    "score": 9.867049999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts to 4h momentum strength, tig"
+  },
+  {
+    "n": 648,
+    "ts": "2026-03-23T01:08:39.252Z",
+    "valSharpe": 7.2397,
+    "audSharpe": 12.9347,
+    "isSharpe": 3.4244,
+    "score": 10.0872,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that adapts between -1.5 (weak 4h moment"
+  },
+  {
+    "n": 649,
+    "ts": "2026-03-23T01:09:01.906Z",
+    "valSharpe": 7.1461,
+    "audSharpe": 12.4627,
+    "isSharpe": 3.7776,
+    "score": 9.8044,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with adaptive threshold scaled by 4h momentum strength to tight"
+  },
+  {
+    "n": 650,
+    "ts": "2026-03-23T01:09:25.078Z",
+    "valSharpe": 7.2776,
+    "audSharpe": 13.6627,
+    "isSharpe": 3.5896,
+    "score": 10.47015,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens (becomes more negative) wh"
+  },
+  {
+    "n": 651,
+    "ts": "2026-03-23T01:09:48.192Z",
+    "valSharpe": 7.3485,
+    "audSharpe": 13.6993,
+    "isSharpe": 3.9029,
+    "score": 10.5239,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h momentum is strong"
+  },
+  {
+    "n": 652,
+    "ts": "2026-03-23T01:10:12.968Z",
+    "valSharpe": 7.3279,
+    "audSharpe": 13.7754,
+    "isSharpe": 3.423,
+    "score": 10.551649999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens when 4h momentum is strong"
+  },
+  {
+    "n": 653,
+    "ts": "2026-03-23T01:10:36.023Z",
+    "valSharpe": 7.2585,
+    "audSharpe": 12.5717,
+    "isSharpe": 3.7951,
+    "score": 9.915099999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that tightens to -0.8 when 4h momentum i"
+  },
+  {
+    "n": 654,
+    "ts": "2026-03-23T01:11:02.771Z",
+    "valSharpe": 7.1806,
+    "audSharpe": 13.2713,
+    "isSharpe": 3.5765,
+    "score": 10.225950000000001,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that relaxes to -0.9 when 4h momentum is"
+  },
+  {
+    "n": 655,
+    "ts": "2026-03-23T01:11:25.450Z",
+    "valSharpe": 7.2776,
+    "audSharpe": 13.6089,
+    "isSharpe": 3.5592,
+    "score": 10.443249999999999,
+    "accepted": false,
+    "description": "Replace fixed -1.2 z-score threshold with dynamic threshold that relaxes to -1.0 when 4h momentum ac"
+  },
+  {
+    "n": 656,
+    "ts": "2026-03-23T01:11:48.491Z",
+    "valSharpe": 6.6554,
+    "audSharpe": 13.7559,
+    "isSharpe": 3.7712,
+    "score": 10.20565,
+    "accepted": false,
+    "description": "Add intraday OBV microstructure signal to detect buy/sell pressure imbalance on oversold bounces."
   }
 ]

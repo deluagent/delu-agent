@@ -25,10 +25,10 @@ const BINANCE_KLINES_URL = (sym, interval, limit) =>
 // DO NOT edit manually — will be overwritten when loop finds improvement
 const ATR_MULT        = 2.7;   // ATR multiplier for trail (from peak)
 const ATR_BARS        = 14;    // ATR period
-const HARD_SL_ATR_MULT = 3;  // ATR multiplier for pre-trail hard SL
+const HARD_SL_ATR_MULT = 2.4;  // ATR multiplier for pre-trail hard SL
 const HARD_SL_MIN_PCT  = 10;    // minimum hard SL % for micro-caps
-const HARD_SL_MAX_PCT  = 15;   // absolute max loss % (floor)
-const ACTIVATE_AT      = 0.5;  // % gain to activate trail
+const HARD_SL_MAX_PCT  = 14.98;   // absolute max loss % (floor)
+const ACTIVATE_AT      = 0.69;  // % gain to activate trail
 
 /**
  * Fetch recent OHLCV bars for majors from Binance

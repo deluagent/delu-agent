@@ -59,10 +59,6 @@ function scoreToken(data) {
   const ret12 = (prices[n-1] - prices[n-13]) / prices[n-13];  // 1h
   const ret48 = n >= 49 ? (prices[n-1] - prices[n-49]) / prices[n-49] : 0; // 4h
 
-  // Strengthen alignment requirement - zero out if opposing signals
-  const aligned = (ret12 > 0 && ret48 > 0) || (ret12 < 0 && ret48 < 0);
-  if (!aligned) return 0;
-  
   const momScore = Math.tanh(ret12 * 30) * 0.6 + Math.tanh(ret48 * 10) * 0.4;
 
   // ── Volume burst (12 bars vs 48 bars) ───────────────────────
@@ -94,7 +90,7 @@ function scoreToken(data) {
   else if (btcRet12 < -0.010) btcGate = 0.1;
   else if (btcRet12 > 0.020) btcGate = 0.5;
 
-  // ── Momentum magnitude filter: LOWER threshold to 0.40 to capture more edge ──────
+  // ── Momentum magnitude filter: threshold at 0.40 ──────────────
   if (Math.abs(momScore) < 0.40) return 0;
 
   const score = momScore + volSignal + relBTC + vwapSignal;

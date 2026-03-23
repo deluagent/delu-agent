@@ -200,12 +200,12 @@ async function scoreMultiTF(symbol, contractAddress, alchemySignal, btcBars = []
     fusionWeights = { w1h: w1h/total, w5m: w5m/total, wOC: wOC/total, w4h: w4h/total };
   } catch {}
 
-  // Weights: hourly ${(fusionWeights.w1h*100).toFixed(0)}%, 5m ${(fusionWeights.w5m*100).toFixed(0)}%, onchain ${(fusionWeights.w5m*100).toFixed(0)}%, 4h ${(fusionWeights.w4h*100).toFixed(0)}% [auto-evolved]
+                      // Weights: hourly 38%, 5m 35%, onchain 17%, 4h 10% [regime=RANGE, auto-evolved]
   const available = [
-    { score: result.scoreH,   w: fusionWeights.w1h, name: '1h'      },
-    { score: result.score5m,  w: fusionWeights.w5m, name: '5m'      },
-    { score: result.scoreOC,  w: fusionWeights.wOC, name: 'onchain' },
-    { score: result.score4h,  w: fusionWeights.w4h, name: '4h'      },
+    { score: result.scoreH,   w: 0.379, name: '1h'      },
+    { score: result.score5m,  w: 0.352, name: '5m'      },
+    { score: result.scoreOC,  w: 0.173, name: 'onchain' },
+    { score: result.score4h,  w: 0.096, name: '4h'      },
   ].filter(s => s.score != null && !isNaN(s.score));
 
   if (available.length === 0) {
