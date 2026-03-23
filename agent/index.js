@@ -1097,20 +1097,20 @@ What is your allocation decision?`;
         try {
           const searchRes = await new Promise((res2) => {
             const https2 = require('https');
-            const url = `https://api.geckoterminal.com/api/v2/networks/base/tokens/multi/search?query=${encodeURIComponent(resolvedDecision.asset)}&include=top_pools`;
+            const url = `https://api.geckoterminal.com/api/v2/search/pools?query=${encodeURIComponent(resolvedDecision.asset)}&network=base`;
             https2.get(url, { headers: { Accept: 'application/json' } }, r => {
               let d = ''; r.on('data', c => d += c);
               r.on('end', () => { try { res2(JSON.parse(d)); } catch { res2({}); } });
             }).on('error', () => res2({}));
           });
-          const tokens = searchRes?.data || [];
-          // Pick highest liquidity match
-          const best = tokens
-            .filter(t => t.attributes?.symbol?.toUpperCase() === resolvedDecision.asset.toUpperCase())
-            .sort((a, b) => (b.attributes?.total_reserve_in_usd || 0) - (a.attributes?.total_reserve_in_usd || 0))[0];
-          if (best?.attributes?.address) {
-            resolvedDecision.contractAddress = best.attributes.address;
-            console.log(`[contract] Resolved ${resolvedDecision.asset} → ${resolvedDecision.contractAddress} (liq=$${Math.round((best.attributes.total_reserve_in_usd||0)/1000)}K)`);
+          const pools = searchRes?.data || [];
+          // Pick highest liquidity pool whose base token name matches
+          const best = pools
+            .filter(p => (p.attributes?.name || '').toUpperCase().startsWith(resolvedDecision.asset.toUpperCase()))
+            .sort((a, b) => (parseFloat(b.attributes?.reserve_in_usd||0)) - (parseFloat(a.attributes?.reserve_in_usd||0)))[0];
+          if (best?.relationships?.base_token?.data?.id) {
+            resolvedDecision.contractAddress = best.relationships.base_token.data.id.replace('base_', '');
+            console.log(`[contract] Resolved ${resolvedDecision.asset} → ${resolvedDecision.contractAddress} (liq=$${Math.round(parseFloat(best.attributes?.reserve_in_usd||0)/1000)}K)`);
           }
         } catch(e) { console.warn(`[contract] Symbol lookup failed for ${resolvedDecision.asset}: ${e.message?.slice(0,50)}`); }
       }
