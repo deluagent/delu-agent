@@ -25,9 +25,10 @@ const STATE_FILE = path.join(__dirname, 'state_stops.json');
 const EXP_FILE   = path.join(__dirname, 'experiments_stops.json');
 const LOG        = '/tmp/autoresearch_stops.log';
 
-// ── LLM setup (Anthropic Haiku direct) ────────────────────────
-const ANTHROPIC_KEY = (process.env.ANTHROPIC_API_KEY || '').replace(/\s/g, '');
-const MODEL = 'claude-haiku-4-5-20251001';
+// ── LLM setup (Bankr gateway → Anthropic Haiku fallback) ──────
+const BANKR_KEY     = (process.env.BANKR_API_KEY      || '').replace(/\s/g, '');
+const ANTHROPIC_KEY = (process.env.ANTHROPIC_API_KEY  || '').replace(/\s/g, '');
+const MODEL         = 'claude-haiku-4-5-20251001';
 
 function log(msg) {
   const line = `[${new Date().toISOString().slice(0,19)} UTC] ${msg}`;
@@ -230,6 +231,29 @@ Propose ONE small change to ONE parameter. Reply with ONLY valid JSON:
       max_tokens: 200,
       messages: [{ role: 'user', content: prompt }],
     });
+    // Try Bankr LLM first
+    const tryBankr = () => new Promise((res2) => {
+      if (!BANKR_KEY) return res2(null);
+      const bankrBody = JSON.stringify({ model: MODEL, max_tokens: 200, messages: [{ role: 'user', content: prompt }] });
+      const req2 = https.request({
+        hostname: 'llm.bankr.bot', path: '/v1/chat/completions', method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${BANKR_KEY}`, 'Content-Length': Buffer.byteLength(bankrBody) },
+      }, r => {
+        let d = ''; r.on('data', c => d += c);
+        r.on('end', () => {
+          try { const j = JSON.parse(d); const t = j.choices?.[0]?.message?.content || ''; const m = t.match(/\{[\s\S]*\}/); res2(m ? JSON.parse(m[0]) : null); }
+          catch { res2(null); }
+        });
+      });
+      req2.on('error', () => res2(null));
+      req2.setTimeout(15000, () => { req2.destroy(); res2(null); });
+      req2.write(bankrBody); req2.end();
+    });
+
+    const bankrResult = await tryBankr();
+    if (bankrResult) return resolve(bankrResult);
+
+    // Anthropic fallback
     const req = https.request({
       hostname: 'api.anthropic.com',
       path: '/v1/messages',

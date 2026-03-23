@@ -41,7 +41,7 @@ async function callLLM(messages) {
   const bankrKey    = (process.env.BANKR_API_KEY     || "").replace(/\s/g, "");
   const anthropicKey= (process.env.ANTHROPIC_API_KEY || "").replace(/\s/g, "");
 
-  if (false) { // Bankr credits exhausted — Anthropic only
+  if (bankrKey) { // Bankr LLM gateway (primary)
     try {
       const body = JSON.stringify({ model: "claude-haiku-4-5-20251001", max_tokens: 4000, messages });
       const result = await new Promise((resolve, reject) => {
