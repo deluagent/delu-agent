@@ -1087,28 +1087,103 @@ What is your allocation decision?`;
 
       console.log(`[kelly] size=$${finalSizeUsd} (kelly=${kelly.kellyFraction}% half=${kelly.halfKelly}% conf_mult=${kelly.confidenceMultiplier}% ${corr.reason})`);
 
-      // Resolve contract address from GeckoTerminal if not already set (avoids Bankr ambiguity on symbol lookup)
+      // Resolve + validate contract address via GeckoTerminal + Alchemy cross-check
       let resolvedDecision = { ...decision, size_pct: Math.round(finalSizeUsd / ACTIVE_TRANCHE_USD * 100) };
+      const resolveAndValidateContract = async (sym, hint) => {
+        // Step 1: GeckoTerminal pool search — exact symbol match only
+        const searchRes = await new Promise((res2) => {
+          const https2 = require('https');
+          const url = `https://api.geckoterminal.com/api/v2/search/pools?query=${encodeURIComponent(sym)}&network=base`;
+          https2.get(url, { headers: { Accept: 'application/json' } }, r => {
+            let d = ''; r.on('data', c => d += c);
+            r.on('end', () => { try { res2(JSON.parse(d)); } catch { res2({}); } });
+          }).on('error', () => res2({}));
+        });
+        const pools = (searchRes?.data || []);
+        // Require EXACT symbol match (not just prefix) against base token symbol
+        const exactPools = pools.filter(p => {
+          const attrs = p.attributes || {};
+          const name = (attrs.name || '').toUpperCase();
+          // Pool name format is usually "SYM / WETH" or "SYM/USDC"
+          const parts = name.split(/[\s\/]+/);
+          return parts[0] === sym.toUpperCase();
+        }).sort((a, b) => parseFloat(b.attributes?.reserve_in_usd||0) - parseFloat(a.attributes?.reserve_in_usd||0));
+
+        const best = exactPools[0];
+        if (!best) {
+          console.warn(`[contract] No exact match for ${sym} in GeckoTerminal pools`);
+          return hint || null;
+        }
+        const contract = best.relationships?.base_token?.data?.id?.replace('base_', '');
+        if (!contract) return hint || null;
+
+        // If we had a hint and it differs — warn and use GeckoTerminal highest-liquidity
+        if (hint && hint.toLowerCase() !== contract.toLowerCase()) {
+          console.warn(`[contract] ⚠️ ${sym}: hint ${hint.slice(0,8)}… ≠ GeckoTerminal ${contract.slice(0,8)}… — using GeckoTerminal (liq=$${Math.round(parseFloat(best.attributes?.reserve_in_usd||0)/1000)}K)`);
+        } else {
+          console.log(`[contract] ✓ ${sym} → ${contract} (liq=$${Math.round(parseFloat(best.attributes?.reserve_in_usd||0)/1000)}K)`);
+        }
+
+        // Step 2: Alchemy — verify token symbol on-chain matches
+        try {
+          const alchKey = process.env.ALCHEMY_KEY;
+          if (alchKey) {
+            // Call symbol() on the contract: selector 0x95d89b41
+            const body = JSON.stringify({ jsonrpc:'2.0', id:1, method:'eth_call', params:[{to:contract, data:'0x95d89b41'},'latest'] });
+            const onchainSym = await new Promise(res => {
+              const req = require('https').request({
+                hostname:'base-mainnet.g.alchemy.com', path:`/v2/${alchKey}`, method:'POST',
+                headers:{'Content-Type':'application/json','Content-Length':Buffer.byteLength(body)}
+              }, r2 => {
+                let d=''; r2.on('data',c=>d+=c);
+                r2.on('end',()=>{
+                  try {
+                    const hex = JSON.parse(d).result;
+                    if (!hex || hex === '0x') return res(null);
+                    // ABI decode string: skip first 64 bytes (offset), next 32 = length, then chars
+                    const raw = hex.slice(2);
+                    const offset = parseInt(raw.slice(0,64),16) * 2;
+                    const len = parseInt(raw.slice(offset, offset+64),16);
+                    const str = Buffer.from(raw.slice(offset+64, offset+64+len*2),'hex').toString('utf8');
+                    res(str);
+                  } catch { res(null); }
+                });
+              });
+              req.on('error',()=>res(null)); req.setTimeout(5000,()=>{req.destroy();res(null);});
+              req.write(body); req.end();
+            });
+            if (onchainSym) {
+              if (onchainSym.toUpperCase() !== sym.toUpperCase()) {
+                console.error(`[contract] ❌ MISMATCH: ${sym} contract ${contract.slice(0,8)}… has onchain symbol "${onchainSym}" — BLOCKING BUY`);
+                return null; // null = block the trade
+              }
+              console.log(`[contract] ✅ Alchemy confirmed: ${contract.slice(0,8)}… symbol="${onchainSym}"`);
+            }
+          }
+        } catch(e) { console.warn(`[contract] Alchemy symbol check failed: ${e.message?.slice(0,50)}`); }
+
+        return contract;
+      };
+
       if (!resolvedDecision.contractAddress && resolvedDecision.asset) {
         try {
-          const searchRes = await new Promise((res2) => {
-            const https2 = require('https');
-            const url = `https://api.geckoterminal.com/api/v2/search/pools?query=${encodeURIComponent(resolvedDecision.asset)}&network=base`;
-            https2.get(url, { headers: { Accept: 'application/json' } }, r => {
-              let d = ''; r.on('data', c => d += c);
-              r.on('end', () => { try { res2(JSON.parse(d)); } catch { res2({}); } });
-            }).on('error', () => res2({}));
-          });
-          const pools = searchRes?.data || [];
-          // Pick highest liquidity pool whose base token name matches
-          const best = pools
-            .filter(p => (p.attributes?.name || '').toUpperCase().startsWith(resolvedDecision.asset.toUpperCase()))
-            .sort((a, b) => (parseFloat(b.attributes?.reserve_in_usd||0)) - (parseFloat(a.attributes?.reserve_in_usd||0)))[0];
-          if (best?.relationships?.base_token?.data?.id) {
-            resolvedDecision.contractAddress = best.relationships.base_token.data.id.replace('base_', '');
-            console.log(`[contract] Resolved ${resolvedDecision.asset} → ${resolvedDecision.contractAddress} (liq=$${Math.round(parseFloat(best.attributes?.reserve_in_usd||0)/1000)}K)`);
+          const validated = await resolveAndValidateContract(resolvedDecision.asset, null);
+          if (validated === null) {
+            console.error(`[contract] ❌ Contract validation failed for ${resolvedDecision.asset} — skipping trade`);
+            return; // skip this trade entirely
           }
+          resolvedDecision.contractAddress = validated;
         } catch(e) { console.warn(`[contract] Symbol lookup failed for ${resolvedDecision.asset}: ${e.message?.slice(0,50)}`); }
+      } else if (resolvedDecision.contractAddress) {
+        // We have a contract hint — still cross-check with GeckoTerminal + Alchemy
+        try {
+          const validated = await resolveAndValidateContract(resolvedDecision.asset, resolvedDecision.contractAddress);
+          if (validated === null) {
+            console.error(`[contract] ❌ Contract validation failed for ${resolvedDecision.asset} — skipping trade`);
+            return;
+          }
+          resolvedDecision.contractAddress = validated;
+        } catch(e) { console.warn(`[contract] Validation failed for ${resolvedDecision.asset}: ${e.message?.slice(0,50)}`); }
       }
 
       // Override Venice's size_pct with Kelly-computed size
