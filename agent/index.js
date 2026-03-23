@@ -869,18 +869,11 @@ async function runCycle() {
         }
         return 0;
       })();
-      const reserve = ACTIVE_TRANCHE_USD * 0.25;
-      if (usdcLiquid > reserve) {
-        console.log(`\n[bankr] $${usdcLiquid.toFixed(2)} USDC idle (reserve=$${reserve.toFixed(2)}) — checking Smart Yield...`);
-        try {
-          const result = await bankr.smartYieldRebalance();
-          console.log(`[bankr] Result:\n${result}`);
-        } catch (e) {
-          console.error('[bankr] Yield rebalance failed:', e.message);
-        }
-      } else {
-        console.log(`\n[delu] $${usdcLiquid.toFixed(2)} USDC liquid — at or below 25% reserve ($${reserve.toFixed(2)}), no yield`);
-      }
+      // YIELD DISABLED — keeping all USDC liquid for trading.
+      // Yield deployment tested and working (Morpho/Moonwell/Aave v3 via Bankr).
+      // Will re-enable autonomously once live win rate exceeds 70%.
+      // TODO: bankr.smartYieldRebalance() when stats.wins/stats.totalTrades >= 0.70
+      console.log(`\n[yield] Disabled — keeping $${usdcLiquid.toFixed(2)} USDC liquid for trades (re-enables at 70% win rate)`);
     } else if (DRY_RUN) {
       console.log(`\n[delu] DRY RUN — would check smartYieldRebalance() if USDC > 25% reserve ($${(ACTIVE_TRANCHE_USD*0.25).toFixed(2)})`);
     }
@@ -1326,13 +1319,9 @@ What is your allocation decision?`;
         }
         return 0;
       })();
-      const surplus = liveLiquid2 - ACTIVE_TRANCHE_USD;
-      if (surplus >= 5) {
-        console.log(`\n[yield] $${surplus.toFixed(2)} USDC surplus — running yield rebalance check...`);
-        const yResult = await bankr.smartYieldRebalance();
-        console.log(`[yield] ${yResult.slice(0, 120)}`);
-      }
-    } catch(e) { console.warn(`[yield] Rebalance check failed: ${e.message?.slice(0,50)}`); }
+      // YIELD DISABLED — keeping all USDC liquid for trading (re-enables at 70% win rate)
+      console.log(`\n[yield] Disabled — $${liveLiquid2.toFixed(2)} USDC kept liquid for trades`);
+    } catch(e) { console.warn(`[yield] Check failed: ${e.message?.slice(0,50)}`); }
   }
 
   // Auto top-up Bankr LLM credits when low (agent pays for its own compute)
