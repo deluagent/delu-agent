@@ -21,7 +21,7 @@ const LOOPS = [
   { file: 'experiments_onchain.json', name: 'Onchain', metric: 'score',     candidate: 'candidate_onchain.js', color: 'indigo'  },
   { file: 'experiments_hourly.json',  name: 'Hourly',  metric: 'score',     candidate: 'candidate_hourly.js',  color: 'emerald' },
   { file: 'experiments_fusion.json',  name: 'Fusion',  metric: 'score',     candidate: null,                   color: 'purple'  },
-  { file: 'experiments.json',         name: 'Daily',   metric: 'valSharpe', candidate: 'candidate.js',         color: 'blue'    },
+
 ];
 
 function readJSON(file, fallback) {
