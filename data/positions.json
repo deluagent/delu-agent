@@ -334,7 +334,7 @@
     "kellyFraction": 22,
     "atrStop": 5.49,
     "atrValue": 0.08331474,
-    "lastChecked": "2026-03-23T03:08:35.123Z"
+    "lastChecked": "2026-03-23T03:14:36.870Z"
   },
   {
     "sym": "SAIRI",
@@ -343,14 +343,17 @@
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPrice": 0.00000968,
-    "peakPct": 0,
+    "peakPrice": 6.1311407667,
+    "peakPct": 63338131.061,
     "openedAt": "2026-03-23T03:10:24.419Z",
     "timeStopAt": "2026-03-26T03:10:24.419Z",
     "status": "open",
     "regime": "BEAR",
     "confidence": 80,
     "contractAddress": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
-    "kellyFraction": 22
+    "kellyFraction": 22,
+    "atrStop": 5.90619096,
+    "atrValue": 0.08331474,
+    "lastChecked": "2026-03-23T03:14:37.873Z"
   }
 ]

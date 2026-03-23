@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-23 03:14 UTC — HOLD (0% conf)
+**Regime:** BEAR | BTC $68255 | -4.5% from 200d MA
+**Venice:** "Venice unavailable: Venice error: {"error":"The model is currently overloaded. Please try again later."}"
+**Discovered:** DRB(score=0.53 ret1h=0.0%) · CLAWD(score=0.23 ret1h=0.0%) · ROBOTMONEY(score=0.40 ret1h=0.0%) · TIBBIR(score=0.32 ret1h=0.0%)
+**Positions:** VVV +0.5%, SAIRI +63338131.1%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-23 03:08 UTC — BUY SAIRI (80% conf)
 **Regime:** BEAR | BTC $68521 | -4.1% from 200d MA
 **Venice:** "SAIRI has a high score of 0.96 and strong social attention signals, indicating a potential buy opportunity. The token's velocity spike and sustained attention growth also support this decision."
