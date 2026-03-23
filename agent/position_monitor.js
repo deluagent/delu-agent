@@ -18,6 +18,24 @@ const { scoreTokenHourly } = require('./quant_score');
 const POSITIONS_FILE = path.join(__dirname, '../data/positions.json');
 
 const BINANCE_PRICE_URL  = sym => `https://api.binance.com/api/v3/ticker/price?symbol=${sym}USDT`;
+
+// GeckoTerminal price fallback for microcaps not tracked by Alchemy
+async function getGeckoPrice(contractAddress) {
+  return new Promise((resolve) => {
+    const https2 = require('https');
+    const url = `https://api.geckoterminal.com/api/v2/networks/base/tokens/${contractAddress}`;
+    https2.get(url, { headers: { Accept: 'application/json' } }, r => {
+      let d = ''; r.on('data', c => d += c);
+      r.on('end', () => {
+        try {
+          const j = JSON.parse(d);
+          const price = parseFloat(j?.data?.attributes?.price_usd);
+          resolve(price > 0 ? price : null);
+        } catch { resolve(null); }
+      });
+    }).on('error', () => resolve(null));
+  });
+}
 const BINANCE_KLINES_URL = (sym, interval, limit) =>
   `https://api.binance.com/api/v3/klines?symbol=${sym}USDT&interval=${interval}&limit=${limit}`;
 
@@ -70,10 +88,15 @@ function savePositions(positions) {
  * For Base tokens: Alchemy. For majors: Binance.
  */
 async function getLivePrice(position) {
-  // Base token with contract address → Alchemy
+  // Base token with contract address → Alchemy, fallback to GeckoTerminal
   if (position.contractAddress) {
     try {
-      return await getCurrentPrice(position.contractAddress);
+      const alchPrice = await getCurrentPrice(position.contractAddress);
+      if (alchPrice && alchPrice > 0) return alchPrice;
+      // Alchemy returned 0 (microcap not tracked) — fallback to GeckoTerminal
+      const gtPrice = await getGeckoPrice(position.contractAddress).catch(() => null);
+      if (gtPrice && gtPrice > 0) return gtPrice;
+      return null; // unknown price — don't show -100%
     } catch { return null; }
   }
   // Major token → Binance (map wrapped tokens)
