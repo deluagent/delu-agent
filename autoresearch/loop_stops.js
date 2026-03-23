@@ -225,15 +225,15 @@ Micro-cap tokens are volatile — too tight = stopped on noise, too wide = large
 Propose ONE small change to ONE parameter. Reply with ONLY valid JSON:
 {"param": "paramName", "value": number, "reasoning": "one sentence"}`;
 
-  return new Promise((resolve) => {
-    const body = JSON.stringify({
-      model: MODEL,
-      max_tokens: 200,
-      messages: [{ role: 'user', content: prompt }],
-    });
-    // Try Bankr LLM first
-    const tryBankr = () => new Promise((res2) => {
-      if (!BANKR_KEY) return res2(null);
+  const body = JSON.stringify({
+    model: MODEL,
+    max_tokens: 200,
+    messages: [{ role: 'user', content: prompt }],
+  });
+
+  // Try Bankr LLM first
+  if (BANKR_KEY) {
+    const bankrResult = await new Promise((res2) => {
       const bankrBody = JSON.stringify({ model: MODEL, max_tokens: 200, messages: [{ role: 'user', content: prompt }] });
       const req2 = https.request({
         hostname: 'llm.bankr.bot', path: '/v1/chat/completions', method: 'POST',
@@ -249,11 +249,11 @@ Propose ONE small change to ONE parameter. Reply with ONLY valid JSON:
       req2.setTimeout(15000, () => { req2.destroy(); res2(null); });
       req2.write(bankrBody); req2.end();
     });
+    if (bankrResult) return bankrResult;
+  }
 
-    const bankrResult = await tryBankr();
-    if (bankrResult) return resolve(bankrResult);
-
-    // Anthropic fallback
+  // Anthropic fallback
+  return new Promise((resolve) => {
     const req = https.request({
       hostname: 'api.anthropic.com',
       path: '/v1/messages',
