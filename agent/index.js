@@ -1304,8 +1304,30 @@ async function main() {
   await runCycle();
 
   if (LOOP) {
-    console.log(`\nNext cycle: ${new Date(Date.now() + CYCLE_MS).toISOString()}`);
-    setInterval(runCycle, CYCLE_MS);
+    // Align to :05 and :35 of each hour (Checkr refreshes at :00 and :30)
+    function scheduleNext() {
+      const now = new Date();
+      const min = now.getUTCMinutes();
+      const sec = now.getUTCSeconds();
+      const msIntoHour = (min * 60 + sec) * 1000 + now.getUTCMilliseconds();
+      const target5  = 5  * 60 * 1000;
+      const target35 = 35 * 60 * 1000;
+      let msUntilNext;
+      if (msIntoHour < target5) {
+        msUntilNext = target5 - msIntoHour;
+      } else if (msIntoHour < target35) {
+        msUntilNext = target35 - msIntoHour;
+      } else {
+        msUntilNext = 60 * 60 * 1000 - msIntoHour + target5;
+      }
+      const nextAt = new Date(Date.now() + msUntilNext);
+      console.log(`\nNext cycle: ${nextAt.toISOString()} (in ${Math.round(msUntilNext/60000)} min)`);
+      setTimeout(async () => {
+        await runCycle();
+        scheduleNext();
+      }, msUntilNext);
+    }
+    scheduleNext();
   }
 }
 
