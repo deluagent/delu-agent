@@ -20,9 +20,8 @@ const LOOPS = [
   { file: 'experiments_5m.json',      name: '5m',      metric: 'score',     candidate: 'candidate_5m.js',      color: 'orange'  },
   { file: 'experiments_onchain.json', name: 'Onchain', metric: 'score',     candidate: 'candidate_onchain.js', color: 'indigo'  },
   { file: 'experiments_hourly.json',  name: 'Hourly',  metric: 'score',     candidate: 'candidate_hourly.js',  color: 'emerald' },
-  { file: 'experiments_fusion.json',  name: 'Fusion',  metric: 'score',     candidate: null,                   color: 'purple'  },
-  { file: 'experiments_stops.json',   name: 'Stops',   metric: 'score',     candidate: null,                   color: 'rose',
-    stateFile: 'state_stops.json' },
+  { file: 'experiments_fusion.json',  name: 'Fusion',  metric: 'score',     candidate: null,                   color: 'purple', stateFile: 'state_fusion.json' },
+  { file: 'experiments_stops.json',   name: 'Stops',   metric: 'score',     candidate: null,                   color: 'rose',   stateFile: 'state_stops.json'  },
 ];
 
 function readJSON(file, fallback) {
@@ -120,7 +119,11 @@ function run() {
     const exps = readJSON(path.join(AGENT_DIR, 'autoresearch', file), []);
     const accepted = exps.filter(e => (e.accepted || e.improved) && (e[metric] ?? e.score ?? -999) > 0);
     const bts = extractBreakthroughs(exps, metric);
-    const bestScore = bts.length ? bts[bts.length - 1].score : 0;
+    // Prefer state file's bestScore (more reliable than breakthrough extraction)
+    const stateData = stateFile ? readJSON(path.join(AGENT_DIR, 'autoresearch', stateFile), null) : null;
+    const bestScore = stateData?.bestScore
+      ? parseFloat(stateData.bestScore.toFixed(3))
+      : bts.length ? bts[bts.length - 1].score : 0;
     const signals = summariseBrain(candidate);
 
     // For stops loop — read evolved params from state file
@@ -142,7 +145,7 @@ function run() {
     const scoreCurve = [];
     exps.forEach((e, i) => {
       const s = e[metric] ?? e.score ?? 0;
-      if (s > runBest) runBest = s;
+      if (s > 0 && s > runBest) runBest = s; // skip -999 failures
       if (i % step === 0) scoreCurve.push(parseFloat(runBest.toFixed(3)));
     });
     if (scoreCurve.length === 0) scoreCurve.push(0);
