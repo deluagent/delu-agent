@@ -168,7 +168,11 @@ async function buildStatus(regimeData, balanceStr = null) {
       const entryUSD   = p.sizeUsd || p.sizeUSD || 0;
 
       // Price priority: Alchemy (via positionAssessment) > Bankr balance > null
-      const currentPrice = assessment?.currentPrice
+      // Sanity check: if assessment price is >1000× entry price, it's stale/wrong — ignore it
+      const rawAssessmentPrice = assessment?.currentPrice;
+      const priceIsSane = rawAssessmentPrice && p.entryPrice > 0 &&
+        rawAssessmentPrice < p.entryPrice * 1000 && rawAssessmentPrice > p.entryPrice * 0.001;
+      const currentPrice = (priceIsSane ? rawAssessmentPrice : null)
         || (live && entryUSD > 0 && p.entryPrice ? (live.valueUSD / entryUSD) * p.entryPrice : null);
 
       // USD value: use position qty × current price (not wallet balance which may include duplicate buys)
