@@ -117,7 +117,13 @@ function run() {
 
   LOOPS.forEach(({ file, name, metric, candidate, color, stateFile }) => {
     const exps = readJSON(path.join(AGENT_DIR, 'autoresearch', file), []);
-    const accepted = exps.filter(e => (e.accepted || e.improved) && (e[metric] ?? e.score ?? -999) > 0);
+    // Count improvements by score progression (flags unreliable across loop restarts)
+    let runningBest = 0;
+    const accepted = exps.filter(e => {
+      const s = e[metric] ?? e.score ?? -999;
+      if (s > 0 && s > runningBest) { runningBest = s; return true; }
+      return false;
+    });
     const bts = extractBreakthroughs(exps, metric);
     // Prefer state file's bestScore (more reliable than breakthrough extraction)
     const stateData = stateFile ? readJSON(path.join(AGENT_DIR, 'autoresearch', stateFile), null) : null;
