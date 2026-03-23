@@ -1,7 +1,12 @@
 node_modules/
 .env
 
-# Large data files — not useful for judges
+# Private intelligence — not public
+autoresearch/candidate*.js
+autoresearch/program*.md
+autoresearch/experiments*.json
+
+# Large data files
 data/history/
 data/history_onchain/
 data/agent_log.jsonl
