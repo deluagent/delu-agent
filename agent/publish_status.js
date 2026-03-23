@@ -435,7 +435,7 @@ async function publish(regimeData = null, balanceStr = null) {
 
     // 1. Commit cycle log to delu-agent repo — only before hackathon deadline
     // Deadline: March 22 11:59pm PST = March 23 07:59 UTC
-    const DEADLINE = new Date('2026-03-23T07:59:00.000Z');
+    const DEADLINE = new Date('2026-03-23T04:29:00.000Z'); // locked at submission
     const agentGit = (cmd) => execSync(cmd, { cwd: AGENT_DIR, stdio: 'pipe' }).toString().trim();
     if (new Date() < DEADLINE) {
       try {
