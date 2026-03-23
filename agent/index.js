@@ -335,7 +335,14 @@ async function bankrScreen(regime, ranked, checkrAttention = {}, trendingEntries
     }));
   const discoverySyms = new Set((trendingEntries || []).map(t => t.symbol || t.sym));
   const extraCheckr = checkrCandidates.filter(c => !discoverySyms.has(c.symbol));
-  const allCandidates = [...(trendingEntries.length > 0 ? trendingEntries : ranked), ...extraCheckr]
+  // Hard block: drop RISKY/DANGER tokens (rugScore < 60) before LLM sees them
+  const safeEntries = (trendingEntries.length > 0 ? trendingEntries : ranked)
+    .filter(s => !s.rugScore || s.rugScore >= 60);
+  if (safeEntries.length < (trendingEntries.length > 0 ? trendingEntries : ranked).length) {
+    const blocked = (trendingEntries.length > 0 ? trendingEntries : ranked).filter(s => s.rugScore && s.rugScore < 60);
+    console.log(`[rug-gate] Blocked ${blocked.length} token(s) with rugScore < 60: ${blocked.map(s=>`${s.symbol||s.sym}(${s.rugScore})`).join(', ')}`);
+  }
+  const allCandidates = [...safeEntries, ...extraCheckr]
     .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
     .slice(0, 12);
 

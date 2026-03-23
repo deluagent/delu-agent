@@ -319,7 +319,7 @@
   {
     "sym": "VVV",
     "entryPrice": 6.1,
-    "sizeUsd": 10,
+    "sizeUsd": 20,
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
@@ -334,7 +334,9 @@
     "kellyFraction": 22,
     "atrStop": 5.49,
     "atrValue": 0.08749679,
-    "lastChecked": "2026-03-23T04:05:14.230Z"
+    "lastChecked": "2026-03-23T04:05:14.230Z",
+    "qty": 3.234,
+    "note": "Consolidated: 2 buys $10+$10, 3.234 tokens in wallet"
   },
   {
     "sym": "SAIRI",
@@ -369,7 +371,7 @@
     "peakPct": 0,
     "openedAt": "2026-03-23T03:37:14.039Z",
     "timeStopAt": "2026-03-26T03:37:14.039Z",
-    "status": "closed",
+    "status": "merged",
     "regime": "BEAR",
     "confidence": 70,
     "contractAddress": "0x45b9a03a05f86088cd1a00874a05dda2c6915ba3",
@@ -380,23 +382,25 @@
     "closeReason": "atr_stop",
     "closedAt": "2026-03-23T04:05:48.245Z",
     "closePrice": 9.509e-7,
-    "pnlPct": -75.9
+    "pnlPct": -75.9,
+    "note": "Merged into later entry"
   },
   {
     "sym": "CASHCLAW",
-    "entryPrice": 9.23362e-7,
-    "sizeUsd": 10,
+    "entryPrice": 0.000002434681,
+    "sizeUsd": 20,
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
     "peakPrice": 9.23362e-7,
     "peakPct": 0,
-    "openedAt": "2026-03-23T04:07:50.571Z",
+    "openedAt": "2026-03-23T03:37:14.039Z",
     "timeStopAt": "2026-03-26T04:07:50.571Z",
     "status": "open",
     "regime": "BEAR",
     "confidence": 72,
     "contractAddress": "0x45b9a03a05f86088cd1a00874a05dda2c6915ba3",
-    "kellyFraction": 22
+    "kellyFraction": 22,
+    "note": "Consolidated: 2 buys $10+$10"
   }
 ]
