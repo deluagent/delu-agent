@@ -326,9 +326,18 @@ async function bankrScreen(regime, ranked, checkrAttention = {}, trendingEntries
 
     // Build a compact summary — use trendingEntries (onchain discovery) as primary signal source
   // ranked may be empty since we no longer have a fixed universe
-  const allCandidates = trendingEntries && trendingEntries.length > 0
-    ? trendingEntries
-    : ranked;
+  // Merge discovery tokens with Checkr attention tokens — Venice should see all signals
+  const checkrCandidates = Object.entries(checkrAttention)
+    .filter(([, a]) => (a.velocity >= 3 || a.momentumWindows >= 2) && a.attentionDelta > 0)
+    .map(([sym, a]) => ({
+      symbol: sym, score: Math.min(1, (a.velocity / 20) * 0.6 + (a.momentumWindows / 4) * 0.4),
+      quantScore: null, ret1h: null, source: 'checkr',
+    }));
+  const discoverySyms = new Set((trendingEntries || []).map(t => t.symbol || t.sym));
+  const extraCheckr = checkrCandidates.filter(c => !discoverySyms.has(c.symbol));
+  const allCandidates = [...(trendingEntries.length > 0 ? trendingEntries : ranked), ...extraCheckr]
+    .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+    .slice(0, 12);
 
   const scoreLines = allCandidates.map(s => {
     const sym  = s.symbol || s.sym;
@@ -417,6 +426,7 @@ or
       layer:       usedLayer,
       model:       usedLayer === 'bankr-llm' ? BANKR_LLM_MODEL : 'claude-haiku-4-5-20251001',
       usage:       data.usage,
+      allCandidates, // pass merged list to log
     };
   } catch(e) {
     console.warn(`[bankr-screen] JSON parse failed: ${e.message}`);
@@ -878,6 +888,7 @@ async function runCycle() {
     const logEntry = {
       ts: cycleStart, regime: state, regime_detail: regime,
       scores: ranked.map(s => ({ sym: s.sym, combined: s.combined, template: s.template })),
+      trendingEntries: (screen.allCandidates || []).map(t => ({ symbol: t.symbol||t.sym, score: t.score, source: t.source||'discovery' })),
       screen, decision: { action: 'smart_yield', asset: 'USDC', reason: screen.reason }, dry_run: DRY_RUN
     };
     const logPath = require('path').join(__dirname, '../data/agent_log.jsonl');
@@ -1204,8 +1215,8 @@ What is your allocation decision?`;
     regime: state,
     regime_detail: regime,
     scores: [], // no fixed universe — onchain discovery is the signal
-    trendingEntries: trendingEntries.map(t => {
-      const ca = checkrAttention[t.symbol] || {};
+    trendingEntries: (screen.allCandidates || trendingEntries).map(t => {
+      const ca = checkrAttention[t.symbol || t.sym] || {};
       return {
         symbol:           t.symbol,
         score:            t.score,
