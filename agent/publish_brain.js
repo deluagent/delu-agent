@@ -136,6 +136,17 @@ function run() {
 
     bts.forEach(b => allBreakthroughs.push({ ...b, loop: name, color }));
 
+    // Build score progression curve (running best, sampled at ~20 points)
+    let runBest = 0;
+    const step = Math.max(1, Math.floor(exps.length / 20));
+    const scoreCurve = [];
+    exps.forEach((e, i) => {
+      const s = e[metric] ?? e.score ?? 0;
+      if (s > runBest) runBest = s;
+      if (i % step === 0) scoreCurve.push(parseFloat(runBest.toFixed(3)));
+    });
+    if (scoreCurve.length === 0) scoreCurve.push(0);
+
     loopStats.push({
       name, color,
       expCount:      exps.length,
@@ -144,6 +155,7 @@ function run() {
       bestScore,
       breakthroughCount: bts.length,
       signals,
+      scoreCurve,
       latestDescription: bts.filter(b => b.description).slice(-1)[0]?.description || null,
       ...(stopsParams || {}),
     });
