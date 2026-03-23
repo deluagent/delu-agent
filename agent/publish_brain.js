@@ -21,7 +21,8 @@ const LOOPS = [
   { file: 'experiments_onchain.json', name: 'Onchain', metric: 'score',     candidate: 'candidate_onchain.js', color: 'indigo'  },
   { file: 'experiments_hourly.json',  name: 'Hourly',  metric: 'score',     candidate: 'candidate_hourly.js',  color: 'emerald' },
   { file: 'experiments_fusion.json',  name: 'Fusion',  metric: 'score',     candidate: null,                   color: 'purple'  },
-
+  { file: 'experiments_stops.json',   name: 'Stops',   metric: 'score',     candidate: null,                   color: 'rose',
+    stateFile: 'state_stops.json' },
 ];
 
 function readJSON(file, fallback) {
@@ -115,12 +116,23 @@ function run() {
   const allBreakthroughs = [];
   const loopStats = [];
 
-  LOOPS.forEach(({ file, name, metric, candidate, color }) => {
+  LOOPS.forEach(({ file, name, metric, candidate, color, stateFile }) => {
     const exps = readJSON(path.join(AGENT_DIR, 'autoresearch', file), []);
     const accepted = exps.filter(e => e.accepted && (e[metric] ?? e.score ?? -999) > 0);
     const bts = extractBreakthroughs(exps, metric);
     const bestScore = bts.length ? bts[bts.length - 1].score : 0;
     const signals = summariseBrain(candidate);
+
+    // For stops loop — read evolved params from state file
+    let stopsParams = null;
+    if (stateFile) {
+      const st = readJSON(path.join(AGENT_DIR, 'autoresearch', stateFile), null);
+      if (st) stopsParams = {
+        bestParams:  st.bestParams,
+        bestWinRate: st.bestWinRate,
+        bestAvgPnl:  st.bestAvgPnl,
+      };
+    }
 
     bts.forEach(b => allBreakthroughs.push({ ...b, loop: name, color }));
 
@@ -133,6 +145,7 @@ function run() {
       breakthroughCount: bts.length,
       signals,
       latestDescription: bts.filter(b => b.description).slice(-1)[0]?.description || null,
+      ...(stopsParams || {}),
     });
   });
 
