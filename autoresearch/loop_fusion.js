@@ -437,13 +437,14 @@ async function main() {
       const keys = Object.keys(DEFAULT_PARAMS);
       const key  = keys[Math.floor(Math.random() * keys.length)];
       const ranges = {
-        bear_w1h: [0.05, 0.60], bear_w5m: [0.05, 0.65], bear_wOC: [0.05, 0.55], bear_w4h: [0.01, 0.30],
-        bull_w1h: [0.05, 0.55], bull_w5m: [0.10, 0.65], bull_wOC: [0.05, 0.45], bull_w4h: [0.02, 0.35],
-        range_w1h:[0.05, 0.55], range_w5m:[0.05, 0.55], range_wOC:[0.05, 0.55], range_w4h:[0.01, 0.25],
+        // Tightened ranges — BEAR is active regime, focus exploration there
+        bear_w1h: [0.10, 0.55], bear_w5m: [0.10, 0.55], bear_wOC: [0.10, 0.50], bear_w4h: [0.02, 0.20],
+        bull_w1h: [0.10, 0.50], bull_w5m: [0.15, 0.55], bull_wOC: [0.10, 0.40], bull_w4h: [0.05, 0.25],
+        range_w1h:[0.10, 0.50], range_w5m:[0.10, 0.50], range_wOC:[0.10, 0.50], range_w4h:[0.02, 0.20],
         minScore: [0.30, 0.80], onchainVeto: [0.05, 0.50], whaleVeto: [0.30, 0.85],
       };
       const [lo, hi] = ranges[key] || [0.05, 0.60];
-      const delta = (Math.random() - 0.5) * (hi - lo) * 0.25;
+      const delta = (Math.random() - 0.5) * (hi - lo) * 0.12;
       proposal.param     = key;
       proposal.value     = parseFloat(Math.max(lo, Math.min(hi, (state.bestParams[key] || (lo+hi)/2) + delta)).toFixed(3));
       proposal.reasoning = 'random perturbation';
