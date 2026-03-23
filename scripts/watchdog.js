@@ -16,7 +16,7 @@ const LOG      = '/tmp/watchdog.log';
 
 const PROCESSES = [
   { name: 'Agent',   match: 'index.js --loop',             cmd: 'node agent/index.js --loop',                        log: '/tmp/agent.log'               },
-  { name: 'Daily',   match: 'autoresearch/loop.js',        cmd: 'node -r dotenv/config autoresearch/loop.js',        log: '/tmp/autoresearch.log'         },
+  { name: 'Fusion',  match: 'loop_fusion.js',               cmd: 'node -r dotenv/config autoresearch/loop_fusion.js', log: '/tmp/autoresearch_fusion.log'  },
   { name: 'Hourly',  match: 'loop_hourly.js',              cmd: 'node -r dotenv/config autoresearch/loop_hourly.js', log: '/tmp/autoresearch_hourly.log'  },
   { name: '5m',      match: 'loop_5m.js',                  cmd: 'node -r dotenv/config autoresearch/loop_5m.js',     log: '/tmp/autoresearch_5m.log'      },
   { name: 'Onchain', match: 'loop_onchain.js',             cmd: 'node -r dotenv/config autoresearch/loop_onchain.js',log: '/tmp/autoresearch_onchain.log' },
@@ -24,7 +24,7 @@ const PROCESSES = [
 ];
 
 const EXP_FILES = [
-  { name: 'Daily',   file: 'autoresearch/experiments.json',         metric: 'valSharpe', alertAt: null },
+  { name: 'Fusion',  file: 'autoresearch/experiments_fusion.json',   metric: 'score',     alertAt: 8   },
   { name: 'Hourly',  file: 'autoresearch/experiments_hourly.json',  metric: 'score',     alertAt: 12  },
   { name: '5m',      file: 'autoresearch/experiments_5m.json',      metric: 'score',     alertAt: 35  },
   { name: 'Onchain', file: 'autoresearch/experiments_onchain.json', metric: 'score',     alertAt: 25  },

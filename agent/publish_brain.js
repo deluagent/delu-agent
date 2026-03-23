@@ -20,6 +20,7 @@ const LOOPS = [
   { file: 'experiments_5m.json',      name: '5m',      metric: 'score',     candidate: 'candidate_5m.js',      color: 'orange'  },
   { file: 'experiments_onchain.json', name: 'Onchain', metric: 'score',     candidate: 'candidate_onchain.js', color: 'indigo'  },
   { file: 'experiments_hourly.json',  name: 'Hourly',  metric: 'score',     candidate: 'candidate_hourly.js',  color: 'emerald' },
+  { file: 'experiments_fusion.json',  name: 'Fusion',  metric: 'score',     candidate: null,                   color: 'purple'  },
   { file: 'experiments.json',         name: 'Daily',   metric: 'valSharpe', candidate: 'candidate.js',         color: 'blue'    },
 ];
 
@@ -52,6 +53,13 @@ function extractBreakthroughs(exps, metric) {
 
 // Extract key signals from candidate JS source as plain english
 function summariseBrain(candidateFile) {
+  if (!candidateFile) return [
+    'Evolves blend weights: 5m + Onchain + Hourly + 4h',
+    'Per-regime weights (BEAR / BULL / RANGE)',
+    'Onchain veto — blocks entry if smart wallet negative',
+    'Whale concentration veto (evolved threshold)',
+    'Entry score threshold (minScore) auto-evolved',
+  ];
   try {
     const src = fs.readFileSync(path.join(AGENT_DIR, 'autoresearch', candidateFile), 'utf8');
     const signals = [];

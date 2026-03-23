@@ -181,13 +181,31 @@ async function scoreMultiTF(symbol, contractAddress, alchemySignal, btcBars = []
   }
 
   // ── 5. Blend scores ──────────────────────────────────────────
-  // Weights: hourly 35%, 5m 30%, onchain 25%, 4h 10%
-  // If a timeframe is unavailable, redistribute weight
+  // Load evolved fusion weights (from loop_fusion.js auto-research)
+  // Falls back to hardcoded defaults if no state file yet
+  let fusionWeights = { w1h: 0.35, w5m: 0.30, wOC: 0.25, w4h: 0.10 };
+  try {
+    const stateFile = path.join(__dirname, '../autoresearch/state_fusion.json');
+    const fusionState = JSON.parse(require('fs').readFileSync(stateFile, 'utf8'));
+    const p = fusionState.bestParams || {};
+    // Detect regime from BTC prices (simple: use btcBars slope)
+    const bN = btcBars.length;
+    const btcRet7d = bN >= 169 ? (btcBars[bN-1] - btcBars[bN-169]) / btcBars[bN-169] : 0;
+    const regime = btcRet7d > 0.05 ? 'bull' : btcRet7d < -0.03 ? 'bear' : 'range';
+    const w1h = p[`${regime}_w1h`] || 0.35;
+    const w5m = p[`${regime}_w5m`] || 0.30;
+    const wOC = p[`${regime}_wOC`] || 0.25;
+    const w4h = p[`${regime}_w4h`] || 0.10;
+    const total = w1h + w5m + wOC + w4h;
+    fusionWeights = { w1h: w1h/total, w5m: w5m/total, wOC: wOC/total, w4h: w4h/total };
+  } catch {}
+
+  // Weights: hourly ${(fusionWeights.w1h*100).toFixed(0)}%, 5m ${(fusionWeights.w5m*100).toFixed(0)}%, onchain ${(fusionWeights.w5m*100).toFixed(0)}%, 4h ${(fusionWeights.w4h*100).toFixed(0)}% [auto-evolved]
   const available = [
-    { score: result.scoreH,   w: 0.35, name: '1h'     },
-    { score: result.score5m,  w: 0.30, name: '5m'     },
-    { score: result.scoreOC,  w: 0.25, name: 'onchain' },
-    { score: result.score4h,  w: 0.10, name: '4h'     },
+    { score: result.scoreH,   w: fusionWeights.w1h, name: '1h'      },
+    { score: result.score5m,  w: fusionWeights.w5m, name: '5m'      },
+    { score: result.scoreOC,  w: fusionWeights.wOC, name: 'onchain' },
+    { score: result.score4h,  w: fusionWeights.w4h, name: '4h'      },
   ].filter(s => s.score != null && !isNaN(s.score));
 
   if (available.length === 0) {
