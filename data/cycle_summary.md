@@ -1,6 +1,14 @@
 # delu — cycle log
 *Autonomous onchain trading agent · updated every 30 min*
 
+## 2026-03-23 03:08 UTC — BUY SAIRI (80% conf)
+**Regime:** BEAR | BTC $68521 | -4.1% from 200d MA
+**Venice:** "SAIRI has a high score of 0.96 and strong social attention signals, indicating a potential buy opportunity. The token's velocity spike and sustained attention growth also support this decision."
+**Discovered:** VVV(score=0.73 ret1h=-0.5%) · KELLYCLAUDE(score=0.53 ret1h=0.0%) · BOTCOIN(score=0.23 ret1h=0.0%) · ROBOTMONEY(score=0.40 ret1h=0.0%)
+**Positions:** VVV +0.5%, SAIRI +0.0%
+
+*Autonomous onchain trading agent · updated every 30 min*
+
 ## 2026-03-23 02:34 UTC — BUY VVV (80% conf)
 **Regime:** BEAR | BTC $68235 | -4.5% from 200d MA
 **Venice:** "VVV has a high onchain trend score of 0.73 and a relatively low move completion of 75%, indicating a strong conviction to buy with a $10-$15 size. The token's liquidity and buyer ratio also support th…"

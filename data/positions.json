@@ -338,23 +338,19 @@
   },
   {
     "sym": "SAIRI",
-    "entryPrice": 0.00000983,
-    "sizeUsd": 19.55,
+    "entryPrice": 0.00000968,
+    "sizeUsd": 10,
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPrice": 0.00000983,
+    "peakPrice": 0.00000968,
     "peakPct": 0,
-    "openedAt": "2026-03-23T00:52:00.000Z",
-    "timeStopAt": "2026-03-26T00:52:00.000Z",
+    "openedAt": "2026-03-23T03:10:24.419Z",
+    "timeStopAt": "2026-03-26T03:10:24.419Z",
     "status": "open",
     "regime": "BEAR",
     "confidence": 80,
-    "contractAddress": "0xde61878b0b21ce395266c44d4d548d1c72a3eb07",
-    "qty": 1988842,
-    "note": "Position from Bankr: 2 purchases totaling $19.55, avg entry $0.00000983",
-    "atrStop": 0.00000885,
-    "atrValue": 2.1e-7,
-    "lastChecked": "2026-03-23T03:08:36.076Z"
+    "contractAddress": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
+    "kellyFraction": 22
   }
 ]
