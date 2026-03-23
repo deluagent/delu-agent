@@ -1073,8 +1073,32 @@ What is your allocation decision?`;
 
       console.log(`[kelly] size=$${finalSizeUsd} (kelly=${kelly.kellyFraction}% half=${kelly.halfKelly}% conf_mult=${kelly.confidenceMultiplier}% ${corr.reason})`);
 
+      // Resolve contract address from GeckoTerminal if not already set (avoids Bankr ambiguity on symbol lookup)
+      let resolvedDecision = { ...decision, size_pct: Math.round(finalSizeUsd / ACTIVE_TRANCHE_USD * 100) };
+      if (!resolvedDecision.contractAddress && resolvedDecision.asset) {
+        try {
+          const searchRes = await new Promise((res2) => {
+            const https2 = require('https');
+            const url = `https://api.geckoterminal.com/api/v2/networks/base/tokens/multi/search?query=${encodeURIComponent(resolvedDecision.asset)}&include=top_pools`;
+            https2.get(url, { headers: { Accept: 'application/json' } }, r => {
+              let d = ''; r.on('data', c => d += c);
+              r.on('end', () => { try { res2(JSON.parse(d)); } catch { res2({}); } });
+            }).on('error', () => res2({}));
+          });
+          const tokens = searchRes?.data || [];
+          // Pick highest liquidity match
+          const best = tokens
+            .filter(t => t.attributes?.symbol?.toUpperCase() === resolvedDecision.asset.toUpperCase())
+            .sort((a, b) => (b.attributes?.total_reserve_in_usd || 0) - (a.attributes?.total_reserve_in_usd || 0))[0];
+          if (best?.attributes?.address) {
+            resolvedDecision.contractAddress = best.attributes.address;
+            console.log(`[contract] Resolved ${resolvedDecision.asset} → ${resolvedDecision.contractAddress} (liq=$${Math.round((best.attributes.total_reserve_in_usd||0)/1000)}K)`);
+          }
+        } catch(e) { console.warn(`[contract] Symbol lookup failed for ${resolvedDecision.asset}: ${e.message?.slice(0,50)}`); }
+      }
+
       // Override Venice's size_pct with Kelly-computed size
-      const kellyDecision = { ...decision, size_pct: Math.round(finalSizeUsd / ACTIVE_TRANCHE_USD * 100) };
+      const kellyDecision = resolvedDecision;
       const result = await bankr.execute(kellyDecision, ACTIVE_TRANCHE_USD);
       console.log(`[bankr] ✓ ${result.response || JSON.stringify(result)}`);
 
@@ -1082,7 +1106,7 @@ What is your allocation decision?`;
       // Only record position if tokens actually landed in wallet
       let tradeConfirmed = false;
       if (decision.action === 'buy' || decision.action === 'long') {
-        const contractAddr = decision.contractAddress;
+        const contractAddr = kellyDecision.contractAddress;
         if (contractAddr) {
           console.log('[bankr] Waiting 8s for on-chain confirmation...');
           await new Promise(r => setTimeout(r, 8000));

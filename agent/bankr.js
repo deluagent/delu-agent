@@ -43,7 +43,7 @@ async function waitForJob(jobId, maxWaitMs = 300000) {
 
 async function execute(decision, activeTrancheUsd) {
   // Keep 2 decimal places — Math.floor on small tranches gives $0
-  const sizeUsd = Math.round((decision.size_pct / 100) * activeTrancheUsd * 100) / 100;
+  const sizeUsd = Math.max(10, Math.ceil((decision.size_pct / 100) * activeTrancheUsd * 100) / 100);
 
   let bankrPrompt;
 
