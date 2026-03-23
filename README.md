@@ -54,13 +54,15 @@ Before every entry, 4 checks run automatically:
 - **Whale concentration** — single wallet > 20% of buy volume → skip
 
 ### Multi-window social attention (Checkr via x402)
-Checkr is called via [x402 micropayments](https://x402.org) — no API key, no subscription, per-call payment from the agent wallet. Four time windows scored and weighted:
-- 1h leaderboard (fastest growers) — 40%
-- 4h leaderboard (building momentum) — 30%
-- 8h leaderboard (sustained attention) — 20%
-- 12h leaderboard (trend confirmation) — 10%
+Checkr is called via [x402 micropayments](https://x402.org) — no API key, no subscription, per-call payment from the agent wallet. Six parallel calls every cycle:
 
-`sustainedMomentum` = positive in 3+ windows = genuine trend, not a flash pump.
+- **4 leaderboard windows** — 1h (fastest growers, 40%), 4h (building momentum, 30%), 8h (sustained, 20%), 12h (trend confirmation, 10%)
+- **Spikes** — tokens with velocity ≥ 2.0 and min_mentions ≥ 3 in the last hour
+- **Rotation graph** — directed attention flow between tokens; identifies which tokens are gaining attention *from* others (rotation gainers vs losers)
+
+`sustainedMomentum` = token appears positive in 3+ windows = genuine trend, not a flash pump.  
+`rotationGain` = net attention inflow from the rotation graph = social conviction building.  
+Both signals feed into the final Venice reasoning layer.
 
 ### Private AI reasoning (Venice)
 All final trade decisions go through [Venice AI](https://venice.ai) — private, E2EE inference. The model (llama-3.3-70b) reasons over the full signal stack and produces a buy/hold decision with written justification. This reasoning is shown on the dashboard but never leaves the E2EE context.
