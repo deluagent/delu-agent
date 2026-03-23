@@ -160,17 +160,20 @@ async function smartYieldRebalance() {
     // Extract current USDC balance from response text
     const balMatch = response.match(/(\d+\.?\d*)\s*usdc/);
     const currentUSDC = balMatch ? parseFloat(balMatch[1]) : 0;
-    const surplusUSDC = Math.max(0, currentUSDC - ACTIVE_TRANCHE_USD);
+    // Keep at least tranche liquid, but also minimum 70% of total USDC
+    // Prevents yielding too much when wallet is small
+    const liquidFloor = Math.max(ACTIVE_TRANCHE_USD, currentUSDC * 0.70);
+    const surplusUSDC = Math.max(0, currentUSDC - liquidFloor);
 
     if (surplusUSDC < 5) {
-      console.log(`[bankr] No yield surplus (USDC=${currentUSDC.toFixed(2)}, tranche=${ACTIVE_TRANCHE_USD}, surplus=${surplusUSDC.toFixed(2)}) — keeping liquid`);
+      console.log(`[bankr] No yield surplus (USDC=${currentUSDC.toFixed(2)}, floor=$${liquidFloor.toFixed(2)}, surplus=${surplusUSDC.toFixed(2)}) — keeping liquid`);
       return `No surplus to yield. Keeping $${currentUSDC.toFixed(2)} liquid for trading.`;
     }
 
-    console.log(`[bankr] Deploying $${surplusUSDC.toFixed(2)} surplus USDC to yield (keeping $${ACTIVE_TRANCHE_USD} liquid)`);
+    console.log(`[bankr] Deploying $${surplusUSDC.toFixed(2)} surplus USDC to yield (keeping $${liquidFloor.toFixed(2)} liquid)`);
     const deployJob = await prompt(
       `I have $${currentUSDC.toFixed(2)} USDC in my wallet. ` +
-      `Keep $${ACTIVE_TRANCHE_USD.toFixed(2)} USDC liquid for trading. ` +
+      `Keep $${liquidFloor.toFixed(2)} USDC liquid for trading. ` +
       `Deposit the remaining $${surplusUSDC.toFixed(2)} USDC into the highest APY USDC vault on Base (Aave v3, Morpho, or Moonwell). Execute now.`
     );
     const deployResult = await waitForJob(deployJob.jobId);
