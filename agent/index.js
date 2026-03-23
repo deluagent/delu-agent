@@ -1124,15 +1124,20 @@ What is your allocation decision?`;
               req.write(body); req.end();
             });
           })();
-          if (onchainBal !== null && onchainBal > 0) {
+          // Primary: trust Bankr response if it explicitly says "swapped"
+          const bankrResponseText = (result.response || '').toLowerCase();
+          const bankrConfirmed = /swapped|bought|purchased|executed/.test(bankrResponseText);
+          if (bankrConfirmed) {
+            tradeConfirmed = true;
+            console.log(`[bankr] ✅ Confirmed via Bankr response ("${bankrResponseText.slice(0,60)}")`);
+          } else if (onchainBal !== null && onchainBal > 0) {
             tradeConfirmed = true;
             console.log(`[bankr] ✅ On-chain confirmed: ${decision.asset} balance=${onchainBal} (raw tokens)`);
-          } else if (onchainBal === 0) {
-            console.warn(`[bankr] ⚠️ Trade NOT confirmed on-chain — balance=0 for ${decision.asset}. Not recording position.`);
+          } else if (onchainBal === 0 && !bankrConfirmed) {
+            console.warn(`[bankr] ⚠️ Trade NOT confirmed — balance=0 and Bankr response unclear for ${decision.asset}.`);
           } else {
-            // null = Alchemy check failed — assume confirmed (don't block)
             tradeConfirmed = true;
-            console.warn(`[bankr] ⚠️ Could not verify on-chain (Alchemy error) — assuming confirmed`);
+            console.warn(`[bankr] ⚠️ Could not verify on-chain — assuming confirmed`);
           }
         } else {
           // No contract address (majors like ETH, SOL) — trust Bankr response
