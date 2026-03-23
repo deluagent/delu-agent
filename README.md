@@ -10,14 +10,14 @@
 
 ---
 
-## What makes delu different
+## What delu is
 
-Most "autonomous" agents are simulations — testnet deployments with monopoly money where mistakes don't matter. delu is different:
+delu is an autonomous onchain trading agent with real skin in the game:
 
-- **Real capital** — live wallet, real USDC, real execution on Base mainnet
-- **Self-improving brain** — 5 parallel autoresearch loops run 24/7, evolving the scoring model through 9,000+ backtested experiments
-- **Self-funding** — agent tops up its own AI compute credits from its trading wallet autonomously
-- **Auditable** — every decision, every trade, every stop-loss is logged and visible on the dashboard
+- **Self-improving brain** — 5 parallel autoresearch loops run 24/7, evolving the scoring model through 9,000+ backtested experiments. The agent gets smarter every hour without human input.
+- **Self-funding** — agent monitors its own AI compute credits and tops up autonomously from its trading wallet. No human needed to keep it running.
+- **Real capital, real consequences** — live wallet on Base mainnet, real USDC, every decision executable and verifiable on Basescan.
+- **Fully auditable** — every decision, every trade, every stop-loss logged and visible on the live dashboard.
 
 ---
 
