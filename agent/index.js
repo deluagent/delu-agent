@@ -1199,6 +1199,7 @@ What is your allocation decision?`;
     } else {
       console.log(`[bankr] Already have open position in ${decision.asset} — skipping re-entry`);
     }
+  } // end if (decision.action === 'buy' || 'long')
 
     // 8. Log
   const logEntry = {
@@ -1391,4 +1392,3 @@ async function main() {
 }
 
 main().catch(e => { console.error('Fatal:', e.stack); process.exit(1); });
-}
