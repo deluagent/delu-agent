@@ -21,6 +21,7 @@ const PROCESSES = [
   { name: '5m',      match: 'loop_5m.js',                  cmd: 'node -r dotenv/config autoresearch/loop_5m.js',     log: '/tmp/autoresearch_5m.log'      },
   { name: 'Onchain', match: 'loop_onchain.js',             cmd: 'node -r dotenv/config autoresearch/loop_onchain.js',log: '/tmp/autoresearch_onchain.log' },
   { name: 'Stops',   match: 'loop_stops.js',               cmd: 'node -r dotenv/config autoresearch/loop_stops.js',  log: '/tmp/autoresearch_stops.log'   },
+  { name: 'Prices',  match: 'price_updater.js',            cmd: 'node -r dotenv/config agent/price_updater.js',      log: '/tmp/price_updater.log'        },
 ];
 
 const EXP_FILES = [
