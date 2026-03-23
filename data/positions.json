@@ -334,7 +334,7 @@
     "kellyFraction": 22,
     "atrStop": 5.49,
     "atrValue": 0.08331474,
-    "lastChecked": "2026-03-23T03:14:36.870Z"
+    "lastChecked": "2026-03-23T03:35:14.159Z"
   },
   {
     "sym": "SAIRI",
@@ -343,8 +343,8 @@
     "trailPct": 5,
     "activateAt": 1,
     "hardSlPct": 3,
-    "peakPrice": 0.0000094388,
-    "peakPct": 0,
+    "peakPrice": 0.0000096545,
+    "peakPct": -1.7854,
     "openedAt": "2026-03-23T00:52:00.000Z",
     "timeStopAt": "2026-03-26T00:52:00.000Z",
     "status": "open",
@@ -352,10 +352,27 @@
     "confidence": 80,
     "contractAddress": "0xde61878b0b21ce395266c44d4d548d1c72a3eb07",
     "kellyFraction": 22,
-    "atrStop": 5.90619096,
-    "atrValue": 0.08331474,
-    "lastChecked": "2026-03-23T03:14:37.873Z",
+    "atrStop": 0.00000885,
+    "atrValue": 2.1e-7,
+    "lastChecked": "2026-03-23T03:35:15.218Z",
     "qty": 1988842,
     "note": "Reconstructed: 2 buys $19.55 total per Bankr, avg entry $0.00000983"
+  },
+  {
+    "sym": "CASHCLAW",
+    "entryPrice": 0.000003946,
+    "sizeUsd": 10,
+    "trailPct": 5,
+    "activateAt": 1,
+    "hardSlPct": 3,
+    "peakPrice": 0.000003946,
+    "peakPct": 0,
+    "openedAt": "2026-03-23T03:37:14.039Z",
+    "timeStopAt": "2026-03-26T03:37:14.039Z",
+    "status": "open",
+    "regime": "BEAR",
+    "confidence": 70,
+    "contractAddress": "0x45b9a03a05f86088cd1a00874a05dda2c6915ba3",
+    "kellyFraction": 22
   }
 ]

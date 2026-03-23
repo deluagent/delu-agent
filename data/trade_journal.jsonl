@@ -28,3 +28,4 @@
 {"type":"close","sym":"ROBOTMONEY","entryPrice":0.00001312,"closePrice":null,"pnlPct":null,"reason":"zero_balance","openedAt":"2026-03-22T21:15:16.453Z","closedAt":"2026-03-22T21:30:09.544Z","sizeUsd":10,"ts":"2026-03-22T21:30:09.545Z"}
 {"type":"open","sym":"VVV","entryPrice":6.1,"sizeUsd":10,"openedAt":"2026-03-23T02:36:13.686Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-23T02:36:13.687Z"}
 {"type":"open","sym":"SAIRI","entryPrice":0.00000968,"sizeUsd":10,"openedAt":"2026-03-23T03:10:24.419Z","signals":null,"regime":"BEAR","confidence":80,"ts":"2026-03-23T03:10:24.419Z"}
+{"type":"open","sym":"CASHCLAW","entryPrice":0.000003946,"sizeUsd":10,"openedAt":"2026-03-23T03:37:14.039Z","signals":null,"regime":"BEAR","confidence":70,"ts":"2026-03-23T03:37:14.039Z"}
