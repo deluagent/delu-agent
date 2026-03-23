@@ -28,6 +28,7 @@ const LOG        = '/tmp/autoresearch_stops.log';
 // ── LLM setup (Bankr gateway → Anthropic Haiku fallback) ──────
 const BANKR_KEY     = (process.env.BANKR_API_KEY      || '').replace(/\s/g, '');
 const ANTHROPIC_KEY = (process.env.ANTHROPIC_API_KEY  || '').replace(/\s/g, '');
+const LLM_EVERY    = 5;  // Call LLM only every Nth experiment
 const MODEL         = 'claude-haiku-4-5-20251001';
 
 function log(msg) {
@@ -310,8 +311,11 @@ async function main() {
     state.expCount++;
     const exps = loadExperiments();
 
-    // Ask LLM to propose a mutation
-    let proposal = await proposeParams(state, exps);
+    // Only call LLM every LLM_EVERY experiments — random perturbation otherwise
+    let proposal;
+    if (state.expCount % LLM_EVERY === 0) {
+      proposal = await proposeParams(state, exps);
+    }
     if (!proposal || !proposal.param || proposal.value == null) {
       log(`Exp ${state.expCount}: LLM returned null — random perturbation`);
       proposal = {};

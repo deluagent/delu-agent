@@ -428,8 +428,11 @@ async function main() {
   while (true) {
     state.expCount++;
 
-    // Get LLM proposal
-    let proposal = await proposeMutation(state, exps);
+    // Only call LLM every 5 experiments — random perturbation otherwise
+    let proposal;
+    if (state.expCount % 5 === 0) {
+      proposal = await proposeMutation(state, exps);
+    }
 
     if (!proposal || !proposal.param || proposal.value == null) {
       log(`Exp ${state.expCount}: LLM null — random perturbation`);

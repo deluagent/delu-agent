@@ -25,6 +25,7 @@ const EXPS_FILE  = path.join(DIR, 'experiments_5m.json');
 const COST_FILE  = path.join(DIR, 'cost_track_5m.json');
 
 const INTERVAL_S    = 5;  // 5s — maximize experiment throughput
+const LLM_EVERY    = 5;  // Call LLM only every Nth experiment — rest use random perturbation
 const COST_LIMIT    = 999;
 const COST_PER_CALL = 0.003;
 
@@ -243,6 +244,9 @@ async function main() {
     const expN = state.expCount + 1;
 
     console.log(`\n🧪 [exp ${expN}] Best: val=${state.bestValSharpe.toFixed(3)} combined=${(state.bestScore||0).toFixed(3)}`);
+
+    // Only call LLM every LLM_EVERY experiments to preserve rate limits
+    if (expN % LLM_EVERY !== 0) { await new Promise(r=>setTimeout(r,INTERVAL_S*1000)); continue; }
 
     let newCode, description = `exp ${expN}`;
     try { newCode = await proposeChange(state, experiments); }

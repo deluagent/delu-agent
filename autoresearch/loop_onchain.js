@@ -22,6 +22,7 @@ const STATE_FILE   = path.join(DIR, 'state_onchain.json');
 const EXPERIMENTS  = path.join(DIR, 'experiments_onchain.json');
 const FEEDBACK     = path.join(DIR, 'live_feedback.json');
 const INTERVAL_S   = 5;
+const LLM_EVERY    = 5;  // Call LLM only every Nth experiment — rest use random perturbation
 
 console.log('\n🔬 Autoresearch — Onchain (Base/Alchemy)');
 
@@ -246,6 +247,10 @@ async function main() {
     await maybeRefreshData();
 
     console.log(`\n🧪 [onchain exp ${expN}] Best: val=${state.bestValSharpe.toFixed(3)} combined=${state.bestScore.toFixed(3)}`);
+
+    // Only call LLM every LLM_EVERY experiments to preserve rate limits
+    if (expN % LLM_EVERY !== 0) { await new Promise(r=>setTimeout(r,5000)); continue; }
+
     const exps    = loadExps();
     const prevCode = fs.readFileSync(CANDIDATE, 'utf8');
     let accepted = false, description = `exp ${expN}`;
