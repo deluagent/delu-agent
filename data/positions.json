@@ -315,5 +315,22 @@
     "closedAt": "2026-03-22T21:06:22.705Z",
     "closePrice": 8.813e-7,
     "pnlPct": -14.1
+  },
+  {
+    "sym": "VVV",
+    "entryPrice": 6.1,
+    "sizeUsd": 10,
+    "trailPct": 5,
+    "activateAt": 1,
+    "hardSlPct": 3,
+    "peakPrice": 6.1,
+    "peakPct": 0,
+    "openedAt": "2026-03-23T02:36:13.686Z",
+    "timeStopAt": "2026-03-26T02:36:13.686Z",
+    "status": "open",
+    "regime": "BEAR",
+    "confidence": 80,
+    "contractAddress": "0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf",
+    "kellyFraction": 22
   }
 ]
