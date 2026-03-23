@@ -433,19 +433,24 @@ async function publish(regimeData = null, balanceStr = null) {
     const status = await buildStatus(regimeData, balanceStr);
     fs.writeFileSync(OUT_FILE, JSON.stringify(status, null, 2));
 
-    // 1. Commit cycle log to delu-agent repo (judges can read raw history)
+    // 1. Commit cycle log to delu-agent repo — only before hackathon deadline
+    // Deadline: March 22 11:59pm PST = March 23 07:59 UTC
+    const DEADLINE = new Date('2026-03-23T07:59:00.000Z');
     const agentGit = (cmd) => execSync(cmd, { cwd: AGENT_DIR, stdio: 'pipe' }).toString().trim();
-    try {
-      // Only commit the human-readable summary — not raw JSONL
-      agentGit('git add data/cycle_summary.md data/positions.json data/trade_journal.jsonl');
-      const agentDiff = agentGit('git diff --cached --stat');
-      if (agentDiff) {
-        agentGit(`git commit -m "data: cycle log ${new Date().toISOString().slice(0,16)}"`);
-        agentGit('git push origin main');
-        console.log('[publish] ✅ Cycle log committed to delu-agent');
+    if (new Date() < DEADLINE) {
+      try {
+        agentGit('git add data/cycle_summary.md data/positions.json data/trade_journal.jsonl');
+        const agentDiff = agentGit('git diff --cached --stat');
+        if (agentDiff) {
+          agentGit(`git commit -m "data: cycle log ${new Date().toISOString().slice(0,16)}"`);
+          agentGit('git push origin main');
+          console.log('[publish] ✅ Cycle log committed to delu-agent');
+        }
+      } catch (agentErr) {
+        console.warn('[publish] Agent log push skipped:', agentErr.message?.slice(0, 60));
       }
-    } catch (agentErr) {
-      console.warn('[publish] Agent log push skipped:', agentErr.message?.slice(0, 60));
+    } else {
+      console.log('[publish] ⏸ Past deadline — skipping delu-agent commit (dashboard still live)');
     }
 
     // 2. Commit + push to delu-site repo
