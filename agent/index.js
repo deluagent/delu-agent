@@ -1279,6 +1279,22 @@ What is your allocation decision?`;
     } catch(e) { console.warn(`[yield] Rebalance check failed: ${e.message?.slice(0,50)}`); }
   }
 
+  // Auto top-up Bankr LLM credits when low (agent pays for its own compute)
+  try {
+    const { execSync } = require('child_process');
+    const bankrCli = require('os').homedir() + '/.local/bin/bankr';
+    const credOut = execSync(`BANKR_API_KEY=${process.env.BANKR_API_KEY} ${bankrCli} llm credits`, { timeout: 10000 }).toString();
+    const match = credOut.match(/Credit Balance:\s+\$([0-9.]+)/);
+    const credits = match ? parseFloat(match[1]) : null;
+    console.log(`[llm-credits] Balance: $${credits ?? '?'}`);
+    if (credits !== null && credits < 5) {
+      console.log(`[llm-credits] Low ($${credits}) — topping up $5 from wallet...`);
+      const result = execSync(`BANKR_API_KEY=${process.env.BANKR_API_KEY} ${bankrCli} llm credits add 5 --yes`, { timeout: 30000 }).toString();
+      const newBal = result.match(/New Balance:\s+\$([0-9.]+)/)?.[1];
+      console.log(`[llm-credits] ✅ Topped up — new balance: $${newBal ?? '?'}`);
+    }
+  } catch(e) { console.warn('[llm-credits] Check failed:', e.message?.slice(0, 60)); }
+
   // Publish live status to delu-site repo (Vercel reads this)
   try {
     const { publish } = require('./publish_status');
