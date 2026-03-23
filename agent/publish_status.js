@@ -58,6 +58,18 @@ async function buildStatus(regimeData, balanceStr = null) {
           const flagged = entries.filter(t => (t.score || 0) >= 0.65).map(t => t.symbol);
           const traded  = (c.decision?.action === 'buy' || c.decision?.action === 'long') && c.decision?.asset
             ? [c.decision.asset] : [];
+
+          // Build rich reasoning: what was scanned + why hold/buy
+          const screenReason = c.screen?.reason || c.decision?.reason || '';
+          const decisionReason = c.decision?.reasoning || '';
+          const topEntries = entries.slice(0, 3).map(t => `${t.symbol}(${(t.score??0).toFixed(2)})`).join(', ');
+          let richReason = decisionReason || screenReason || '—';
+          if (!decisionReason && entries.length > 0) {
+            richReason = `Scanned ${entries.length} tokens [${topEntries}]. ${screenReason}`;
+          } else if (!decisionReason && entries.length === 0) {
+            richReason = `No tokens passed discovery this cycle. ${screenReason}`;
+          }
+
           return {
             ts:               c.ts,
             regime:           c.regime,
@@ -65,7 +77,7 @@ async function buildStatus(regimeData, balanceStr = null) {
             action:           c.decision?.action || 'hold',
             asset:            c.decision?.asset  || null,
             confidence:       c.decision?.confidence || null,
-            reasoning:        c.decision?.reasoning || c.screen?.reason || null,
+            reasoning:        richReason,
             seenCount:        entries.length,
             flagged,
             traded,

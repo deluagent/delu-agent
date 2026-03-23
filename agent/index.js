@@ -312,16 +312,16 @@ function scoreTemplateD(bars) {
 async function bankrScreen(regime, ranked, checkrAttention = {}, trendingEntries = []) {
   const state = regime.state;
 
-  // In BEAR: only skip if nothing is oversold — otherwise look for bounce plays
+  // In BEAR: only skip if truly nothing to look at — trending entries count as signal
   if (state === 'BEAR') {
-    // Check if any token has a non-zero score OR spiking attention (oversold bounce / divergence)
     const hasSocialSpike = Object.values(checkrAttention).some(a => (a.velocity >= 3.0 && a.divergence) || (a.isGainer && a.rotationGain >= 2.0));
-    const hasSignal = ranked.some(s => s.sAR > 0 || s.sD > 0.05) || hasSocialSpike;
+    const hasRankedSignal = ranked.some(s => s.sAR > 0 || s.sD > 0.05);
+    const hasTrendingSignal = trendingEntries.some(t => (t.score ?? 0) >= 0.30);
+    const hasSignal = hasRankedSignal || hasSocialSpike || hasTrendingSignal;
     if (!hasSignal) {
-      return { skip: true, interesting: [], reason: 'BEAR regime, no oversold signals — yield only', layer: 'hardcoded' };
+      return { skip: true, interesting: [], reason: 'BEAR regime — no signals above threshold across Alchemy, Checkr, onchain discovery', layer: 'hardcoded' };
     }
-    // Has oversold signal — pass through to Bankr LLM for light screening
-    console.log('[bankr-screen] BEAR but oversold signals detected — checking with LLM');
+    console.log(`[bankr-screen] BEAR but signals present (ranked=${hasRankedSignal} social=${hasSocialSpike} trending=${hasTrendingSignal}) — screening with LLM`);
   }
 
     // Build a compact summary — use trendingEntries (onchain discovery) as primary signal source
