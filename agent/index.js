@@ -1242,7 +1242,16 @@ What is your allocation decision?`;
     })),
     screen,
     decision,
-    dry_run: DRY_RUN
+    dry_run: DRY_RUN,
+    // Data sources summary (for site display)
+    dataSources: {
+      checkrTokens:    Object.keys(checkrAttention).length,
+      checkrSustained: Object.entries(checkrAttention)
+        .filter(([,a]) => a.sustainedMomentum || (a.momentumWindows >= 2))
+        .map(([sym,a]) => ({ sym, att1h: a.att_1h, att4h: a.att_4h, velocity: a.velocity, windows: a.momentumWindows }))
+        .slice(0, 6),
+      discoveryPassed: trendingEntries.length,
+    },
   };
   const logPath = require('path').join(__dirname, '../data/agent_log.jsonl');
   require('fs').appendFileSync(logPath, JSON.stringify(logEntry) + '\n');

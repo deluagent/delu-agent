@@ -88,6 +88,7 @@ async function buildStatus(regimeData, balanceStr = null) {
               : null,
             layers:           c.decision?.layers_used || [],
             screenLayer:      c.screen?.layer || null,
+            dataSources:      c.dataSources || null,
           };
         } catch { return null; }
       }).filter(Boolean);
