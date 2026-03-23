@@ -387,7 +387,7 @@
   },
   {
     "sym": "CASHCLAW",
-    "entryPrice": 0.0000039803,
+    "entryPrice": 0.000003946,
     "sizeUsd": 10,
     "trailPct": 5,
     "activateAt": 1,
@@ -399,7 +399,9 @@
     "status": "open",
     "regime": "BEAR",
     "confidence": 80,
-    "contractAddress": "0x45b9a03a05f86088cd1a00874a05dda2c6915ba3",
-    "kellyFraction": 22
+    "contractAddress": "0xe2aa4a1251864d3001b472c1d346e0382a3a41af",
+    "kellyFraction": 22,
+    "qty": 2534211.8601115053,
+    "note": "Entry from first confirmed buy $10 @ 0.000003946; contract corrected"
   }
 ]
