@@ -1065,11 +1065,7 @@ What is your allocation decision?`;
 
     // Block re-entry if we already have an open position in this asset
     const alreadyOpen = openPositions.find(p => p.sym === decision.asset && p.status === 'open');
-    if (alreadyOpen) {
-      console.log(`[bankr] Already have open position in ${decision.asset} — skipping re-entry`);
-      // fall through to publish
-    }
-
+    if (!alreadyOpen) {
     console.log('\n[bankr] Executing...');
     try {
       // Kelly position sizing — calibrate from live trade history
@@ -1200,7 +1196,9 @@ What is your allocation decision?`;
     } catch (e) {
       console.error('[bankr] Execution failed:', e.message);
     }
-  }
+    } else {
+      console.log(`[bankr] Already have open position in ${decision.asset} — skipping re-entry`);
+    }
 
     // 8. Log
   const logEntry = {
@@ -1393,3 +1391,4 @@ async function main() {
 }
 
 main().catch(e => { console.error('Fatal:', e.stack); process.exit(1); });
+}
