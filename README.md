@@ -4,7 +4,7 @@
 
 delu is an autonomous trading agent that manages a live treasury on Base mainnet. It runs every 30 minutes, discovers trending tokens, scores them with an evolving quant model, reasons privately via Venice, and executes trades via Bankr — all without human intervention.
 
-**Live demo:** https://delu-site.vercel.app  
+**Live demo:** https://deluagent.vercel.app  
 **Wallet:** [0xed2ceca9de162c4f2337d7c1ab44ee9c427709da](https://basescan.org/address/0xed2ceca9de162c4f2337d7c1ab44ee9c427709da)  
 **ERC-8004 identity:** Agent #30004 on Base
 
