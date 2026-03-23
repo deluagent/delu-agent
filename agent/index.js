@@ -1067,7 +1067,7 @@ What is your allocation decision?`;
     const alreadyOpen = openPositions.find(p => p.sym === decision.asset && p.status === 'open');
     if (alreadyOpen) {
       console.log(`[bankr] Already have open position in ${decision.asset} — skipping re-entry`);
-      return;
+      // fall through to publish
     }
 
     console.log('\n[bankr] Executing...');
